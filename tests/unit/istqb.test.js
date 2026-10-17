@@ -131,16 +131,16 @@ describe('shipped ISTQB content (content/istqb/)', () => {
   });
 
   it('question stems never name a mnemonic (standing rule SR-2)', () => {
-    for (const q of SHIPPED.questions) expect(q.stem, q.id).not.toMatch(/PMADIEC|2-3-2|CIRAP|I-WTI|INVEST|3 C's/);
+    for (const q of SHIPPED.questions) expect(q.stem, q.id).not.toMatch(/PMADIEC|2-3-2|CIRAP|I-WTI|INVEST|3 C's|PIICF/);
   });
 
   it('every card names a real objective', () => {
     for (const c of SHIPPED.cards) if (c.objective) expect(LO.has(c.objective), c.id).toBe(true);
   });
 
-  // TODO(content runs): add each chapter here when its content run is finished (Ch3, Ch4, Ch5–6, then
-  // the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
-  const FINISHED_CHAPTERS = [];
+  // Add each chapter here when its content run is finished (Ch3 and Ch6 done 2026-10-17; still to come:
+  // Ch4, Ch5, then the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
+  const FINISHED_CHAPTERS = [3, 6];
   const minimum = (o) => (o.kLevel === 'K3' ? 8 : 6);
 
   // Skipped (pending) while no chapter is finished yet.

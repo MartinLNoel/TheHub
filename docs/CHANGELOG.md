@@ -2,6 +2,22 @@
 
 Dated entries, newest first.
 
+## 2026-10-17 — Part 6 content run: Chapters 3 and 6 (version 0.6.1)
+
+Written autonomously while Martin was away, on branch `content/istqb-ch3-ch6`, merged into local `main` (not
+pushed). All content in our own words; no official sample-exam questions.
+
+- **Lessons:** §3.2 (stakeholder feedback, the five review activities, the six roles, the four review types, success
+  factors), §6.1 (tool categories with game-QA examples) and §6.2 (automation benefits and risks, key phrases for
+  exact-wording drilling). §3.1 kept, with one line on the low effort of static analysis. Lesson examples differ
+  from the question scenarios.
+- **Questions:** Ch3 from 9 to 55, Ch6 22 (6 to 12 per objective; extra for review roles and types, tool
+  categories and automation benefits/risks). Correct answers spread A 20 · B 18 · C 19 · D 20.
+- **Flashcards:** 25 new (47 in all): review terms and roles, tool categories, automation wording, lists.
+- **Tests:** the ≥ 6 questions per objective check now runs for Chapters 3 and 6; the mnemonic ban in stems also
+  covers the new review-process mnemonic.
+- New open question: Q-17 (lesson order until the Ch4 and Ch5 lessons exist).
+
 ## 2026-10-17 — Part 6a: ISTQB module, progress import, content scaffolding (version 0.6.0)
 
 Built autonomously while Martin was away, on branch `part-6/istqb`, merged into local `main` (not pushed). Paused

@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-17, after Part 6a)
+## Where things stand (2026-10-17, after the Ch3 + Ch6 content run)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -30,11 +30,15 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   `adjustSession`/`homeCards` hooks, step labels, `"__done__"` pointer resumes, imported-session objectives).
   Martin's progress is in **`private/istqb-progress.json`** (git-ignored, never committed); its
   summary is in `private/istqb-notes.md` (Q-1, Q-15). New placeholders: Q-15, Q-16.
-- **Next: the Part 6 content runs**, one session each, with the prompt in `docs/content-loop.md`:
-  1. **Ch3**: lesson §3.2 + Ch3 questions to ≥ 6 per LO.
-  2. **Ch4**: lessons 4.1–4.5 + questions (≥ 8 for the five K3 LOs).
-  3. **Ch5–6**: lessons 5.1–5.5, 6.1–6.2 + questions.
-  4. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
+- **Part 6 content run Ch3 + Ch6: done** (version 0.6.1, branch `content/istqb-ch3-ch6`, merged into local
+  `main`, not pushed). Lessons §3.2, §6.1, §6.2 (§3.1 kept, one line added); 77 questions (Ch3 55, Ch6 22; 6–12 per
+  LO, more for the shaky FL-3.2.3, 3.2.4, 6.1.1 and for 6.2.1); 25 new flashcards (47 in all). The ≥ 6 per objective
+  check now runs for Chapters 3 and 6. PLACEHOLDER(Q-17): until the Ch4 and Ch5 lessons exist, the lesson after
+  §3.2 is §6.1 (course order follows the files); see Q-17 before studying past §3.2.
+- **Next: the remaining Part 6 content runs**, one session each, with the prompt in `docs/content-loop.md`:
+  1. **Ch4**: lessons 4.1–4.5 + questions (≥ 8 for the five K3 LOs).
+  2. **Ch5**: lessons 5.1–5.5 + questions (≥ 8 for 5.1.4, 5.1.5, 5.5.1).
+  3. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
   Until all four are done, full mocks are short and do not count for the readiness gate; Martin can study §3.1
   now.
 - Next after Part 6: Part 8 (Fridge), then the book-free parts of Part 7.
@@ -98,7 +102,7 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [x] Part 4: Gym (code done; Martin's export, import, side-by-side week and gainz-tracker's retirement open)
 - [x] Part 5: study engine (code done; Ask Claude on the phone open, Q-13)
 - [x] Part 6a: ISTQB module, progress import, scaffolding, content loop (Martin's import on the phone open)
-- [ ] Part 6 content runs: Ch3 · Ch4 · Ch5–6 · Ch1–2 questions
+- [ ] Part 6 content runs: [x] Ch3 · [x] Ch6 · [ ] Ch4 · [ ] Ch5 · [ ] Ch1–2 questions
 - [ ] Part 7: Bulgarian (gated) · Part 8: Fridge
 
 ## Known gaps and notes

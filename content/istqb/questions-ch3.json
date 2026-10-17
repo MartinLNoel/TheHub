@@ -66,6 +66,72 @@
     "source": "generated"
   },
   {
+    "id": "q3.1.1-d",
+    "objective": "FL-3.1.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A QA lead wants to run a static analysis tool, not a review, on one of the following work products. Which is the BEST candidate?",
+    "options": [
+      "The concept-art moodboard for the new desert biome",
+      "The voice-over recordings for the opening cutscene",
+      "The C# scripts for the combat system in the repository",
+      "The impressions players described after a playtest"
+    ],
+    "answer": "C",
+    "why": "Static analysis needs a work product with a formal structure that a tool can check, such as source code.",
+    "distractorNotes": {
+      "A": "Static analysis needs a work product with a formal structure a tool can check; a moodboard has none.",
+      "B": "Audio recordings have no formal structure a static analysis tool can check.",
+      "D": "Players' impressions are not a structured work product, and they come from playing the game."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.1-e",
+    "objective": "FL-3.1.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about the work products that static testing can examine is CORRECT?",
+    "options": [
+      "Only work products with a formal structure, such as code, can be reviewed",
+      "Test cases cannot be examined statically, because they are part of testing itself",
+      "A work product must be finished and approved before it can be examined",
+      "Any work product that people can read and understand can be reviewed, including a project budget"
+    ],
+    "answer": "D",
+    "why": "Reviews can examine any work product people can read and understand: requirements, code, testware, plans, budgets, contracts.",
+    "distractorNotes": {
+      "A": "Smear: a formal structure is needed for static analysis by a tool, not for a review by people.",
+      "B": "Testware such as test cases and test plans is a normal review target.",
+      "C": "Drafts can and should be reviewed; early review is one of the main benefits."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.1-f",
+    "objective": "FL-3.1.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Your producer asks whether the contract with an outsourcing art studio can be examined by static testing. Which answer is BEST?",
+    "options": [
+      "Yes: a contract is a work product people can read and understand, so it can be reviewed",
+      "No: only work products that will later be executed can be examined statically",
+      "No: static testing is limited to technical work products such as code and designs",
+      "Yes, but only with a static analysis tool, because no tester is assigned to contracts"
+    ],
+    "answer": "A",
+    "why": "Contracts are among the project documents that can be reviewed: people can read them and find problems without running anything.",
+    "distractorNotes": {
+      "B": "Static testing is precisely for examining work products without executing them, executable or not.",
+      "C": "Overly narrow: project documents such as contracts, schedules and budgets can also be reviewed.",
+      "D": "A contract is reviewed by people; a static analysis tool needs a formally structured product such as code."
+    },
+    "source": "generated"
+  },
+  {
     "id": "q3.1.2-a",
     "objective": "FL-3.1.2",
     "kLevel": "K2",
@@ -132,6 +198,72 @@
     "source": "generated"
   },
   {
+    "id": "q3.1.2-d",
+    "objective": "FL-3.1.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Designers, a developer and a tester review the crafting user stories together before the sprint. Afterwards the developer says: \"I had read 'stack size' as 99 per slot; the designer meant 999.\" Which benefit of static testing does this BEST illustrate?",
+    "options": [
+      "Reviews prove that the crafting stories are now complete and correct",
+      "Reviews create a shared understanding of the requirements among the people involved",
+      "Reviews measure the performance efficiency of the crafting system",
+      "Reviews remove the need to test the stack limit dynamically"
+    ],
+    "answer": "B",
+    "why": "Reading the same story together surfaced two different interpretations before any code was written: a shared understanding of the requirement.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: testing shows the presence of defects, never their absence.",
+      "C": "Performance efficiency depends on execution, so it is measured by dynamic testing.",
+      "D": "Static and dynamic testing are complementary; the limit still needs dynamic tests."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.2-e",
+    "objective": "FL-3.1.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A producer argues: \"Reviews cost us two days per milestone, so they make the project more expensive.\" Which response BEST reflects the value of static testing?",
+    "options": [
+      "Reviews cost nothing, because no tools or builds are needed to run them",
+      "Reviews are worth it because they replace system testing at each milestone",
+      "Defects found early cost less to fix than the same defects found later, so total project cost usually falls",
+      "Reviews are worth it because they show that the reviewed product has no defects"
+    ],
+    "answer": "C",
+    "why": "The review effort is usually outweighed by the savings of fixing defects early, before they are built on or released.",
+    "distractorNotes": {
+      "A": "Reviews do cost effort; the point is that the effort usually pays for itself.",
+      "B": "Static testing complements dynamic testing; it replaces no test level.",
+      "D": "Overgeneralisation: no testing can show that defects are absent."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.2-f",
+    "objective": "FL-3.1.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 3,
+    "stem": "Which finding shows a benefit that static testing can provide but dynamic testing CANNOT?",
+    "options": [
+      "The test plan's exit criteria contradict the dates in the release schedule",
+      "The game crashes when the player opens the map during a cutscene",
+      "Saving takes eight seconds on a slow memory card",
+      "An exception occurs when two players pick up the same item at once"
+    ],
+    "answer": "A",
+    "why": "A test plan and a schedule are never executed, so only static testing (a review) can find a contradiction between them.",
+    "distractorNotes": {
+      "B": "A crash is a failure seen while the game runs: dynamic testing finds it.",
+      "C": "Save time is measured by running the game: dynamic (performance) testing.",
+      "D": "A runtime exception shows up only when the code executes: dynamic testing."
+    },
+    "source": "generated"
+  },
+  {
     "id": "q3.1.3-a",
     "objective": "FL-3.1.3",
     "kLevel": "K2",
@@ -194,6 +326,886 @@
       "B": "A device-specific rendering problem shows up when the game runs on that device.",
       "C": "Load-dependent behaviour needs execution under load to appear.",
       "D": "A defect that shows after many autosaves is found by running the game repeatedly."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.3-d",
+    "objective": "FL-3.1.3",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about static and dynamic testing is CORRECT?",
+    "options": [
+      "Dynamic testing finds defects directly in the work product, while static testing finds failures in the running software",
+      "Static testing only finds defects that dynamic testing would also find later, so it mainly saves time",
+      "Both can find defects and evaluate quality, but only static testing can be applied to work products that cannot be executed",
+      "Dynamic testing is the better way to measure maintainability, since it observes the code in use"
+    ],
+    "answer": "C",
+    "why": "Static and dynamic testing share their objectives, but static testing also works on non-executable work products such as a GDD or a test plan.",
+    "distractorNotes": {
+      "A": "Swapped: static testing finds defects directly; dynamic testing causes failures.",
+      "B": "Static testing also finds defects dynamic testing typically cannot, e.g. unreachable code or document defects.",
+      "D": "Swapped: maintainability does not depend on execution and is measured statically."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.3-e",
+    "objective": "FL-3.1.3",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "In a code review of the enemy AI, a reviewer notices a method that is never called from anywhere and a loop with nine levels of nested conditions. Which classification is BEST?",
+    "options": [
+      "Both are failures, because the code would behave wrongly when the game runs",
+      "Both are defects that are typically easier to find with static testing than with dynamic testing",
+      "Both can only be confirmed by running the game, so they are dynamic findings",
+      "Both are errors made by the developer, not defects in the code"
+    ],
+    "answer": "B",
+    "why": "Unreachable code and excessive complexity are coding defects that a review or static analyser sees directly, without execution.",
+    "distractorNotes": {
+      "A": "A failure is seen during execution; nothing was executed here, and unused code may never misbehave.",
+      "C": "They were found by reading the code; unreachable code cannot even be reached by a dynamic test.",
+      "D": "Term swap: the error is the human mistake; what sits in the code is a defect."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.3-f",
+    "objective": "FL-3.1.3",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 3,
+    "stem": "Two teams wrote the interface specification for the leaderboard service. One side assumes scores are sent in points, the other in thousands of points. Why is this defect typically found more easily by static testing?",
+    "options": [
+      "Only static testing can find defects that would later cause failures in the running game",
+      "Dynamic testing can never find interface defects, however many integration tests are run",
+      "It is a non-functional defect, and non-functional defects depend on execution to be measured",
+      "It is an interface specification defect, visible by comparing the two documents before any code runs"
+    ],
+    "answer": "D",
+    "why": "Wrong or mismatched interface specifications are among the defects typically easier to find statically: reading both specs shows the mismatch.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: dynamic testing finds defects through the failures they cause.",
+      "B": "Overgeneralisation: integration tests can expose interface defects, usually later and at higher cost.",
+      "C": "Wrong category: a unit mismatch is a functional interface defect, and it is found by reading, not running."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.1-a",
+    "objective": "FL-3.2.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Which of the following is a benefit of early and frequent stakeholder feedback?",
+    "options": [
+      "Stakeholders take over the responsibility for testing the product from the team",
+      "The product is guaranteed to meet every stakeholder's expectations at release",
+      "The need to review work products such as user stories disappears",
+      "Misunderstandings about requirements are prevented, and requirement changes are dealt with earlier"
+    ],
+    "answer": "D",
+    "why": "Frequent feedback catches misunderstood or changed requirements while they are cheap to correct.",
+    "distractorNotes": {
+      "A": "Wrong actor: giving feedback does not make stakeholders the testers.",
+      "B": "Overgeneralisation: feedback lowers the risk, it guarantees nothing.",
+      "C": "Feedback complements reviews; it does not replace them."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.1-b",
+    "objective": "FL-3.2.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A studio develops for six months without showing the game to its publisher. At the first demo the publisher rejects the core gameplay loop. Which consequence of missing stakeholder involvement does this BEST show?",
+    "options": [
+      "The product may not match the stakeholders' vision, leading to costly rework and missed deadlines",
+      "The developers' confirmation bias grew because no independent testers were used",
+      "The test environment was not representative of the publisher's hardware",
+      "The team skipped writing a test completion report"
+    ],
+    "answer": "A",
+    "why": "Without stakeholder feedback the product drifted from what the publisher wanted, which means rework, slipped dates and possibly blame.",
+    "distractorNotes": {
+      "B": "Adjacent concept: confirmation bias is about authors and their own work, not about stakeholder involvement.",
+      "C": "True-but-irrelevant: the rejection is about the vision, not the environment.",
+      "D": "A completion report summarises testing; it has nothing to do with this rejection."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.1-c",
+    "objective": "FL-3.2.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which of the following is NOT a benefit of early and frequent stakeholder feedback?",
+    "options": [
+      "Potential quality problems are communicated early",
+      "Features that stakeholders have approved no longer need to be tested",
+      "The team can focus on the features that give stakeholders the most value",
+      "The team gains a better understanding of what it is building"
+    ],
+    "answer": "B",
+    "why": "Approval by stakeholders is no substitute for testing; the other three are listed benefits of early and frequent feedback.",
+    "distractorNotes": {
+      "A": "This is a benefit: problems surface while they are cheap to address.",
+      "C": "This is a benefit: feedback steers the team towards the most valuable features.",
+      "D": "This is a benefit: feedback clarifies what is being built."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.1-d",
+    "objective": "FL-3.2.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Every two weeks the team shows a playable build to its community council and then reorders the backlog. Which benefit of frequent feedback is the team MAINLY using?",
+    "options": [
+      "Measuring the code coverage of the features shown at each demo",
+      "Collecting metrics that are used to improve the inspection process",
+      "Focusing on the features that deliver the most value and have the most positive impact on identified risks",
+      "Getting a formal sign-off from the council that replaces acceptance testing"
+    ],
+    "answer": "C",
+    "why": "Reordering the backlog after each demo means the team works on what stakeholders value most.",
+    "distractorNotes": {
+      "A": "Coverage is measured by tools during test execution, not by showing a build to stakeholders.",
+      "B": "Adjacent concept: process metrics belong to inspections, not to stakeholder feedback.",
+      "D": "Feedback does not replace any test level."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.1-e",
+    "objective": "FL-3.2.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which outcome is MOST likely when stakeholders are NOT involved while the product is being developed?",
+    "options": [
+      "Lower costs, because fewer meetings are held",
+      "More defects found by static analysis tools",
+      "A faster time to market, because there are fewer change requests",
+      "Rework, missed deadlines and blame between the parties"
+    ],
+    "answer": "D",
+    "why": "When the product does not match what stakeholders expected, the result is costly rework, late delivery, blame games and even failure.",
+    "distractorNotes": {
+      "A": "Short-term savings are usually lost many times over in rework.",
+      "B": "Static analysis does not depend on stakeholder involvement.",
+      "C": "The change requests still come, only later, when they are more expensive."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.1-f",
+    "objective": "FL-3.2.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Which statement about stakeholder feedback is CORRECT?",
+    "options": [
+      "It is most valuable when gathered early and repeatedly, not only at the end",
+      "It should be collected only after system testing, when the product is stable",
+      "It is relevant only in sequential development models",
+      "It is useful only for finding coding defects"
+    ],
+    "answer": "A",
+    "why": "The benefits come from early and frequent feedback: problems and misunderstandings surface while they are cheap to fix.",
+    "distractorNotes": {
+      "B": "Late feedback is exactly what causes expensive rework.",
+      "C": "Frequent feedback is central to iterative and Agile development too.",
+      "D": "Its value is mainly in requirements, priorities and vision, not coding defects."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-a",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "During a review of the boss-fight design document, each reviewer reads the document on their own and logs possible problems using a checklist. Which review activity is this?",
+    "options": [
+      "Review initiation",
+      "Individual review",
+      "Communication and analysis",
+      "Planning"
+    ],
+    "answer": "B",
+    "why": "Each reviewer assessing the work product alone and logging anomalies, e.g. with a checklist, is individual review.",
+    "distractorNotes": {
+      "A": "Initiation makes sure people and materials are ready; the reading itself comes later.",
+      "C": "That activity discusses the logged anomalies together; here everyone works alone.",
+      "D": "Planning defines the scope and exit criteria before anyone reads the document."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-b",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "The review leader checks that every reviewer can open the level-design document, knows their role and has received the checklist. Which review activity is this?",
+    "options": [
+      "Planning",
+      "Individual review",
+      "Review initiation",
+      "Fixing and reporting"
+    ],
+    "answer": "C",
+    "why": "Making sure everyone and everything is prepared to start is review initiation.",
+    "distractorNotes": {
+      "A": "Planning sets purpose, scope and exit criteria; checking that people are ready comes next.",
+      "B": "No one is reviewing the document yet.",
+      "D": "Fixing and reporting happens at the end, after the anomalies are analysed."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-c",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "In a meeting, the team goes through each logged anomaly in the multiplayer spec, decides which ones are real defects, gives each an owner and decides that a follow-up review is needed. Which review activity is this?",
+    "options": [
+      "Communication and analysis",
+      "Individual review",
+      "Fixing and reporting",
+      "Review initiation"
+    ],
+    "answer": "A",
+    "why": "Discussing anomalies, deciding their status, owner and actions, and deciding on follow-up is communication and analysis.",
+    "distractorNotes": {
+      "B": "Individual review is done alone and produces the anomalies; it does not decide on them.",
+      "C": "Fixes and defect reports come after these decisions.",
+      "D": "Initiation is about readiness before the review starts."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-d",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Before a review of the save-system design starts, the purpose, the quality characteristics to evaluate, the exit criteria and the time available are defined. Which review activity is this?",
+    "options": [
+      "Review initiation",
+      "Communication and analysis",
+      "Fixing and reporting",
+      "Planning"
+    ],
+    "answer": "D",
+    "why": "Defining the scope, purpose, characteristics, exit criteria and effort is planning.",
+    "distractorNotes": {
+      "A": "Initiation prepares people and materials; the scope and exit criteria already exist by then.",
+      "B": "That activity deals with anomalies already found.",
+      "C": "Reporting checks the exit criteria at the end; it does not define them."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-e",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about anomalies in the review process is CORRECT?",
+    "options": [
+      "Every anomaly logged during individual review is a defect and must be fixed",
+      "Anomalies are first recorded in the fixing and reporting activity",
+      "Not every anomaly is a defect; each one is analysed and given a status",
+      "The author alone decides about the anomalies after the review is closed"
+    ],
+    "answer": "C",
+    "why": "An anomaly is anything that looks wrong; communication and analysis decides whether it is a defect and what to do with it.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: some anomalies turn out to be misunderstandings or non-issues.",
+      "B": "Anomalies are logged during individual review; defect reports come in fixing and reporting.",
+      "D": "Anomalies are discussed and decided in communication and analysis, not by the author alone afterwards."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-f",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "The designer corrects the five confirmed problems in the vehicle-handling spec, each tracked in the bug tracker. The review leader then closes the review because the exit criteria are met, and shares the results. Which review activity is this?",
+    "options": [
+      "Communication and analysis",
+      "Fixing and reporting",
+      "Planning",
+      "Individual review"
+    ],
+    "answer": "B",
+    "why": "Defect reports for the defects, acceptance once the exit criteria are met and reporting the results make up fixing and reporting.",
+    "distractorNotes": {
+      "A": "The decisions about the anomalies were already made; now they are being fixed and reported.",
+      "C": "Planning comes first and only defines the exit criteria.",
+      "D": "Individual review is reviewers reading alone, not fixing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.2-g",
+    "objective": "FL-3.2.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "In which order are the activities of the review process carried out?",
+    "options": [
+      "Planning, review initiation, individual review, communication and analysis, fixing and reporting",
+      "Review initiation, planning, individual review, communication and analysis, fixing and reporting",
+      "Planning, review initiation, communication and analysis, individual review, fixing and reporting",
+      "Planning, individual review, review initiation, fixing and reporting, communication and analysis"
+    ],
+    "answer": "A",
+    "why": "Scope first, then readiness, then reading alone, then discussing the anomalies, then fixing and reporting.",
+    "distractorNotes": {
+      "B": "Planning must come first: initiation prepares people for a review whose scope is already set.",
+      "C": "Anomalies must exist before they can be discussed: individual review comes before communication and analysis.",
+      "D": "Reviewers can only start once initiated, and fixing follows the analysis."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-a",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "On a project, who decides what is to be reviewed and provides the people and time for the review?",
+    "options": [
+      "The review leader",
+      "The moderator",
+      "The author",
+      "The manager"
+    ],
+    "answer": "D",
+    "why": "Deciding what is reviewed and providing staff and time is the manager's responsibility.",
+    "distractorNotes": {
+      "A": "Adjacent role: the review leader organises who takes part and when and where, using the resources the manager gives.",
+      "B": "The moderator runs the review meeting; they do not decide what is reviewed.",
+      "C": "The author creates and fixes the work product; they do not provide resources."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-b",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "In a review meeting about the lobby specification, one person keeps the discussion on time, settles an argument between two developers and makes sure the junior designer feels safe to speak. Which role is this?",
+    "options": [
+      "Review leader",
+      "Moderator (facilitator)",
+      "Scribe (recorder)",
+      "Manager"
+    ],
+    "answer": "B",
+    "why": "Mediation, time management and a safe review environment are the moderator's responsibilities.",
+    "distractorNotes": {
+      "A": "The review leader has overall responsibility and organises the review, but running the meeting is the moderator's job.",
+      "C": "The scribe records anomalies and decisions; mediation and time management are not theirs.",
+      "D": "The manager decides what is reviewed and provides resources."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-c",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "During the review of the crafting GDD, one participant gathers all the reviewers' notes into a single list and, in the meeting, writes down each decision and the two new problems found there. Which role is this?",
+    "options": [
+      "Scribe (recorder)",
+      "Moderator",
+      "Reviewer",
+      "Review leader"
+    ],
+    "answer": "A",
+    "why": "Collating the anomalies and recording decisions and new anomalies from the meeting is the scribe's job.",
+    "distractorNotes": {
+      "B": "The moderator facilitates the meeting; recording its results is the scribe's role.",
+      "C": "Reviewers find anomalies; collating and recording them is the scribe's role.",
+      "D": "The review leader organises the review overall; they do not do the recording."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-d",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "An inspection of the save-system design is being set up. Which role assignment is NOT allowed?",
+    "options": [
+      "The author takes part and answers questions about the design",
+      "A senior developer who did not write the design acts as review leader",
+      "The author of the design acts as the scribe",
+      "A QA tester acts as a reviewer"
+    ],
+    "answer": "C",
+    "why": "In an inspection the author may not act as review leader or scribe.",
+    "distractorNotes": {
+      "A": "Allowed: the author participates in an inspection.",
+      "B": "Allowed: anyone except the author may lead the inspection.",
+      "D": "Allowed: testers are typical reviewers."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-e",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about the author in an inspection is CORRECT?",
+    "options": [
+      "The author may not take part at all, to avoid confirmation bias",
+      "The author takes part, but may not act as review leader or scribe",
+      "The author leads the inspection, because they know the work product best",
+      "The author acts as scribe, so that the needed fixes are recorded accurately"
+    ],
+    "answer": "B",
+    "why": "The author participates in an inspection but never as review leader or scribe.",
+    "distractorNotes": {
+      "A": "Too strong: the author does take part; only the leader and scribe roles are ruled out.",
+      "C": "Swap with the walkthrough: only a walkthrough is led by the author.",
+      "D": "The scribe role is exactly one the author may not take in an inspection."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-f",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "For the review of the economy balance sheet, Lena picks the participants, sets the date and books the room. She takes overall responsibility for the review. Which role does Lena have?",
+    "options": [
+      "Manager",
+      "Moderator",
+      "Author",
+      "Review leader"
+    ],
+    "answer": "D",
+    "why": "Overall responsibility, choosing participants and organising when and where is the review leader's role.",
+    "distractorNotes": {
+      "A": "The manager decides what is reviewed and provides resources; organising who, when and where is the review leader's job.",
+      "B": "The moderator runs the meeting itself, not the organisation of the review.",
+      "C": "Nothing says Lena wrote the balance sheet; the author creates and fixes the work product."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-g",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "A level designer wrote the dungeon layout document and, after its review, corrects the confirmed problems in it. Which review role does she have?",
+    "options": [
+      "Scribe",
+      "Reviewer",
+      "Author",
+      "Moderator"
+    ],
+    "answer": "C",
+    "why": "The author creates the work product under review and fixes it afterwards.",
+    "distractorNotes": {
+      "A": "The scribe records the anomalies and decisions; they do not fix the work product.",
+      "B": "Reviewers examine the work product; they do not create or fix it.",
+      "D": "The moderator facilitates the meeting."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-h",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Match each review role to its responsibility. Roles: 1 Manager, 2 Moderator, 3 Scribe, 4 Review leader. Responsibilities: a) organises who takes part and when and where; b) provides staff and time; c) records decisions and new anomalies; d) keeps the meeting on track and safe.",
+    "options": [
+      "1-b, 2-d, 3-c, 4-a",
+      "1-a, 2-d, 3-c, 4-b",
+      "1-b, 2-a, 3-c, 4-d",
+      "1-b, 2-d, 3-a, 4-c"
+    ],
+    "answer": "A",
+    "why": "Manager = resources, moderator = runs the meeting, scribe = records, review leader = organises the review.",
+    "distractorNotes": {
+      "B": "Manager and review leader swapped: the manager provides resources, the review leader organises.",
+      "C": "Moderator and review leader swapped: the moderator runs the meeting, the review leader organises the review.",
+      "D": "The scribe records; the review leader organises."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.3-i",
+    "objective": "FL-3.2.3",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Who can act as a reviewer?",
+    "options": [
+      "Only members of the test team",
+      "Only people who know nothing about the work product, to stay independent",
+      "Only the manager, who decides what is reviewed",
+      "Anyone with relevant input, such as a team member, a subject-matter expert or another stakeholder"
+    ],
+    "answer": "D",
+    "why": "A reviewer may be someone working on the project, a subject-matter expert or any other stakeholder.",
+    "distractorNotes": {
+      "A": "Too narrow: developers, designers, experts and other stakeholders review too.",
+      "B": "Reviewers need relevant knowledge; independence does not mean ignorance.",
+      "C": "The manager's role is to decide and provide resources, not to be the only reviewer."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-a",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A programmer takes the team through her new pathfinding code, leading the session herself, to explain it to two new hires and collect ideas for improving it. Which review type BEST describes this session?",
+    "options": [
+      "Inspection",
+      "Technical review",
+      "Walkthrough",
+      "Informal review"
+    ],
+    "answer": "C",
+    "why": "An author-led session aimed at educating reviewers and generating ideas is a walkthrough.",
+    "distractorNotes": {
+      "A": "An inspection is led by a review leader who is not the author, follows the full process and collects metrics.",
+      "B": "A technical review is led by a moderator, mainly to reach decisions on a technical problem.",
+      "D": "An informal review has no defined format; here the author leads a session with education and new ideas as objectives."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-b",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Senior engineers, led by a moderator, meet to agree which of two network architectures to use for co-op mode. Which review type is this?",
+    "options": [
+      "Walkthrough",
+      "Technical review",
+      "Inspection",
+      "Informal review"
+    ],
+    "answer": "B",
+    "why": "Technically qualified reviewers, led by a moderator, reaching consensus and a decision on a technical problem: a technical review.",
+    "distractorNotes": {
+      "A": "A walkthrough is led by the author, not by a moderator.",
+      "C": "An inspection's main objective is the maximum number of anomalies, not a technical decision.",
+      "D": "An informal review has no moderator or defined process."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-c",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "For the console certification compliance document, every activity of the review process is followed, exit criteria are checked, the goal is to find as many anomalies as possible, and defects found per page are recorded to improve future reviews. Which type of review is this?",
+    "options": [
+      "Technical review",
+      "Walkthrough",
+      "Acceptance testing",
+      "Inspection"
+    ],
+    "answer": "D",
+    "why": "Full process, maximum anomalies and metrics to improve the process are the marks of an inspection.",
+    "distractorNotes": {
+      "A": "A technical review aims mainly at consensus and decisions, and does not require metrics.",
+      "B": "A walkthrough is author-led and less formal; individual preparation is even optional.",
+      "C": "Category smear: acceptance testing is a test level, not a review type."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-d",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "A sound designer asks a programmer walking past to look over the list of audio-event names for the fishing minigame and say if anything looks wrong. No process is followed and nothing is written down. Which review type is this?",
+    "options": [
+      "Informal review",
+      "Walkthrough",
+      "Technical review",
+      "Component testing"
+    ],
+    "answer": "A",
+    "why": "No defined process and no formal documented output: an informal review.",
+    "distractorNotes": {
+      "B": "In a walkthrough the author leads a session for the reviewers; this is a quick ad hoc check.",
+      "C": "A technical review has technically qualified reviewers led by a moderator.",
+      "D": "Category smear: component testing is a test level, and it executes code."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-e",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about review types is CORRECT?",
+    "options": [
+      "A walkthrough is led by the author, while a technical review is led by a moderator",
+      "An inspection may be led by the author, since the author knows the work product best",
+      "An informal review must produce a formal documented output",
+      "A technical review is the most formal review type"
+    ],
+    "answer": "A",
+    "why": "The leader is a key difference: the author leads a walkthrough, a moderator leads a technical review.",
+    "distractorNotes": {
+      "B": "In an inspection the author may never be the review leader.",
+      "C": "By definition an informal review has no formal documented output.",
+      "D": "The inspection is the most formal type."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-f",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 3,
+    "stem": "Match each goal to the review type that fits it BEST. Goals: 1 educate new team members about a design; 2 make a decision about a technical problem; 3 find as many anomalies as possible and collect metrics; 4 a quick, cheap check with no documented output. Types: a) inspection; b) informal review; c) walkthrough; d) technical review.",
+    "options": [
+      "1-d, 2-c, 3-a, 4-b",
+      "1-c, 2-d, 3-a, 4-b",
+      "1-c, 2-a, 3-d, 4-b",
+      "1-b, 2-d, 3-a, 4-c"
+    ],
+    "answer": "B",
+    "why": "Educate = walkthrough, technical decision = technical review, maximum anomalies with metrics = inspection, quick check = informal review.",
+    "distractorNotes": {
+      "A": "Walkthrough and technical review swapped: educating is a walkthrough goal, deciding a technical problem a technical review goal.",
+      "C": "Inspection and technical review swapped: maximum anomalies with metrics is the inspection.",
+      "D": "Informal review and walkthrough swapped: a check with no output is informal; educating is a walkthrough."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-g",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Which list orders the review types from LEAST to MOST formal?",
+    "options": [
+      "Informal review, technical review, walkthrough, inspection",
+      "Walkthrough, informal review, inspection, technical review",
+      "Informal review, walkthrough, technical review, inspection",
+      "Informal review, walkthrough, inspection, technical review"
+    ],
+    "answer": "C",
+    "why": "Formality rises from informal review through walkthrough and technical review to inspection.",
+    "distractorNotes": {
+      "A": "Walkthrough and technical review are in the wrong order.",
+      "B": "The informal review is the least formal, and the inspection the most formal.",
+      "D": "The inspection is the most formal type, so it comes last."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-h",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 3,
+    "stem": "A colleague says: \"An inspection is just a formal review.\" Which description BEST captures what sets an inspection apart from the other review types?",
+    "options": [
+      "It is led by the author, who walks the reviewers through the work product",
+      "It is held by technical experts to reach a decision on a technical problem",
+      "It needs no process, so it is fast, cheap and leaves no documented output",
+      "It is the most formal type, follows the full process and collects metrics to improve it"
+    ],
+    "answer": "D",
+    "why": "Being the most formal, following the complete process and collecting metrics (with the maximum number of anomalies as main objective) set the inspection apart.",
+    "distractorNotes": {
+      "A": "That describes a walkthrough.",
+      "B": "That describes a technical review.",
+      "C": "That describes an informal review."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.4-i",
+    "objective": "FL-3.2.4",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "You are a tester on a team that wants to review the new quest-editor user manual. The aims are to build confidence in it, teach the support team how the editor works and gather ideas; the technical writer who wrote it wants to present it. Which review type fits BEST?",
+    "options": [
+      "Inspection",
+      "Walkthrough",
+      "Technical review",
+      "Beta testing"
+    ],
+    "answer": "B",
+    "why": "An author-presented review with educating, confidence and new ideas as goals is a walkthrough.",
+    "distractorNotes": {
+      "A": "An inspection aims at the maximum number of anomalies and may not be led by the author.",
+      "C": "A technical review is led by a moderator and aims at technical decisions.",
+      "D": "Category smear: beta testing is a form of acceptance testing, not a review type."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.5-a",
+    "objective": "FL-3.2.5",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Which of the following is a success factor for reviews?",
+    "options": [
+      "Using review results to evaluate the performance of each author",
+      "Reviewing a whole 300-page GDD in one long session to see the full picture",
+      "Reviewing the work product in small chunks so that reviewers keep their concentration",
+      "Keeping management out of reviews so that they stay informal"
+    ],
+    "answer": "C",
+    "why": "Small chunks keep reviewers from losing concentration.",
+    "distractorNotes": {
+      "A": "Evaluating participants must never be an objective of a review.",
+      "B": "The opposite of the factor: small chunks keep reviewers focused.",
+      "D": "Management support is one of the success factors."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.5-b",
+    "objective": "FL-3.2.5",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which of the following is NOT a success factor for reviews?",
+    "options": [
+      "Giving participants enough time to prepare",
+      "Providing training for all participants",
+      "Choosing a review type that suits the objectives and the work product",
+      "Ranking designers at their yearly appraisal by the defects found in their work"
+    ],
+    "answer": "D",
+    "why": "Evaluating the participants should never be a review objective; it makes people avoid reviews.",
+    "distractorNotes": {
+      "A": "This is a success factor.",
+      "B": "This is a success factor.",
+      "C": "This is a success factor."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.5-c",
+    "objective": "FL-3.2.5",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A studio's reviews keep failing: nobody knows when a review is finished, and meetings drift on for hours. Which pair of success factors addresses these problems MOST directly?",
+    "options": [
+      "Defining clear objectives and measurable exit criteria, and facilitating the meetings",
+      "Reviewing larger chunks of work at once and inviting more reviewers",
+      "Replacing the reviews with automated dynamic tests run on each build",
+      "Making the author both the moderator and the scribe of each review"
+    ],
+    "answer": "A",
+    "why": "Measurable exit criteria say when a review is done; a facilitated meeting keeps it on time.",
+    "distractorNotes": {
+      "B": "Larger chunks make concentration worse, not better.",
+      "C": "That abandons static testing instead of making reviews work.",
+      "D": "Not a success factor, and in an inspection the author may not be the scribe."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.5-d",
+    "objective": "FL-3.2.5",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which action by management BEST supports successful reviews?",
+    "options": [
+      "Attending every review to assess each participant's contribution",
+      "Backing the review process, including time for participants to prepare",
+      "Requiring every review to find a fixed minimum number of defects",
+      "Cancelling reviews near deadlines to save time"
+    ],
+    "answer": "B",
+    "why": "Support from management, including adequate preparation time, is a success factor.",
+    "distractorNotes": {
+      "A": "Evaluating participants is never an objective of a review.",
+      "C": "Not a success factor; it pushes people to log non-issues.",
+      "D": "This removes the early detection that reviews offer."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.5-e",
+    "objective": "FL-3.2.5",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about review success factors is CORRECT?",
+    "options": [
+      "Reviews work best when only senior staff take part, so no training is needed",
+      "Evaluating the participants is a useful secondary objective of every review",
+      "Review feedback should reach authors and stakeholders so they can improve the product and their work",
+      "The same review type should be used for every work product, for consistency"
+    ],
+    "answer": "C",
+    "why": "Feeding review results back to authors and stakeholders is a listed success factor.",
+    "distractorNotes": {
+      "A": "Training for all participants is a success factor.",
+      "B": "Evaluating participants should never be an objective.",
+      "D": "The review type should be chosen to fit the objectives, work product and context."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.2.5-f",
+    "objective": "FL-3.2.5",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "A studio wants reviews to become a normal habit that helps people learn and helps improve the way the studio works. Which success factor does this describe?",
+    "options": [
+      "Conducting reviews on small chunks of the work product",
+      "Choosing the appropriate review type",
+      "Defining measurable exit criteria",
+      "Making reviews part of the organisation's culture"
+    ],
+    "answer": "D",
+    "why": "Reviews as part of the culture promote learning and process improvement.",
+    "distractorNotes": {
+      "A": "A success factor, but it is about concentration, not culture and learning.",
+      "B": "A success factor, but it is about fitting the review to its goal.",
+      "C": "A success factor, but it is about knowing when a review is done."
     },
     "source": "generated"
   }
