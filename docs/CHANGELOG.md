@@ -2,6 +2,32 @@
 
 Dated entries, newest first.
 
+## 2026-10-18 — Part 6 content run: Chapter 5 (version 0.6.4)
+
+Written autonomously while Martin was away, on branch `content/istqb-ch5`, merged into local `main` (not pushed).
+All content in our own words; no official sample-exam questions.
+
+- **Lessons (7):** §5.1 split in three: `5.1a` (test plan, release and iteration planning, entry and exit
+  criteria, Definition of Ready/Done), `5.1b` (the four estimation techniques with the three-point formula,
+  the three prioritisation strategies, dependencies and resources, worked orders), `5.1c` (test pyramid, testing
+  quadrants with a placement method; the quadrants got the extra explanation the Legacy Analysis asked for); §5.2
+  (risk level, project vs product risks, product risk analysis, risk control and the four responses); §5.3
+  (monitoring, control directives, completion, metric groups, progress vs completion reports, ways to
+  communicate); §5.4 (configuration management, baselines); §5.5 (defect management, report content, a
+  severity-vs-priority section with a 2 × 2 table and exam traps, and how to judge a report).
+- **Questions:** 124 for Chapter 5 (6 to 8 per objective; 11 each for the K3 objectives 5.1.4 and 5.1.5, 14 for
+  5.5.1, six of them on severity vs priority). Correct answers spread A 31 · B 31 · C 31 · D 31. Every
+  estimate, ratio, extrapolation, risk level and prioritisation order (also the lesson examples) was recomputed
+  with a throwaway script (not committed), which also checked that no distractor is another valid answer and
+  that additional-coverage questions have no ties. Dependency questions state their rule ("highest priority as
+  early as possible; dependencies right before it"), because "the highest-priority ready test first" gives a
+  different order. Questions whose scenario repeated a lesson example were rewritten (SR-1).
+- **Flashcards:** 27 new (110 in all): plan, planning horizons, entry/exit, estimation techniques, prioritisation,
+  pyramid, quadrants, risk terms and responses, metrics, reports, baseline, defect report content and status.
+- **Tests:** the ≥ 6 per objective check now runs for Chapter 5 too; the ≥ 10 K3 check covers Chapters 4 and 5;
+  the course-order test now pins the full lesson order and §4.5 → §5.1a → … → §5.5 → §6.1.
+- **Q-17 answered:** no lesson gap remains.
+
 ## 2026-10-18 — Fix Q-18: study sessions dated with the local day (version 0.6.3)
 
 Fixed autonomously while Martin was away, on branch `fix/local-date`, merged into local `main` (not pushed).

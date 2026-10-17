@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-18, after the Q-18 fix)
+## Where things stand (2026-10-18, after the Ch5 content run)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -45,11 +45,13 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   and mocks are dated with the local day through the new `src/core/dates.js`; no migration (same shape, no old
   dates on the phone). The e2e "import progress, then a session" is pinned to Amsterdam at 00:20, so it no longer
   depends on the hour it runs. The Gym keeps UTC (Q-11, now with a note on how to switch).
-- **Next: the remaining Part 6 content runs**, one session each, with the prompt in `docs/content-loop.md`:
-  1. **Ch5**: lessons 5.1–5.5 + questions (≥ 8 for 5.1.4, 5.1.5, 5.5.1). Ship it before Martin reaches §4.5.
-  2. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
-  Until both are done, full mocks are short and do not count for the readiness gate; Martin can study §3.1 to
-  §4.5 now.
+- **Part 6 content run Ch5: done** (version 0.6.4, branch `content/istqb-ch5`, merged into local `main`, not
+  pushed). Seven lessons (§5.1 split into `5.1a`, `5.1b`, `5.1c`; §5.2–5.5); 124 questions (6–8 per LO; 11 for
+  5.1.4 and 5.1.5, 14 for 5.5.1 with extra severity-vs-priority drilling); 27 new flashcards (110 in all). Every
+  calculation checked with a throwaway script. **Q-17 answered:** the course now runs §3.1 to §6.2 with no gap.
+- **Next: the last Part 6 content run**, with the prompt in `docs/content-loop.md`: **Ch1–2 questions only** (no
+  lessons), for full mocks and warm-ups. Until it is done, full mocks are short and do not count for the readiness
+  gate; Martin can study every lesson, §3.1 to §6.2, now.
 - Next after Part 6: Part 8 (Fridge), then the book-free parts of Part 7.
 
 ## Martin's USER ACTIONS still open for Part 6
@@ -111,7 +113,7 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [x] Part 4: Gym (code done; Martin's export, import, side-by-side week and gainz-tracker's retirement open)
 - [x] Part 5: study engine (code done; Ask Claude on the phone open, Q-13)
 - [x] Part 6a: ISTQB module, progress import, scaffolding, content loop (Martin's import on the phone open)
-- [ ] Part 6 content runs: [x] Ch3 · [x] Ch6 · [x] Ch4 · [ ] Ch5 · [ ] Ch1–2 questions
+- [ ] Part 6 content runs: [x] Ch3 · [x] Ch6 · [x] Ch4 · [x] Ch5 · [ ] Ch1–2 questions
 - [ ] Part 7: Bulgarian (gated) · Part 8: Fridge
 
 ## Known gaps and notes
