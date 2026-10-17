@@ -108,7 +108,8 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     for (const f of MANIFEST.lessons) expect(f).toMatch(/^lessons-ch[3-6]\.json$/);
     for (const l of SHIPPED.lessons) {
       expect(l.chapter).toBeGreaterThanOrEqual(3);
-      expect(l.id).toBe(l.section);
+      // A long section may be split into parts: "4.2a", "4.2b" (docs/istqb-content-guide.md, Lessons).
+      expect([l.section, `${l.section}a`, `${l.section}b`, `${l.section}c`], l.id).toContain(l.id);
       for (const o of l.objectives) {
         expect(LO.has(o), `${l.id}: ${o}`).toBe(true);
         expect(LO.get(o).chapter, `${l.id}: ${o}`).toBe(l.chapter);
@@ -130,6 +131,24 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     }
   });
 
+  it('lessons run in course order, and the lesson after §3.2 is §4.1 (QUESTIONS.md Q-17)', () => {
+    const ids = SHIPPED.lessons.map((l) => l.id);
+    const sections = SHIPPED.lessons.map((l) => l.section.split('.').map(Number));
+    for (let i = 1; i < sections.length; i++) {
+      const [a, b] = [sections[i - 1], sections[i]];
+      expect(a[0] < b[0] || (a[0] === b[0] && a[1] <= b[1]), `${ids[i - 1]} before ${ids[i]}`).toBe(true);
+    }
+    expect(ids.indexOf('4.1')).toBe(ids.indexOf('3.2') + 1);
+    expect(ids.slice(ids.indexOf('4.1'), ids.indexOf('4.5') + 1)).toEqual(['4.1', '4.2a', '4.2b', '4.3', '4.4', '4.5']);
+  });
+
+  it('Chapter 4: each K3 objective has at least 10 questions (the Ch4 run target)', () => {
+    for (const o of OBJECTIVES.filter((x) => x.chapter === 4 && x.kLevel === 'K3')) {
+      const n = SHIPPED.questions.filter((q) => q.objective === o.code).length;
+      expect(n, `${o.code} has ${n} questions`).toBeGreaterThanOrEqual(10);
+    }
+  });
+
   it('question stems never name a mnemonic (standing rule SR-2)', () => {
     for (const q of SHIPPED.questions) expect(q.stem, q.id).not.toMatch(/PMADIEC|2-3-2|CIRAP|I-WTI|INVEST|3 C's|PIICF/);
   });
@@ -138,9 +157,9 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     for (const c of SHIPPED.cards) if (c.objective) expect(LO.has(c.objective), c.id).toBe(true);
   });
 
-  // Add each chapter here when its content run is finished (Ch3 and Ch6 done 2026-10-17; still to come:
-  // Ch4, Ch5, then the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
-  const FINISHED_CHAPTERS = [3, 6];
+  // Add each chapter here when its content run is finished (Ch3 and Ch6 done 2026-10-17, Ch4 2026-10-18; still to
+  // come: Ch5, then the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
+  const FINISHED_CHAPTERS = [3, 4, 6];
   const minimum = (o) => (o.kLevel === 'K3' ? 8 : 6);
 
   // Skipped (pending) while no chapter is finished yet.

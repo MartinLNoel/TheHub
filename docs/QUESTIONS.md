@@ -113,6 +113,23 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   §6.2 and would skip the new Chapter 4–5 lessons. Options: (a) wait for the Ch4 run before studying past §3.2;
   (b) let the Ch4 run change `nextLesson` to resume at the first lesson not yet studied. Which? · Course order
   and whether Chapters 4–5 get offered. · `src/core/study/session.js` `nextLesson`, `docs/BACKLOG.md` · open
+  - *Checked 2026-10-18 (Ch4 run):* with the Ch4 lessons shipped, `index.json` order (ch3, ch4, ch5, ch6) gives
+    3.1, 3.2, **4.1**, 4.2a, 4.2b, 4.3, 4.4, 4.5, 6.1, 6.2, so `pointerAfter('3.2')` is now **4.1** (a unit test
+    checks it). **Not fully resolved:** `lessons-ch5.json` is still empty, so the same gap has moved: after §4.5
+    the next lesson is §6.1, and if §6.1–6.2 are studied before the Ch5 lessons ship, the `"__done__"` rule would
+    skip Chapter 5. Default kept: option (a), ship the Ch5 run before you reach §4.5 (six Ch4 lessons ahead of
+    you). Answer still wanted: (a) or (b). Q-17 moves to Answered when the Ch5 lessons exist.
+
+- **Q-18** · **Bug found (not fixed: the Ch4 content run may only edit content, tests and docs).** A study session
+  is saved with its **UTC** date (`finishSession`: `new Date(now).toISOString().slice(0, 10)`), but the ISTQB home
+  compares it with the **local** date (`daysSinceLastSession` uses `localISO`). Between midnight and 01:00 (02:00
+  in summer) Dutch time, a session just finished shows "Last session: 1 day ago", and the 10-day warm-up count can
+  be off by a day. Found 2026-10-18 at 00:20 CEST: the e2e test "import progress, then a session" fails at that
+  hour on this branch **and on the base commit d560a69**; with the browser in UTC all 41 e2e tests pass. Proposed
+  fix (next code session): store the local date (`localISO`) in `finishSession`, with a unit test at 23:30 UTC.
+  Same family as Q-11 (the Gym's UTC "today"). OK to fix that way? · Wrong "last session" and warm-up day count
+  late at night. · `src/core/study/session.js` (`finishSession`, `date:`), `src/modules/istqb/rules.js`
+  `daysSinceLastSession` (no PLACEHOLDER marker added: code was out of scope) · open
 
 ## Answered
 
