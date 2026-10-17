@@ -26,6 +26,7 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | Building the next part | `docs/plans/part-N-*.md` (the next unstarted one, per `docs/BACKLOG.md`) |
 | Where things stand, what is next | `docs/BACKLOG.md` *(started when Part 1 begins)* |
 | What changed | `docs/CHANGELOG.md` *(started when Part 1 begins)* |
+| Open questions for Martin and every placeholder | `docs/QUESTIONS.md` |
 | Longer-term ideas | `docs/ROADMAP.md` *(started when Part 1 begins)* |
 
 ## Plan status
