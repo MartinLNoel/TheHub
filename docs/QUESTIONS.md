@@ -49,7 +49,7 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   until the first one); the Restore list shows the newest 100 backups (older ones stay in git history, reachable
   by a Claude Code session). OK? · Reminder noise, restore reach. · `src/core/backup.js` `EXPORT_REMIND_AFTER`,
   `src/core/github.js` `listBackups` · open
-- **Q-10** · gainz-tracker pre-loaded your first 7 sessions (23 Feb to 4 May 2026) whenever its workout list was
+- **Q-10** · gainz-tracker pre-loaded your first 7 sessions (spring 2026) whenever its workout list was
   empty, and saved them, so every gainz export should already hold them. TheHub **does not pre-load** them (a fresh
   Gym starts empty) and relies on your import instead, which also keeps that personal data out of the public repo.
   When your real export exists: does it hold those 7 sessions (the import preview shows the count; History lists
