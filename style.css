@@ -116,6 +116,21 @@ a { color: var(--accent); }
   padding: 1rem;
 }
 .card--warn { background: var(--warn-bg); border-color: var(--warn-border); }
+.card--bad { border-color: var(--bad); border-width: 2px; }
+
+.field { display: flex; flex-direction: column; gap: 0.25rem; margin: 0.75rem 0 0; font-weight: 600; }
+.field input {
+  min-height: var(--tap);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-weight: 400;
+}
+details { margin-top: 0.75rem; }
+summary { min-height: var(--tap); display: flex; align-items: center; cursor: pointer; font-weight: 600; }
 
 .muted { color: var(--muted); }
 .status { margin-top: 0.75rem; }

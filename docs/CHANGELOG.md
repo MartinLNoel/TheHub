@@ -2,6 +2,31 @@
 
 Dated entries, newest first.
 
+## 2026-10-17 — Part 3: verified backup and restore (version 0.3.0)
+
+Built autonomously while Martin was away, on branch `part-3/backup`, merged into local `main` (not pushed). GitHub
+was never called: every test uses a mocked `fetch` (`tests/fixtures/fake-github.js`).
+
+- **`src/core/github.js`:** the only GitHub calls: read `backup.json` (latest or at a commit; raw fallback over
+  1 MB), list its commits, write it with the current `sha` (re-read and retry once on a conflict), test connection.
+  Clear errors for 401, 403 (incl. rate limit), 404, offline, conflict and a moved repo. Owner/repo configurable
+  (defaults `MartinLNoel` / `thehub-backup`) and validated.
+- **`src/core/backup.js`:** build → verify (checksum, migrations on a copy, `validate`, item counts equal to live
+  data) → upload → read back at the new commit → verify again; only then `lastVerifiedBackup`. Automatic on start
+  and on return to the foreground when over 24 hours old, at most once per 10 minutes; before every migration
+  (`hooks.beforeMigrate`; a failure blocks the migration); before an import; and from "Back up now". Restore:
+  verify, safety backup first, then replace (old backups are migrated).
+- **`src/core/backup-screens.js`:** Settings → Backup (masked token, expiry date, repository, Test connection, Back
+  up now, Remove token) and `#/settings/restore` (history, per-module preview, confirm).
+- **Today "Backups" card:** not set up / never / ok ✓ / amber after 30 h / red after 48 h or a failure (with the
+  reason and Back up now); token-expiry warning 14 days ahead; monthly export reminder.
+- **Security:** the token is sent only to `https://api.github.com` in the `Authorization` header (origin checked
+  before every request, `redirect: 'manual'`, `credentials: 'omit'`, no referrer, `no-store`); never in a URL,
+  message, log, backup or export (`assertNoSecret` checks both).
+- **Tests:** 110 unit tests and 17 e2e tests, all passing locally.
+- **Docs:** Part 0 layout and backup notes; QUESTIONS Q-7 (shared Pages origin), Q-8 (migrations blocked without
+  backups), Q-9 (export reminder interval, restore list length).
+
 ## 2026-10-17 — Part 2: core shell (version 0.2.0)
 
 Built autonomously while Martin was away, on branch `part-2/core-shell`, merged into local `main` (not pushed).

@@ -1,6 +1,8 @@
-// Settings screen (#/settings): theme, export and import.
+// Settings screen (#/settings): theme, backup, export and import.
 import { h, mount } from './dom.js';
 import { applyImport, countItems, downloadJSON, exportAll, readImport } from './transfer.js';
+import { assertNoSecret } from './backup.js';
+import { backupSettingsCard } from './backup-screens.js';
 
 export const THEMES = ['system', 'light', 'dark'];
 
@@ -25,11 +27,11 @@ function formatCounts(counts) {
 }
 
 /**
- * ctx: { storage, registry, appVersion, state, reloadData(), navigate(hash) }
+ * ctx: { storage, registry, appVersion, state, reloadData(), navigate(hash), backup (service, optional) }
  */
 export async function renderSettings(root, ctx) {
   const settings = await loadSettings(ctx.storage);
-  const status = h('p', { class: 'status', role: 'status', 'aria-live': 'polite' });
+  const status = h('p', { class: 'status', role: 'status', 'aria-live': 'polite', 'data-testid': 'transfer-status' });
 
   const themeButtons = THEMES.map((t) =>
     h(
@@ -76,6 +78,7 @@ export async function renderSettings(root, ctx) {
       'div',
       { class: 'stack', 'data-testid': 'settings' },
       h('section', { class: 'card' }, h('h2', {}, 'Theme'), h('div', { class: 'segmented', role: 'group', 'aria-label': 'Theme' }, themeButtons)),
+      ctx.backup ? await backupSettingsCard({ backup: ctx.backup, onChange: ctx.onBackupChange }) : null,
       h(
         'section',
         { class: 'card' },
@@ -89,7 +92,15 @@ export async function renderSettings(root, ctx) {
             'data-testid': 'export',
             onclick: async () => {
               const file = await exportAll(ctx.storage, ctx.registry, ctx.appVersion);
+              try {
+                if (ctx.backup) assertNoSecret(JSON.stringify(file), await ctx.backup.getToken());
+              } catch (err) {
+                status.className = 'status status--bad';
+                status.textContent = err.message;
+                return;
+              }
               downloadJSON(file);
+              await ctx.backup?.recordExport();
               status.className = 'status';
               status.textContent = 'Export saved to your downloads.';
             },
@@ -105,7 +116,9 @@ export async function renderSettings(root, ctx) {
   );
 }
 
-function renderConfirm(root, ctx, verified) {
+async function renderConfirm(root, ctx, verified) {
+  const backedUp = Boolean(await ctx.backup?.isConfigured());
+  const result = h('p', { class: 'status', role: 'status', 'aria-live': 'polite' });
   const rows = Object.entries(verified.modules).map(([id, m]) => {
     const mod = ctx.registry.get(id);
     const current = ctx.state[id]?.data;
@@ -133,6 +146,13 @@ function renderConfirm(root, ctx, verified) {
         ? h('p', { class: 'muted' }, `Not imported (not in this app version): ${verified.skipped.join(', ')}.`)
         : null,
       h(
+        'p',
+        { class: 'muted' },
+        backedUp
+          ? 'Your current data is backed up to GitHub first.'
+          : 'Backups are not set up, so the current data is not backed up first. Export it before importing if you may want it back.',
+      ),
+      h(
         'div',
         { class: 'row' },
         h(
@@ -141,8 +161,26 @@ function renderConfirm(root, ctx, verified) {
             type: 'button',
             class: 'btn btn--danger',
             'data-testid': 'import-confirm-button',
-            onclick: async () => {
-              await applyImport(ctx.storage, verified);
+            onclick: async (event) => {
+              const button = event.currentTarget;
+              button.disabled = true;
+              try {
+                await applyImport(ctx.storage, verified, {
+                  beforeReplace: backedUp
+                    ? async () => {
+                        result.className = 'status';
+                        result.textContent = 'Backing up your current data first…';
+                        const r = await ctx.backup.backupNow({ reason: 'before import' });
+                        if (!r.ok && r.step !== 'nothing') throw new Error(`Import stopped: the backup of your current data failed (${r.reason}). Nothing was replaced.`);
+                      }
+                    : undefined,
+                });
+              } catch (err) {
+                button.disabled = false;
+                result.className = 'status status--bad';
+                result.textContent = err.message;
+                return;
+              }
               await ctx.reloadData();
               mount(
                 root,
@@ -160,6 +198,7 @@ function renderConfirm(root, ctx, verified) {
         ),
         h('button', { type: 'button', class: 'btn', onclick: () => renderSettings(root, ctx) }, 'Cancel'),
       ),
+      result,
     ),
   );
 }

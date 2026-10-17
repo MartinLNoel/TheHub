@@ -22,6 +22,19 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
 - **Q-6** · Version numbers: Part 2 starts at `0.2.0` and the plan is to bump the middle number per plan part and the
   last number per fix, reaching `1.0.0` when you use TheHub daily. OK? · The version shows in Settings and names the
   offline cache. · `src/version.js` (and `sw.js`) · open
+- **Q-7** · The backup token is stored in the app's IndexedDB. Every GitHub Pages site you have lives on the same
+  origin, `martinlnoel.github.io`, so in principle a script on another of your Pages sites could read it. Part 3
+  accepts this (the token can only touch `thehub-backup`, Contents only, and the other sites are your own code). Do
+  you want a custom domain (e.g. a subdomain you own) for TheHub later to isolate it? · Token safety. ·
+  `src/core/backup.js` (top comment) · open
+- **Q-8** · When an update converts a module's data and **backups are not set up** (no token), Part 3 **blocks** the
+  conversion: that module shows an error until a token is entered and the backup succeeds. The alternative is to
+  convert anyway after a warning. Keep blocking? · "Never lose stored data" vs. being locked out of a module. ·
+  `src/core/backup.js` `beforeMigrate` · open
+- **Q-9** · Two small defaults: the "monthly" export reminder appears 30 days after the last export (and always
+  until the first one); the Restore list shows the newest 100 backups (older ones stay in git history, reachable
+  by a Claude Code session). OK? · Reminder noise, restore reach. · `src/core/backup.js` `EXPORT_REMIND_AFTER`,
+  `src/core/github.js` `listBackups` · open
 
 ## Answered
 

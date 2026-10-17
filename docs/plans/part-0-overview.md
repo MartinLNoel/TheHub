@@ -54,8 +54,9 @@ TheHub/
 │   │   ├── screens.js       "coming soon" and error screens
 │   │   ├── settings.js      Settings screen: theme, export, import
 │   │   ├── today.js         Today screen
-│   │   ├── backup.js        build, checksum, verify, upload, restore
-│   │   ├── github.js        GitHub REST calls for the backup repo
+│   │   ├── backup.js        build, verify, upload, read back, schedule, restore (the backup service)
+│   │   ├── backup-screens.js Settings → Backup card and the Restore screen (#/settings/restore)
+│   │   ├── github.js        GitHub REST calls for the backup repo (the only code that sends the token)
 │   │   ├── transfer.js      export / import of everything as a file
 │   │   ├── update.js        service worker registration + banner
 │   │   └── study/           shared study engine (Part 5)
@@ -70,7 +71,7 @@ TheHub/
 ├── tests/
 │   ├── unit/                Vitest (jsdom + fake-indexeddb)
 │   ├── e2e/                 Playwright, mobile viewport (412×915, Galaxy size)
-│   └── fixtures/            the demo module (tests only, never shipped)
+│   └── fixtures/            the demo module and a fake GitHub API (tests only, never shipped)
 ├── scripts/                 serve.mjs (static server at /TheHub/), make-icons.mjs, check-version-bump.mjs
 ├── private/                 GIT-IGNORED: imports, exports, local notes
 ├── .github/workflows/       ci.yml: test, then deploy to Pages
@@ -117,8 +118,8 @@ touch another module's store; cross-module features (Fridge → Bulgarian cards)
 
 - One IndexedDB database `thehub`. Store `core` holds settings and backup status; one store per module holds a
   single document `{ schemaVersion, data, updatedAt }`.
-- Load: if the stored `schemaVersion` is older than the module's, **back up first**, then run each migration in order
-  and save. If it is newer (an old app version opened newer data), refuse to write and show a message.
+- Load: if the stored `schemaVersion` is older than the module's, **back up first** (Part 3 connects
+  `hooks.beforeMigrate` in `src/core/db.js` to a verified GitHub backup), then run each migration in order and save. If it is newer (an old app version opened newer data), refuse to write and show a message.
 - Ask Chrome for persistent storage (`navigator.storage.persist()`), so Android does not evict the data.
 
 ---
@@ -145,6 +146,12 @@ touch another module's store; cross-module features (Fridge → Bulgarian cards)
   a copy, run each module's `validate`, and check the item counts match the live data. Only then record
   "last verified backup".
 - The same format is used for the export file.
+- The core store holds `backupToken` (only ever sent to `api.github.com`), `backupConfig` (owner, repo, token
+  expiry), `backupStatus` (`lastVerifiedBackup`, `lastCommit`, `lastFailure`, `lastAutoAttemptAt`) and
+  `lastExportAt`. Backups and exports contain module stores only, never the core store.
+- When: on start and on return to the foreground if the last verified backup is over 24 hours old (at most once
+  per 10 minutes); before any migration (`hooks.beforeMigrate`: a failed backup blocks the migration); before an
+  import or a restore; and on "Back up now".
 
 ---
 
