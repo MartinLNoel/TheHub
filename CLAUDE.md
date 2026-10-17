@@ -30,10 +30,10 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | Longer-term ideas | `docs/ROADMAP.md` |
 
 ## Plan status
-Parts 0–8 written 2026-10-17. Parts 2 (core shell), 3 (verified backup and restore) and 4 (Gym, from gainz-tracker)
-built 2026-10-17 and merged into local `main`; nothing pushed yet (Part 1's repos, Part 3's token and Part 4's
-export, import and side-by-side week are Martin's). Next: Part 5 (study engine). Bulgarian (Part 7) is gated on the
-course book.
+Parts 0–8 written 2026-10-17. Parts 2 (core shell), 3 (verified backup and restore), 4 (Gym, from gainz-tracker)
+and 5 (shared study engine, `src/core/study/README.md`) built 2026-10-17 and merged into local `main`; nothing
+pushed yet (Part 1's repos, Part 3's token, Part 4's export, import and side-by-side week, and Part 5's Ask Claude
+phone test are Martin's). Next: Part 6 (ISTQB). Bulgarian (Part 7) is gated on the course book.
 Details: `docs/BACKLOG.md`.
 
 ## Commands

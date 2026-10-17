@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-17, after Part 4)
+## Where things stand (2026-10-17, after Part 5)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -15,7 +15,23 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   pass locally. The import was built against a **synthetic** gainz export: Martin's real export does not exist yet.
   gainz-tracker's export button is on its local branch `export-button` (c476b99), not merged or pushed. New
   placeholders: Q-10, Q-11, Q-12; Q-2 has what was found.
-- Next: **Part 5 (study engine)**, branch per `docs/plans/part-5-study-engine.md`.
+- **Part 5 (study engine): built and merged into local `main`** (version 0.5.0), also autonomously. All unit and
+  e2e tests pass locally. The engine ships **no course**: the sample course lives in `tests/fixtures/` and only the
+  test build shows it, so there is nothing to study on the phone until Part 6. **Ask Claude was not tested on the
+  phone** (Q-13); Settings → Ask Claude has a test button for each delivery so Martin can try them without a
+  course. Engine defaults: Q-14. API for module authors: `src/core/study/README.md`.
+- Next: **Part 6 (ISTQB)**, branch per `docs/plans/part-6-istqb.md`. It starts with Martin's Notion progress
+  (Q-1) and builds on `createStudyModule`.
+
+## Martin's USER ACTIONS still open for Part 5
+
+(After Part 1 and the first push.)
+1. On the phone: **Settings → Ask Claude** → tap **Test: Share sheet**, **Test: Link (experimental)** and **Test:
+   Copy and open Claude**; tell Claude which work (Q-13). Record the result here:
+   - Share sheet: *not tested yet* · Link: *not tested yet* · Copy and open Claude: *not tested yet*
+2. Leaving feedback and seeing it in the Feedback list can only be tried once a course ships (Part 6); the e2e tests
+   cover it with the sample course.
+3. Answer Q-14 (session sizes, re-teach rule, mastery rule).
 
 ## Martin's USER ACTIONS still open for Part 4
 
@@ -54,7 +70,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [ ] Part 1 (Martin, manual) — Q-3
 - [x] Part 3: verified backup and restore (code done; Martin's token, first real backup and restore drill open)
 - [x] Part 4: Gym (code done; Martin's export, import, side-by-side week and gainz-tracker's retirement open)
-- [ ] Part 5: study engine · Part 6: ISTQB · Part 7: Bulgarian (gated) · Part 8: Fridge
+- [x] Part 5: study engine (code done; Ask Claude on the phone open, Q-13)
+- [ ] Part 6: ISTQB · Part 7: Bulgarian (gated) · Part 8: Fridge
 
 ## Known gaps and notes
 
@@ -69,3 +86,9 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - The gainz import was tested only with a synthetic file of the same shape; the first real import is the real test
   (watch the preview counts against gainz-tracker).
 - Migrations are blocked while backups are not set up (Q-8).
+- Study engine: the Today card learns the next lesson's title only once the course has loaded (the first Today
+  render after opening may lack that line). Course content is fetched from `content/<course>/` (network first,
+  cache fallback); Part 6 must add its content files to `PRECACHE` (the shell test now requires it) so the course
+  works offline from the first visit.
+- Part 5 core changes other parts rely on: parameter routes (`'lesson/*'`, `src/core/router.js` `resolveRoute`),
+  and `settings` + `params` in every module screen's context (Part 0, module contract).

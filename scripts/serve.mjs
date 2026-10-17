@@ -6,7 +6,7 @@
 // Test build (THEHUB_TEST=1) only:
 //   - src/modules.js is answered with tests/fixtures/modules.test.js (adds the demo module),
 //     and tests/ is served so that file's imports load;
-//   - sw.js also precaches the demo module, and GET /__test/sw-version?v=X makes sw.js report
+//   - sw.js also precaches the demo module and the sample study course, and GET /__test/sw-version?v=X makes sw.js report
 //     version X, which is how the e2e test makes a "new version" appear.
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
@@ -72,7 +72,11 @@ const server = createServer(async (req, res) => {
     const type = TYPES[extname(file)] || 'application/octet-stream';
     if (TEST && rel === 'sw.js') {
       let text = body.toString('utf8');
-      text = text.replace('const PRECACHE = [', "const PRECACHE = [\n  'tests/fixtures/demo-module.js',");
+      text = text.replace(
+        'const PRECACHE = [',
+        "const PRECACHE = [\n  'tests/fixtures/demo-module.js',\n  'tests/fixtures/sample-study-module.js',\n" +
+          "  'tests/fixtures/sample-course/lessons.json',\n  'tests/fixtures/sample-course/questions.json',\n  'tests/fixtures/sample-course/cards.json',",
+      );
       if (swVersionOverride) text = text.replace(/const VERSION = '[^']*';/, `const VERSION = '${swVersionOverride}';`);
       body = Buffer.from(text, 'utf8');
     }

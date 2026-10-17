@@ -1,0 +1,31 @@
+[
+  {
+    "id": "c-hello",
+    "front": "Здравей",
+    "back": "Hello",
+    "topic": "Greetings",
+    "twoWay": true,
+    "lang": {
+      "front": "bg",
+      "back": "en"
+    }
+  },
+  {
+    "id": "c-thanks",
+    "front": "Благодаря",
+    "back": "Thank you",
+    "topic": "Greetings",
+    "twoWay": true,
+    "lang": {
+      "front": "bg",
+      "back": "en"
+    }
+  },
+  {
+    "id": "c-sun",
+    "front": "The Sun's type",
+    "back": "Yellow dwarf star",
+    "topic": "Sun",
+    "twoWay": false
+  }
+]

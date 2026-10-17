@@ -2,6 +2,53 @@
 
 Dated entries, newest first.
 
+## 2026-10-17 — Part 5: shared study engine (version 0.5.0)
+
+Built autonomously while Martin was away, on branch `part-5/study-engine`, merged into local `main` (not pushed).
+Read the ISTQB tutor prompt (v2) as the specification for the engine's rules.
+
+- **Engine (`src/core/study/`):** `createStudyModule(config)` turns a course config into a normal module (contract
+  checked), with screens for home, session, lessons, lesson reader, mocks, flashcards and the Feedback list. API for
+  module authors: `src/core/study/README.md`.
+- **Content loader:** validates lessons, questions and cards (four different options, a letter answer, a note for
+  every distractor and none for the answer, K-levels, objectives taught by a lesson unless the question names its
+  chapter, unique ids); `tests/unit/study-content.test.js` checks every course under `content/`, and at runtime
+  bad items are dropped and listed, never fatal.
+- **Lesson reader:** safe markdown subset (headings, lists, bold, italic, code, simple tables) rendered as text
+  nodes; objective chips with K-level and mastery.
+- **Question runner:** four options, "Select ONE option."; before submission the DOM holds only the stem and options
+  (unit-tested for every sample question); afterwards the correct option, why, and why each distractor is wrong.
+  Every answer is recorded the moment it is given.
+- **Session builder:** the tutor prompt's format: drill from due review items → next lesson → quiz on its
+  objectives → 1–2 delayed-retrieval questions from lessons at least two sessions back → debrief (binary score,
+  calibration, mastery changes, next pointer). Past wrong answers and shaky objectives come first; questions
+  answered correctly twice come last. Stop at any point: the session is kept and resumes where it stopped; "Finish
+  now" debriefs what was done. Below 65 % the lesson is taught again (Q-14).
+- **Spaced review:** wrong → next session, then +3, then +7; leaves after two correct in a row. **Mastery:**
+  untested / shaky / solid / exam-ready (rule in Q-14).
+- **Mocks:** N questions, a time limit, optional per-chapter counts (filled from other chapters if short), no
+  feedback until the end; the timer is `endsAt − now` from stored timestamps, so it is right after the screen locks
+  and a mock that ran out ends itself; debrief per objective and per chapter, then a full review.
+- **Flashcards:** SM-2 (again/hard/good/easy), two-way cards scheduled per direction, large text with `lang` set;
+  Cyrillic tested in jsdom and the browser.
+- **Ask Claude:** on every lesson, answered question and card; the message holds course, section, objective,
+  question and options, Martin's answer and the correct one, and ends with "My question: ". Delivery per Settings →
+  Ask Claude: share sheet (default, "Copy instead" next to it), link `claude.ai/new?q=` (undocumented, off unless
+  chosen), or copy and open the Claude app. Test buttons for all three in Settings. Not yet tried on the phone
+  (Q-13).
+- **Feedback:** `{ id, targetId, targetKind, text, at, resolved }` in the course's progress (so in backups); a
+  Feedback list per course with open and resolved notes, "Mark resolved"/"Reopen", and a `handledFeedback` hook
+  for Part 6's content loop.
+- **Core:** parameter routes (`'lesson/*'` matches `#/<id>/lesson/<x>`, `resolveRoute` in `router.js`); module
+  screens also get `settings` and `params`; core settings gain `askClaude`; generic `.toast` and study styles in
+  `style.css`; the precache test now also requires every file under `content/` (READMEs excluded).
+- **Tests:** a sample course (`tests/fixtures/sample-course/`, with Cyrillic cards) and module
+  (`tests/fixtures/sample-study-module.js`), in the e2e build only. Unit: content validation, SM-2 intervals,
+  1/3/7 queue, mastery, session builder (due items, delayed retrieval, priorities, pointer), mock timer and
+  scoring, answer never in the DOM before submission, markdown safety, Cyrillic, Ask Claude message and the three
+  deliveries. E2E: a session end to end, stop and resume after a reload, a 5-question timed mock, a mock that times
+  out, feedback in the list, Ask Claude share and copy, Settings tests, flashcards, touch targets.
+
 ## 2026-10-17 — Part 4: Gym module (version 0.4.0)
 
 Built autonomously while Martin was away, on branch `part-4/gym`, merged into local `main` (not pushed). The two

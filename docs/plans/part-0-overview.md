@@ -60,7 +60,9 @@ TheHub/
 │   │   ├── transfer.js      export / import of everything as a file
 │   │   ├── module-import.js Settings cards for module importers (e.g. Gym's "Import from gainz-tracker")
 │   │   ├── update.js        service worker registration + banner
-│   │   └── study/           shared study engine (Part 5)
+│   │   └── study/           shared study engine (Part 5): index.js (createStudyModule), content.js (validate,
+│   │                        load), markdown.js, progress.js (review queue, mastery, feedback), session.js,
+│   │                        mock.js, scheduler.js (SM-2), ask-claude.js, screens.js; README.md = its API
 │   └── modules/
 │       ├── gym/             Part 4: index.js (module), program.js (gainz program data, unchanged), logic.js
 │       │                    (gainz rules as pure functions), data.js (store + validate), screens.js,
@@ -74,7 +76,8 @@ TheHub/
 ├── tests/
 │   ├── unit/                Vitest (jsdom + fake-indexeddb)
 │   ├── e2e/                 Playwright, mobile viewport (412×915, Galaxy size)
-│   └── fixtures/            the demo module and a fake GitHub API (tests only, never shipped)
+│   └── fixtures/            the demo module, the sample study course and module (sample-course/,
+│                            sample-study-module.js) and a fake GitHub API (tests only, never shipped)
 ├── scripts/                 serve.mjs (static server at /TheHub/), make-icons.mjs, check-version-bump.mjs
 ├── private/                 GIT-IGNORED: imports, exports, local notes
 ├── .github/workflows/       ci.yml: test, then deploy to Pages
@@ -101,7 +104,8 @@ export default {
   },
   defaultData: () => ({ /* fresh data */ }),
   validate: (data) => [],       // returns a list of problems; [] means complete (used by backup verify)
-  routes: { '': renderHome, 'log': renderLog },   // #/gym, #/gym/log; '' is required
+  routes: { '': renderHome, 'log': renderLog, 'lesson/*': renderLesson },
+                                // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
   todayCard: (data) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
   importers: [                  // optional (Part 4): bring data in from another app, shown in Settings
     { id, title, description, prepare: (text, currentData) => ({ ok, problems, summary, data, nothingNew }),
@@ -115,9 +119,11 @@ An importer's `prepare` maps and merges but never writes. The core (`src/core/mo
 result with the module's `validate`, then saves it as the module's data. Gym's routes: `''` and `log` (the workout
 to log, the "Log workout" shortcut), `history`, `fighter`, `protein`, `checkin`.
 
-Each route function is called as `render({ root, data, readOnly, save, navigate })`: `root` is the `<main>` element
+Each route function is called as `render({ root, data, readOnly, save, navigate, settings, params })`: `root` is the `<main>` element
 to fill, `data` the module's current data, `save(newData)` stores it (and rejects with `NewerDataError` when the
-stored data is newer than the code), `navigate('#/gym/log')` changes screen. An action `route` may be `'gym/log'`
+stored data is newer than the code), `navigate('#/gym/log')` changes screen, `settings` is the core settings (read-only copy: theme, `askClaude`),
+`params` is what a `'x/*'` route matched (`'3.1'` for `#/istqb/lesson/3.1`), else `''` (Part 5; exact keys win,
+`src/core/router.js` `resolveRoute`). An action `route` may be `'gym/log'`
 or `'#/gym/log'`. The registry (`src/core/registry.js`) rejects a module that breaks this contract.
 
 The core never reaches into a module's data except through `validate`, `migrations` and `defaultData`. Modules never
@@ -169,18 +175,35 @@ touch another module's store; cross-module features (Fridge → Bulgarian cards)
 
 ## Study engine data (Part 5)
 
-Content (shipped in the repo, `content/<module>/`):
-- `lessons.json`: `{ id, chapter, section, title, objectives: ["FL-3.1.1"], body (markdown subset) }`
-- `questions.json`: `{ id, objective, kLevel, stem, options: [A–D], answer, why, distractorNotes, source: "generated" }`
-- `cards.json`: `{ id, front, back, topic, twoWay }`
+A study module is made with `createStudyModule(config)` (`src/core/study/index.js`; its API for module authors is
+`src/core/study/README.md`). Shapes as built in Part 5 (fields marked *new* were added to the Part 0 draft):
 
-Progress (per module, in IndexedDB and backups):
-- `mastery`: `{ [objective]: "untested" | "shaky" | "solid" | "exam-ready" }`
-- `reviewQueue`: spaced review items with next-due session (1 / 3 / 7 session intervals, as in the tutor prompt)
-- `attempts`: every answered question `{ questionId, chosen, correct, at, sessionNo }` (this is the wrong-answer log)
-- `sessions`: `{ no, date, section, score, kind: "lesson" | "mini-mock" | "full-mock" }`
-- `feedback`: `{ targetId, text, at, resolved: false }`
-- `pointer`: next section to study
+Content (shipped in the repo, `content/<module>/`, every file listed in `PRECACHE`; CI validates them all):
+- `lessons.json`: `{ id, chapter, section, title, objectives: ["FL-3.1.1"], body (markdown subset) }`; file order is
+  course order.
+- `questions.json`: `{ id, objective, kLevel, stem, options: [4 texts, A–D], answer: "A"–"D", why,
+  distractorNotes: { <each wrong letter>: text }, source: "generated", chapter?, difficulty? }`. *New:* optional
+  `chapter` (required when no lesson teaches the objective, e.g. ISTQB Ch1–2) and `difficulty` 1–3.
+- `cards.json`: `{ id, front, back, topic, twoWay, lang?: { front, back }, objective? }`. *New:* optional `lang`;
+  ids must not contain `~`.
+
+Progress (per module, in IndexedDB and backups; schema version 1):
+- `mastery`: `{ [objective]: "untested" | "shaky" | "solid" | "exam-ready" }` (missing = untested)
+- `reviewQueue`: `[{ id, questionId?, objective?, note?, addedSession, dueSession, step, correctCount }]`: 1 / 3 / 7
+  session intervals, leaves after 2 correct in a row (as in the tutor prompt)
+- `attempts`: every answered question `{ questionId, objective, chosen, correct, at, sessionNo, kind }` (the
+  wrong-answer log; *new:* `objective`, `kind` = drill | quiz | retrieval | mock; `chosen` is null for a mock
+  question left unanswered; imports may add `legacyText`)
+- `sessions`: `{ no, date, section, score, correct, total, kind: "lesson" | "mini-mock" | "full-mock", … }`
+  (`section` = lesson id, or the mock's config id; `score` = percent; lesson sessions add `calibration`, `complete`;
+  mocks add `elapsedMs`, `timedOut`)
+- `feedback`: `{ id, targetId, targetKind?, text, at, resolved: false }` (*new:* `id` for the content loop,
+  `targetKind` = lesson | question | card)
+- `pointer`: id of the next lesson (`null` = the first, `"__done__"` after the last)
+- *new:* `cardState`: `{ [cardId or cardId~rev]: { reps, interval, ef, due, lapses, last, first } }` (SM-2)
+- *new:* `activeSession`, `activeMock`: the session or timed mock in progress (or `null`), so stopping never loses work
+
+Core settings gain `askClaude`: `"share"` (default) | `"link"` | `"copy"` (Settings → Ask Claude).
 
 ---
 
