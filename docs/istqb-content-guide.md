@@ -119,8 +119,9 @@ mnemonic on the back.
 ## Checks before committing a content run
 
 1. `npm test` (content validation, K-levels, chapters, mnemonic ban, precache, version).
-2. When a chapter is finished, add it to `FINISHED_CHAPTERS` in `tests/unit/istqb.test.js` (it then enforces 6
-   per objective, 8 for K3). After the last run, remove the `.skip` from the whole-bank test.
+2. `tests/unit/istqb.test.js` enforces 6 questions per objective (8 for K3) in all six chapters, 8 for the Ch1–2
+   extra-drilling objectives, an even A–D spread for Ch1–2, and that a full mock assembles from the bank with the
+   official weighting and no repeats. Keep them green when questions are fixed or added.
 3. `npm run e2e`.
 4. Read each new lesson once at phone width (`npm run serve`).
 5. Bump the version, update `docs/BACKLOG.md` and `docs/CHANGELOG.md`, commit per chapter.

@@ -1,1 +1,1586 @@
-[]
+[
+  {
+    "id": "q2.1.1-a",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "In a strictly sequential (waterfall) game project, why can testers NOT run dynamic tests in the early phases?",
+    "options": [
+      "Testers are not involved in sequential projects until the end",
+      "Sequential models forbid reviews",
+      "Executable code is only created in the later phases",
+      "Dynamic testing is only used in Agile"
+    ],
+    "answer": "C",
+    "why": "In sequential models code comes late, so early on testers do static testing, test analysis and design.",
+    "distractorNotes": {
+      "A": "They are involved early: reviews, analysis and design.",
+      "B": "Reviews of requirements are typical early tester work.",
+      "D": "Dynamic testing is used in every SDLC."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.1-b",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A studio delivers a playable increment every two weeks. What does this mean for testing?",
+    "options": [
+      "Testing is done once, at the end of the last iteration, on the full game",
+      "Static and dynamic testing happen in every iteration, with fast feedback and extensive regression testing",
+      "Regression testing is not needed, because each increment is new code",
+      "Only static testing is possible in each iteration; dynamic testing waits until the final release is built"
+    ],
+    "answer": "B",
+    "why": "Iterative and incremental models deliver working software each iteration, so testing happens at all levels every iteration.",
+    "distractorNotes": {
+      "A": "That ignores the frequent deliveries.",
+      "C": "Frequent changes make regression testing more important.",
+      "D": "Each increment is working software that can be tested dynamically."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.1-c",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which of these does the chosen SDLC influence?",
+    "options": [
+      "Whether testing can prove, at the end of each iteration, that no defects are left",
+      "The extent of test automation and the tester's role and responsibilities",
+      "Which of the seven testing principles apply",
+      "The ISTQB definition of a failure and a defect"
+    ],
+    "answer": "B",
+    "why": "The SDLC affects scope and timing of test activities, documentation detail, techniques and approach, automation and the tester's role.",
+    "distractorNotes": {
+      "A": "No SDLC allows that.",
+      "C": "They apply in every SDLC.",
+      "D": "Definitions do not change with the SDLC."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.1-d",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "An Agile team expects the design of its card game to change often. Which testing choice fits BEST?",
+    "options": [
+      "Detailed test scripts written up front for every feature, before the sprint starts",
+      "No regression testing, to save time",
+      "Testing only at the acceptance test level",
+      "Lightweight test documentation and extensive test automation for regression"
+    ],
+    "answer": "D",
+    "why": "Where change is expected, lightweight documentation and much automation make regression easier.",
+    "distractorNotes": {
+      "A": "Heavy documentation is costly when change is expected.",
+      "B": "Frequent change makes regression testing essential.",
+      "C": "Agile tests at all levels."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.1-e",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "In an Agile project, how is most manual testing typically done?",
+    "options": [
+      "With formal scripted tests that are designed and reviewed months in advance of each sprint",
+      "Only by the product owner, as part of acceptance",
+      "With experience-based test techniques that need little prior test analysis and design",
+      "With white-box test techniques only, from the code"
+    ],
+    "answer": "C",
+    "why": "Agile manual testing tends to use experience-based techniques, which need little upfront analysis and design.",
+    "distractorNotes": {
+      "A": "That fits sequential projects better.",
+      "B": "Wrong actor.",
+      "D": "Not the typical choice for manual Agile testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.1-f",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "A tester moves from a V-model console project to a Scrum mobile team. Which change is she MOST likely to experience?",
+    "options": [
+      "Less detailed test documentation and more test automation",
+      "More detailed test documentation and less test automation than before",
+      "No change, because testing is the same in every SDLC",
+      "She will no longer take part in reviews"
+    ],
+    "answer": "A",
+    "why": "Agile prefers lightweight documentation and extensive automation; sequential projects often document more.",
+    "distractorNotes": {
+      "B": "Reversed.",
+      "C": "The SDLC shapes testing a lot.",
+      "D": "Reviews happen in Agile too."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.1-g",
+    "objective": "FL-2.1.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "In a Scrum team, the tester refines stories with the product owner, pairs with developers on automated tests and explores each increment. Compared with her old sequential project, which effect of the SDLC on testing does this show MOST?",
+    "options": [
+      "The testing principles that apply",
+      "The definition of a defect",
+      "The role and responsibilities of the tester",
+      "Whether acceptance testing is needed"
+    ],
+    "answer": "C",
+    "why": "The SDLC shapes the tester's role and responsibilities, among scope, timing, documentation, techniques and automation.",
+    "distractorNotes": {
+      "A": "The seven principles apply in every SDLC.",
+      "B": "Definitions do not change with the SDLC.",
+      "D": "Acceptance testing is still needed in Agile."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.2-a",
+    "objective": "FL-2.1.2",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "Which is a good testing practice that applies to every SDLC?",
+    "options": [
+      "Testing starts only after coding is complete and stable",
+      "All test levels share the same test objectives",
+      "Testers review the documents only once they are final and approved by the lead",
+      "For every development activity there is a corresponding test activity"
+    ],
+    "answer": "D",
+    "why": "Every development activity has a matching test activity, so all development is subject to quality control.",
+    "distractorNotes": {
+      "A": "Contradicts early testing.",
+      "B": "Each level has its own objectives.",
+      "C": "They review as soon as drafts exist."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.2-b",
+    "objective": "FL-2.1.2",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "When should testers start reviewing work products such as the GDD, in any SDLC?",
+    "options": [
+      "Once they are approved and frozen",
+      "As soon as drafts are available",
+      "Only when the code is ready",
+      "Only during acceptance testing"
+    ],
+    "answer": "B",
+    "why": "Testers review drafts as soon as they exist, which supports early testing and shift-left.",
+    "distractorNotes": {
+      "A": "Too late: drafts already allow early defect detection.",
+      "C": "Contradicts early testing.",
+      "D": "Far too late."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.2-c",
+    "objective": "FL-2.1.2",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "Why should each test level have its own specific objectives?",
+    "options": [
+      "So that each test level can be skipped if the level before it passed",
+      "So all tests can be automated",
+      "So testing is comprehensive enough while avoiding redundancy",
+      "So the same tests can be repeated at every level"
+    ],
+    "answer": "C",
+    "why": "Different objectives per level keep testing comprehensive without redundancy.",
+    "distractorNotes": {
+      "A": "Not a reason given.",
+      "B": "Unrelated.",
+      "D": "The point is to avoid redundancy."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.2-d",
+    "objective": "FL-2.1.2",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "When should test analysis and design for a given test level begin?",
+    "options": [
+      "After the previous test level has finished",
+      "Only when the test object is delivered",
+      "During the corresponding development phase",
+      "At the start of the project, for all levels at once"
+    ],
+    "answer": "C",
+    "why": "Starting analysis and design during the matching development phase follows the early-testing principle.",
+    "distractorNotes": {
+      "A": "That delays testing.",
+      "B": "That contradicts early testing.",
+      "D": "Not the stated practice."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.2-e",
+    "objective": "FL-2.1.2",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which of these is NOT one of the good testing practices that apply to every SDLC?",
+    "options": [
+      "Each development activity has a matching test activity",
+      "Test levels have specific and different objectives",
+      "Testing is done by a separate team after development has finished",
+      "Testers review work products as soon as the first drafts of them are available"
+    ],
+    "answer": "C",
+    "why": "A late hand-off to a separate team is not one of the practices; they all push testing early and alongside development.",
+    "distractorNotes": {
+      "A": "This IS a good practice.",
+      "B": "This IS a good practice.",
+      "D": "This IS a good practice."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.2-f",
+    "objective": "FL-2.1.2",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A studio's rule says: \"Every design document has a test review, every feature has test design during its build, and every build has tests.\" Which good practice does this rule follow MOST directly?",
+    "options": [
+      "Each test level has its own different test objectives",
+      "Tests should be automated as much as possible, at all levels and for every single build",
+      "For every software development activity, there is a corresponding test activity",
+      "Testing should be independent from the development team"
+    ],
+    "answer": "C",
+    "why": "Pairing each development activity with a test activity keeps all development under quality control.",
+    "distractorNotes": {
+      "A": "The rule is about pairing activities, not level objectives.",
+      "B": "Not stated in the rule.",
+      "D": "Not stated in the rule."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-a",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "A developer writes a failing unit test for a new health-regeneration function, writes just enough code to pass it, then refactors. Which approach is this?",
+    "options": [
+      "Acceptance test-driven development (ATDD)",
+      "Test-driven development (TDD)",
+      "Behaviour-driven development (BDD)",
+      "Exploratory testing"
+    ],
+    "answer": "B",
+    "why": "TDD: write the test, write code to pass it, refactor; tests direct the coding.",
+    "distractorNotes": {
+      "A": "ATDD starts from acceptance criteria, not unit-level tests.",
+      "C": "BDD expresses behaviour in natural language (Given/When/Then).",
+      "D": "Not a test-first approach."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-b",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "The team writes tests from the acceptance criteria of a user story, before the feature is built. Which approach is this?",
+    "options": [
+      "Test-driven development (TDD)",
+      "Behaviour-driven development (BDD)",
+      "Regression testing",
+      "Acceptance test-driven development (ATDD)"
+    ],
+    "answer": "D",
+    "why": "ATDD derives tests from acceptance criteria, as part of system design, before development.",
+    "distractorNotes": {
+      "A": "TDD is driven by unit-level tests written by the developer.",
+      "B": "BDD is defined by natural-language behaviour scenarios, not acceptance criteria as input.",
+      "C": "Not a test-first approach."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-c",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "Which approach expresses the desired behaviour in simple natural language, often as Given/When/Then, that stakeholders can understand?",
+    "options": [
+      "Test-driven development (TDD)",
+      "Acceptance test-driven development (ATDD)",
+      "Behaviour-driven development (BDD)",
+      "Static analysis"
+    ],
+    "answer": "C",
+    "why": "BDD writes behaviour as natural-language scenarios, which are then turned into executable tests.",
+    "distractorNotes": {
+      "A": "TDD tests are code, written by developers.",
+      "B": "ATDD's input is the acceptance criteria; the natural-language behaviour format is BDD's mark.",
+      "D": "Not a test-first approach."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-d",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "What do TDD, ATDD and BDD have in common?",
+    "options": [
+      "They all start from Given/When/Then scenarios written by users",
+      "Tests are written first and may stay on as automated tests that protect later changes",
+      "They all start from the acceptance criteria of user stories, agreed with the product owner",
+      "They all replace the need for separate testers on the team"
+    ],
+    "answer": "B",
+    "why": "In all three, tests are defined before the code, and may persist as automated tests for future refactoring.",
+    "distractorNotes": {
+      "A": "That is BDD only.",
+      "C": "That is ATDD.",
+      "D": "Overgeneralisation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-e",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A scenario reads: \"Given the player has 3 lives, When she falls into lava, Then she has 2 lives.\" It will be turned into an automated test. Which approach does this format belong to?",
+    "options": [
+      "Test-driven development (TDD)",
+      "Acceptance test-driven development (ATDD)",
+      "Behaviour-driven development (BDD)",
+      "Data-driven testing"
+    ],
+    "answer": "C",
+    "why": "Given/When/Then natural-language scenarios turned into executable tests are BDD.",
+    "distractorNotes": {
+      "A": "TDD tests are written in code by the developer.",
+      "B": "Close: ATDD works from acceptance criteria; the Given/When/Then behaviour format is BDD.",
+      "D": "That is a scripting technique, not a test-first approach."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-f",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "In TDD, what directs the coding?",
+    "options": [
+      "The acceptance criteria written by the product owner for each story",
+      "The test cases, instead of an extensive software design",
+      "Natural-language behaviour scenarios",
+      "The test completion report"
+    ],
+    "answer": "B",
+    "why": "In TDD the tests come first and steer the code.",
+    "distractorNotes": {
+      "A": "That is ATDD.",
+      "C": "That is BDD.",
+      "D": "Not a coding input."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.3-g",
+    "objective": "FL-2.1.3",
+    "kLevel": "K1",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which statement about ATDD is CORRECT?",
+    "options": [
+      "Tests come from acceptance criteria and are written before the feature is developed",
+      "Tests are written after the code, derived from the code itself",
+      "Tests must always be written in the Given/When/Then format, so stakeholders can read them",
+      "Only developers write ATDD tests, and only at unit level"
+    ],
+    "answer": "A",
+    "why": "ATDD derives tests from acceptance criteria as part of system design, before development.",
+    "distractorNotes": {
+      "B": "That is not test-first.",
+      "C": "That format is typical of BDD, not required by ATDD.",
+      "D": "ATDD works at acceptance level with the team."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-a",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "What is DevOps?",
+    "options": [
+      "A test tool for automated GUI tests in the delivery pipeline",
+      "An organisational approach that brings development, including testing, and operations together",
+      "A test level between system testing and acceptance testing",
+      "Another name for Agile software development, when it is applied to the studio's operations team"
+    ],
+    "answer": "B",
+    "why": "DevOps aims at synergy by getting development (with testing) and operations to work together.",
+    "distractorNotes": {
+      "A": "It is an approach, not a tool.",
+      "C": "Not a test level.",
+      "D": "Related, but different."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-b",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which is a benefit of DevOps from a testing perspective?",
+    "options": [
+      "Fast feedback on code quality and on whether changes break existing code",
+      "Manual testing is no longer needed once the pipeline runs",
+      "The delivery pipeline sets itself up without extra effort",
+      "No separate test environments are needed, because all tests run in production"
+    ],
+    "answer": "A",
+    "why": "DevOps gives fast feedback on quality and on adverse effects of changes.",
+    "distractorNotes": {
+      "B": "Overgeneralisation: manual testing from the user's view is still needed.",
+      "C": "Defining and setting up the pipeline is a challenge.",
+      "D": "DevOps helps make stable environments; they are still needed."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-c",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which is a risk or challenge of DevOps for testing?",
+    "options": [
+      "Test automation needs extra resources and can be hard to set up and maintain",
+      "Feedback on code quality becomes slower for developers",
+      "Regression risk rises because fewer automated tests run",
+      "Non-functional quality characteristics such as performance get much less attention"
+    ],
+    "answer": "A",
+    "why": "Challenges: the pipeline must be defined, CI/CD tools introduced and maintained, and automation resourced.",
+    "distractorNotes": {
+      "B": "DevOps speeds feedback.",
+      "C": "Automated regression testing at scale lowers it.",
+      "D": "DevOps increases the view on non-functional characteristics."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-d",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A studio's CI pipeline runs static analysis and component tests on every commit. How does this support shift-left?",
+    "options": [
+      "It moves all testing to the end of the delivery pipeline",
+      "It removes the need for testers to be part of the team",
+      "It replaces acceptance testing by players with automated component tests on every single commit",
+      "It encourages developers to submit high-quality code with component tests and static analysis"
+    ],
+    "answer": "D",
+    "why": "CI promotes shift-left: quality is built in from the commit, with component tests and static analysis.",
+    "distractorNotes": {
+      "A": "The opposite of shift-left.",
+      "B": "Overgeneralisation.",
+      "C": "Acceptance testing is still needed."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-e",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A live-service game deploys several times a week through an automated pipeline. Which testing statement is CORRECT?",
+    "options": [
+      "All testing can be automated, so testers are no longer needed",
+      "Regression testing becomes unnecessary, because deployments are so small and so frequent",
+      "Test environments become less stable with each deployment",
+      "Manual testing from the player's perspective is still needed, even with high automation"
+    ],
+    "answer": "D",
+    "why": "Even with a high degree of automation, manual testing, especially from the user's view, is still needed.",
+    "distractorNotes": {
+      "A": "Overgeneralisation.",
+      "B": "Regression testing is automated, not dropped.",
+      "C": "DevOps helps establish stable environments."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-f",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "How does the automated delivery pipeline in DevOps affect manual testing?",
+    "options": [
+      "It removes the need for all manual testing, including from the user's view",
+      "It increases repetitive manual testing",
+      "It has no effect on manual testing",
+      "It reduces the need for repetitive manual testing"
+    ],
+    "answer": "D",
+    "why": "Automation through the pipeline reduces repetitive manual testing; manual testing remains for the user's perspective.",
+    "distractorNotes": {
+      "A": "Overgeneralisation.",
+      "B": "The opposite.",
+      "C": "Automation takes over repetitive tests."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.4-g",
+    "objective": "FL-2.1.4",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "Which pair of statements about DevOps and testing is CORRECT?",
+    "options": [
+      "Benefit: no pipeline needs to be set up. Challenge: slower feedback.",
+      "Benefit: more focus on non-functional quality. Challenge: CI/CD tools must be set up and maintained.",
+      "Benefit: manual testing ends. Challenge: regression risk grows.",
+      "Benefit: no extra automation resources are needed. Challenge: test environments become less stable over time."
+    ],
+    "answer": "B",
+    "why": "DevOps increases the view on non-functional quality; introducing and maintaining CI/CD tools is a challenge.",
+    "distractorNotes": {
+      "A": "Both are wrong: a pipeline must be set up, and feedback gets faster.",
+      "C": "Both are wrong.",
+      "D": "Both are wrong."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-a",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "What does shift-left mean?",
+    "options": [
+      "Testing is done earlier in the SDLC",
+      "Testing is moved to after release",
+      "Testing is reduced so that development can start sooner",
+      "Only static testing is done"
+    ],
+    "answer": "A",
+    "why": "Shift-left is the approach of testing earlier in the SDLC.",
+    "distractorNotes": {
+      "B": "That is the opposite direction.",
+      "C": "Shift-left moves testing earlier; it does not reduce it.",
+      "D": "Dynamic testing still happens."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-b",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which is a good practice for shift-left?",
+    "options": [
+      "Reviewing the specification from a testing perspective",
+      "Waiting for the full build before writing any tests",
+      "Running non-functional tests only at the system test level, at the end",
+      "Skipping static analysis to save time"
+    ],
+    "answer": "A",
+    "why": "Reviewing specifications from the test perspective finds ambiguities, incompleteness and inconsistencies early.",
+    "distractorNotes": {
+      "B": "That shifts right.",
+      "C": "Shift-left starts non-functional testing at component level where possible.",
+      "D": "Static analysis before dynamic testing is a shift-left practice."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-c",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A developer measures a pathfinding component's frame time in a component test, long before the full game exists. Which shift-left practice is this?",
+    "options": [
+      "Writing test cases before the code is written",
+      "Using continuous delivery with automated tests",
+      "Reviewing the pathfinding specification from a testing perspective first",
+      "Performing non-functional testing starting at the component test level"
+    ],
+    "answer": "D",
+    "why": "Non-functional testing starting at component level, where possible, is a shift-left practice.",
+    "distractorNotes": {
+      "A": "The stem is about measuring performance early, not test-first.",
+      "B": "Not described.",
+      "C": "No specification review happens here."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-d",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "What is a typical trade-off of shift-left?",
+    "options": [
+      "It always reduces cost in every phase of the project",
+      "Extra training, effort or cost early, expected to save effort and cost later",
+      "It removes the need for stakeholders to support or pay for testing at any point",
+      "It means each feature is tested only once, early on"
+    ],
+    "answer": "B",
+    "why": "Shift-left may raise early costs, expecting savings later; stakeholders need to buy in.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: early costs may rise.",
+      "C": "Stakeholders must be convinced and bought in.",
+      "D": "Not a trade-off; wrong."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-e",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A team runs static analysis on its scripts before any dynamic test, as part of the build. Which approach is this an example of?",
+    "options": [
+      "Confirmation testing",
+      "Maintenance testing",
+      "Shift-left",
+      "Exploratory testing"
+    ],
+    "answer": "C",
+    "why": "Doing static analysis before dynamic testing, or in the automated process, is a shift-left practice.",
+    "distractorNotes": {
+      "A": "No fix is being checked.",
+      "B": "No change to a system in production.",
+      "D": "Not related."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-f",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which is MOST important for shift-left to succeed?",
+    "options": [
+      "Testers work separately from the developers, so that they stay objective",
+      "No test automation is used, to keep costs low early",
+      "All testing waits until there is a stable build",
+      "Stakeholders are convinced of the approach and buy into it"
+    ],
+    "answer": "D",
+    "why": "Because early costs rise, stakeholders must be convinced and bought into the concept.",
+    "distractorNotes": {
+      "A": "Shift-left needs close work.",
+      "B": "CI/CD and automated component tests support it.",
+      "C": "That is not shift-left."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.5-g",
+    "objective": "FL-2.1.5",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "Which of these is NOT a shift-left practice?",
+    "options": [
+      "Writing test cases before the code and running the code in a test harness during implementation",
+      "Using continuous integration with automated component tests",
+      "Writing all test cases after the release candidate is built",
+      "Running static analysis before dynamic testing"
+    ],
+    "answer": "C",
+    "why": "Writing tests only at the end is the opposite of shifting left.",
+    "distractorNotes": {
+      "A": "This IS a shift-left practice.",
+      "B": "This IS a shift-left practice.",
+      "D": "This IS a shift-left practice."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-a",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "What do participants typically discuss in a retrospective?",
+    "options": [
+      "Which defects each team member caused in the iteration",
+      "What went well, what could be improved, and how to keep or improve it",
+      "Only the test results and defect counts of the last build in the iteration",
+      "The release date and scope of the next version"
+    ],
+    "answer": "B",
+    "why": "A retrospective covers successes to retain, things to improve and how to do both in future.",
+    "distractorNotes": {
+      "A": "Retrospectives are not about blame.",
+      "C": "Too narrow.",
+      "D": "That is planning, not a retrospective."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-b",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Who typically takes part in a retrospective?",
+    "options": [
+      "Only the testers, since it is a test activity",
+      "Only the test manager and the product owner, who own the test process together",
+      "Testers, developers, architects, the product owner and business analysts",
+      "Only external auditors and the studio's management"
+    ],
+    "answer": "C",
+    "why": "Retrospectives involve the whole team, not just testers.",
+    "distractorNotes": {
+      "A": "Not only testers.",
+      "B": "Too narrow.",
+      "D": "Not typical."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-c",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Where are the results of a retrospective normally recorded?",
+    "options": [
+      "In the defect reports",
+      "In the test completion report",
+      "In the test execution schedule",
+      "They are never recorded"
+    ],
+    "answer": "B",
+    "why": "Retrospective results are recorded, normally as part of the test completion report.",
+    "distractorNotes": {
+      "A": "Defect reports record defects.",
+      "C": "That orders test runs.",
+      "D": "They should be recorded."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-d",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "In a retrospective, the team agrees that vague user stories caused many wasted test hours, and agrees a stricter story template. Which benefit for testing is this?",
+    "options": [
+      "Increased quality of testware",
+      "Improved quality of the test basis",
+      "Team bonding",
+      "Better test automation"
+    ],
+    "answer": "B",
+    "why": "Addressing deficiencies in requirements improves the quality of the test basis.",
+    "distractorNotes": {
+      "A": "The improvement is to the stories (the test basis), not the testware.",
+      "C": "Possible side effect, but the stem's point is better stories.",
+      "D": "Not described."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-e",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A tester raises in a retrospective that developers and testers keep misunderstanding each other's bug reports; they agree a short daily sync. Which benefit is this?",
+    "options": [
+      "Better cooperation between development and testing",
+      "Improved quality of the test basis",
+      "Increased test efficiency through automation",
+      "Fewer test levels"
+    ],
+    "answer": "A",
+    "why": "Reviewing and optimising collaboration regularly improves cooperation between development and testing.",
+    "distractorNotes": {
+      "B": "The test basis (requirements) is not what changes.",
+      "C": "Not described.",
+      "D": "Not a benefit of retrospectives."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-f",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "When are retrospectives typically held?",
+    "options": [
+      "Only at the very end of the whole project",
+      "Only before a project starts, to plan it",
+      "Only when a severe defect has reached production and many players have complained about it",
+      "At the end of a project or iteration, at a release milestone, or whenever needed"
+    ],
+    "answer": "D",
+    "why": "Retrospectives are often held at the end of a project or iteration, at a release milestone, or when needed.",
+    "distractorNotes": {
+      "A": "Too narrow.",
+      "B": "A retrospective looks back.",
+      "C": "They can be held when needed, but not only then."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.1.6-g",
+    "objective": "FL-2.1.6",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "After a retrospective the testers jointly review their regression checklists and remove outdated items. Which benefit for testing does this MOST directly give?",
+    "options": [
+      "Improved quality of the test basis",
+      "Better cooperation between development and testing",
+      "A higher degree of test independence",
+      "Increased quality of testware"
+    ],
+    "answer": "D",
+    "why": "Jointly reviewing test processes and testware improves the quality of the testware.",
+    "distractorNotes": {
+      "A": "The checklists are testware, not test basis.",
+      "B": "Developers are not involved here.",
+      "C": "Not a retrospective benefit."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-a",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "The QA team tests the complete game against its specification, including end-to-end tasks and performance, in a representative environment. Which test level is this?",
+    "options": [
+      "Acceptance testing",
+      "System integration testing",
+      "System testing",
+      "Component integration testing"
+    ],
+    "answer": "C",
+    "why": "System testing checks the behaviour and capabilities of the whole system, often by an independent test team, against the system specification.",
+    "distractorNotes": {
+      "A": "Wrong actor and basis: testing by the QA team against the spec is system testing; acceptance is ideally by the intended users.",
+      "B": "That focuses on interfaces with other systems and external services.",
+      "D": "That focuses on interfaces between components."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-b",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Selected players and the publisher try the finished game to decide whether it meets their needs and is ready to release. Which test level is this?",
+    "options": [
+      "System testing",
+      "Acceptance testing",
+      "System integration testing",
+      "Component testing"
+    ],
+    "answer": "B",
+    "why": "Acceptance testing validates readiness for deployment and that business needs are met, ideally by the intended users.",
+    "distractorNotes": {
+      "A": "Wrong actor: system testing is done by testers against the spec; users judging release readiness is acceptance.",
+      "C": "That tests interfaces with other systems.",
+      "D": "That tests components in isolation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-c",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A tester checks that the game client correctly exchanges data with the platform's achievements service and the external payment provider. Which test level is this?",
+    "options": [
+      "Component integration testing",
+      "System testing",
+      "Acceptance testing",
+      "System integration testing"
+    ],
+    "answer": "D",
+    "why": "System integration testing focuses on interfaces between the system and other systems and external services.",
+    "distractorNotes": {
+      "A": "That is between components inside the system, not external services.",
+      "B": "System testing looks at the system's own behaviour, not interfaces with other systems.",
+      "C": "Not about business readiness."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-d",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Developers test the inventory class in isolation, using a unit test framework and mocks. Which test level is this?",
+    "options": [
+      "Component testing",
+      "Component integration testing",
+      "System testing",
+      "Acceptance testing"
+    ],
+    "answer": "A",
+    "why": "Component (unit) testing tests components in isolation, usually by developers with test harnesses or frameworks.",
+    "distractorNotes": {
+      "B": "No interaction between components is tested; mocks isolate it.",
+      "C": "Not the whole system.",
+      "D": "Not users validating needs."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-e",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Testers check that the save system and the cloud-sync component pass data correctly to each other. The test approach depends heavily on whether integration is done bottom-up, top-down or big-bang. Which test level is this?",
+    "options": [
+      "System integration testing",
+      "Component testing",
+      "Component integration testing",
+      "System testing"
+    ],
+    "answer": "C",
+    "why": "Component integration testing tests interfaces and interactions between components, depending on the integration strategy.",
+    "distractorNotes": {
+      "A": "Cloud-sync here is a component of the game, not an external system.",
+      "B": "Two components interact, so it is not isolation.",
+      "D": "Not the whole system's behaviour."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-f",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A closed test is run at the studio's own site, by people from outside the development team, before the game goes to players at home. What is this called?",
+    "options": [
+      "Beta testing",
+      "System testing",
+      "Operational acceptance testing",
+      "Alpha testing"
+    ],
+    "answer": "D",
+    "why": "Alpha testing is done at the developer's site; beta testing at the customers' or users' own locations.",
+    "distractorNotes": {
+      "A": "Beta testing happens at the users' own locations.",
+      "B": "System testing is not defined by outside users at the developer's site.",
+      "C": "That checks operations tasks such as backup and recovery."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-g",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Players download an early version and play it at home, sending feedback before launch. Which form of acceptance testing is this?",
+    "options": [
+      "Alpha testing",
+      "Operational acceptance testing",
+      "Contractual acceptance testing",
+      "Beta testing"
+    ],
+    "answer": "D",
+    "why": "Beta testing is done by potential or existing users at their own locations.",
+    "distractorNotes": {
+      "A": "Alpha is at the developer's site.",
+      "B": "That is done by operations staff.",
+      "C": "That checks a contract's acceptance criteria."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-h",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "The live-ops team checks that the game servers can be backed up, restored and patched without downtime before launch. Which form of acceptance testing is this?",
+    "options": [
+      "User acceptance testing",
+      "Beta testing",
+      "System integration testing",
+      "Operational acceptance testing"
+    ],
+    "answer": "D",
+    "why": "Operational acceptance testing checks operational readiness: backup, recovery, maintenance, etc.",
+    "distractorNotes": {
+      "A": "Users judging fitness for their needs is UAT; this is operations.",
+      "B": "Not users at home.",
+      "C": "Not about interfaces with other systems."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-i",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "Which statement about the actors of test levels is CORRECT?",
+    "options": [
+      "System testing should ideally be performed by the intended users",
+      "Component testing is normally performed by independent testers",
+      "Acceptance testing should ideally be performed by the intended users",
+      "Acceptance testing is always performed by the QA team against the specification"
+    ],
+    "answer": "C",
+    "why": "Intended users are the ideal acceptance testers; testers against the spec do system testing.",
+    "distractorNotes": {
+      "A": "Wrong actor: system testing is often done by an independent test team.",
+      "B": "Usually by developers in their own environments.",
+      "D": "That describes system testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.1-j",
+    "objective": "FL-2.2.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "A publisher's contract says the game is accepted when it runs at 30 FPS on all target consoles and passes the agreed feature list. The publisher's team checks exactly this before paying the milestone. Which form of testing is this?",
+    "options": [
+      "System testing",
+      "Contractual acceptance testing",
+      "Operational acceptance testing",
+      "Regulatory acceptance testing"
+    ],
+    "answer": "B",
+    "why": "Checking a product against criteria in a contract, before accepting it, is contractual acceptance testing.",
+    "distractorNotes": {
+      "A": "Wrong actor and purpose: this is the customer checking contract criteria to accept the product.",
+      "C": "Not about operations tasks.",
+      "D": "The criteria come from a contract, not a regulation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-a",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "A tester measures how long a level takes to load on the minimum-spec phone. Which test type is this?",
+    "options": [
+      "Non-functional testing",
+      "Functional testing",
+      "White-box testing",
+      "Confirmation testing"
+    ],
+    "answer": "A",
+    "why": "Load time is performance efficiency, a non-functional characteristic: HOW WELL, not WHAT.",
+    "distractorNotes": {
+      "B": "Loading is a function, but measuring how fast it is checks how well: non-functional.",
+      "C": "No internal structure is used.",
+      "D": "No fix is being checked."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-b",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A tester checks that crafting two iron bars gives one sword, as the GDD says. Which test type is this?",
+    "options": [
+      "Non-functional testing",
+      "White-box testing",
+      "Regression testing",
+      "Functional testing"
+    ],
+    "answer": "D",
+    "why": "Functional testing checks WHAT the system should do: here the crafting result.",
+    "distractorNotes": {
+      "A": "The test checks what the system does, not how well.",
+      "B": "The test is based on the GDD, not the code.",
+      "C": "Not about changes."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-c",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which test type aims to cover the code's internal structure, such as statements and branches, to an acceptable level?",
+    "options": [
+      "White-box testing",
+      "Black-box testing",
+      "Functional testing",
+      "Non-functional testing"
+    ],
+    "answer": "A",
+    "why": "White-box testing derives tests from the internal structure and aims to cover it.",
+    "distractorNotes": {
+      "B": "Black-box tests are based on the specification, not the structure.",
+      "C": "Functional testing is about what the system does.",
+      "D": "It is about quality characteristics."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-d",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A tester runs the same \"buy item\" test as the functional suite, but checks that the purchase completes within 2 seconds under load. What is true?",
+    "options": [
+      "It is a functional test, because it uses the functional steps",
+      "It is a white-box test",
+      "It is a confirmation test",
+      "It is a non-functional test derived from a functional test"
+    ],
+    "answer": "D",
+    "why": "Many non-functional tests reuse functional tests and check a non-functional constraint (e.g. time).",
+    "distractorNotes": {
+      "A": "The check is on time: how well, so non-functional.",
+      "B": "No code structure is used.",
+      "C": "No fix is being checked."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-e",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A tester checks whether first-time players can find the subtitles setting without help. Which quality characteristic is being tested?",
+    "options": [
+      "Functional correctness, a functional characteristic",
+      "Performance efficiency (time behaviour), a non-functional characteristic",
+      "Maintainability, a non-functional characteristic",
+      "Usability (interaction capability), a non-functional characteristic"
+    ],
+    "answer": "D",
+    "why": "How easily users can use the product is usability (interaction capability), a non-functional characteristic.",
+    "distractorNotes": {
+      "A": "Correctness is about giving the right results; the stem asks how easily players use the game.",
+      "B": "Nothing about speed or resource use is measured.",
+      "C": "Maintainability is about how easily the product can be modified."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-f",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A game is checked to run on three Android versions and two screen ratios without problems. Which test type is this?",
+    "options": [
+      "Non-functional testing, for compatibility or portability",
+      "Functional testing, because the game must work on each Android version",
+      "White-box testing",
+      "Regression testing"
+    ],
+    "answer": "A",
+    "why": "Running across platforms tests compatibility/portability: non-functional.",
+    "distractorNotes": {
+      "B": "The question is how well it works across platforms.",
+      "C": "No code structure is used.",
+      "D": "No change is involved."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-g",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which statement about test types and test levels is CORRECT?",
+    "options": [
+      "All four test types can be applied at all test levels, with a different focus at each",
+      "Non-functional testing is done only at the system test level",
+      "White-box testing is done only at the component test level, by the developers themselves",
+      "Functional testing is done only at the acceptance test level"
+    ],
+    "answer": "A",
+    "why": "Functional, non-functional, black-box and white-box testing can be applied at all levels.",
+    "distractorNotes": {
+      "B": "It can start early, even at component level.",
+      "C": "It can be used at any level.",
+      "D": "It is done at all levels."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-h",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "A tester records the frames per second during a big explosion scene. A colleague calls it a functional test because \"the explosion is a function\". Who is right?",
+    "options": [
+      "The colleague: any test of a game feature is a functional test",
+      "The tester: measuring FPS checks how well the game performs, so it is non-functional",
+      "Both: the test checks a function and its performance, so it belongs equally to both types",
+      "Neither: measuring FPS is a form of white-box testing"
+    ],
+    "answer": "B",
+    "why": "FPS is performance efficiency: a non-functional characteristic.",
+    "distractorNotes": {
+      "A": "Informal paraphrase: functional = WHAT, non-functional = HOW WELL.",
+      "C": "The measurement is of performance.",
+      "D": "No internal structure is used."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.2-i",
+    "objective": "FL-2.2.2",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "Why can late discovery of non-functional defects be a serious problem?",
+    "options": [
+      "Because non-functional defects cannot be fixed",
+      "Because fixing them may need major changes, such as to the architecture, late in the project",
+      "Because non-functional testing is only possible once the game has been released to players",
+      "Because functional tests find them anyway"
+    ],
+    "answer": "B",
+    "why": "Non-functional defects found late can threaten project success; testing them early is often wise.",
+    "distractorNotes": {
+      "A": "Overgeneralisation.",
+      "C": "It can start early.",
+      "D": "They usually do not."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.3-a",
+    "objective": "FL-2.2.3",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "After the fix for a stuck elevator, the tester re-runs the steps that made the elevator stick and checks it now moves. Which test type is this?",
+    "options": [
+      "Regression testing",
+      "Maintenance testing",
+      "Confirmation testing",
+      "Smoke testing"
+    ],
+    "answer": "C",
+    "why": "Confirmation testing confirms that the original defect is fixed.",
+    "distractorNotes": {
+      "A": "Regression checks that nothing else broke.",
+      "B": "Not about a change to a production system in general.",
+      "D": "Not about the fix."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.3-b",
+    "objective": "FL-2.2.3",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A fix to the jump physics went in. The tester then re-runs tests for climbing, swimming and vehicles. Which test type is this?",
+    "options": [
+      "Regression testing",
+      "Confirmation testing",
+      "Acceptance testing",
+      "Exploratory testing"
+    ],
+    "answer": "A",
+    "why": "Regression testing checks that a change has not had adverse consequences elsewhere.",
+    "distractorNotes": {
+      "B": "That would check the jump fix itself.",
+      "C": "Acceptance testing validates business needs; this checks unchanged areas after a fix.",
+      "D": "Not defined by the purpose of checking unchanged areas."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.3-c",
+    "objective": "FL-2.2.3",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Why is regression testing a strong candidate for automation?",
+    "options": [
+      "Regression suites run many times and usually grow with each iteration or release",
+      "Regression tests rarely find any defects, so nobody on the team wants to run them by hand",
+      "Regression tests change every day, which automation handles well",
+      "Automating them makes confirmation testing unnecessary"
+    ],
+    "answer": "A",
+    "why": "Repeated runs and growing suites make regression testing ideal for automation.",
+    "distractorNotes": {
+      "B": "They do find regressions.",
+      "C": "They are repeated, which suits automation.",
+      "D": "Unrelated."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.3-d",
+    "objective": "FL-2.2.3",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Time is short after a hotfix. What is the minimum confirmation testing that might be done?",
+    "options": [
+      "Run the steps that should reproduce the failure and check that it no longer occurs",
+      "Run the entire regression suite on the hotfix build",
+      "Skip testing, because the developer has already tested the fix on their own machine",
+      "Write new tests for all the unchanged areas of the game"
+    ],
+    "answer": "A",
+    "why": "With little time, confirmation testing can be restricted to re-running the failure's reproduction steps.",
+    "distractorNotes": {
+      "B": "That is regression testing, not the minimum confirmation.",
+      "C": "Not recommended.",
+      "D": "That is regression scope."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.3-e",
+    "objective": "FL-2.2.3",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "What is advisable before regression testing a change, to choose its extent?",
+    "options": [
+      "A root cause analysis",
+      "A retrospective",
+      "An impact analysis",
+      "A test completion report"
+    ],
+    "answer": "C",
+    "why": "Impact analysis optimises the extent of regression testing.",
+    "distractorNotes": {
+      "A": "That looks at why a defect happened, not what a change affects.",
+      "B": "Not used to scope regression.",
+      "D": "Comes after testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.2.3-f",
+    "objective": "FL-2.2.3",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "A fix in the game client changes the save format. Where might regression testing need to look?",
+    "options": [
+      "Only in the save component, because that is the only part of the game that was changed",
+      "Only in the lines of code that were changed by the fix",
+      "Nowhere else, because confirmation testing of the fix passed",
+      "In the same component, other components, and connected systems such as the cloud save"
+    ],
+    "answer": "D",
+    "why": "Adverse consequences can affect the same component, other components and connected systems, and the environment.",
+    "distractorNotes": {
+      "A": "Too narrow: adverse effects can reach other components and systems.",
+      "B": "That is the change itself, mostly confirmation.",
+      "C": "Confirmation does not rule out regressions."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.3.1-a",
+    "objective": "FL-2.3.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 1,
+    "stem": "Which is a trigger for maintenance testing?",
+    "options": [
+      "Writing the first version of the GDD",
+      "A code review of a new feature that is still in development for the sequel",
+      "Moving the game's servers from one cloud provider to another",
+      "Hiring a new tester"
+    ],
+    "answer": "C",
+    "why": "Migrations of the operational environment trigger maintenance testing.",
+    "distractorNotes": {
+      "A": "Not maintenance: nothing is in production.",
+      "B": "Not a change to a system in operation.",
+      "D": "Not a trigger."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.3.1-b",
+    "objective": "FL-2.3.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "An old online game is being shut down, but players' purchase records must be kept for seven years. What testing does this retirement need?",
+    "options": [
+      "Testing of data archiving, and of restore and retrieval procedures",
+      "No testing at all, because a system that is being retired no longer needs any",
+      "Only performance testing of the servers before shutdown",
+      "Only beta testing with the remaining players"
+    ],
+    "answer": "A",
+    "why": "Retirement can require testing of data archiving and of restore and retrieval procedures.",
+    "distractorNotes": {
+      "B": "Retirement is a maintenance trigger.",
+      "C": "Not the focus.",
+      "D": "Not relevant."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.3.1-c",
+    "objective": "FL-2.3.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A patch changes one weapon's damage in a released game. What should maintenance testing cover?",
+    "options": [
+      "Only the changed weapon",
+      "Whether the change works, and regression testing of the unchanged parts",
+      "Only the unchanged parts",
+      "Nothing, because a balance change to one weapon is not a real code change"
+    ],
+    "answer": "B",
+    "why": "Maintenance testing evaluates the change and checks for regressions in the unchanged parts.",
+    "distractorNotes": {
+      "A": "Regressions in unchanged parts must also be checked.",
+      "C": "The change itself must be checked too.",
+      "D": "It is a change to a system in production."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.3.1-d",
+    "objective": "FL-2.3.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "Which factors determine the scope of maintenance testing?",
+    "options": [
+      "The risk of the change, the size of the existing system and the size of the change",
+      "Only the number of testers available for the patch",
+      "The age of the source code and the team's seniority",
+      "The size of the marketing budget for the patch and the date of its planned launch event"
+    ],
+    "answer": "A",
+    "why": "Scope depends on the risk of the change, the size of the system and the size of the change.",
+    "distractorNotes": {
+      "B": "Not one of the stated factors.",
+      "C": "Not a stated factor.",
+      "D": "Not a factor."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.3.1-e",
+    "objective": "FL-2.3.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 2,
+    "stem": "A hotfix for a crash on the title screen is released overnight. Which kind of maintenance trigger is this?",
+    "options": [
+      "A modification: an unplanned corrective change (hotfix)",
+      "A migration of the operational environment",
+      "A retirement",
+      "A planned enhancement"
+    ],
+    "answer": "A",
+    "why": "Modifications include planned enhancements and corrective changes such as hotfixes.",
+    "distractorNotes": {
+      "B": "The environment does not change.",
+      "C": "The game is not being retired.",
+      "D": "A hotfix is unplanned and corrective."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q2.3.1-f",
+    "objective": "FL-2.3.1",
+    "kLevel": "K2",
+    "chapter": 2,
+    "difficulty": 3,
+    "stem": "A studio moves player profiles from its old account system into a new one, then switches over. Which testing is MOST specifically needed besides testing the new environment?",
+    "options": [
+      "Testing of data archiving for retirement",
+      "Testing of the data conversion",
+      "Component testing of the old system",
+      "Alpha testing"
+    ],
+    "answer": "B",
+    "why": "Migrating data from another application requires testing the data conversion.",
+    "distractorNotes": {
+      "A": "Nothing is being retired here.",
+      "C": "The old system is not the test object.",
+      "D": "Not relevant to a migration."
+    },
+    "source": "generated"
+  }
+]
