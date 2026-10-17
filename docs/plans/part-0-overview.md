@@ -39,15 +39,20 @@ and wrong answers (the content loop).
 TheHub/
 ├── index.html               app shell: header, <main id="screen">, bottom nav
 ├── manifest.webmanifest     name, icons, theme, shortcuts
-├── sw.js                    service worker (must sit at the root for scope)
+├── sw.js                    service worker (must sit at the root for scope); VERSION + PRECACHE list
 ├── style.css                global tokens (light/dark) and shared components
 ├── icons/
 ├── src/
 │   ├── app.js               boots core, registers modules, routes
+│   ├── version.js           the app version (bump with every app change; sw.js repeats it)
+│   ├── modules.js           the list of shipped modules, in nav order
 │   ├── core/
 │   │   ├── db.js            IndexedDB wrapper + migrations runner
+│   │   ├── dom.js           tiny h()/mount() helper (text is always text, never HTML)
 │   │   ├── registry.js      module registry
 │   │   ├── router.js        hash routes: #/today, #/gym/log, ...
+│   │   ├── screens.js       "coming soon" and error screens
+│   │   ├── settings.js      Settings screen: theme, export, import
 │   │   ├── today.js         Today screen
 │   │   ├── backup.js        build, checksum, verify, upload, restore
 │   │   ├── github.js        GitHub REST calls for the backup repo
@@ -64,7 +69,9 @@ TheHub/
 │   └── bulgarian/
 ├── tests/
 │   ├── unit/                Vitest (jsdom + fake-indexeddb)
-│   └── e2e/                 Playwright, mobile viewport (Pixel/Galaxy size)
+│   ├── e2e/                 Playwright, mobile viewport (412×915, Galaxy size)
+│   └── fixtures/            the demo module (tests only, never shipped)
+├── scripts/                 serve.mjs (static server at /TheHub/), make-icons.mjs, check-version-bump.mjs
 ├── private/                 GIT-IGNORED: imports, exports, local notes
 ├── .github/workflows/       ci.yml: test, then deploy to Pages
 ├── package.json             dev tooling only
@@ -76,7 +83,8 @@ TheHub/
 
 ## The module contract
 
-Every module exports one object from `src/modules/<id>/index.js` and is listed in `src/app.js`:
+Every module exports one object from `src/modules/<id>/index.js` and is listed in `src/modules.js`
+(Part 2 moved the list there from `src/app.js`, so the e2e test build can swap in a demo module):
 
 ```js
 export default {
@@ -89,10 +97,15 @@ export default {
   },
   defaultData: () => ({ /* fresh data */ }),
   validate: (data) => [],       // returns a list of problems; [] means complete (used by backup verify)
-  routes: { '': renderHome, 'log': renderLog },   // #/gym, #/gym/log
-  todayCard: (data) => ({ title, lines: [], action: { label, route } }) // or null
+  routes: { '': renderHome, 'log': renderLog },   // #/gym, #/gym/log; '' is required
+  todayCard: (data) => ({ title, lines: [], action: { label, route } }) // or null; may be left out
 };
 ```
+
+Each route function is called as `render({ root, data, readOnly, save, navigate })`: `root` is the `<main>` element
+to fill, `data` the module's current data, `save(newData)` stores it (and rejects with `NewerDataError` when the
+stored data is newer than the code), `navigate('#/gym/log')` changes screen. An action `route` may be `'gym/log'`
+or `'#/gym/log'`. The registry (`src/core/registry.js`) rejects a module that breaks this contract.
 
 The core never reaches into a module's data except through `validate`, `migrations` and `defaultData`. Modules never
 touch another module's store; cross-module features (Fridge → Bulgarian cards) go through a small core API,
@@ -158,5 +171,6 @@ Progress (per module, in IndexedDB and backups):
   viewport.
 - `.github/workflows/ci.yml`: on push to `main`, run both; only if they pass, deploy the repo's app files to GitHub
   Pages with the official Pages actions. On other branches: tests only.
-- The service worker's cache name includes the app version from `src/version.js`; CI fails if a commit changes app
+- The service worker's cache name includes the app version from `src/version.js` (repeated as a constant at the top
+  of `sw.js`, because a byte change in `sw.js` is what makes the phone see an update; a unit test keeps them equal); CI fails if a commit changes app
   files without bumping it (so the phone always sees updates).
