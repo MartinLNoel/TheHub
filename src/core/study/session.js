@@ -6,6 +6,7 @@
 //   4. debrief    score, mastery changes, next pointer (finishSession)
 // The session lives in `progress.activeSession` and is saved after every step, so it can be stopped
 // at any point and resumed. Answers are recorded (attempts + review queue) the moment they are given.
+import { localDate } from '../dates.js';
 import { applyMastery, calibrate, dueReviews, masteryOf, nextSessionNo, questionStats, recordAttempt } from './progress.js';
 
 // PLACEHOLDER(Q-14): default sizes and the re-teach rule (pointer stays below the pass mark).
@@ -197,7 +198,7 @@ export function finishSession(progress, course, { now = new Date(), passMark = S
   const lesson = course.lessons.find((l) => l.id === s.lessonId);
   const session = {
     no: s.no,
-    date: new Date(now).toISOString().slice(0, 10),
+    date: localDate(now), // the local calendar day (Q-18), not the UTC one
     section: s.lessonId,
     score: percent,
     correct,

@@ -2,6 +2,31 @@
 
 Dated entries, newest first.
 
+## 2026-10-18 — Fix Q-18: study sessions dated with the local day (version 0.6.3)
+
+Fixed autonomously while Martin was away, on branch `fix/local-date`, merged into local `main` (not pushed).
+
+- **Bug:** lesson sessions (`finishSession`) and mocks (`finishMock`) saved their `date` as the UTC day
+  (`toISOString().slice(0, 10)`), while the ISTQB home and Today card compare it with the local day. Between local
+  midnight and 01:00 (02:00 in summer) a session just done showed "Last session: 1 day ago" and the 10-day
+  warm-up count could be a day off.
+- **Tests first:** `tests/unit/local-date.test.js` (session and mock finished at 00:30 Amsterdam time = 22:30 UTC
+  the day before; both failed on the old code with `'2026-10-17'` instead of `'2026-10-18'`), and the e2e test
+  "import progress, then a session" now runs with the browser pinned to `Europe/Amsterdam` and a fixed clock at
+  00:20 local (it failed on the old code with "Last session: 1 day ago."), so it no longer depends on the hour the
+  suite runs.
+- **Fix:** one shared helper, `src/core/dates.js` (`localDate`, `addDays`, `daysBetween`). Used by
+  `session.js`, `mock.js`, `scheduler.js` (re-exports it; the SM-2 card dates were already local),
+  `transfer.js` (export file name, already local), and the ISTQB `rules.js` (`daysSinceLastSession`; the
+  module's own `localISO` copy is gone). Timestamps (`at`, `startedAt`, backups) stay ISO instants. The **Gym is
+  unchanged** on purpose: it keeps gainz-tracker's UTC "today" until Martin answers Q-11.
+- **No migration:** no stored value changes shape. `sessions[].date` was and stays a `YYYY-MM-DD` string; only
+  the day chosen for a session finished just after local midnight changes, and only for new sessions. Old values
+  cannot be told apart (a session has no stored time of day) and none exist yet: the app has never been
+  deployed, so every session date on the phone will be written by the fixed code; the imported Notion sessions
+  carry their own calendar dates. So the schema version stays 1.
+- Unit and e2e suites pass in local time and with `TZ=UTC`.
+
 ## 2026-10-18 — Part 6 content run: Chapter 4 (version 0.6.2)
 
 Written autonomously while Martin was away, on branch `content/istqb-ch4`, merged into local `main` (not pushed).

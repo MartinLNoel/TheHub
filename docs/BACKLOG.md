@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-18, after the Ch4 content run)
+## Where things stand (2026-10-18, after the Q-18 fix)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -41,6 +41,10 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   checked with a throwaway script. The ≥ 6 per objective check now runs for Chapter 4, plus a ≥ 10 check for its
   K3 LOs and a course-order check. **Q-17 narrowed:** the lesson after §3.2 is now §4.1; the same gap now sits
   between §4.5 and §6.1 until the Ch5 run ships (see Q-17 before studying past §4.5).
+- **Fix Q-18: done** (version 0.6.3, branch `fix/local-date`, merged into local `main`, not pushed). Study sessions
+  and mocks are dated with the local day through the new `src/core/dates.js`; no migration (same shape, no old
+  dates on the phone). The e2e "import progress, then a session" is pinned to Amsterdam at 00:20, so it no longer
+  depends on the hour it runs. The Gym keeps UTC (Q-11, now with a note on how to switch).
 - **Next: the remaining Part 6 content runs**, one session each, with the prompt in `docs/content-loop.md`:
   1. **Ch5**: lessons 5.1–5.5 + questions (≥ 8 for 5.1.4, 5.1.5, 5.5.1). Ship it before Martin reaches §4.5.
   2. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
@@ -123,8 +127,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - The gainz import was tested only with a synthetic file of the same shape; the first real import is the real test
   (watch the preview counts against gainz-tracker).
 - Migrations are blocked while backups are not set up (Q-8).
-- Study sessions are dated in UTC but compared with the local date (Q-18): the e2e test "import progress, then a
-  session" fails between local midnight and 02:00 CEST. Fix in the next code session.
+- Calendar dates: the study engine and ISTQB use the local day (`src/core/dates.js`, Q-18 fixed in 0.6.3); the Gym
+  still uses the UTC day on purpose until Q-11 is answered.
 - Study engine: the Today card learns the next lesson's title only once the course has loaded (the first Today
   render after opening may lack that line). Course content is fetched from `content/<course>/` (network first,
   cache fallback); Part 6 must add its content files to `PRECACHE` (the shell test now requires it) so the course

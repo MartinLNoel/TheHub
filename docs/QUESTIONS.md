@@ -64,6 +64,10 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   for the day before; (2) Check-in's "This Week" counts from Sunday, while everything else (week target, streak,
   the Monday reset to Upper A) uses Monday to Sunday. Fix both after that week? · Late-night sessions land on the
   wrong day; a confusing count. · `src/modules/gym/logic.js` (`todayISO`, `checkinThisWeek`) · open
+  - *Note 2026-10-18 (Q-18 fix):* the core now has one local-date helper, `src/core/dates.js` (`localDate`,
+    `addDays`, `daysBetween`), used by the study engine. If you say yes to (1), the switch is small: `todayISO`
+    in `src/modules/gym/logic.js` (and `loggedToday` in `src/modules/gym/index.js`) call `localDate(now)`; the
+    stored Gym dates keep their `YYYY-MM-DD` shape, so no migration. The Gym was left on UTC for now.
 - **Q-12** · Small Part 4 choices: the Gym's own tabs are **Workout · History · Fighter · Protein · Check-in**
   (gainz calls the first two Today and Log; renamed so they do not clash with TheHub's Today, and so "Log workout"
   = `#/gym/log` opens the logging screen); the gainz Notion backup and its setup screen are gone (TheHub's backup
@@ -120,6 +124,8 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
     skip Chapter 5. Default kept: option (a), ship the Ch5 run before you reach §4.5 (six Ch4 lessons ahead of
     you). Answer still wanted: (a) or (b). Q-17 moves to Answered when the Ch5 lessons exist.
 
+## Answered
+
 - **Q-18** · **Bug found (not fixed: the Ch4 content run may only edit content, tests and docs).** A study session
   is saved with its **UTC** date (`finishSession`: `new Date(now).toISOString().slice(0, 10)`), but the ISTQB home
   compares it with the **local** date (`daysSinceLastSession` uses `localISO`). Between midnight and 01:00 (02:00
@@ -129,8 +135,10 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   fix (next code session): store the local date (`localISO`) in `finishSession`, with a unit test at 23:30 UTC.
   Same family as Q-11 (the Gym's UTC "today"). OK to fix that way? · Wrong "last session" and warm-up day count
   late at night. · `src/core/study/session.js` (`finishSession`, `date:`), `src/modules/istqb/rules.js`
-  `daysSinceLastSession` (no PLACEHOLDER marker added: code was out of scope) · open
-
-## Answered
-
-(none yet)
+  `daysSinceLastSession` (no PLACEHOLDER marker added: code was out of scope) · **answered (fixed 2026-10-18)**
+  - *Done 2026-10-18 (version 0.6.3, branch `fix/local-date`), as proposed, without waiting for an answer (a
+    plain bug):* new `src/core/dates.js` (`localDate`, `addDays`, `daysBetween`); `finishSession` and
+    `finishMock` store `localDate(now)`; `daysSinceLastSession` uses `daysBetween`. Tests: `tests/unit/local-date.test.js`
+    (failed before the fix) and the e2e "import progress, then a session" pinned to Amsterdam at 00:20 (failed
+    before). No migration: the stored shape is unchanged and no old-code dates exist on the phone (CHANGELOG).
+    The Gym is untouched (Q-11).
