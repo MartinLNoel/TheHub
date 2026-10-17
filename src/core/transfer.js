@@ -1,6 +1,6 @@
 // Export / import of everything as one JSON file, in the backup format of
-// docs/plans/part-0-overview.md ("Backup file format"). Part 3's backups reuse buildBackup and
-// verifyBackup from here.
+// docs/plans/part-0-overview.md ("Backup file format"). The GitHub backups (backup.js) reuse
+// buildBackup and verifyBackup from here.
 
 import { runMigrations } from './db.js';
 
@@ -141,10 +141,14 @@ export async function readImport(text, registry) {
   return verifyBackup(parsed, registry);
 }
 
-/** Writes a verified import into storage (replacing the modules it contains). */
-export async function applyImport(storage, verified) {
+/**
+ * Writes a verified import into storage (replacing the modules it contains).
+ * beforeReplace (optional) runs first and is awaited; if it throws, nothing is replaced. The
+ * Settings screen passes "take a verified backup of the current state" when backups are set up.
+ */
+export async function applyImport(storage, verified, { beforeReplace } = {}) {
   if (!verified?.ok) throw new Error('Refusing to import a file that did not pass verification.');
-  // PART 3: take a verified backup of the current state before replacing it.
+  if (beforeReplace) await beforeReplace();
   const entries = {};
   for (const [id, m] of Object.entries(verified.modules)) {
     entries[id] = { schemaVersion: m.schemaVersion, data: m.data };

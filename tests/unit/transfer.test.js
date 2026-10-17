@@ -143,3 +143,23 @@ describe('helpers', () => {
     expect(exportFileName(new Date(2026, 9, 7))).toBe('thehub-export-2026-10-07.json');
   });
 });
+
+describe('import with a backup first', () => {
+  it('runs beforeReplace first, and replaces nothing when it fails', async () => {
+    const a = await setup({ notes: [{ text: 'from file' }] });
+    const verified = await readImport(JSON.stringify(await exportAll(a.storage, a.registry, '1')), a.registry);
+    const b = await setup({ notes: [{ text: 'current' }] });
+    await expect(
+      applyImport(b.storage, verified, { beforeReplace: async () => { throw new Error('backup failed'); } }),
+    ).rejects.toThrow('backup failed');
+    expect((await b.storage.readAll([demo])).demo.data.notes).toEqual([{ text: 'current' }]);
+
+    const order = [];
+    await applyImport(b.storage, verified, { beforeReplace: async () => order.push('backup') });
+    order.push('replaced');
+    expect(order).toEqual(['backup', 'replaced']);
+    expect((await b.storage.readAll([demo])).demo.data.notes).toEqual([{ text: 'from file' }]);
+    a.storage.close();
+    b.storage.close();
+  });
+});

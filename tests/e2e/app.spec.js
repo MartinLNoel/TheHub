@@ -138,7 +138,7 @@ test('a tampered import file is refused', async ({ page }) => {
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(exported)),
   });
-  await expect(page.getByRole('status')).toContainText('Checksum mismatch');
+  await expect(page.getByTestId('transfer-status')).toContainText('Checksum mismatch');
   await expect(page.getByTestId('import-confirm')).toHaveCount(0);
 });
 

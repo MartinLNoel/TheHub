@@ -1,7 +1,7 @@
 // TheHub service worker: offline cache and updates.
 // VERSION must equal src/version.js (a unit test checks it). Bumping it changes this file's bytes,
 // which is how the phone notices a new version.
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 const CACHE = `thehub-${VERSION}`;
 
 // The app shell, cached on install. Every file under src/ and icons/ must be listed
@@ -17,8 +17,11 @@ const PRECACHE = [
   'src/app.js',
   'src/version.js',
   'src/modules.js',
+  'src/core/backup.js',
+  'src/core/backup-screens.js',
   'src/core/db.js',
   'src/core/dom.js',
+  'src/core/github.js',
   'src/core/registry.js',
   'src/core/router.js',
   'src/core/screens.js',
