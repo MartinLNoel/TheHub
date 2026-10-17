@@ -2,6 +2,52 @@
 
 Dated entries, newest first.
 
+## 2026-10-17 — Part 4: Gym module (version 0.4.0)
+
+Built autonomously while Martin was away, on branch `part-4/gym`, merged into local `main` (not pushed). The two
+gainz Notion pages (coaching guide, app spec) were read, read-only; they agree with gainz-tracker's `app.js`.
+
+- **gainz-tracker (Step 1):** on its local branch `export-button` (commit c476b99, based on its `main` ea0373b; not
+  merged, not pushed): a visible **"⬇ Export all data (JSON)"** button on Check-in, next to "Restore from JSON
+  file", calling the existing `exportBackup()`. Checked by running the app in jsdom: the export holds `state` only
+  (workoutLogs, dayIndex, _mondayFixed, personalBests, proteinLogs, checkIns, phase, bodyweight, myFoods, and
+  lastSeenStage once the Fighter tab was opened), never `gainz_notion_token`. Nothing else changed there.
+- **Gym module (`src/modules/gym/`):** Workout (gainz "Today": GYM/HOME, sets pre-filled from the last time that day
+  was logged, personal bests, rest timer, Phase 2 prompt after 18 sessions), History (gainz "Log", with personal
+  bests), Fighter (10 stages, the evolving SVG character copied unchanged, power state at a 3-week streak, stage
+  preview by arrows, swipe or list, unlock toast and jump), Protein (ring, quick add, My Foods, one-off, today's log,
+  bodyweight), Check-in (stats, weekly check-in, history with weight change, coach notes). The program data
+  (`PROGRAM`, `WORKOUTS`, `HOME_WORKOUTS`, `QUICK_FOODS`, `STAGES`) is copied unchanged into `program.js`, and a unit
+  test compares it with gainz-tracker's `app.js`. The rules are pure functions in `logic.js`.
+- **Data:** schema version 1, the same fields as gainz `state` minus `_mondayFixed`; gainz's one-time date fix and
+  its Notion backup are dropped (TheHub's backups replace it). `validate`: every workout has a real date and
+  exercises, counts are 0 or more, dates parse.
+- **Decision: gainz's "pre-load historical workout data if starting fresh" block is not kept.** gainz-tracker ran
+  it whenever its list was empty and saved the result, so an export from the phone already holds those 7 sessions
+  (Feb to May 2026). A fresh TheHub would otherwise show sessions before the import, and the data is personal, which
+  the public repo must not hold. A fresh Gym starts empty; the history comes from the import. Martin to confirm
+  with his real export (QUESTIONS Q-10).
+- **Today card:** the planned workout ("Rest day" once the week's target is met, "Done today. Next: …" after a
+  session), sessions this week vs target, protein left today, streak; "Log workout" opens `#/gym/log`, as does the
+  manifest shortcut.
+- **Import from gainz-tracker (Settings):** reads the gainz export, maps and **merges** it into the Gym (it adds,
+  never deletes): workouts by id (by content when there is none), protein items and check-ins by content (counted,
+  so two identical shakes on a day stay two), saved foods by name and grams, the better personal best; Phase 2 is
+  never undone. Preview: workouts, protein days, check-ins and fighter stage in the file, what is new, and the
+  result. A verified TheHub backup is taken first when backups are set up (a failure stops the import). Importing
+  the same file again says "Nothing to import". When gainz-tracker runs on the same address
+  (`martinlnoel.github.io`), a button reads its data straight from the phone (only `gainz_state`).
+- **Core:** optional `importers` in the module contract (checked by the registry; `src/core/module-import.js`
+  renders them in Settings); an unknown screen of a shipped module now says "no screen" instead of "coming soon".
+- **Tests:** 182 unit tests and 28 e2e tests, all passing locally. New: parity with gainz-tracker's original
+  functions (copied unchanged into `tests/fixtures/gainz-original.js`) over generated histories and many "today"s
+  (streak, next day, sessions this week, stage, protein, pre-fill); mapping and double import with a **synthetic**
+  export (`tests/fixtures/gainz-export.synthetic.json`, never the real file); `validate`; e2e: log a workout and see
+  it on Today and in History, protein, check-in, the import (twice, from a file, from the phone's storage, with a
+  backup first and stopped when it fails).
+- **Docs:** Part 0 (gym files, `importers`), QUESTIONS Q-2 (what was found), Q-10 (pre-load decision), Q-11 (UTC
+  date and Sunday-week quirks kept on purpose), Q-12 (tab names and other port choices).
+
 ## 2026-10-17 — Part 3: verified backup and restore (version 0.3.0)
 
 Built autonomously while Martin was away, on branch `part-3/backup`, merged into local `main` (not pushed). GitHub

@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-17, after Part 3)
+## Where things stand (2026-10-17, after Part 4)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -11,7 +11,22 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - **Part 3 (verified backup and restore): built and merged into local `main`** (version 0.3.0), also autonomously.
   All unit and e2e tests pass locally; GitHub is only ever mocked in them, so **no real backup has been made yet**.
   New placeholders: Q-7, Q-8, Q-9.
-- Next: **Part 4 (Gym)**, branch `part-4/gym`.
+- **Part 4 (Gym): built and merged into local `main`** (version 0.4.0), also autonomously. All unit and e2e tests
+  pass locally. The import was built against a **synthetic** gainz export: Martin's real export does not exist yet.
+  gainz-tracker's export button is on its local branch `export-button` (c476b99), not merged or pushed. New
+  placeholders: Q-10, Q-11, Q-12; Q-2 has what was found.
+- Next: **Part 5 (study engine)**, branch per `docs/plans/part-5-study-engine.md`.
+
+## Martin's USER ACTIONS still open for Part 4
+
+(After Part 1 and the first push.)
+1. gainz-tracker: merge the local branch `export-button` into `main` and push (Q-2 says how it reaches the phone).
+2. On the phone: export from gainz-tracker (Check-in → **⬇ Export all data (JSON)**), then in TheHub **Settings →
+   Import from gainz-tracker** (or "Use the gainz-tracker data on this phone" if that button shows). Answer Q-10.
+3. Compare side by side: same number of workouts, same fighter stage, same protein today.
+4. Use TheHub for workouts for one week; keep gainz-tracker installed but stop logging there.
+5. After that week, if nothing is missing: tell Claude to archive gainz-tracker (README note, archived repo, its
+   `CLAUDE.md` pointing to TheHub, hub entry). **Not done: Martin's call.**
 
 ## Martin's USER ACTIONS still open for Part 3
 
@@ -38,7 +53,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 
 - [ ] Part 1 (Martin, manual) — Q-3
 - [x] Part 3: verified backup and restore (code done; Martin's token, first real backup and restore drill open)
-- [ ] Part 4: Gym · Part 5: study engine · Part 6: ISTQB · Part 7: Bulgarian (gated) · Part 8: Fridge
+- [x] Part 4: Gym (code done; Martin's export, import, side-by-side week and gainz-tracker's retirement open)
+- [ ] Part 5: study engine · Part 6: ISTQB · Part 7: Bulgarian (gated) · Part 8: Fridge
 
 ## Known gaps and notes
 
@@ -48,6 +64,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - Backups have never talked to the real GitHub API: the client follows GitHub's documented contents/commits
   endpoints and CORS, but only the phone run (USER ACTIONS above) proves it. Watch for: the 401/403/404 texts,
   the read-back at the new commit, and `redirect: 'manual'` (a renamed repo is reported, not followed).
-- With no module shipped, the shipped build has nothing to back up; the Backups card stays at "No verified backup
-  yet" until Part 4.
+- Part 4 ships the first module (Gym), so backups now have data; Part 3's restore drill can be done once the Gym
+  has some.
+- The gainz import was tested only with a synthetic file of the same shape; the first real import is the real test
+  (watch the preview counts against gainz-tracker).
 - Migrations are blocked while backups are not set up (Q-8).

@@ -74,7 +74,8 @@ describe('index.html', () => {
 });
 
 describe('shipped modules', () => {
-  it('ships no module yet, and never the demo module', () => {
+  it('ships the Gym module, and never the demo module', () => {
+    expect(modules.map((m) => m.id)).toEqual(['gym']);
     expect(modules.map((m) => m.id)).not.toContain('demo');
   });
 });

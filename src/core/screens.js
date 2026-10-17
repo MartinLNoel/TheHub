@@ -9,8 +9,9 @@ export const PLANNED = {
   fridge: { name: 'Fridge', icon: '🧊', part: 8 },
 };
 
-export function renderComingSoon(root, { section, screen }) {
-  const planned = PLANNED[section];
+export function renderComingSoon(root, { section, screen, built = false }) {
+  // A module that is already in this build but has no such screen is "not here", not "coming soon".
+  const planned = built ? null : PLANNED[section];
   const title = planned ? `${planned.icon} ${planned.name}` : 'Not here yet';
   const text = planned
     ? `${planned.name} is coming soon. It arrives with a later update.`

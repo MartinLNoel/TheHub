@@ -1,8 +1,9 @@
-// Settings screen (#/settings): theme, backup, export and import.
+// Settings screen (#/settings): theme, backup, export and import, and module importers.
 import { h, mount } from './dom.js';
 import { applyImport, countItems, downloadJSON, exportAll, readImport } from './transfer.js';
 import { assertNoSecret } from './backup.js';
 import { backupSettingsCard } from './backup-screens.js';
+import { importerCards } from './module-import.js';
 
 export const THEMES = ['system', 'light', 'dark'];
 
@@ -111,6 +112,7 @@ export async function renderSettings(root, ctx) {
         fileInput,
         status,
       ),
+      importerCards(root, ctx, () => renderSettings(root, ctx)),
       h('p', { class: 'muted' }, `TheHub version ${ctx.appVersion}`),
     ),
   );
