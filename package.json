@@ -1,0 +1,22 @@
+{
+  "name": "thehub",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TheHub: Martin's personal multi-module phone web app. npm is for dev tooling only; the app ships as plain files.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "serve": "node scripts/serve.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "check:version": "node scripts/check-version-bump.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "fake-indexeddb": "^6.2.6",
+    "jsdom": "^29.1.1",
+    "vitest": "^5.0.5",
+    "yaml": "^2.9.1"
+  }
+}

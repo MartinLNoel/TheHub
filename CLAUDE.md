@@ -24,10 +24,17 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | What the app must do, and why | `SPEC.md` |
 | Architecture, folder layout, data and module contracts | `docs/plans/part-0-overview.md` |
 | Building the next part | `docs/plans/part-N-*.md` (the next unstarted one, per `docs/BACKLOG.md`) |
-| Where things stand, what is next | `docs/BACKLOG.md` *(started when Part 1 begins)* |
-| What changed | `docs/CHANGELOG.md` *(started when Part 1 begins)* |
+| Where things stand, what is next | `docs/BACKLOG.md` |
+| What changed | `docs/CHANGELOG.md` |
 | Open questions for Martin and every placeholder | `docs/QUESTIONS.md` |
-| Longer-term ideas | `docs/ROADMAP.md` *(started when Part 1 begins)* |
+| Longer-term ideas | `docs/ROADMAP.md` |
 
 ## Plan status
-Parts 0–8 written 2026-10-17; no part started yet. Bulgarian (Part 7) is gated on the course book.
+Parts 0–8 written 2026-10-17. Part 2 (core shell) built 2026-10-17 and merged into local `main`; nothing pushed yet
+(Part 1's repos are Martin's to create). Next: Part 3. Bulgarian (Part 7) is gated on the course book.
+Details: `docs/BACKLOG.md`.
+
+## Commands
+`npm test` (unit, Vitest) · `npm run e2e` (Playwright, phone viewport; first run `npx playwright install chromium`)
+· `npm run serve` (the app at http://localhost:4173/TheHub/). Bump `VERSION` in `src/version.js` **and** `sw.js`
+whenever app files change; add every new app file to `PRECACHE` in `sw.js` (tests check both).

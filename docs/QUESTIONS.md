@@ -16,6 +16,12 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   Pages to "GitHub Actions"; then push. Nothing has been pushed anywhere. · Nothing is online until this is done. ·
   Part 1 · open (action, not a question)
 - **Q-4** · Bulgarian course book: still to find. · Part 7's lessons follow it. · Part 7 · open
+- **Q-5** · App icon and colours: Part 2 ships a generated placeholder icon (a white "hub" wheel on blue, #2f6fde)
+  and a neutral blue accent. Do you want a different icon or colour? · It is what you see on the home screen. ·
+  `scripts/make-icons.mjs` (regenerate with `npm run icons`), `icons/`, `style.css` tokens · open
+- **Q-6** · Version numbers: Part 2 starts at `0.2.0` and the plan is to bump the middle number per plan part and the
+  last number per fix, reaching `1.0.0` when you use TheHub daily. OK? · The version shows in Settings and names the
+  offline cache. · `src/version.js` (and `sw.js`) · open
 
 ## Answered
 

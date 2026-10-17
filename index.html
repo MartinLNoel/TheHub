@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>TheHub</title>
+  <meta name="description" content="Martin's personal hub: training, studying and household.">
+  <meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="src/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1 id="title" class="topbar__title">TheHub</h1>
+    <a href="#/settings" class="icon-btn" aria-label="Settings" data-testid="settings-link">⚙️</a>
+  </header>
+  <main id="screen" class="screen" tabindex="-1">
+    <p class="muted">Loading…</p>
+  </main>
+  <nav id="nav" class="bottomnav" aria-label="Sections"></nav>
+  <noscript><p class="screen">TheHub needs JavaScript.</p></noscript>
+</body>
+</html>
