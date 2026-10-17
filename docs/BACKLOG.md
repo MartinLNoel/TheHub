@@ -4,6 +4,10 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 
 ## Where things stand (2026-10-18, after the Ch1–2 questions run: Part 6 content complete)
 
+> **PAUSED by Martin on 2026-10-18 during Part 8 (Fridge).** The Fridge work is WIP commit `427e21e` on branch
+> `part-8/fridge`: written, but its final test runs (unit + e2e, local and UTC) had not run, and it is not merged.
+> `main` is complete up to Part 6. To resume: check out `part-8/fridge`, run all tests, fix, squash the WIP commit, merge.
+
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
   every placeholder is in `QUESTIONS.md`. All unit and e2e tests pass locally. The CI workflow is written and its
