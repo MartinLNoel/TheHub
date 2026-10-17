@@ -77,8 +77,9 @@ describe('index.html', () => {
 });
 
 describe('shipped modules', () => {
-  it('ships the Gym module, and never the demo module', () => {
-    expect(modules.map((m) => m.id)).toEqual(['gym']);
+  it('ships the Gym and ISTQB modules, and never the demo or sample module', () => {
+    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb']);
+    expect(modules.map((m) => m.id)).not.toContain('sample');
     expect(modules.map((m) => m.id)).not.toContain('demo');
   });
 });

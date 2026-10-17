@@ -1,0 +1,200 @@
+[
+  {
+    "id": "q3.1.1-a",
+    "objective": "FL-3.1.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Your team wants to start testing the new trading feature while the code is still being written. Which of the following can be examined by static testing?",
+    "options": [
+      "Only the trading code, once it compiles without errors",
+      "The user stories and acceptance criteria written for the trading feature",
+      "Only work products that were written by the test team",
+      "Only the trading screen as it behaves in a running build"
+    ],
+    "answer": "B",
+    "why": "Static testing can examine almost any work product people can read and understand, including user stories and acceptance criteria, long before code exists.",
+    "distractorNotes": {
+      "A": "Code can be examined statically even before it compiles, and code is far from the only target.",
+      "C": "Anyone's work products can be examined: designers', developers' and managers' as well as testers'.",
+      "D": "Watching the running build is dynamic testing: something is executed."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.1-b",
+    "objective": "FL-3.1.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A studio licenses an anti-cheat module that arrives only as an encrypted binary; the contract forbids reverse engineering it. Which work product is NOT appropriate for static testing?",
+    "options": [
+      "The C# scripts the studio wrote to call the anti-cheat module",
+      "The design document describing how the anti-cheat module is integrated",
+      "The anti-cheat module's encrypted binary itself",
+      "The test cases written to check the integration"
+    ],
+    "answer": "C",
+    "why": "Work products that people cannot sensibly interpret and that must not be analysed by tools (here for legal reasons) are not appropriate for static testing.",
+    "distractorNotes": {
+      "A": "The studio's own scripts are readable source code: a classic target for reviews and static analysis.",
+      "B": "Design documents are typical review targets.",
+      "D": "Testware such as test cases can be reviewed like any other work product."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.1-c",
+    "objective": "FL-3.1.1",
+    "kLevel": "K1",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which list contains ONLY work products that can be examined by static testing?",
+    "options": [
+      "A test plan, a level-design document, the localisation string table",
+      "A test plan, the frame time measured on a device, the localisation string table",
+      "The memory use observed during a soak test, a contract, a project schedule",
+      "A level-design document, the server's measured response times, a user story"
+    ],
+    "answer": "A",
+    "why": "Test plans, design documents and string tables are all readable work products, so all three can be reviewed or analysed without running anything.",
+    "distractorNotes": {
+      "B": "A frame time measured on a device is the result of executing the game, not a work product to review.",
+      "C": "Memory use observed during a soak test comes from running the software: dynamic testing.",
+      "D": "Measured response times come from execution; the other two items are fine."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.2-a",
+    "objective": "FL-3.1.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "While reviewing the quest design document, a tester notices that two quests both reward the same unique sword. The designer fixes the document in ten minutes. Which benefit of static testing does this BEST illustrate?",
+    "options": [
+      "Static testing shows that the quest document now has no remaining defects",
+      "Static testing makes dynamic testing of the quests unnecessary",
+      "Static testing measures how efficiently the quest system performs",
+      "Defects are found early in the lifecycle, when they are cheaper to fix"
+    ],
+    "answer": "D",
+    "why": "The defect was found in a document before any code existed, so it was fixed cheaply instead of reaching a build or a release.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: testing shows the presence of defects, never their absence.",
+      "B": "Static and dynamic testing are complementary; neither replaces the other.",
+      "C": "Performance efficiency depends on execution and is measured by dynamic testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.2-b",
+    "objective": "FL-3.1.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which defect can static testing find that dynamic testing typically CANNOT find?",
+    "options": [
+      "A method in the save system that no code path can ever call",
+      "A frame-rate drop when 200 enemies spawn at once",
+      "A crash that happens only with one specific graphics driver",
+      "A memory leak that grows over a three-hour play session"
+    ],
+    "answer": "A",
+    "why": "Unreachable code is never executed, so no dynamic test can make it fail; a review or a static analyser can see it directly.",
+    "distractorNotes": {
+      "B": "A frame-rate drop is a behaviour of the running game, found by dynamic (performance) testing.",
+      "C": "A driver-specific crash only shows up when the game runs on that configuration.",
+      "D": "A leak that grows over time is typically found by running the game for a long time."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.2-c",
+    "objective": "FL-3.1.2",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which statement about the value of static testing is CORRECT?",
+    "options": [
+      "Static testing can only start once the code is complete",
+      "Because reviews take effort, static testing always increases the total cost of a project",
+      "Reviews help designers, developers and testers reach a shared understanding of the requirements",
+      "Static testing is useful only for finding defects in source code"
+    ],
+    "answer": "C",
+    "why": "Reviewing together makes stakeholders read the same requirement the same way, which prevents misunderstandings from reaching the code.",
+    "distractorNotes": {
+      "A": "Static testing can start as soon as any work product exists, e.g. the first draft of the requirements.",
+      "B": "Overgeneralisation: reviews cost effort, but finding defects early usually lowers the total project cost.",
+      "D": "Requirements, designs and testware are typical static testing targets too."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.3-a",
+    "objective": "FL-3.1.3",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "A tester plays the build and sees the shop charge 100 gold for an item priced at 10. A developer debugs it and finds a wrong constant. The day before, a static analyser had flagged the same constant without running the game. Which statement BEST describes the difference?",
+    "options": [
+      "Static testing found the failure; dynamic testing found the defect",
+      "Static testing found the defect directly; dynamic testing caused a failure that then had to be analysed",
+      "Both approaches found the same failure, so they are interchangeable",
+      "Dynamic testing found the error; static testing found its root cause"
+    ],
+    "answer": "B",
+    "why": "Static testing works on the work product itself and finds the defect directly; dynamic testing makes the software fail, and the defect behind the failure is found afterwards by analysis (debugging).",
+    "distractorNotes": {
+      "A": "Swapped: a failure can only be seen when the software runs, which is dynamic testing.",
+      "C": "Static testing found a defect without any failure; the approaches are complementary, not interchangeable.",
+      "D": "Term swap: the wrong constant is a defect, not an error, and neither approach found a root cause here."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.3-b",
+    "objective": "FL-3.1.3",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 2,
+    "stem": "Which quality characteristic is BEST evaluated by static testing rather than by dynamic testing?",
+    "options": [
+      "How quickly a level loads on the target console",
+      "How the matchmaking service behaves with 10,000 players online",
+      "How quickly the game reacts to controller input",
+      "How maintainable the inventory code is, e.g. its complexity"
+    ],
+    "answer": "D",
+    "why": "Maintainability does not depend on execution, so it is measured by examining the code itself (static testing).",
+    "distractorNotes": {
+      "A": "Load time is performance efficiency, which depends on execution: dynamic testing.",
+      "B": "Behaviour under load can only be seen by running the service: dynamic (performance) testing.",
+      "C": "Input responsiveness depends on execution on real hardware: dynamic testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q3.1.3-c",
+    "objective": "FL-3.1.3",
+    "kLevel": "K2",
+    "chapter": 3,
+    "difficulty": 1,
+    "stem": "Which defect is typically EASIER to find with static testing than with dynamic testing?",
+    "options": [
+      "Two requirements in the GDD that contradict each other",
+      "A shader that renders incorrectly on one phone model",
+      "A desynchronisation that appears only under heavy network load",
+      "A save file that becomes corrupt after 50 autosaves"
+    ],
+    "answer": "A",
+    "why": "Contradictions between requirements live in a document that cannot be executed; reading it (a review) finds them directly.",
+    "distractorNotes": {
+      "B": "A device-specific rendering problem shows up when the game runs on that device.",
+      "C": "Load-dependent behaviour needs execution under load to appear.",
+      "D": "A defect that shows after many autosaves is found by running the game repeatedly."
+    },
+    "source": "generated"
+  }
+]

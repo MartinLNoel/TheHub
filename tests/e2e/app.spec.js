@@ -36,7 +36,7 @@ test('Today shows the demo module card and the backup placeholder', async ({ pag
 test('the bottom nav and the header move between screens', async ({ page }) => {
   await open(page);
   const tabs = page.locator('#nav .tab');
-  await expect(tabs).toHaveText([/Today/, /Gym/, /Demo/, /Sample/]);
+  await expect(tabs).toHaveText([/Today/, /Gym/, /ISTQB/, /Demo/, /Sample/]);
 
   await page.locator('#nav [data-section="demo"]').click();
   await expect(page).toHaveURL(/#\/demo$/);
@@ -65,11 +65,11 @@ test('module data is saved and shows on Today after a reload', async ({ page }) 
   await expect(page.locator('[data-module="demo"]')).toContainText('2 notes');
 });
 
-test('shortcut routes for modules not built yet show "coming soon"; "Log workout" opens the Gym', async ({ page }) => {
-  for (const hash of ['#/istqb', '#/fridge/scan']) {
-    await open(page, hash);
-    await expect(page.getByTestId('coming-soon')).toContainText('coming soon');
-  }
+test('shortcut routes: "Scan item" (not built yet) shows "coming soon"; "Study" opens ISTQB; "Log workout" opens the Gym', async ({ page }) => {
+  await open(page, '#/fridge/scan');
+  await expect(page.getByTestId('coming-soon')).toContainText('coming soon');
+  await open(page, '#/istqb');
+  await expect(page.getByTestId('study-home')).toHaveAttribute('data-module', 'istqb');
   await open(page, '#/gym/log');
   await expect(page.getByTestId('gym-workout')).toBeVisible();
   await expect(page.getByTestId('gym-log-workout')).toBeVisible();

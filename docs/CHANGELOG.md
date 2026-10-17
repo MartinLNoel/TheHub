@@ -2,6 +2,39 @@
 
 Dated entries, newest first.
 
+## 2026-10-17 — Part 6a: ISTQB module, progress import, content scaffolding (version 0.6.0)
+
+Built autonomously while Martin was away, on branch `part-6/istqb`, merged into local `main` (not pushed). Paused
+once by Martin mid-run (work saved as a WIP commit) and resumed. Notion was read only (no page created or changed).
+
+- **Progress import (Step 1):** read the CTFL v4 Session States database (the newest state pages), the Legacy Analysis, the Exam Style Guide, the Official Question Pool Index and the
+  Upgrade Spec. Their content went into a private extract (`private/istqb-notion-extract.json`);
+  `scripts/istqb-import.mjs` converts it into the engine's progress and writes `private/istqb-progress.json` in
+  the backup format (checksum verified). Both git-ignored, never committed. A Style Guide summary, the Legacy
+  emphasis lists, the terminology list and Martin's trap log are in `private/istqb-notes.md`.
+- **Module (`src/modules/istqb/`):** on `createStudyModule`. Home summary (Chapters X/6, readiness level and
+  gate, next step, warm-up note, mastery by chapter, wrong answers); sessions in the tutor format; Chapter 3–6
+  mini-mocks (10 questions: 7 + 3 cumulative, 15 min); the full mock (40 questions / 60 min, Ch1:8 Ch2:6 Ch3:4
+  Ch4:11 Ch5:9 Ch6:2); the readiness gate (two consecutive complete full mocks ≥ 80 %); a chapter is banked by
+  its mini-mock at ≥ 65 %; after more than 10 days the next session opens with a 5-question cumulative warm-up;
+  wrong-answer review (imported answers keep their text) with "Retry my wrong answers"; flashcards; feedback with
+  `handled-feedback.json`; Today card; the Study shortcut now opens it; Settings → **Import ISTQB progress**
+  (refuses to overwrite study done in TheHub, re-import is a no-op, keeps TheHub feedback and cards).
+- **Content scaffolding (`content/istqb/`):** a manifest (`index.json`) with per-chapter files, `objectives.json`
+  (all 64 LOs, 14 K1 · 42 K2 · 8 K3, titles in our own words), the example lesson §3.1 with 9 questions, 22
+  terminology and mnemonic flashcards, empty files for the later runs.
+- **Engine:** content manifests (`contentManifest`), hooks `adjustSession` and `homeCards`, step `label`s carried
+  into the debrief, a `"__done__"` pointer resumes when lessons are added later, imported lesson sessions may list
+  their `objectives` for delayed retrieval.
+- **Docs:** `docs/istqb-content-guide.md` (house style, copyright rules, layout), `docs/content-loop.md` (procedure
+  and ready-to-paste prompt, also for the content runs), both linked from `CLAUDE.md`.
+- **Tests:** objectives (64; 14/42/8; per chapter), shipped content rules (K-level, chapter, file, no mnemonic in
+  stems), ≥ 6 questions per objective (pending until the content runs finish), official full-mock weighting,
+  mini-mock split, chapters banked, readiness gate, 10-day warm-up, next step, the Notion import on a synthetic
+  fixture, the in-app importer, Today card and home summary, manifest loading. E2E: import, a session, the
+  Chapter 3 mini-mock and the full mock, wrong-answer review, phone fit. An existing backup e2e test now polls
+  for the commit instead of reading it once (it raced).
+
 ## 2026-10-17 — Part 5: shared study engine (version 0.5.0)
 
 Built autonomously while Martin was away, on branch `part-5/study-engine`, merged into local `main` (not pushed).

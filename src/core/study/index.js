@@ -16,6 +16,8 @@ export { checkCourse, loadCourse } from './content.js';
  *   id, name, icon                 as in the module contract
  *   content                        { lessons, questions, cards } given directly, or
  *   contentBase                    a folder URL relative to the app, e.g. 'content/istqb/'
+ *   contentManifest                optional file in contentBase listing the course files per kind
+ *                                  (e.g. 'index.json': { lessons: [...], questions: [...], cards: [...] })
  *   schemaVersion, migrations      default 1, {} (the module's own versions)
  *   extendDefault(data)            adds module-specific fields to the default progress
  *   validateExtra(data)            problems with those fields
@@ -26,6 +28,9 @@ export { checkCourse, loadCourse } from './content.js';
  *   handledFeedback                feedback ids the content loop has handled (list or function)
  *   routes                         extra or replacement routes, merged over the engine's
  *   todayCard(data, course)        replaces the default Today card (course may be null while loading)
+ *   adjustSession(session, course, data)   may change a newly built session before it starts
+ *                                  (ISTQB's 10-day warm-up); returns the session to start
+ *   homeCards(ctx, course, data)   extra cards (DOM nodes) shown at the top of the course home
  */
 export function createStudyModule(config) {
   let loading = null;
@@ -34,7 +39,9 @@ export function createStudyModule(config) {
     if (!loading) {
       loading = config.content
         ? Promise.resolve(checkCourse(config.content))
-        : loadCourse(new URL(config.contentBase, globalThis.document?.baseURI ?? globalThis.location?.href).href);
+        : loadCourse(new URL(config.contentBase, globalThis.document?.baseURI ?? globalThis.location?.href).href, undefined, {
+            manifest: config.contentManifest,
+          });
       loading.then((c) => (loaded = c));
     }
     return loading;

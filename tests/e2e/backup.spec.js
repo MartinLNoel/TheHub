@@ -125,7 +125,8 @@ test('backs up automatically on start when the last verified backup is over 24 h
   await seedCore(page, { backupToken: TEST_TOKEN, backupStatus: { lastVerifiedBackup: iso(25 * HOUR) } });
   await expect(card(page)).toHaveAttribute('data-state', 'ok');
   await expect(card(page)).toContainText('✓');
-  expect(fake.commits).toHaveLength(1);
+  // The commit may land a moment after the card turns green: poll instead of reading once.
+  await expect.poll(() => fake.commits.length).toBe(1);
   expect(fake.latest().message).toMatch(/automatic/);
 });
 

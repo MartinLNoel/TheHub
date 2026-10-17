@@ -298,3 +298,38 @@ describe('progress shape', () => {
     expect(validateProgress(p)).toEqual([]);
   });
 });
+
+describe('Part 6 engine additions', () => {
+  it('a finished course carries on when lessons are added after its last studied lesson', () => {
+    const first = { ...course, lessons: course.lessons.slice(0, 1) };
+    const p = { ...defaultProgress(), pointer: '__done__', sessions: [{ no: 1, kind: 'lesson', section: first.lessons[0].id, date: '2026-10-01' }] };
+    expect(nextLesson(first, p)).toBe(null);
+    expect(nextLesson(course, p).id).toBe(course.lessons[1].id);
+    // Done and the last lesson studied: still done.
+    const last = course.lessons.at(-1).id;
+    expect(nextLesson(course, { ...p, sessions: [{ no: 1, kind: 'lesson', section: last }] })).toBe(null);
+    // Done with no lesson sessions at all (e.g. imported): stays done.
+    expect(nextLesson(course, { ...defaultProgress(), pointer: '__done__' })).toBe(null);
+  });
+
+  it('delayed retrieval also reaches objectives that imported sessions list themselves', () => {
+    const p = {
+      ...defaultProgress(),
+      sessions: [{ no: 1, kind: 'lesson', section: 'not-in-course', objectives: [course.questions[0].objective], date: '2026-07-01' }],
+      pointer: course.lessons.at(-1).id,
+    };
+    const s = buildSession(course, p, { sessionNo: 3, rng: fixedRng, retrievalCount: 2 });
+    const retrieval = s.steps.filter((x) => x.type === 'retrieval').map((x) => Q(x.questionId).objective);
+    expect(retrieval.length).toBeGreaterThan(0);
+    expect(new Set(retrieval)).toEqual(new Set([course.questions[0].objective]));
+  });
+
+  it('a step label (e.g. Warm-up) is carried into the debrief rows', () => {
+    const q = course.questions[0];
+    let p = { ...defaultProgress(), activeSession: { no: 1, kind: 'lesson', lessonId: null, steps: [{ type: 'drill', questionId: q.id, label: 'Warm-up' }], index: 0, answers: {} } };
+    p = answerStep(p, course, q.answer);
+    p = advance(p, course);
+    const { debrief } = finishSession(p, course);
+    expect(debrief.drill.map((r) => r.label)).toEqual(['Warm-up']);
+  });
+});

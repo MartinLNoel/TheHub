@@ -15,7 +15,16 @@ export const SESSION_DEFAULTS = { drillSize: 4, quizSize: 5, retrievalCount: 2, 
 export function nextLesson(course, progress) {
   if (!course.lessons.length) return null;
   if (progress.pointer === null || progress.pointer === undefined) return course.lessons[0];
-  if (progress.pointer === '__done__') return null;
+  if (progress.pointer === '__done__') {
+    // Lessons added after the course was finished (content ships chapter by chapter): carry on
+    // after the last lesson studied, if there is one after it now.
+    const studied = new Set(progress.sessions.filter((s) => s.kind === 'lesson').map((s) => s.section));
+    let last = -1;
+    course.lessons.forEach((l, i) => {
+      if (studied.has(l.id)) last = i;
+    });
+    return last >= 0 ? course.lessons[last + 1] ?? null : null;
+  }
   return course.lessons.find((l) => l.id === progress.pointer) || course.lessons[0];
 }
 
@@ -59,10 +68,18 @@ export function pickQuestions(candidates, n, ctx, rng = Math.random) {
     .map((x) => x.q);
 }
 
-/** Objectives of lessons studied in lesson sessions numbered `sessionNo − 2` or earlier. */
+/**
+ * Objectives of lessons studied in lesson sessions numbered `sessionNo − 2` or earlier. A session may
+ * also carry its own `objectives` (imported history whose lessons are not in the course, e.g. ISTQB
+ * Chapters 1–2 studied before TheHub), so delayed retrieval reaches back into it too.
+ */
 export function delayedObjectives(course, progress, sessionNo) {
-  const ids = new Set(progress.sessions.filter((s) => s.kind === 'lesson' && s.no <= sessionNo - 2).map((s) => s.section));
-  return new Set(course.lessons.filter((l) => ids.has(l.id)).flatMap((l) => l.objectives));
+  const old = progress.sessions.filter((s) => s.kind === 'lesson' && s.no <= sessionNo - 2);
+  const ids = new Set(old.map((s) => s.section));
+  return new Set([
+    ...course.lessons.filter((l) => ids.has(l.id)).flatMap((l) => l.objectives),
+    ...old.flatMap((s) => (Array.isArray(s.objectives) ? s.objectives : [])),
+  ]);
 }
 
 /** Builds a new session (the value for progress.activeSession). Pure apart from rng. */
@@ -153,7 +170,7 @@ export function finishSession(progress, course, { now = new Date(), passMark = S
     .filter((r) => r.step.questionId && r.chosen !== undefined)
     .map((r) => {
       const q = byId.get(r.step.questionId);
-      return { type: r.step.type, question: q, chosen: r.chosen, correct: Boolean(q) && r.chosen === q.answer };
+      return { type: r.step.type, label: r.step.label, question: q, chosen: r.chosen, correct: Boolean(q) && r.chosen === q.answer };
     });
   const scored = rows.filter((r) => r.type === 'quiz' || r.type === 'retrieval');
   const correct = scored.filter((r) => r.correct).length;

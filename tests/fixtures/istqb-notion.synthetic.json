@@ -1,0 +1,47 @@
+{
+  "format": "istqb-notion-extract",
+  "formatVersion": 1,
+  "readAt": "2026-01-01",
+  "note": "SYNTHETIC test fixture in the shape of the Notion extract scripts/istqb-import.mjs reads. Made-up data, not Martin's.",
+  "pages": { "newestState": "synthetic-page-3" },
+  "newestSession": 3,
+  "sessions": [
+    { "no": 1, "date": "2026-01-05", "title": "v2 Session 1 — Ch1 §1.1", "kind": "lesson", "section": "1.1", "objectives": ["FL-1.1.1", "FL-1.1.2"], "score": 67,
+      "results": [
+        { "ref": "D1", "kind": "drill", "lo": "FL-1.2.3", "ok": false },
+        { "ref": "Q1", "kind": "quiz", "lo": "FL-1.1.1", "ok": true, "chosen": "B" },
+        { "ref": "Q2", "kind": "quiz", "lo": "FL-1.1.2", "ok": false, "chosen": "A", "answer": "C" },
+        { "ref": "Q3", "kind": "quiz", "lo": "FL-1.1.2", "ok": true, "chosen": "D" }
+      ] },
+    { "no": 2, "date": "2026-01-07", "title": "v2 Session 2 — Ch1 §1.2", "kind": "lesson", "section": "1.2", "objectives": ["FL-1.2.3"], "score": 100,
+      "results": [
+        { "ref": "Q1", "kind": "quiz", "lo": "FL-1.2.3", "ok": true, "chosen": "A" },
+        { "ref": "Q2", "kind": "retrieval", "lo": "FL-1.1.1", "ok": true, "chosen": "C", "guess": true }
+      ] },
+    { "no": 3, "date": "2026-01-09", "title": "v2 Session 3 — Ch1 mini-mock", "kind": "mini-mock", "chapter": 1, "score": 75,
+      "results": [
+        { "ref": "Q1", "kind": "mock", "lo": "FL-1.1.1", "ok": true, "chosen": "A" },
+        { "ref": "Q2", "kind": "mock", "lo": "FL-1.1.2", "ok": true, "chosen": "B" },
+        { "ref": "Q3", "kind": "mock", "lo": "FL-1.2.3", "ok": false, "chosen": "D", "answer": "B" },
+        { "ref": "Q4", "kind": "mock", "lo": "FL-3.1.1", "ok": true, "chosen": "C" }
+      ] }
+  ],
+  "wrongAnswerLog": [
+    { "session": 1, "ref": "D1", "question": "Synthetic drill question?", "given": "a guess", "correct": "the right term", "why": "a made-up reason" },
+    { "session": 1, "ref": "Q2", "question": "Synthetic quiz question?", "given": "A", "correct": "C" },
+    { "session": 3, "ref": "Q3", "question": "Synthetic mock question?", "given": "D", "correct": "B", "why": "adjacent-concept swap" }
+  ],
+  "ledger": {
+    "FL-1.1.1": "exam-ready",
+    "FL-1.1.2": "solid",
+    "FL-1.2.3": "shaky",
+    "FL-3.1.1": "solid"
+  },
+  "ledgerNotes": "synthetic",
+  "reviewQueue": [
+    { "id": "rq-syn-1", "objective": "FL-1.2.3", "note": "Synthetic review note", "addedSession": 3, "dueSession": 4, "step": 0, "correctCount": 0 }
+  ],
+  "nextPointer": { "session": 4, "chapter": 3, "section": "3.1", "text": "Synthetic pointer" },
+  "cumulative": { "v2Scores": [67, 100, 75], "chaptersDone": [1], "readiness": "Building" },
+  "standingRules": ["SR-1 synthetic"]
+}

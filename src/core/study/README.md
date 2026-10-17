@@ -12,6 +12,7 @@ import { createStudyModule } from '../../core/study/index.js';
 export default createStudyModule({
   id: 'istqb', name: 'ISTQB', icon: '🧪',
   contentBase: 'content/istqb/',            // lessons.json, questions.json, cards.json (add them to PRECACHE)
+  contentManifest: 'index.json',            // optional: { lessons: [files], questions: [files], cards: [files] }
   session: { drillSize: 4, quizSize: 5, retrievalCount: 2, passMark: 65 },
   mocks: [
     { id: 'full', label: 'Full mock', kind: 'full-mock', minutes: 60,
@@ -27,6 +28,8 @@ export default createStudyModule({
   handledFeedback: () => HANDLED_IDS,        // ids from content/<course>/handled-feedback.json (content loop)
   routes: { readiness: renderReadiness },    // extra screens; same key replaces an engine screen
   todayCard: (data, course) => ({ ... }),    // replaces the default card; course is null while loading
+  adjustSession: (session, course, data) => session,  // change a new session before it starts (ISTQB warm-up)
+  homeCards: async (ctx, course, data) => node,       // extra card(s) at the top of the course home
 });
 ```
 
@@ -81,6 +84,10 @@ Martin's phone is open: `docs/QUESTIONS.md` Q-13.
   `objective` (the drill picks a question for it) or carry only a `note` (kept, not drilled), `attempts` may hold `legacyText`, `sessions`
   with `section` = a lesson id let delayed retrieval reach back into imported history; `pointer` = the next lesson id.
 - The readiness gate, 10-day warm-up and chapter-complete logic are module rules on top of `sessions` (kinds
-  `lesson`, `mini-mock`, `full-mock`): add them as `routes`/`todayCard`, or as engine options if both courses need them.
+  `lesson`, `mini-mock`, `full-mock`): ISTQB's are in `src/modules/istqb/rules.js`, wired through
+  `adjustSession`, `homeCards`, `routes` and `todayCard`. Extra `routes` get only the screen context (not the
+  engine's `env`); pass the module itself in if the screen needs `getCourse()`.
+- A step may carry `label` (shown instead of its type) and imported sessions may list `objectives` for delayed
+  retrieval (Part 6).
 - Bulgarian: cards with `twoWay: true` and `lang`; offered words go in the progress and reach the engine through
   `extraCards`.

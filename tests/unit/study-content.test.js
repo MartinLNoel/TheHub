@@ -3,13 +3,25 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { checkCourse, chapterOf, kLevelsByObjective, loadCourse } from '../../src/core/study/content.js';
+import { DEFAULT_FILES, checkCourse, chapterOf, kLevelsByObjective, loadCourse, manifestProblems } from '../../src/core/study/content.js';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const SAMPLE = join(ROOT, 'tests', 'fixtures', 'sample-course');
 
+// A course folder may list its files in index.json (split per chapter); otherwise the default names.
+const MANIFEST = 'index.json';
+// Files a course folder may hold besides its course files (read by the module itself).
+const EXTRA_FILES = ['objectives.json', 'handled-feedback.json'];
+
+function courseFiles(dir) {
+  if (!existsSync(join(dir, MANIFEST))) return DEFAULT_FILES;
+  const m = JSON.parse(readFileSync(join(dir, MANIFEST), 'utf8'));
+  return { lessons: m.lessons || [], questions: m.questions || [], cards: m.cards || [] };
+}
+
 function readCourse(dir) {
-  const read = (name) => (existsSync(join(dir, `${name}.json`)) ? JSON.parse(readFileSync(join(dir, `${name}.json`), 'utf8')) : []);
+  const files = courseFiles(dir);
+  const read = (kind) => files[kind].flatMap((f) => (existsSync(join(dir, f)) ? JSON.parse(readFileSync(join(dir, f), 'utf8')) : []));
   return { lessons: read('lessons'), questions: read('questions'), cards: read('cards') };
 }
 
@@ -22,6 +34,20 @@ describe('shipped content (content/<course>/)', () => {
     for (const dir of courseDirs) {
       const { problems } = checkCourse(readCourse(join(ROOT, 'content', dir)));
       expect(problems, `content/${dir}`).toEqual([]);
+    }
+  });
+
+  it('a manifest is well formed, every file it lists exists, and every JSON file is listed or a known extra', () => {
+    for (const dir of courseDirs) {
+      const full = join(ROOT, 'content', dir);
+      if (!existsSync(join(full, MANIFEST))) continue;
+      const m = JSON.parse(readFileSync(join(full, MANIFEST), 'utf8'));
+      expect(manifestProblems(m), `content/${dir}/${MANIFEST}`).toEqual([]);
+      const listed = Object.values(courseFiles(full)).flat();
+      for (const f of listed) expect(existsSync(join(full, f)), `content/${dir}/${f} (listed in ${MANIFEST})`).toBe(true);
+      for (const f of readdirSync(full).filter((x) => x.endsWith('.json') && x !== MANIFEST)) {
+        expect([...listed, ...EXTRA_FILES], `content/${dir}/${f} is in no list: add it to ${MANIFEST} or EXTRA_FILES`).toContain(f);
+      }
     }
   });
 
@@ -120,6 +146,31 @@ describe('loadCourse (runtime)', () => {
     expect(course.cards).toEqual([]);
     expect(problems.join('\n')).toMatch(/cards.json could not be loaded/);
     expect(problems.join('\n')).toMatch(/questions\[1\] \(bad\)/);
+  });
+
+  it('with a manifest, loads the listed files in order and concatenates them', async () => {
+    const l2 = { ...goodL, id: 'l2', section: '1.2' };
+    const { course, problems } = await loadCourse(
+      'http://x/content/c/',
+      fakeFetch({
+        'index.json': { lessons: ['lessons-a.json', 'lessons-b.json'], questions: ['q-1.json', 'q-missing.json'], cards: [] },
+        'lessons-a.json': [goodL],
+        'lessons-b.json': [l2],
+        'q-1.json': [goodQ],
+      }),
+      { manifest: 'index.json' },
+    );
+    expect(course.lessons.map((l) => l.id)).toEqual(['l1', 'l2']);
+    expect(course.questions.map((q) => q.id)).toEqual(['q1']);
+    expect(problems).toEqual(['q-missing.json could not be loaded (HTTP 404)']);
+  });
+
+  it('reports a missing or bad manifest without throwing', async () => {
+    const missing = await loadCourse('http://x/c/', fakeFetch({}), { manifest: 'index.json' });
+    expect(missing.course).toEqual({ lessons: [], questions: [], cards: [] });
+    expect(missing.problems).toEqual(['index.json could not be loaded (HTTP 404)']);
+    const bad = await loadCourse('http://x/c/', fakeFetch({ 'index.json': { lessons: ['../x.json'] } }), { manifest: 'index.json' });
+    expect(bad.problems.join()).toMatch(/manifest.lessons/);
   });
 
   it('survives a network failure', async () => {

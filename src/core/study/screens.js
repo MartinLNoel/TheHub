@@ -270,7 +270,8 @@ export async function renderHome(ctx, env) {
         'data-testid': s ? 'study-resume' : 'study-start',
         onclick: async () => {
           if (!s) {
-            const session = buildSession(course, st.data, env.config.session);
+            let session = buildSession(course, st.data, env.config.session);
+            if (env.config.adjustSession) session = env.config.adjustSession(session, course, st.data);
             if (!session.steps.length) return toast('Nothing to study yet: the course has no content.');
             if (!(await st.commit({ ...st.data, activeSession: session }))) return;
           }
@@ -282,6 +283,7 @@ export async function renderHome(ctx, env) {
   );
 
   const m = p.activeMock;
+  const extraCards = env.config.homeCards ? await env.config.homeCards(ctx, course, p) : null;
   mount(
     ctx.root,
     h(
@@ -289,6 +291,7 @@ export async function renderHome(ctx, env) {
       { class: 'stack study', 'data-testid': 'study-home', 'data-module': env.id },
       tabs(env, ''),
       problemsNote(problems),
+      extraCards,
       sessionCard,
       m
         ? h(
@@ -350,7 +353,7 @@ export async function renderSession(ctx, env) {
     const head = h(
       'div',
       { class: 'study-head' },
-      h('p', { class: 'kicker', 'data-testid': 'session-progress' }, `Session ${s.no} · Step ${s.index + 1} of ${s.steps.length} · ${STEP_LABEL[step.type]}`),
+      h('p', { class: 'kicker', 'data-testid': 'session-progress' }, `Session ${s.no} · Step ${s.index + 1} of ${s.steps.length} · ${step.label || STEP_LABEL[step.type]}`),
       h(
         'div',
         { class: 'row' },
@@ -372,7 +375,7 @@ export async function renderSession(ctx, env) {
       body = questionView({
         question,
         chosen,
-        label: STEP_LABEL[step.type],
+        label: step.label || STEP_LABEL[step.type],
         onSubmit: async (letter) => {
           if (await st.commit(answerStep(st.data, course, letter))) draw();
         },
@@ -412,7 +415,7 @@ export async function renderSession(ctx, env) {
             'ul',
             { class: 'list' },
             [...d.drill, ...d.rows].map((r) =>
-              h('li', {}, `${r.correct ? '✓' : '✗'} ${r.question.objective} (${r.question.kLevel}) — ${STEP_LABEL[r.type]}`),
+              h('li', {}, `${r.correct ? '✓' : '✗'} ${r.question.objective} (${r.question.kLevel}) — ${r.label || STEP_LABEL[r.type]}`),
             ),
           ),
           d.changes.length

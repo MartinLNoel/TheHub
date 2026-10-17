@@ -67,18 +67,22 @@ TheHub/
 │       ├── gym/             Part 4: index.js (module), program.js (gainz program data, unchanged), logic.js
 │       │                    (gainz rules as pure functions), data.js (store + validate), screens.js,
 │       │                    fighter.js (the SVG character), import.js (gainz-tracker import)
-│       ├── istqb/           Part 6
+│       ├── istqb/           Part 6: index.js (createStudyModule config, Today card, importer), rules.js
+│       │                    (official weighting, chapters X/6, readiness gate, 10-day warm-up), import.js
+│       │                    ("Import ISTQB progress"), screens.js (home summary, wrong-answer review)
 │       ├── bulgarian/       Part 7
 │       └── fridge/          Part 8
 ├── content/
-│   ├── istqb/               lessons + question bank (JSON, Martin's own text)
+│   ├── istqb/               index.json (manifest) · objectives.json (64 LOs) · lessons-ch3..6.json ·
+│   │                        questions-ch1..6.json · cards.json · handled-feedback.json (docs/istqb-content-guide.md)
 │   └── bulgarian/
 ├── tests/
 │   ├── unit/                Vitest (jsdom + fake-indexeddb)
 │   ├── e2e/                 Playwright, mobile viewport (412×915, Galaxy size)
 │   └── fixtures/            the demo module, the sample study course and module (sample-course/,
 │                            sample-study-module.js) and a fake GitHub API (tests only, never shipped)
-├── scripts/                 serve.mjs (static server at /TheHub/), make-icons.mjs, check-version-bump.mjs
+├── scripts/                 serve.mjs (static server at /TheHub/), make-icons.mjs, check-version-bump.mjs,
+│                            istqb-import.mjs (Notion extract → private/istqb-progress.json, Part 6)
 ├── private/                 GIT-IGNORED: imports, exports, local notes
 ├── .github/workflows/       ci.yml: test, then deploy to Pages
 ├── package.json             dev tooling only
@@ -178,7 +182,9 @@ touch another module's store; cross-module features (Fridge → Bulgarian cards)
 A study module is made with `createStudyModule(config)` (`src/core/study/index.js`; its API for module authors is
 `src/core/study/README.md`). Shapes as built in Part 5 (fields marked *new* were added to the Part 0 draft):
 
-Content (shipped in the repo, `content/<module>/`, every file listed in `PRECACHE`; CI validates them all):
+Content (shipped in the repo, `content/<module>/`, every file listed in `PRECACHE`; CI validates them all).
+*Part 6:* a course may split each kind over several files listed in a manifest (`contentManifest`, e.g.
+`content/istqb/index.json` `{ lessons: [...], questions: [...], cards: [...] }`), concatenated in order:
 - `lessons.json`: `{ id, chapter, section, title, objectives: ["FL-3.1.1"], body (markdown subset) }`; file order is
   course order.
 - `questions.json`: `{ id, objective, kLevel, stem, options: [4 texts, A–D], answer: "A"–"D", why,
@@ -202,6 +208,10 @@ Progress (per module, in IndexedDB and backups; schema version 1):
 - `pointer`: id of the next lesson (`null` = the first, `"__done__"` after the last)
 - *new:* `cardState`: `{ [cardId or cardId~rev]: { reps, interval, ef, due, lapses, last, first } }` (SM-2)
 - *new:* `activeSession`, `activeMock`: the session or timed mock in progress (or `null`), so stopping never loses work
+- *Part 6:* imported sessions and attempts carry `imported: true`; an imported lesson session may list its own
+  `objectives` (its lesson is not in the course), which delayed retrieval uses; `legacy.importId` makes a
+  re-import a no-op. A session step may carry a `label` (e.g. "Warm-up"). A `"__done__"` pointer resumes when
+  lessons are added after the last one studied.
 
 Core settings gain `askClaude`: `"share"` (default) | `"link"` | `"copy"` (Settings → Ask Claude).
 

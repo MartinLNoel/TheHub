@@ -9,6 +9,10 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
 
 - **Q-1** · Have you done ISTQB sessions in the Claude Project after the last one saved in Notion? If yes, which is
   the newest session number? · The progress import starts from the newest v2 state page. · Part 6 import · open
+  - *Found 2026-10-17 (Notion read-only):* details in `private/istqb-notes.md` (private): no newer session was saved, so
+    TheHub continues from the last saved one. If a later session got further, tell Claude: the extract can be
+    adjusted and the file rebuilt with `node scripts/istqb-import.mjs`. SR-2 is honoured (a unit test bans
+    mnemonics in stems).
 - **Q-2** · How do you open gainz-tracker on your phone: which address in Chrome (or is it a home-screen icon from a
   GitHub Pages address)? · Needed to get the new "Export all data" button onto your phone so your history can move
   to TheHub. · Part 4 · open
@@ -87,6 +91,21 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   flashcards: SM-2 with Again/Hard/Good/Easy and **10** new card sides a day. OK? · How sessions feel and how fast
   objectives reach exam-ready. · `src/core/study/session.js` `SESSION_DEFAULTS`, `src/core/study/progress.js`
   `nextMastery`, `src/core/study/scheduler.js` · open
+
+- **Q-15** · Your ISTQB progress was imported per objective (all 64). Notion kept the ledger per *topic*
+  ("FL-2.2.x acceptance vs system", "Ch5: 6 solid/exam-ready"), so Claude mapped it: each LO takes the weakest
+  status of the topics inside it, and LOs with only v1 evidence keep the Legacy Analysis verdict (*solid* =
+  re-verify). The result is in `private/istqb-notes.md`. OK, or should
+  Ch3–6 LOs that were only "solid" in the inflated v1 run start as *untested*? · Which questions come up first
+  and when objectives reach exam-ready. · `private/istqb-notion-extract.json` (`ledger`, `ledgerNotes`),
+  `scripts/istqb-import.mjs` · open
+- **Q-16** · ISTQB defaults chosen while you were away: a chapter mini-mock is **10 questions in 15 minutes, 7
+  from the chapter and 3 cumulative**, and **≥ 65 % banks the chapter** (the tutor's "7/10"); a full mock counts
+  for the readiness gate only when it has all **40** questions (until the bank is complete, full mocks are short
+  and never count); the 10-day warm-up uses only objectives already studied (so it starts working once the
+  Chapter 1–2 questions exist); readiness levels: *Ready* = last two complete full mocks ≥ 80 %, *Approaching* =
+  all chapters banked or the latest full mock passed, *Building* = any study. OK? · How mocks and the gate feel. ·
+  `src/modules/istqb/rules.js` · open
 
 ## Answered
 
