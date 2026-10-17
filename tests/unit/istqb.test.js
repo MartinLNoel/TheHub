@@ -28,6 +28,7 @@ const readKind = (kind) => MANIFEST[kind].flatMap((f) => readJSON(join(DIR, f)))
 const SHIPPED = { lessons: readKind('lessons'), questions: readKind('questions'), cards: readKind('cards') };
 const LO = new Map(OBJECTIVES.map((o) => [o.code, o]));
 const fixedRng = () => 0;
+const SYNTHETIC = readJSON(join(ROOT, 'tests', 'fixtures', 'istqb-notion.synthetic.json'));
 
 // ---------- a synthetic full course: 8 questions for every objective, one lesson per Ch3–6 section ----------
 
@@ -163,26 +164,90 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     for (const c of SHIPPED.cards) if (c.objective) expect(LO.has(c.objective), c.id).toBe(true);
   });
 
-  // Add each chapter here when its content run is finished (Ch3 and Ch6 done 2026-10-17, Ch4 and Ch5 2026-10-18;
-  // still to come: the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
-  const FINISHED_CHAPTERS = [3, 4, 5, 6];
+  // Every chapter's content run is finished (Ch3 and Ch6 on 2026-10-17; Ch4, Ch5 and the Ch1–2 questions on
+  // 2026-10-18), so the check covers the whole bank, chapter by chapter.
   const minimum = (o) => (o.kLevel === 'K3' ? 8 : 6);
-
-  // Skipped (pending) while no chapter is finished yet.
-  const eachFinished = FINISHED_CHAPTERS.length ? it.each(FINISHED_CHAPTERS) : it.skip.each(['(none finished yet)']);
-  eachFinished('chapter %s: every objective has at least 6 questions (K3: 8)', (ch) => {
+  it.each([1, 2, 3, 4, 5, 6])('chapter %s: every objective has at least 6 questions (K3: 8)', (ch) => {
     for (const o of OBJECTIVES.filter((x) => x.chapter === ch)) {
       const n = SHIPPED.questions.filter((q) => q.objective === o.code).length;
       expect(n, `${o.code} has ${n} questions`).toBeGreaterThanOrEqual(minimum(o));
     }
   });
 
-  // PENDING until every content run has finished: then delete `.skip` (and FINISHED_CHAPTERS above).
-  it.skip('all 64 objectives have at least 6 questions (K3: 8): the full bank (pending the content runs)', () => {
-    for (const o of OBJECTIVES) {
-      const n = SHIPPED.questions.filter((q) => q.objective === o.code).length;
-      expect(n, `${o.code} has ${n} questions`).toBeGreaterThanOrEqual(minimum(o));
+  it('Chapters 1–2 (questions only, no lessons): the Legacy "extra drilling" objectives have at least 8 questions', () => {
+    // §1.4–1.5 terms (activities, testware, traceability, confirmation bias, XP), error–defect–failure,
+    // and acceptance-vs-system actors (docs/istqb-content-guide.md, Emphasis).
+    for (const code of ['FL-1.2.3', 'FL-1.4.1', 'FL-1.4.3', 'FL-1.4.4', 'FL-1.5.1', 'FL-1.5.2', 'FL-2.2.1']) {
+      const n = SHIPPED.questions.filter((q) => q.objective === code).length;
+      expect(n, `${code} has ${n} questions`).toBeGreaterThanOrEqual(8);
     }
+    for (const q of SHIPPED.questions.filter((x) => x.chapter <= 2)) expect(q.id, q.id).toMatch(/^q[12]\.\d\.\d-[a-z]$/);
+  });
+
+  it('question ids are unique and the correct answers are spread over A–D in every chapter', () => {
+    expect(new Set(SHIPPED.questions.map((q) => q.id)).size).toBe(SHIPPED.questions.length);
+    for (const ch of [1, 2]) {
+      const qs = SHIPPED.questions.filter((q) => q.chapter === ch);
+      const per = ['A', 'B', 'C', 'D'].map((l) => qs.filter((q) => q.answer === l).length);
+      expect(Math.max(...per) - Math.min(...per), `chapter ${ch}: ${per}`).toBeLessThanOrEqual(2);
+    }
+  });
+});
+
+// ---------- the shipped bank in mocks, warm-ups and delayed retrieval ----------
+
+describe('the shipped question bank feeds every mock, warm-up and delayed retrieval', () => {
+  const course = checkCourse(SHIPPED).course;
+  const full = mockConfigs().find((m) => m.id === 'full');
+  const chapterCounts = (ids) => {
+    const byId = new Map(course.questions.map((q) => [q.id, q]));
+    const counts = {};
+    for (const id of ids) {
+      const c = chapterOf(byId.get(id), course.lessons);
+      counts[c] = (counts[c] || 0) + 1;
+    }
+    return counts;
+  };
+
+  it('a full mock assembles from the bank: 40 different questions, the official weighting, no shortfall', () => {
+    for (const seed of [0, 0.37, 0.99]) {
+      const { questionIds, shortfall } = pickMockQuestions(course, defaultProgress(), { ...full, rng: () => seed });
+      expect(shortfall).toEqual([]);
+      expect(questionIds).toHaveLength(40);
+      expect(new Set(questionIds).size).toBe(40);
+      expect(chapterCounts(questionIds)).toEqual(OFFICIAL_WEIGHTING);
+    }
+  });
+
+  it('a second full mock after the first uses 40 fresh questions', () => {
+    const first = startMock(course, defaultProgress(), full, { rng: fixedRng });
+    const attempts = first.questionIds.map((id) => ({ questionId: id, objective: course.questions.find((q) => q.id === id).objective, chosen: 'A', correct: true, at: '2026-10-18', sessionNo: 1, kind: 'mock' }));
+    const second = startMock(course, { ...defaultProgress(), attempts }, full, { rng: fixedRng });
+    expect(second.shortfall).toEqual([]);
+    expect(second.questionIds.filter((id) => first.questionIds.includes(id))).toEqual([]);
+    expect(chapterCounts(second.questionIds)).toEqual(OFFICIAL_WEIGHTING);
+  });
+
+  // Part 6a noted the warm-up was a no-op until Chapter 1–2 questions existed: after the import, the
+  // only studied objectives are Chapters 1–2 (taught before TheHub).
+  const { data } = convertNotionExtract(SYNTHETIC, OBJECTIVES, { importedAt: '2026-10-17T10:00:00.000Z' });
+
+  it('the 10-day warm-up after the import draws 5 Chapter 1 questions from the shipped bank', () => {
+    const built = buildSession(course, data, { rng: fixedRng });
+    const s = adjustSession(built, course, data, new Date(2026, 9, 18), fixedRng);
+    const warm = s.steps.filter((x) => x.warmup);
+    expect(warm).toHaveLength(5);
+    expect(s.steps.slice(0, 5)).toEqual(warm);
+    for (const w of warm) expect(course.questions.find((q) => q.id === w.questionId).chapter).toBe(1);
+    expect(s.steps.find((x) => x.type === 'lesson').lessonId).toBe('3.1');
+  });
+
+  it('delayed retrieval reaches back into the imported Chapter 1 lessons', () => {
+    const built = buildSession(course, data, { rng: fixedRng });
+    const retrieval = built.steps.filter((x) => x.type === 'retrieval');
+    expect(retrieval).toHaveLength(2);
+    // Sessions 1–2 (two or more sessions back) studied FL-1.1.1, FL-1.1.2 and FL-1.2.3.
+    for (const r of retrieval) expect(['FL-1.1.1', 'FL-1.1.2', 'FL-1.2.3']).toContain(course.questions.find((q) => q.id === r.questionId).objective);
   });
 });
 
@@ -346,7 +411,6 @@ describe('the next step', () => {
 
 // ---------- the Notion import ----------
 
-const SYNTHETIC = readJSON(join(ROOT, 'tests', 'fixtures', 'istqb-notion.synthetic.json'));
 
 describe('the Notion progress import (scripts/istqb-import.mjs) on a synthetic Notion-shaped fixture', () => {
   const { data, problems, warnings } = convertNotionExtract(SYNTHETIC, OBJECTIVES, { importedAt: '2026-10-17T10:00:00.000Z' });
@@ -498,7 +562,13 @@ describe('Today card and screens', () => {
     expect(wrongAnswers(data).map((a) => a.questionId)).toEqual(['notion-s3-Q3', 'notion-s1-Q2', 'notion-s1-D1']);
     const withCh3 = { ...data, attempts: [...data.attempts, { questionId: 'q3.1.1-a', objective: 'FL-3.1.1', chosen: 'A', correct: false, at: '2026-10-17', sessionNo: 4, kind: 'quiz' }] };
     const retry = buildRetrySession(course, withCh3, { rng: fixedRng });
-    expect(retry.steps).toEqual([{ type: 'drill', questionId: 'q3.1.1-a', label: 'Wrong-answer retry' }]);
+    // The same question when it is in the bank; otherwise (the imported Chapter 1 wrong answers, newest
+    // first) a bank question on the same objective, since the Ch1–2 questions shipped (2026-10-18).
+    expect(retry.steps[0]).toEqual({ type: 'drill', questionId: 'q3.1.1-a', label: 'Wrong-answer retry' });
+    const byId = new Map(course.questions.map((q) => [q.id, q]));
+    expect(retry.steps.slice(1).map((s) => byId.get(s.questionId).objective)).toEqual(['FL-1.2.3', 'FL-1.1.2', 'FL-1.2.3']);
+    expect(retry.steps.every((s) => s.type === 'drill' && s.label === 'Wrong-answer retry')).toBe(true);
+    expect(new Set(retry.steps.map((s) => s.questionId)).size).toBe(4);
     expect(retry.no).toBe(4);
   });
 

@@ -36,8 +36,9 @@ Parts 0–8 written 2026-10-17. Parts 2 (core shell), 3 (verified backup and res
 and 5 (shared study engine, `src/core/study/README.md`) built 2026-10-17 and merged into local `main`; nothing
 pushed yet (Part 1's repos, Part 3's token, Part 4's export, import and side-by-side week, and Part 5's Ask Claude
 phone test are Martin's). Part 6a (ISTQB module, Notion progress import, content scaffolding with §3.1, the
-content loop) built and merged 2026-10-17; Ch3 and Ch6 content written 2026-10-17, Ch4 2026-10-18 (version 0.6.2); the Q-18 local-date fix 2026-10-18 (0.6.3); Ch5 2026-10-18 (0.6.4); next: the Ch1–2 questions run per
-`docs/content-loop.md`. Bulgarian (Part 7) is gated on the course book.
+content loop) built and merged 2026-10-17; Ch3 and Ch6 content written 2026-10-17, Ch4 2026-10-18 (version 0.6.2); the Q-18 local-date fix 2026-10-18 (0.6.3); Ch5 2026-10-18 (0.6.4); the Ch1–2 questions 2026-10-18 (0.6.5): **Part 6 content
+complete** (Part 6's phone import and Q-1, Q-15, Q-16 are Martin's). Next: Part 8 (Fridge). Bulgarian (Part 7) is
+gated on the course book.
 Details: `docs/BACKLOG.md`.
 
 ## Commands

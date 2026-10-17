@@ -2,6 +2,40 @@
 
 Dated entries, newest first.
 
+## 2026-10-18 — Part 6 content run: Chapter 1–2 questions (version 0.6.5)
+
+Written autonomously while Martin was away, on branch `content/istqb-ch1-ch2`, merged into local `main` (not
+pushed). **Questions and flashcards only, no lessons** (Martin studied Chapters 1–2 before TheHub). All content in
+our own words; no official sample-exam questions; distractors aimed at the Legacy Analysis traps (informal
+paraphrase next to the exact term, adjacent-concept swaps, wrong actor, overgeneralisation).
+
+- **Questions:** 181 (Ch1 109, Ch2 72), 6 to 10 per objective. 10 each for FL-1.2.3 (error, defect, failure,
+  root cause), FL-1.4.3 (testware by activity) and FL-2.2.1 (test levels, acceptance vs system actors, alpha vs
+  beta); 9 for FL-1.4.1 (Design vs Implementation), FL-1.4.4 (traceability, impact analysis) and FL-2.2.2
+  (functional WHAT vs non-functional HOW WELL); 8 for FL-1.3.1, FL-1.5.1 (confirmation bias), FL-1.5.2 (XP) and
+  FL-1.5.3; 7 for the objectives last rated "solid" (FL-1.4.2, FL-2.1.1, FL-2.1.3–2.1.6) and for FL-1.2.2 and
+  FL-1.4.5. Correct answers spread A 46 · B 45 · C 45 · D 45. Every question was re-read cold for exactly one
+  defensible answer, and the options were rebalanced so the key is no longer the longest option by habit (now
+  the longest in about 1 question in 7). The bank now holds 500 questions.
+- **Flashcards:** 40 new (150 in all): defect, failure, debugging; each of the seven principles from a scenario;
+  testware per activity (planning, monitoring and control, analysis, design, implementation); analysis vs design;
+  the two roles; whole team; TDD, ATDD vs BDD; DevOps; shift-left; the integration levels; alpha vs beta;
+  confirmation vs regression; retirement; and list cards for test objectives, context factors, generic skills,
+  independence (levels and drawbacks), SDLC effects and good practices, DevOps, shift-left, retrospective
+  benefits, test levels, acceptance forms, test types and maintenance triggers.
+- **Full mocks are now complete:** 40 questions with the official weighting (8 · 6 · 4 · 11 · 9 · 2), so they
+  count for the readiness gate. **The 10-day warm-up and delayed retrieval now draw on Chapters 1–2** (Part 6a's
+  warm-up was a no-op before, with no questions on the only studied objectives), and the wrong-answer retry now
+  finds a bank question for imported Chapter 1–2 wrong answers.
+- **Tests:** the ≥ 6 per objective check runs for all six chapters; the skipped whole-bank test was removed (no
+  skipped test is left); new checks: ≥ 8 for the Ch1–2 extra-drilling objectives, unique ids and an even A–D
+  spread, a full mock assembled from the shipped bank (three seeds: 40 different questions, official weighting,
+  no shortfall), a second full mock with 40 fresh questions, the warm-up after the import drawing 5 Chapter 1
+  questions, and delayed retrieval reaching the imported Chapter 1 lessons. The retry test now expects those
+  Chapter 1 questions. E2E: the import-then-session run now walks the 5 warm-up questions, the quiz and 2 delayed
+  retrieval questions (7/7); the mock run expects full-size mocks, and one full mock at 100 % shows
+  "Approaching (recent: 100 %)". Unit and e2e suites pass in local time and with `TZ=UTC`.
+
 ## 2026-10-18 — Part 6 content run: Chapter 5 (version 0.6.4)
 
 Written autonomously while Martin was away, on branch `content/istqb-ch5`, merged into local `main` (not pushed).

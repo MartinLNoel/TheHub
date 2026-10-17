@@ -1,1 +1,2400 @@
-[]
+[
+  {
+    "id": "q1.1.1-a",
+    "objective": "FL-1.1.1",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which of the following is a typical objective of testing?",
+    "options": [
+      "Proving that the test object contains no remaining defects",
+      "Fixing the defects that the tests have revealed",
+      "Building confidence in the quality of the test object",
+      "Running every possible combination of inputs once"
+    ],
+    "answer": "C",
+    "why": "Building confidence in the quality of the test object is one of the typical test objectives.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: testing can show defects are present, never that none remain.",
+      "B": "Fixing is debugging, a development activity, not a test objective.",
+      "D": "Exhaustive testing is impossible; it is never an objective."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.1-b",
+    "objective": "FL-1.1.1",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A studio's legal team says the new loot-box screen must show drop rates, as a national gaming law requires. The QA lead adds a test for it. Which test objective does this test serve MOST directly?",
+    "options": [
+      "Validating that the test object works as the players and other stakeholders expect",
+      "Verifying that the test object complies with legal or regulatory requirements",
+      "Reducing the level of risk of inadequate software quality",
+      "Ensuring the required coverage of the test object"
+    ],
+    "answer": "B",
+    "why": "A test that checks a law is met serves the objective of verifying compliance with contractual, legal or regulatory requirements.",
+    "distractorNotes": {
+      "A": "Close, but the driver here is a law, not stakeholder expectations; the compliance objective fits better.",
+      "C": "True-but-less-precise: every test reduces risk somewhat; the stem names a legal requirement.",
+      "D": "Coverage is about how much of the test object the tests exercise, not about a law."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.1-c",
+    "objective": "FL-1.1.1",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Before go-live, the producer asks QA: \"Give me what I need to decide whether we ship Friday or slip a week.\" Which test objective is the producer relying on?",
+    "options": [
+      "Triggering failures and finding defects",
+      "Evaluating work products such as the release notes, user stories and designs",
+      "Proving that the release candidate is ready",
+      "Providing information to stakeholders so they can make informed decisions"
+    ],
+    "answer": "D",
+    "why": "Giving stakeholders the information they need for decisions (such as release) is a typical test objective.",
+    "distractorNotes": {
+      "A": "Finding defects feeds the decision, but the request is for decision-making information.",
+      "B": "That objective is about reviewing work products, not a release decision.",
+      "C": "Overgeneralisation: testing gives information and confidence; it proves nothing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.1-d",
+    "objective": "FL-1.1.1",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Testers review the user stories for a new crafting system before any code exists, and log three contradictions. Which test objective are they pursuing?",
+    "options": [
+      "Triggering failures in the crafting system",
+      "Evaluating work products such as requirements, user stories and designs",
+      "Validating that the crafting system works the way players will expect it to work",
+      "Debugging the crafting system"
+    ],
+    "answer": "B",
+    "why": "Reviewing user stories is evaluating work products, a typical objective of (static) testing.",
+    "distractorNotes": {
+      "A": "No code runs, so nothing can fail; this is static testing of a work product.",
+      "C": "Validation of working behaviour needs a running test object.",
+      "D": "Debugging finds and fixes the cause of a failure; reviewing stories is testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.1-e",
+    "objective": "FL-1.1.1",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which statement about test objectives is CORRECT?",
+    "options": [
+      "They are the same for every project, so they can be copied unchanged from one test plan to the next",
+      "They vary with the context, such as the work product, the test level, the risks and the SDLC",
+      "They are fixed by the test level alone",
+      "They always include showing that the software has no defects"
+    ],
+    "answer": "B",
+    "why": "Test objectives vary with context: the work product, test level, risks, SDLC and business factors such as time to market.",
+    "distractorNotes": {
+      "A": "Wrong: objectives depend on context; that is why they vary.",
+      "C": "The test level is one factor among several (risks, SDLC, business factors).",
+      "D": "Overgeneralisation: no test objective can be the absence of defects."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.1-f",
+    "objective": "FL-1.1.1",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A mobile game is in soft launch in one country. The team runs tests to find out whether players can actually complete the tutorial as the designers intended, on real phones. Which test objective is MOST directly addressed?",
+    "options": [
+      "Verifying whether the specified requirements for the tutorial have all been fulfilled",
+      "Evaluating work products such as user stories",
+      "Ensuring the required coverage of the test object",
+      "Validating whether the test object is complete and works as stakeholders expect"
+    ],
+    "answer": "D",
+    "why": "Checking that the product works as users and stakeholders expect, in real conditions, is validation.",
+    "distractorNotes": {
+      "A": "Adjacent-concept swap: verification checks against the spec; the stem asks whether it works as intended for real users (validation).",
+      "B": "The test object is the running game, not a written work product.",
+      "C": "Nothing in the stem is about how much of the test object is covered."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.2-a",
+    "objective": "FL-1.1.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "A tester sees the character fall through the floor on level 3 and logs it. A developer then reproduces it, finds a missing collider and adds it. Which part was debugging?",
+    "options": [
+      "Seeing the character fall through the floor",
+      "Reproducing the failure, finding the missing collider and adding it",
+      "Logging the defect report",
+      "All of it: in ISTQB terms, testing and debugging are the same activity"
+    ],
+    "answer": "B",
+    "why": "Debugging = reproducing the failure, diagnosing (finding the cause) and fixing it. Seeing and reporting the failure is testing.",
+    "distractorNotes": {
+      "A": "Observing a failure is testing (dynamic testing triggers failures).",
+      "C": "Reporting what testing found is a test task, not debugging.",
+      "D": "Testing and debugging are different activities with different people and goals."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.2-b",
+    "objective": "FL-1.1.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "After the fix for a broken save slot, the tester re-runs the failing test, and then a set of tests on the rest of the save system. What are these two test activities called?",
+    "options": [
+      "Debugging, then confirmation testing",
+      "Regression testing, then confirmation testing",
+      "Retesting, then debugging",
+      "Confirmation testing, then regression testing"
+    ],
+    "answer": "D",
+    "why": "Debugging ends with a fix; then confirmation testing checks the fix and regression testing checks nothing else broke.",
+    "distractorNotes": {
+      "A": "The tester is not debugging; re-running the failed test is confirmation testing.",
+      "B": "Order swapped: checking the fix comes first (confirmation), then the unchanged areas (regression).",
+      "C": "Debugging is the developer's reproduction, diagnosis and fix, which happened before."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.2-c",
+    "objective": "FL-1.1.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "In a code review a reviewer spots that a damage formula divides by the armour value, which can be zero. The developer changes the formula. Which debugging steps were NOT needed here?",
+    "options": [
+      "Reproducing a failure and diagnosing its cause",
+      "Fixing the cause",
+      "Confirmation testing of the change",
+      "None: debugging always needs reproduction, diagnosis and fixing"
+    ],
+    "answer": "A",
+    "why": "Static testing finds the defect itself, so debugging only has to remove it: no failure to reproduce or diagnose.",
+    "distractorNotes": {
+      "B": "The fix is still needed: the developer changed the formula.",
+      "C": "Confirmation testing is not a debugging step at all, and checking the fix is still sensible.",
+      "D": "Overgeneralisation: when static testing finds the defect directly there is no failure to reproduce."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.2-d",
+    "objective": "FL-1.1.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which statement BEST describes the difference between testing and debugging?",
+    "options": [
+      "Testing removes defects from the code; debugging finds them by running tests",
+      "Testing is done by developers in their own IDE; debugging is done by testers on the console builds",
+      "Testing triggers failures or finds defects; debugging finds, analyses and removes their causes",
+      "Testing is always dynamic; debugging is always static, without running code"
+    ],
+    "answer": "C",
+    "why": "Testing triggers failures (dynamic) or finds defects directly (static); debugging finds, analyses and removes the cause.",
+    "distractorNotes": {
+      "A": "Swapped: testing finds, debugging removes.",
+      "B": "Wrong actors: debugging is mostly done by developers.",
+      "D": "Testing can be static or dynamic; debugging is not defined as static."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.2-e",
+    "objective": "FL-1.1.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A QA tester on a Unity project attaches the debugger, steps through the inventory script and locates the line that corrupts the item count. Strictly in ISTQB terms, which activity is the tester performing at that moment?",
+    "options": [
+      "Dynamic testing",
+      "Confirmation testing",
+      "Static testing",
+      "Debugging (diagnosis)"
+    ],
+    "answer": "D",
+    "why": "Locating the cause of a failure is diagnosis, part of debugging, whoever does it.",
+    "distractorNotes": {
+      "A": "Executing to trigger a failure is testing; stepping through code to locate the cause is diagnosis, part of debugging.",
+      "B": "Confirmation testing comes after a fix, to check it.",
+      "C": "Static testing examines work products without running them; this uses a debugger on running code."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.1.2-f",
+    "objective": "FL-1.1.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A tester finds that the boss fight crashes on the PlayStation devkit. Which sequence is the typical one?",
+    "options": [
+      "Failure observed, cause diagnosed, cause fixed, failure reproduced, regression testing, confirmation testing",
+      "Failure reproduced, failure observed, cause diagnosed, cause fixed, regression testing, confirmation testing",
+      "Failure observed, failure reproduced, cause diagnosed, cause fixed, confirmation testing, regression testing",
+      "Failure observed, cause diagnosed, confirmation testing, cause fixed, failure reproduced, regression testing"
+    ],
+    "answer": "C",
+    "why": "Testing triggers the failure; debugging reproduces, diagnoses and fixes; then confirmation testing, then regression testing.",
+    "distractorNotes": {
+      "A": "Reproduction comes before diagnosis and the fix, and confirmation testing before regression testing.",
+      "B": "The failure is observed in testing before it is reproduced, and confirmation testing comes before regression testing.",
+      "D": "Confirmation testing checks a fix, so it cannot come before it."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.1-a",
+    "objective": "FL-1.2.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which of the following is an example of how testing contributes to success?",
+    "options": [
+      "Testers fix the defects they find themselves, so that developers can focus on new features",
+      "Testers review the GDD early, so ambiguities are fixed before levels are built on them",
+      "Testing of the full build guarantees that the release has no defects left",
+      "Testers decide the release date, because they know the quality best"
+    ],
+    "answer": "B",
+    "why": "Finding defects early in reviews of requirements (here the GDD) is a classic example of testing's contribution.",
+    "distractorNotes": {
+      "A": "Fixing is debugging, done by developers; it is not testing's contribution.",
+      "C": "Overgeneralisation: testing cannot guarantee that.",
+      "D": "Wrong actor: testing informs the decision; management makes it."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.1-b",
+    "objective": "FL-1.2.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester joins the design meeting for a new multiplayer lobby and asks how a dropped connection should behave. Two designers had different answers. Why is this a contribution to success?",
+    "options": [
+      "It replaces the need to test the lobby once it has been built",
+      "It moves the responsibility for the lobby's quality away from the designers and to the tester",
+      "It improves the shared understanding of the design and lowers the risk of design defects",
+      "It is not a contribution, because testers should only test code that exists"
+    ],
+    "answer": "C",
+    "why": "Testers involved in design increase understanding of the design and how to test it, reducing the risk of design defects.",
+    "distractorNotes": {
+      "A": "Early involvement does not remove later testing.",
+      "B": "Quality is everyone's responsibility; testers do not take it over.",
+      "D": "Testers contribute by being involved in design too."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.1-c",
+    "objective": "FL-1.2.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Why can testing be cost-effective even though it adds work to the project?",
+    "options": [
+      "Because finding defects before release, especially early, costs less than failures in the field",
+      "Because testing makes every project shorter, whatever its size or context",
+      "Because testers are usually paid less than developers, so every hour of testing costs less",
+      "Because testing removes the need for code reviews and static analysis"
+    ],
+    "answer": "A",
+    "why": "Defects found and fixed before release cost less than failures in production; early detection is cheaper still.",
+    "distractorNotes": {
+      "B": "Overgeneralisation: testing does not always shorten a project.",
+      "C": "True-but-irrelevant at best; this is not the reason given.",
+      "D": "Wrong: reviews are a form of testing, not something testing replaces."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.1-d",
+    "objective": "FL-1.2.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A racing game will be played mostly with controllers, but no one on the development team uses one. Which contribution of testing is MOST relevant?",
+    "options": [
+      "Testers ensure that the controller code meets the studio's coding standard",
+      "Testers check that the game complies with legal requirements",
+      "Testers measure the code coverage of the controller module",
+      "Testers represent the users and make sure their needs are considered"
+    ],
+    "answer": "D",
+    "why": "Testing gives users an indirect voice: testers make sure users' needs (here controller play) are considered.",
+    "distractorNotes": {
+      "A": "Static analysis checks standards; the stem is about users' needs.",
+      "B": "Nothing in the stem is legal or contractual.",
+      "C": "Coverage is not about whose needs are considered."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.1-e",
+    "objective": "FL-1.2.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A console platform holder requires every game to pass its certification checklist before release. How does testing help here?",
+    "options": [
+      "It guarantees that the platform holder will approve the game on the first try",
+      "It replaces the platform holder's own certification",
+      "It decides which checklist items can be ignored",
+      "It helps meet contractual, legal or regulatory requirements"
+    ],
+    "answer": "D",
+    "why": "Testing contributes by checking that contractual and regulatory requirements (certification) are met.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: testing gives evidence, never a guarantee.",
+      "B": "The platform's certification still happens.",
+      "C": "Testing does not waive requirements."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.1-f",
+    "objective": "FL-1.2.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "Which of these is NOT a way testing contributes to the success of a game project?",
+    "options": [
+      "Testers work closely with the developers to understand the code, so that they can test it better",
+      "Testers verify and validate a build before release",
+      "Testers review the requirements and find gaps early",
+      "Testers take over the developers' unit testing so that developers can focus on features"
+    ],
+    "answer": "D",
+    "why": "Taking work away from developers is not one of testing's contributions; component (unit) testing is normally done by developers.",
+    "distractorNotes": {
+      "A": "This IS a contribution: close cooperation.",
+      "B": "This IS a contribution: it finds failures that would reach players.",
+      "C": "This IS a contribution: early defect detection."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-a",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which statement about testing and quality assurance is CORRECT?",
+    "options": [
+      "Testing is a form of quality control",
+      "Testing is a form of quality assurance",
+      "Quality assurance is product-oriented and corrective",
+      "Quality assurance is only the testers' responsibility"
+    ],
+    "answer": "A",
+    "why": "Testing is a form of quality control: product-oriented and corrective.",
+    "distractorNotes": {
+      "B": "Adjacent-concept swap: testing is QC (product-oriented), not QA.",
+      "C": "Swapped: that describes QC; QA is process-oriented and preventive.",
+      "D": "QA is everyone's responsibility on a project."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-b",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which describes quality assurance (QA)?",
+    "options": [
+      "A product-oriented, corrective approach that finds and removes defects in the finished product before each release",
+      "A process-oriented, preventive approach: following good processes correctly should produce a good product",
+      "Another name for testing, used mainly in game studios",
+      "A final check of the product by the QA department just before release"
+    ],
+    "answer": "B",
+    "why": "QA is process-oriented and preventive: it improves the development and test processes.",
+    "distractorNotes": {
+      "A": "That is quality control (QC).",
+      "C": "Testing is a form of QC, not a synonym for QA.",
+      "D": "Informal paraphrase: QA is about processes throughout, not a final check."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-c",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A studio adopts a rule that every pull request needs a second approver and starts an onboarding course on its coding standard. What is this?",
+    "options": [
+      "Quality control",
+      "Testing",
+      "Quality assurance",
+      "Debugging"
+    ],
+    "answer": "C",
+    "why": "Improving the process so it produces better products is quality assurance.",
+    "distractorNotes": {
+      "A": "QC works on the product (e.g. testing it); these are process improvements.",
+      "B": "Neither measure tests a product.",
+      "D": "No failure is being diagnosed or fixed."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-d",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "How are test results used by QA and by QC?",
+    "options": [
+      "QA uses them to fix defects; QC uses them to improve processes",
+      "Only QC uses test results; QA does not need them",
+      "Both use them only to decide whether the product can be released on its date",
+      "QC uses them to fix defects; QA uses them as feedback on the processes"
+    ],
+    "answer": "D",
+    "why": "Test results serve QC (fix the defects) and QA (feedback on the development and test processes).",
+    "distractorNotes": {
+      "A": "Swapped roles.",
+      "B": "QA does use them, as process feedback.",
+      "C": "True-but-incomplete smear; neither is defined that way."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-e",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "The QA team of a game studio runs a two-week playtest and logs 40 defects in the build. In ISTQB terms, what is this activity?",
+    "options": [
+      "Quality assurance, because the team that does it is called QA",
+      "Quality control, because it evaluates the product",
+      "Quality assurance, because it prevents defects",
+      "Neither, because playtests are not testing"
+    ],
+    "answer": "B",
+    "why": "Testing a product is quality control, whatever the team is called.",
+    "distractorNotes": {
+      "A": "Informal paraphrase trap: a department name does not make an activity QA.",
+      "C": "Testing a build finds defects in the product; it does not prevent them.",
+      "D": "Playtesting the build is testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-f",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Who is responsible for quality assurance on a project?",
+    "options": [
+      "Only the testers",
+      "Only the test manager",
+      "Only an external auditor",
+      "Everyone on the project"
+    ],
+    "answer": "D",
+    "why": "QA applies to both development and testing processes, and is the responsibility of everyone on the project.",
+    "distractorNotes": {
+      "A": "QA applies to the whole process, so it is everyone's job.",
+      "B": "Wrong actor: no single role owns QA.",
+      "C": "Audits can support QA, but QA is not delegated to outsiders."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.2-g",
+    "objective": "FL-1.2.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "After three patches each broke save files, the studio analyses why and adds a save-compatibility step to its release process. Which pair is correct?",
+    "options": [
+      "Finding the broken saves was quality control; adding the release step is quality assurance",
+      "Finding the broken saves was quality assurance; adding the release step is quality control",
+      "Both are quality control, because both concern save files",
+      "Both are quality assurance, because both aim at quality"
+    ],
+    "answer": "A",
+    "why": "QC finds defects in the product (corrective); QA improves the process so it stops producing them (preventive).",
+    "distractorNotes": {
+      "B": "Swapped.",
+      "C": "Category smear: the release step changes the process, which is QA.",
+      "D": "Category smear: finding defects in the product is QC."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-a",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "A designer misreads the GDD and specifies the wrong jump height. What is the misreading, in ISTQB terms?",
+    "options": [
+      "A defect",
+      "An error",
+      "A failure",
+      "A root cause"
+    ],
+    "answer": "B",
+    "why": "A human mistake is an error. It produces a defect, which may cause a failure.",
+    "distractorNotes": {
+      "A": "The defect is the wrong value in the specification, which the error produced.",
+      "C": "A failure is what happens when the defective build is run.",
+      "D": "The root cause is why the misreading happened (e.g. time pressure)."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-b",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A programmer, rushing before a milestone, types `<` instead of `<=` in the level-up check. Players with exactly 100 XP do not level up. Match: 1 rushing before the milestone, 2 typing the wrong operator, 3 the `<` in the code, 4 not levelling up at 100 XP. a error, b defect, c failure, d root cause.",
+    "options": [
+      "1-a, 2-d, 3-b, 4-c",
+      "1-d, 2-b, 3-a, 4-c",
+      "1-d, 2-a, 3-b, 4-c",
+      "1-d, 2-a, 3-c, 4-b"
+    ],
+    "answer": "C",
+    "why": "Root cause (time pressure) → error (the human mistake) → defect (in the code) → failure (when executed).",
+    "distractorNotes": {
+      "A": "Swapped error and root cause: the time pressure is why the mistake was made.",
+      "B": "The mistake (action) is the error; the wrong operator in the code is the defect.",
+      "D": "The `<` is the defect in the code; what the player sees is the failure."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-c",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A sound designer mislabels an audio file, so the wrong music plays in the shop. A tester later asks why it happened: the naming convention was never documented. What is the undocumented convention?",
+    "options": [
+      "The error",
+      "The root cause",
+      "The defect",
+      "The failure"
+    ],
+    "answer": "B",
+    "why": "The root cause is the fundamental reason a problem occurred, here the situation that led to the error.",
+    "distractorNotes": {
+      "A": "The error is the mislabelling itself; the missing convention is what led to it.",
+      "C": "The defect is the wrong label in the project.",
+      "D": "The failure is the wrong music playing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-d",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which statement about defects and failures is CORRECT?",
+    "options": [
+      "Every defect causes a failure the moment the build is started",
+      "A defect in the code may never cause a failure if the code containing it is never executed",
+      "Failures can only be caused by defects in the code, never by the environment or anything else",
+      "Defects can only exist in source code, not in documents or build files"
+    ],
+    "answer": "B",
+    "why": "Some defects always fail when executed, some only under specific conditions, some never.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: some defects fail only in certain conditions, some never.",
+      "C": "Environmental conditions (e.g. radiation, electromagnetic fields) can also cause failures.",
+      "D": "Defects also sit in documentation, requirements and supporting artefacts like build files."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-e",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "During a heatwave a server rack overheats and the game's matchmaking service returns corrupted results, although the code has no defect. What is this?",
+    "options": [
+      "A defect in the code caused by a developer's error",
+      "An error made by the server hardware",
+      "A root cause that leads to no failure",
+      "A failure caused by environmental conditions"
+    ],
+    "answer": "D",
+    "why": "Failures can also be caused by environmental conditions, without any defect.",
+    "distractorNotes": {
+      "A": "There is no defect in the code; the cause is the environment.",
+      "B": "An error is a human mistake, not a machine event.",
+      "C": "Corrupted results returned to players are a failure."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-f",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A defect in the requirements for a quest system was not found in review. What is the MOST likely consequence?",
+    "options": [
+      "Nothing, because only code defects matter",
+      "Later work products built from it, such as the design and code, contain defects too",
+      "The quest system fails as soon as the defective requirements are approved and signed off",
+      "The defect turns into an error during coding"
+    ],
+    "answer": "B",
+    "why": "An undetected defect in an early work product tends to cause defective later work products.",
+    "distractorNotes": {
+      "A": "Defects in early work products spread into later ones.",
+      "C": "A requirement cannot fail; failures happen when code is executed.",
+      "D": "The chain runs error → defect → failure, not defect → error."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-g",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A tester writes in a report: \"Root cause: the developer misread the item spec.\" A colleague says this is not quite right in ISTQB terms. Why?",
+    "options": [
+      "Misreading the spec is the failure; the root cause is the wrong code",
+      "Misreading the spec is the defect; the root cause is the failure",
+      "The tester is right: in ISTQB terms, root cause and error mean the same thing and are interchangeable",
+      "Misreading the spec is the error; the root cause is what led to it, e.g. time pressure"
+    ],
+    "answer": "D",
+    "why": "The human mistake is the error; root cause analysis asks why the mistake happened.",
+    "distractorNotes": {
+      "A": "A failure is observed behaviour when executing, not a misreading.",
+      "B": "The defect is in the work product; the root cause is never after the failure.",
+      "C": "Informal paraphrase: they are different terms; the root cause sits before the error."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-h",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "What is the main purpose of identifying root causes?",
+    "options": [
+      "To find the failure that the defect caused in the field",
+      "To decide which person should be blamed for the error",
+      "To reduce the occurrence of similar defects and failures in the future",
+      "To reproduce the failure so that the developer can debug and fix it quickly"
+    ],
+    "answer": "C",
+    "why": "Addressing the root cause prevents similar defects and failures from recurring.",
+    "distractorNotes": {
+      "A": "The failure is already known; root cause analysis looks backwards for the reason.",
+      "B": "Root cause analysis is not about blame.",
+      "D": "Reproduction is a debugging step, not the purpose of root cause analysis."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-i",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which of the following is a typical reason why people make errors?",
+    "options": [
+      "Failures in the operational environment",
+      "Defects in the code",
+      "Test coverage that is too low",
+      "Fatigue and time pressure"
+    ],
+    "answer": "D",
+    "why": "Errors happen for many reasons: time pressure, complexity, fatigue, lack of training, and so on.",
+    "distractorNotes": {
+      "A": "Failures are the result at the end of the chain, not why people err.",
+      "B": "A defect is what an error produces, not why it was made.",
+      "C": "Low coverage lets defects go unfound; it does not cause errors."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.2.3-j",
+    "objective": "FL-1.2.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A localisation tester sees German text cut off on a button. The cause: the translator was given no length limit, so wrote a long word; the UI file holds the long word; the button shows it cut off. Which is the defect?",
+    "options": [
+      "The button showing the text cut off",
+      "The translator writing a long word",
+      "The long word in the UI text file",
+      "Giving the translator no length limit"
+    ],
+    "answer": "C",
+    "why": "The defect is the flaw in the work product (the text file); the cut-off button is the failure.",
+    "distractorNotes": {
+      "A": "That is the failure, seen when the game runs.",
+      "B": "That is the error, the human action.",
+      "D": "That is the root cause, what led to the error."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-a",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "A regression suite of 300 tests has run unchanged for a year and now finds almost nothing, yet players keep reporting new bugs. Which principle explains this?",
+    "options": [
+      "Tests wear out",
+      "Defects cluster together",
+      "Exhaustive testing is impossible",
+      "Absence-of-defects fallacy"
+    ],
+    "answer": "A",
+    "why": "Repeating the same tests makes them less effective at finding new defects; tests must be changed or new ones written.",
+    "distractorNotes": {
+      "B": "Clustering is about where defects concentrate, not tests losing power.",
+      "C": "True in general, but the stem is about repeating the same tests.",
+      "D": "That is about building the wrong product, not stale tests."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-b",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Most crash reports for a game come from its physics module, which is 5 % of the code. Which principle does this illustrate, and what should the test manager do?",
+    "options": [
+      "Tests wear out; rewrite the physics tests",
+      "Testing is context dependent; test physics like any other module",
+      "Early testing saves time and money; move the physics tests to an earlier phase",
+      "Defects cluster together; focus more test effort on the physics module"
+    ],
+    "answer": "D",
+    "why": "A small number of components usually holds most defects; this is used for risk-based focus.",
+    "distractorNotes": {
+      "A": "The stem is about where defects are, not stale tests.",
+      "B": "Ignores the clustering, which is the point.",
+      "C": "True-but-irrelevant: the stem is about concentration of defects."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-c",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A studio ships a technically flawless city builder: every test passes. Players hate it because it lacks the sandbox mode they asked for. Which principle applies?",
+    "options": [
+      "Testing shows the presence, not the absence, of defects",
+      "Absence-of-defects fallacy",
+      "Testing is context dependent",
+      "Exhaustive testing is impossible"
+    ],
+    "answer": "B",
+    "why": "Verifying that software is defect-free does not make it successful; it must also be validated against users' needs.",
+    "distractorNotes": {
+      "A": "Adjacent concept: the problem is not hidden defects but the wrong product.",
+      "C": "True-but-irrelevant here.",
+      "D": "Not about meeting user needs."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-d",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A test manager uses the same checklist-heavy approach for a medical-device app and for a game jam prototype. Which principle is she ignoring?",
+    "options": [
+      "Testing is context dependent",
+      "Defects cluster together",
+      "Tests wear out",
+      "Early testing saves time and money"
+    ],
+    "answer": "A",
+    "why": "There is no single universal approach; testing is done differently in different contexts.",
+    "distractorNotes": {
+      "B": "Nothing in the stem is about where defects concentrate.",
+      "C": "Not about repeating the same tests on the same product.",
+      "D": "Not about timing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-e",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A producer says: \"QA ran 2,000 tests and none failed, so the build has no bugs.\" Which principle contradicts this?",
+    "options": [
+      "Testing shows the presence, not the absence, of defects",
+      "The absence-of-defects fallacy",
+      "Tests wear out",
+      "Exhaustive testing is impossible"
+    ],
+    "answer": "A",
+    "why": "Testing can show that defects are present, but cannot prove they are absent; it only reduces the probability.",
+    "distractorNotes": {
+      "B": "Adjacent-concept swap: that principle is about building the wrong system, not about proof of no defects.",
+      "C": "Possible, but the claim itself is contradicted by the presence principle.",
+      "D": "Related, but the direct answer to \"no bugs\" is the presence principle."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-f",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A settings screen has 12 options with 5 values each. Instead of trying all combinations, the tester uses test techniques and risk to choose a few dozen tests. Which principle is she applying?",
+    "options": [
+      "Defects cluster together",
+      "Exhaustive testing is impossible",
+      "Testing is context dependent",
+      "Tests wear out"
+    ],
+    "answer": "B",
+    "why": "Testing everything is not feasible except in trivial cases; techniques, prioritisation and risk focus the effort.",
+    "distractorNotes": {
+      "A": "Risk focus is related, but the stem is about not testing all combinations.",
+      "C": "True-but-irrelevant: the reason is the number of combinations.",
+      "D": "Not about repeating tests."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-g",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which practice follows from the principle \"early testing saves time and money\"?",
+    "options": [
+      "Running the full regression suite after every release",
+      "Writing more tests for the module with the most past defects in it",
+      "Changing test data regularly",
+      "Reviewing the level design document before the level is built"
+    ],
+    "answer": "D",
+    "why": "Defects removed early do not cause later defects in derived work products, which saves cost.",
+    "distractorNotes": {
+      "A": "That is regression testing, not early testing.",
+      "B": "That follows from defect clustering.",
+      "C": "That counters tests wearing out."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.3.1-h",
+    "objective": "FL-1.3.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "Which statement about the principle \"tests wear out\" is CORRECT?",
+    "options": [
+      "Repeating the same tests can still be useful, for example automated regression tests",
+      "Tests that have passed once should never be run again",
+      "It means that test environments and test devices break down after long periods of heavy use",
+      "It means that testers become tired over time and miss more defects"
+    ],
+    "answer": "A",
+    "why": "Tests must be modified to find new defects, but in some cases, such as automated regression, repetition helps.",
+    "distractorNotes": {
+      "B": "Overgeneralisation: repetition is sometimes beneficial.",
+      "C": "Informal paraphrase: it is about tests losing their power to find new defects.",
+      "D": "Informal paraphrase: it is not about the testers."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-a",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "A tester turns the test condition \"the shop rejects purchases when coins are insufficient\" into test cases with inputs and expected results. Which test activity is this?",
+    "options": [
+      "Test analysis",
+      "Test implementation",
+      "Test design",
+      "Test execution"
+    ],
+    "answer": "C",
+    "why": "Elaborating test conditions into test cases (how to test) is test design.",
+    "distractorNotes": {
+      "A": "Analysis identifies the test condition (what to test); turning it into test cases is design.",
+      "B": "Implementation organises test cases into procedures and suites and prepares data; it does not create the test cases.",
+      "D": "Nothing is run yet."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-b",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester groups 30 existing test cases into a \"smoke\" suite, writes the step-by-step procedures and builds the save files the tests need. Which test activity is this?",
+    "options": [
+      "Test design",
+      "Test implementation",
+      "Test analysis",
+      "Test execution"
+    ],
+    "answer": "B",
+    "why": "Organising test cases into procedures and suites and creating the test data is test implementation.",
+    "distractorNotes": {
+      "A": "Classic swap: design creates the test cases and identifies test data requirements; building the actual data and suites is implementation.",
+      "C": "Analysis decides what to test (test conditions).",
+      "D": "The tests are prepared, not run."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-c",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which task belongs to test analysis?",
+    "options": [
+      "Identifying the coverage items for each of the prioritised test conditions",
+      "Evaluating the test basis for testability and identifying defects in it",
+      "Building the test environment and checking it works",
+      "Arranging test procedures into an execution schedule"
+    ],
+    "answer": "B",
+    "why": "Analysis examines the test basis to identify test conditions (what to test) and evaluates it, including testability and defects.",
+    "distractorNotes": {
+      "A": "That is part of test design.",
+      "C": "That is part of test implementation.",
+      "D": "That is part of test implementation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-d",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Halfway through a sprint the tests are behind schedule. The test lead compares progress with the plan and moves two low-risk features out of the sprint's test scope. Which test activity is this?",
+    "options": [
+      "Test monitoring and test control",
+      "Test planning",
+      "Test completion",
+      "Test analysis"
+    ],
+    "answer": "A",
+    "why": "Monitoring compares actual progress with the plan; control takes actions to meet the test objectives.",
+    "distractorNotes": {
+      "B": "Planning sets the objectives and approach; adjusting during the work is control.",
+      "C": "Completion happens at a milestone, after testing.",
+      "D": "Analysis is about the test basis and test conditions."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-e",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which task belongs to test design, NOT to test implementation?",
+    "options": [
+      "Defining the test data requirements and designing the test environment",
+      "Creating the test data",
+      "Assembling test procedures into test suites",
+      "Building the test environment and checking that it is set up correctly before execution"
+    ],
+    "answer": "A",
+    "why": "Design identifies coverage items, test data requirements, the test environment design and the tools needed; implementation creates them.",
+    "distractorNotes": {
+      "B": "Creating the data is implementation; design only states what data is needed.",
+      "C": "That is implementation.",
+      "D": "That is implementation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-f",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Before the first run of a new patch's tests, the tester checks that the console devkits have the right firmware and the test server is reachable. Which activity does this task belong to?",
+    "options": [
+      "Test implementation",
+      "Test execution",
+      "Test design",
+      "Test planning"
+    ],
+    "answer": "A",
+    "why": "Building the test environment and verifying it is set up correctly is a test implementation task.",
+    "distractorNotes": {
+      "B": "Execution starts when the tests are run; preparing and verifying the environment is done before.",
+      "C": "Design only designs the environment; building and verifying it is implementation.",
+      "D": "Planning sets the approach, not the readiness of devkits."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-g",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester runs the tests, compares actual and expected results, and analyses an anomaly to find its likely cause before reporting it. Which activity is this?",
+    "options": [
+      "Debugging",
+      "Test execution",
+      "Test monitoring and control",
+      "Test completion"
+    ],
+    "answer": "B",
+    "why": "Execution includes running tests, comparing results, logging them, analysing anomalies and reporting defects.",
+    "distractorNotes": {
+      "A": "Analysing an anomaly for its likely cause before reporting is part of execution; debugging is the developer's diagnosis and fix.",
+      "C": "Monitoring compares progress with the plan, not actual results with expected ones.",
+      "D": "Completion comes at a milestone, after execution."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-h",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "At the end of a release, the test team archives reusable test assets, shuts down the cloud test servers, collects lessons learned and creates backlog items for unresolved defects. Which activity is this?",
+    "options": [
+      "Test closure",
+      "Test monitoring and control",
+      "Test implementation",
+      "Test completion"
+    ],
+    "answer": "D",
+    "why": "Archiving testware, shutting down environments, lessons learned and items for unresolved defects are test completion tasks.",
+    "distractorNotes": {
+      "A": "Informal paraphrase: an older name; the ISTQB v4.0 term is test completion.",
+      "B": "Monitoring and control run during the work, not at its end.",
+      "C": "Implementation prepares tests before execution."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.1-i",
+    "objective": "FL-1.4.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "The test lead writes down the test objectives and decides on the approach for testing a new co-op mode within its time and budget limits. Which activity is this?",
+    "options": [
+      "Test analysis",
+      "Test planning",
+      "Test monitoring and control",
+      "Test design"
+    ],
+    "answer": "B",
+    "why": "Test planning defines the test objectives and the approach to meet them within the constraints of the context.",
+    "distractorNotes": {
+      "A": "Analysis looks at the test basis to decide what to test, after the approach exists.",
+      "C": "That compares progress against the plan once it exists.",
+      "D": "Design turns test conditions into test cases."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-a",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which of the following is a contextual factor that influences the test process?",
+    "options": [
+      "The number of defects that the tests will find",
+      "The criticality of the test object and the identified risks",
+      "The favourite test technique of the most senior tester on the team",
+      "The test completion report of the current project"
+    ],
+    "answer": "B",
+    "why": "The business domain (criticality, risks, market needs, legal regulations) is one of the contextual factors.",
+    "distractorNotes": {
+      "A": "That is unknown in advance; it is a result, not a context factor.",
+      "C": "Personal preference is not a contextual factor; team skills are.",
+      "D": "That is an output of testing, not something that shapes it."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-b",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A small indie team has two weeks before a game festival and no budget for tools. Which contextual factor MOST shapes how much they can test?",
+    "options": [
+      "The business domain, such as market needs and legal regulations",
+      "Organisational factors, such as structure and existing policies",
+      "Project constraints such as scope, time, budget and resources",
+      "Technical factors, such as the type of software and architecture"
+    ],
+    "answer": "C",
+    "why": "Scope, time, budget and resources are project constraints, a contextual factor.",
+    "distractorNotes": {
+      "A": "The stem is about time and money, not the domain.",
+      "B": "Those are structure, policies and practices; the stem is about time and money.",
+      "D": "Those are the type of software, architecture and technology."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-c",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A game will use a new VR headset whose SDK the team has never worked with. Which contextual factor does this BEST represent?",
+    "options": [
+      "Stakeholders",
+      "Tools",
+      "Business domain",
+      "Technical factors"
+    ],
+    "answer": "D",
+    "why": "The type of software, the product architecture and the technology used are technical factors.",
+    "distractorNotes": {
+      "A": "Stakeholders are people with needs and expectations.",
+      "B": "The SDK is the technology of the product, not a test tool.",
+      "C": "That is criticality, risks, markets and regulations."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-d",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which of these is shaped by the context of testing?",
+    "options": [
+      "The definition of a test case",
+      "Whether testing can prove there are no defects",
+      "The level of detail of the test documentation",
+      "The seven testing principles"
+    ],
+    "answer": "C",
+    "why": "Context affects the test strategy, techniques, degree of automation, required coverage, documentation detail and reporting.",
+    "distractorNotes": {
+      "A": "Definitions are fixed; how they are applied varies.",
+      "B": "It never can, in any context.",
+      "D": "The principles apply everywhere."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-e",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A company's game for young children must follow strict child-privacy regulations. Which part of the test process is MOST likely to change because of this context?",
+    "options": [
+      "Nothing, because regulations only affect the studio's legal and compliance teams, not testing",
+      "The required level of coverage and the detail of test documentation for privacy features",
+      "The order in which the test activities are performed",
+      "Which of the seven testing principles apply"
+    ],
+    "answer": "B",
+    "why": "Regulations are part of the business domain; they raise coverage and documentation demands.",
+    "distractorNotes": {
+      "A": "Business domain regulations do shape testing.",
+      "C": "The activities stay the same; their depth and form change.",
+      "D": "All principles always apply."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-f",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A new tester joins a team where the others have ten years of experience but none know test automation. Which contextual factor is this?",
+    "options": [
+      "Stakeholders: their needs, expectations, requirements and willingness to cooperate with testing",
+      "Organisational factors: the structure, policies and practices used",
+      "Team members: their skills, knowledge, experience, availability and training needs",
+      "Tools: their availability, usability and compliance"
+    ],
+    "answer": "C",
+    "why": "The team's skills, experience and training needs are a contextual factor that shapes, for example, the degree of automation.",
+    "distractorNotes": {
+      "A": "Stakeholders are those with an interest in the product; the stem is about the team.",
+      "B": "Those are about the organisation, not the team's skills.",
+      "D": "The tools are not the issue; the team's skills are."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.2-g",
+    "objective": "FL-1.4.2",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "Two studios test similar mobile games. Studio A tests with heavy automation and short reports; studio B with mostly manual tests and long reports. Both are well run. What is the BEST explanation?",
+    "options": [
+      "One of the two studios must be following the wrong test process",
+      "Mobile games need exactly one correct test process, whatever the team, its size and its tools",
+      "The length of test reports is fixed by the syllabus for each SDLC",
+      "Testing is context dependent: different factors lead to different, suitable processes"
+    ],
+    "answer": "D",
+    "why": "Many factors (stakeholders, team, domain, technical, constraints, organisation, SDLC, tools) shape each test process.",
+    "distractorNotes": {
+      "A": "Testing is context dependent; both can be right.",
+      "B": "Overgeneralisation.",
+      "C": "The syllabus sets no report length."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-a",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which test activity produces test logs and defect reports?",
+    "options": [
+      "Test execution",
+      "Test completion",
+      "Test implementation",
+      "Test monitoring and control"
+    ],
+    "answer": "A",
+    "why": "Test logs and defect reports are the testware of test execution.",
+    "distractorNotes": {
+      "B": "Completion produces the test completion report and lessons learned; defect reports are born in execution.",
+      "C": "Implementation produces procedures, scripts, suites, data and the schedule.",
+      "D": "That produces progress reports and control directives."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-b",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which testware is typically produced by test design?",
+    "options": [
+      "Test procedures and the test execution schedule",
+      "Test conditions and defect reports on the test basis",
+      "Test logs",
+      "Test cases, test charters and coverage items"
+    ],
+    "answer": "D",
+    "why": "Design produces test cases, test charters, coverage items, test data requirements and test environment requirements.",
+    "distractorNotes": {
+      "A": "Those come from implementation.",
+      "B": "Those come from analysis.",
+      "C": "Those come from execution."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-c",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester produces stubs for the unfinished matchmaking service and a simulator for the payment provider. Which activity produces this testware?",
+    "options": [
+      "Test design",
+      "Test execution",
+      "Test implementation",
+      "Test analysis"
+    ],
+    "answer": "C",
+    "why": "Test environment elements such as stubs, drivers, simulators and service virtualisations are produced in implementation.",
+    "distractorNotes": {
+      "A": "Design produces test environment requirements; the stubs and simulators themselves are implementation.",
+      "B": "They must exist before the tests can run.",
+      "D": "Analysis produces test conditions."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-d",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Match the testware to the activity that produces it: 1 risk register, 2 test conditions, 3 test data requirements, 4 test data. a analysis, b design, c implementation, d planning.",
+    "options": [
+      "1-d, 2-b, 3-a, 4-c",
+      "1-a, 2-a, 3-b, 4-c",
+      "1-d, 2-a, 3-c, 4-b",
+      "1-d, 2-a, 3-b, 4-c"
+    ],
+    "answer": "D",
+    "why": "Planning: risk register. Analysis: test conditions. Design: test data requirements. Implementation: test data.",
+    "distractorNotes": {
+      "A": "Test conditions come from analysis; data requirements from design.",
+      "B": "The risk register is planning testware.",
+      "C": "Swapped design and implementation: requirements in design, the data itself in implementation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-e",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "While analysing a GDD, a tester finds a contradiction that cannot be fixed straight away and logs it. Which activity is this testware produced in?",
+    "options": [
+      "Test execution",
+      "Test design",
+      "Test completion",
+      "Test analysis"
+    ],
+    "answer": "D",
+    "why": "Analysis produces test conditions and defect reports about defects in the test basis (if not fixed directly).",
+    "distractorNotes": {
+      "A": "Defect reports are also born in execution, but this one is on the test basis, found in analysis.",
+      "B": "Design produces test cases and related items.",
+      "C": "Completion reports on finished testing."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-f",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which testware is produced by test completion?",
+    "options": [
+      "Test progress reports and documented control directives",
+      "Defect reports and the test logs of the final regression runs before the release",
+      "The test plan, updated with the final results",
+      "The test completion report, documented lessons learned and change requests"
+    ],
+    "answer": "D",
+    "why": "Completion produces the test completion report, action items for improvement, lessons learned and change requests (e.g. backlog items).",
+    "distractorNotes": {
+      "A": "Those come from monitoring and control.",
+      "B": "Test logs and defect reports are born in execution, not completion.",
+      "C": "The test plan is planning testware."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-g",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which testware is produced by test monitoring and control?",
+    "options": [
+      "The test plan, the risk register, and the entry and exit criteria",
+      "The test execution schedule and the test suites",
+      "Test progress reports and documentation of control directives",
+      "The test completion report and lessons learned"
+    ],
+    "answer": "C",
+    "why": "Monitoring and control produce test progress reports, documented control directives and risk information.",
+    "distractorNotes": {
+      "A": "Those are planning testware.",
+      "B": "That is implementation testware.",
+      "D": "That is completion testware."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-h",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A tester has written exploratory test charters for a new photo mode and listed the save states the tests will need. Then she prepares those save files and puts the charters into a session schedule. Which pair of activities produced the first and the second set of testware?",
+    "options": [
+      "Test analysis, then test design",
+      "Test design, then test implementation",
+      "Test implementation, then test execution",
+      "Test design, then test execution"
+    ],
+    "answer": "B",
+    "why": "Test charters and test data requirements are design testware; the test data and the schedule are implementation testware.",
+    "distractorNotes": {
+      "A": "Charters and data requirements are design; prepared data and schedules are implementation.",
+      "C": "Nothing has run yet; and charters are design testware.",
+      "D": "Preparing data and a schedule is implementation, not execution."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-i",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "Which of the following is NOT testware of test planning?",
+    "options": [
+      "Test procedures",
+      "The test schedule",
+      "Entry criteria and exit criteria",
+      "The risk register"
+    ],
+    "answer": "A",
+    "why": "Test procedures are produced in implementation; planning produces the test plan, schedule, risk register and entry/exit criteria.",
+    "distractorNotes": {
+      "B": "Planning produces the test schedule.",
+      "C": "Planning produces them.",
+      "D": "Planning produces it."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.3-j",
+    "objective": "FL-1.4.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A test lead asks for \"the document that orders the test procedures and suites into a sequence for the next three days of runs\". Which testware is this, and which activity produces it?",
+    "options": [
+      "The overall test schedule of the project, produced in test planning",
+      "The test log, produced in test execution",
+      "The test execution schedule, produced in test implementation",
+      "The test plan, produced in test planning"
+    ],
+    "answer": "C",
+    "why": "Arranging test procedures in a test execution schedule is done, and the schedule produced, in implementation.",
+    "distractorNotes": {
+      "A": "Adjacent-term trap: the planning schedule covers the project; the run order of procedures is the execution schedule.",
+      "B": "A log records what ran; it does not plan the order.",
+      "D": "The test plan describes objectives and approach, not the run order of procedures."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-a",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "A designer changes the rules of the ranked mode. Thanks to traceability, the test lead lists the 14 test cases linked to those rules. What is this use of traceability called?",
+    "options": [
+      "Updating the tests",
+      "Regression testing",
+      "Impact analysis",
+      "Coverage measurement"
+    ],
+    "answer": "C",
+    "why": "Traceability supports impact analysis of changes: finding the testware affected by a change.",
+    "distractorNotes": {
+      "A": "Informal paraphrase: the tests may then be updated, but the term for finding what a change affects is impact analysis.",
+      "B": "Regression testing is a test type; traceability supports choosing its scope.",
+      "D": "Coverage is about how much of the basis is tested, not what a change touches."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-b",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which of the following is a benefit of traceability between test cases and requirements?",
+    "options": [
+      "It guarantees that every requirement is correct",
+      "It lets you check that every requirement is covered by tests",
+      "It removes the need for a test plan",
+      "It lets testers fix defects faster"
+    ],
+    "answer": "B",
+    "why": "Traceability of test cases to requirements lets you verify that requirements are covered.",
+    "distractorNotes": {
+      "A": "Traceability says nothing about whether a requirement is correct.",
+      "C": "True-but-irrelevant and false: traceability does not replace planning.",
+      "D": "Fixing is debugging; traceability supports test tasks."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-c",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A test lead links test results to the product risks they mitigate. What does this let her do?",
+    "options": [
+      "Prove that no risks remain",
+      "Measure the code coverage reached in the risky components",
+      "Evaluate the level of residual risk in the test object",
+      "Decide the priority of each defect"
+    ],
+    "answer": "C",
+    "why": "Traceability of test results to risks lets you evaluate the residual risk.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: residual risk can be evaluated, not removed.",
+      "B": "Code coverage needs a coverage tool, not traceability to risks.",
+      "D": "Priority is set by the business; this link is about risk levels."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-d",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A platform holder audits the studio's testing for a certification. What does good traceability make easier?",
+    "options": [
+      "Hiding the tests that failed from the auditors' view",
+      "Skipping the parts of the certification checklist that passed in an earlier audit",
+      "Showing the auditors which requirements were tested and with what result",
+      "Writing the remaining code faster before the audit"
+    ],
+    "answer": "C",
+    "why": "Traceability facilitates test audits and helps meet IT governance criteria.",
+    "distractorNotes": {
+      "A": "Traceability makes status visible, not hidden.",
+      "B": "It supports audits, it does not replace them.",
+      "D": "Not a testing benefit."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-e",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Why do traceable test reports help stakeholders?",
+    "options": [
+      "They list every line of code that the tests executed",
+      "They include the full text and steps of every test case",
+      "They show the status of test basis elements, e.g. which requirements passed, failed or are untested",
+      "They make separate test completion reports unnecessary, because the links already show everything"
+    ],
+    "answer": "C",
+    "why": "Traceability makes progress and completion reports easier to understand by showing the status of test basis elements.",
+    "distractorNotes": {
+      "A": "That is code coverage reporting, not traceability.",
+      "B": "Detail is not the benefit; linking results to the basis is.",
+      "D": "Traceability makes those reports clearer, not unnecessary."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-f",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Between which items is traceability typically kept in testing?",
+    "options": [
+      "Test basis elements, related testware (conditions, cases, risks), test results and defects",
+      "Only between test cases and the test logs of their runs",
+      "Between testers and the defects they reported",
+      "Between every source code file and its full history of changes in the version control system"
+    ],
+    "answer": "A",
+    "why": "Traceability runs from the test basis through test conditions, cases and risks to results and defects.",
+    "distractorNotes": {
+      "B": "Too narrow: traceability links the test basis through to results and defects.",
+      "C": "That is ownership, not traceability.",
+      "D": "That is configuration management, not test traceability."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-g",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Before the release, the test lead traces every requirement to its test conditions and sees that the colour-blind mode requirement has none. Which benefit of traceability is this?",
+    "options": [
+      "Impact analysis of the change",
+      "Facilitating test audits",
+      "Defect prevention in the requirements",
+      "Evaluating coverage of the test basis"
+    ],
+    "answer": "D",
+    "why": "Tracing requirements to test conditions reveals coverage gaps: a requirement with nothing traced to it is untested.",
+    "distractorNotes": {
+      "A": "Impact analysis finds what a change affects; nothing has changed here, a requirement simply has no tests.",
+      "B": "No audit is taking place.",
+      "C": "Traceability is not a defect prevention technique."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-h",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A tester claims: \"The main use of traceability is to update test cases after a change.\" Which reply is BEST?",
+    "options": [
+      "Its term is impact analysis: it shows which tests a change affects, which you then update",
+      "Agreed; updating test cases after a change is its only use",
+      "Not quite; traceability is only used to prepare for audits",
+      "Not quite; traceability is mainly relevant to developers, who need it to trace code changes"
+    ],
+    "answer": "A",
+    "why": "The term is impact analysis; traceability also supports coverage evaluation, residual risk, audits and reporting.",
+    "distractorNotes": {
+      "B": "Informal paraphrase and overgeneralisation: impact analysis is the term, and coverage, risk, audits and reporting are also uses.",
+      "C": "Too narrow: audits are one use among several.",
+      "D": "It is a core test activity concept."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.4-i",
+    "objective": "FL-1.4.4",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "Which of the following is NOT a benefit of traceability?",
+    "options": [
+      "It supports evaluating coverage",
+      "It helps communicate technical aspects of testing to stakeholders understandably",
+      "It ensures that the test cases themselves are free of defects",
+      "It facilitates test audits"
+    ],
+    "answer": "C",
+    "why": "Traceability links items; it says nothing about whether a test case is itself correct.",
+    "distractorNotes": {
+      "A": "This IS a benefit.",
+      "B": "This IS a benefit.",
+      "D": "This IS a benefit."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-a",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which activities does the test management role mainly focus on?",
+    "options": [
+      "Test analysis, test design, test implementation and test execution",
+      "Test design and test execution only",
+      "Test planning, test monitoring and control, and test completion",
+      "Debugging and fixing"
+    ],
+    "answer": "C",
+    "why": "The test management role covers planning, monitoring and control, and completion.",
+    "distractorNotes": {
+      "A": "Those are the testing role's focus.",
+      "B": "Those belong to the testing role.",
+      "D": "Neither role does debugging."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-b",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which activities does the testing role mainly focus on?",
+    "options": [
+      "Test planning, test monitoring and test control",
+      "Test planning, test monitoring and test control, and test completion",
+      "Writing the production code and debugging it",
+      "Test analysis, test design, test implementation and test execution"
+    ],
+    "answer": "D",
+    "why": "The testing role is the engineering (technical) side: analysis, design, implementation and execution.",
+    "distractorNotes": {
+      "A": "Those are the test management role's focus.",
+      "B": "Those are the test management role's focus.",
+      "C": "That is development."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-c",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "On a three-person team, Ana writes the test plan in the morning and executes test cases in the afternoon. Which statement is CORRECT?",
+    "options": [
+      "This is not allowed: the two roles must always be held by two different people on the team",
+      "She is only in the testing role, because she executes tests",
+      "This is fine: one person can take both the test management role and the testing role",
+      "She is only in the test management role, because she writes the plan"
+    ],
+    "answer": "C",
+    "why": "Roles are not people: one person can hold both roles at the same time.",
+    "distractorNotes": {
+      "A": "Wrong: different people may hold them, or one person may hold both.",
+      "B": "Writing the test plan is a test management task.",
+      "D": "Executing tests is a testing role task."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-d",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "In an Agile team, who typically handles some of the test management tasks?",
+    "options": [
+      "Always a dedicated test manager outside the team",
+      "The Agile team itself",
+      "The product owner alone",
+      "Nobody: Agile teams do not need test management"
+    ],
+    "answer": "B",
+    "why": "In Agile, some test management tasks are handled by the team; tasks across teams may be done by test managers outside it.",
+    "distractorNotes": {
+      "A": "Tasks spanning several teams may be done outside, but within a team the Agile team handles some.",
+      "C": "Wrong actor: no such rule.",
+      "D": "The tasks still exist."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-e",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester on a live-service game is asked to decide which areas to stop testing because the patch deadline moved forward. Which role is she taking at that moment?",
+    "options": [
+      "The test management role",
+      "The testing role",
+      "The developer role",
+      "No role: only test managers may do this"
+    ],
+    "answer": "A",
+    "why": "Adjusting test scope in response to progress is test control, part of the test management role.",
+    "distractorNotes": {
+      "B": "Changing scope to meet a deadline is test control, a management task.",
+      "C": "Not a development task.",
+      "D": "Roles are not job titles; she is in the management role."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-f",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "What is the overall responsibility of the testing role?",
+    "options": [
+      "The test process, the test team and leadership of the test activities",
+      "The engineering, technical aspect of testing",
+      "The product's business success",
+      "Quality assurance of the whole development process"
+    ],
+    "answer": "B",
+    "why": "The testing role has overall responsibility for the engineering (technical) aspect of testing.",
+    "distractorNotes": {
+      "A": "That is the test management role.",
+      "C": "Not a testing role responsibility.",
+      "D": "QA is everyone's responsibility, not the testing role's definition."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.4.5-g",
+    "objective": "FL-1.4.5",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A studio has test managers who coordinate testing across six game teams. Within each team, testers also set the iteration's test priorities. Which statement is CORRECT?",
+    "options": [
+      "The testers are breaking the role model by setting test priorities",
+      "The cross-team test managers should also execute all of the teams' tests themselves, to keep the roles clean",
+      "Test management tasks can be split: cross-team tasks by test managers, team-level tasks by the team",
+      "Only one of the two arrangements can be correct at the same studio"
+    ],
+    "answer": "C",
+    "why": "How the test management role is carried out varies: in teams and across teams, by different people.",
+    "distractorNotes": {
+      "A": "No: anyone may take the test management role.",
+      "B": "Not required; the testing role does that, whoever holds it.",
+      "D": "The syllabus explicitly allows both at once."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-a",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "A developer refuses to accept a well-documented defect report because she is sure her netcode is correct. Which cognitive effect makes this hard for her?",
+    "options": [
+      "Confirmation bias",
+      "Communication",
+      "The pesticide paradox",
+      "Defect clustering"
+    ],
+    "answer": "A",
+    "why": "Confirmation bias makes it difficult to accept information that disagrees with what we already believe.",
+    "distractorNotes": {
+      "B": "Informal paraphrase: communication skills help deal with it, but the bias itself is confirmation bias.",
+      "C": "That is about tests wearing out.",
+      "D": "That is about where defects concentrate."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-b",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Why are communication skills especially important for testers?",
+    "options": [
+      "Testers often bring bad news, and results can feel like criticism of the author",
+      "Testers must write the user documentation for the players",
+      "Testers decide the priority of defects in the backlog",
+      "Testers must convince the developers that testing proves the quality of their code"
+    ],
+    "answer": "A",
+    "why": "Testers are often bearers of bad news, so results must be communicated constructively.",
+    "distractorNotes": {
+      "B": "Not a reason given; it is not a testing task.",
+      "C": "Wrong actor: priority is a business decision.",
+      "D": "Testing proves nothing; and that is not the reason."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-c",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester writes: \"Your terrible lighting code broke again.\" A colleague suggests: \"Lighting flickers on level 2 after loading a save; steps attached.\" Which skill does the colleague show?",
+    "options": [
+      "Domain knowledge",
+      "Technical knowledge of the bug-tracking tools",
+      "Thoroughness",
+      "Communicating defects in a constructive way"
+    ],
+    "answer": "D",
+    "why": "Information about defects should be communicated constructively, about the product, not the person.",
+    "distractorNotes": {
+      "A": "Knowing the game domain is not what changed.",
+      "B": "No tool is involved.",
+      "C": "Both reports may be thorough; the difference is tone."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-d",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which skill helps a tester MOST to find the hard-to-spot defects?",
+    "options": [
+      "Thoroughness, carefulness, curiosity and attention to detail",
+      "Being a team player and listening actively to the developers' views",
+      "Domain knowledge of the game's genre",
+      "Technical knowledge of the test tools"
+    ],
+    "answer": "A",
+    "why": "Thoroughness, carefulness, curiosity, attention to detail and being methodical help find defects, especially hard-to-find ones.",
+    "distractorNotes": {
+      "B": "Important for working with others, but not for finding hard defects.",
+      "C": "Helps understand users, but attention to detail is the key here.",
+      "D": "Technical knowledge increases efficiency, e.g. with tools, not the finding of hard defects."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-e",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "A tester on a racing game is also a keen sim-racer and can talk with the community about how cars should handle. Which generic skill is this?",
+    "options": [
+      "Technical knowledge",
+      "Analytical thinking",
+      "Testing knowledge",
+      "Domain knowledge"
+    ],
+    "answer": "D",
+    "why": "Domain knowledge helps testers understand and communicate with end users and business representatives.",
+    "distractorNotes": {
+      "A": "Technical knowledge is about tools and technology, for efficiency.",
+      "B": "Not what the stem describes.",
+      "C": "That is about techniques and processes."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-f",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Why might some people see testing as a destructive activity, even though it contributes to success?",
+    "options": [
+      "Because testing reports problems in someone's work, which may feel like criticism",
+      "Because testing changes the code and can break it",
+      "Because testers delete the builds they do not need",
+      "Because testing always delays the release of the finished product by weeks or even months"
+    ],
+    "answer": "A",
+    "why": "Results reveal defects in others' work, which can be felt as criticism; constructive communication helps.",
+    "distractorNotes": {
+      "B": "Testing does not change code; debugging does.",
+      "C": "Not a reason.",
+      "D": "Overgeneralisation."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-g",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "Which pair links a generic skill to the benefit the syllabus gives it?",
+    "options": [
+      "Domain knowledge: it increases the efficiency of test automation and of the test tools",
+      "Technical knowledge: it makes testing more efficient, e.g. through test tools",
+      "Testing knowledge: it lets the tester decide release dates",
+      "Active listening: it finds defects in the code faster"
+    ],
+    "answer": "B",
+    "why": "Technical knowledge increases efficiency (e.g. tools); testing knowledge increases effectiveness (e.g. techniques).",
+    "distractorNotes": {
+      "A": "Domain knowledge helps understanding and communicating with users.",
+      "C": "It increases test effectiveness, e.g. through test techniques.",
+      "D": "Communication skills help interaction with stakeholders."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.1-h",
+    "objective": "FL-1.5.1",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A tester notices that a chest duplicates items only when two players open it in the same frame. She reasons about the timing, questions the developers' claim that it cannot happen, and invents new tests around it. Which generic skills is she MAINLY using?",
+    "options": [
+      "Analytical thinking, critical thinking and creativity",
+      "Domain knowledge",
+      "Active listening, communication and being a team player",
+      "Technical knowledge of test tools"
+    ],
+    "answer": "A",
+    "why": "Analytical thinking, critical thinking and creativity increase the effectiveness of testing.",
+    "distractorNotes": {
+      "B": "Knowing the game's genre is not what drives this.",
+      "C": "Those help interaction with stakeholders, not reasoning about the defect.",
+      "D": "No tool is involved."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-a",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "The whole team approach comes from which development methodology?",
+    "options": [
+      "Agile software development",
+      "Scrum",
+      "Extreme Programming (XP)",
+      "The V-model"
+    ],
+    "answer": "C",
+    "why": "The whole team approach is a practice from Extreme Programming (XP).",
+    "distractorNotes": {
+      "A": "Informal paraphrase: XP is an Agile method, but the approach is attributed to XP specifically.",
+      "B": "Scrum is a different Agile framework.",
+      "D": "A sequential model, not the origin."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-b",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which is an advantage of the whole team approach?",
+    "options": [
+      "Better communication and collaboration within the team",
+      "Each team member is responsible for quality only in their own area",
+      "Testers no longer need to talk to business representatives",
+      "A high degree of test independence"
+    ],
+    "answer": "A",
+    "why": "The approach improves team dynamics, enhances communication and collaboration, and creates synergy.",
+    "distractorNotes": {
+      "B": "Wrong: everyone is responsible for quality of the whole.",
+      "C": "Testers collaborate with business representatives in this approach.",
+      "D": "The whole team approach lowers independence."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-c",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "In the whole team approach, who is responsible for quality?",
+    "options": [
+      "Everyone on the team",
+      "The testers",
+      "The product owner",
+      "The QA department outside the team"
+    ],
+    "answer": "A",
+    "why": "Any team member with the right skills can do any task, and everyone is responsible for quality.",
+    "distractorNotes": {
+      "B": "Not only the testers.",
+      "C": "Not only the product owner.",
+      "D": "Wrong: responsibility stays inside the team."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-d",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which practice is typical of the whole team approach?",
+    "options": [
+      "Testers and developers sit on different floors so that the testers stay independent",
+      "Only testers write tests",
+      "The team shares one workspace, physical or virtual, to make communication easy",
+      "Developers hand finished code to an external test team"
+    ],
+    "answer": "C",
+    "why": "Team members share a workspace (physical or virtual), because co-location helps communication.",
+    "distractorNotes": {
+      "A": "That reduces collaboration, the opposite.",
+      "B": "Anyone with the skills may do any task.",
+      "D": "That is high independence, not whole team."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-e",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "How do testers help in the whole team approach?",
+    "options": [
+      "By helping create acceptance tests with the business and agreeing automation with developers",
+      "By testing only after the developers declare that a feature is finished",
+      "By owning the quality decision alone, as the team's quality gate",
+      "By avoiding contact with business representatives and developers, so that their tests stay fully objective"
+    ],
+    "answer": "A",
+    "why": "Testers collaborate with business representatives (acceptance tests) and developers (strategy, automation), and share testing knowledge.",
+    "distractorNotes": {
+      "B": "That is a hand-off, not whole team.",
+      "C": "Quality is shared.",
+      "D": "Testers collaborate with them."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-f",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "When may the whole team approach NOT be appropriate?",
+    "options": [
+      "In some safety-critical contexts that need a high level of test independence",
+      "Never; it is the best approach in every context",
+      "In any project team with more than five people in it",
+      "Whenever a project relies heavily on test automation in a CI/CD delivery pipeline"
+    ],
+    "answer": "A",
+    "why": "Depending on the context, e.g. safety-critical systems, a high level of independence may be needed instead.",
+    "distractorNotes": {
+      "B": "Overgeneralisation.",
+      "C": "No team-size rule.",
+      "D": "Automation fits the approach well."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-g",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which benefit of the whole team approach comes from letting the team's various skill sets work together?",
+    "options": [
+      "Independence",
+      "Synergy",
+      "Exhaustive testing",
+      "Faster debugging by testers"
+    ],
+    "answer": "B",
+    "why": "Combining the team's skill sets creates synergy for the benefit of the project.",
+    "distractorNotes": {
+      "A": "The approach reduces independence.",
+      "C": "Impossible, and unrelated.",
+      "D": "Testers do not debug."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.2-h",
+    "objective": "FL-1.5.2",
+    "kLevel": "K1",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A studio moves to a whole team approach. Which change is MOST in line with it?",
+    "options": [
+      "The testers become a separate team in another building, so that they can test fully independently",
+      "Testers stop transferring their testing knowledge to others",
+      "Each discipline signs off quality for its own part only",
+      "Developers, designers and testers all write and run tests and share responsibility for quality"
+    ],
+    "answer": "D",
+    "why": "Anyone with the skills does any task, testers share knowledge, and everyone owns quality.",
+    "distractorNotes": {
+      "A": "That increases independence, the opposite.",
+      "B": "Sharing knowledge is part of the approach.",
+      "C": "Quality responsibility is shared, not split."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-a",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 1,
+    "stem": "Which of these gives the HIGHEST degree of test independence?",
+    "options": [
+      "An external test company hired to test the game",
+      "Testers from another team in the same studio",
+      "A fellow developer in the same team",
+      "The developer who wrote the code"
+    ],
+    "answer": "A",
+    "why": "Very high independence: testers from outside the organisation.",
+    "distractorNotes": {
+      "B": "High independence, but less than outside the organisation.",
+      "C": "Some independence.",
+      "D": "No independence."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-b",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which is a benefit of independent testing?",
+    "options": [
+      "Independent testers tend to recognise other kinds of failures, thanks to different backgrounds and biases",
+      "Independent testers usually know the code better than its own author",
+      "Independent testing removes the need for the developers to test their own code at all, at any test level",
+      "Independent testers are never seen as a bottleneck by the team"
+    ],
+    "answer": "A",
+    "why": "Different backgrounds, perspectives and biases help independent testers find other failures.",
+    "distractorNotes": {
+      "B": "Usually the reverse; authors know their code well.",
+      "C": "Developers still test their own code efficiently.",
+      "D": "That is in fact a known drawback."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-c",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Which is a drawback of test independence?",
+    "options": [
+      "Independent testers cannot challenge assumptions",
+      "Independent testers find fewer kinds of defects than the developers do",
+      "Developers may lose their sense of responsibility for quality",
+      "Independence makes tests exhaustive"
+    ],
+    "answer": "C",
+    "why": "Drawbacks: isolation, communication problems, an adversarial relationship, developers losing responsibility, testers seen as a bottleneck.",
+    "distractorNotes": {
+      "A": "They can; that is a benefit.",
+      "B": "They tend to find different ones.",
+      "D": "Not a drawback, and impossible."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-d",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "An outsourced QA vendor tests a game in another time zone and only sees builds. Developers feel the vendor slows releases and is to blame for delays. Which drawback of independence is shown?",
+    "options": [
+      "Independent testers find too many defects for the development team to fix in time",
+      "Independence makes communication between the teams perfect",
+      "Developers take more responsibility for quality than before",
+      "Independent testers may be seen as a bottleneck and blamed for delays"
+    ],
+    "answer": "D",
+    "why": "Being seen as a bottleneck or blamed for delays is a listed drawback of independence.",
+    "distractorNotes": {
+      "A": "Not a drawback named in the syllabus.",
+      "B": "The opposite: isolation causes communication problems.",
+      "C": "That is not a drawback, and not what happens."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-e",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "Why is it still useful for developers to test their own code?",
+    "options": [
+      "Because they have no biases about their own code",
+      "Because they know the code well, so they can find many defects efficiently",
+      "Because it gives the highest independence",
+      "Because independent testers are not allowed to run component tests at all"
+    ],
+    "answer": "B",
+    "why": "Authors are familiar with their code, so they can find many defects efficiently.",
+    "distractorNotes": {
+      "A": "They do: that is why independence also helps.",
+      "C": "It gives none.",
+      "D": "Not a reason."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-f",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 2,
+    "stem": "What does the syllabus recommend about levels of independence?",
+    "options": [
+      "Always use the highest level of independence at every test level, whatever it costs the project",
+      "Use several levels, e.g. developers test components and an independent team tests the system",
+      "Avoid any independence in Agile teams, to keep the team whole",
+      "Use only one level, so that responsibilities stay clear"
+    ],
+    "answer": "B",
+    "why": "In most projects, testing is done at multiple levels of independence.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: costly and not always appropriate.",
+      "C": "Not a recommendation; some independence still helps.",
+      "D": "Several levels are usually best."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-g",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A tester from another studio team reviews a level design and challenges the designer's assumption that players always find the hidden door. Which benefit of independence is this?",
+    "options": [
+      "Independent testers can challenge or disprove assumptions made during specification and implementation",
+      "Independent testers work faster than the authors of the work",
+      "Independent testers have no cognitive biases of their own, so their results are always objective",
+      "Independent testers take over the responsibility for quality"
+    ],
+    "answer": "A",
+    "why": "Challenging stakeholders' assumptions is a listed benefit of independent testing.",
+    "distractorNotes": {
+      "B": "Speed is not the benefit.",
+      "C": "They have biases, just different ones.",
+      "D": "That would be a drawback for the authors, not a benefit."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q1.5.3-h",
+    "objective": "FL-1.5.3",
+    "kLevel": "K2",
+    "chapter": 1,
+    "difficulty": 3,
+    "stem": "A team's testers sit far from the developers and only communicate via the bug tracker. Arguments over reports are getting personal. Which drawback of independence is this?",
+    "options": [
+      "A lack of domain knowledge in the test team",
+      "Too much collaboration between the two groups",
+      "Isolation from developers, causing communication problems and an adversarial relationship",
+      "Confirmation bias in the testers, who expect the developers' code to be full of serious defects"
+    ],
+    "answer": "C",
+    "why": "Isolation can cause lack of collaboration, communication problems and an adversarial relationship.",
+    "distractorNotes": {
+      "A": "Not what the stem describes.",
+      "B": "The opposite of the stem.",
+      "D": "Bias may play a part, but the described problem is isolation and conflict."
+    },
+    "source": "generated"
+  }
+]

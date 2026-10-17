@@ -66,10 +66,15 @@ test.describe('just after local midnight (Q-18)', () => {
     await open(page, '#/istqb');
     await page.getByTestId('study-start').click();
     await expect(page).toHaveURL(/#\/istqb\/session$/);
-    // Warm-up questions come first only when there are questions on studied objectives (Chapter 1
-    // questions arrive in a later content run); then the lesson.
+    // The gap is long, so 5 warm-up questions come first, from Chapter 1 (studied before TheHub; its
+    // questions shipped in the Ch1–2 run); then the lesson.
     const progress = page.getByTestId('session-progress');
-    while ((await progress.textContent()).includes('Warm-up')) {
+    for (let i = 1; i <= 5; i++) {
+      // Wait for step i to render before reading it (the previous step's screen may still be shown).
+      await expect(progress).toContainText(`Step ${i} of`);
+      await expect(progress).toContainText('Warm-up');
+      const stem = await page.getByTestId('q-stem').textContent();
+      expect(QUESTIONS.find((x) => x.stem === stem).chapter).toBe(1);
       await page.getByTestId(`option-${await answerFor(page)}`).click();
       await page.getByTestId('q-submit').click();
       await page.getByTestId('session-next').click();
@@ -80,21 +85,21 @@ test.describe('just after local midnight (Q-18)', () => {
     await expect(page.getByTestId('objective-chips')).toContainText('FL-3.1.1 · K1');
     await page.getByTestId('session-next').click();
 
-    let answered = 0;
-    // Wait for the next screen (a question or the debrief) before deciding whether to go on.
-    const nextScreen = () => page.getByTestId('q-submit').or(page.getByTestId('session-debrief')).first();
-    while ((await nextScreen().getAttribute('data-testid')) === 'q-submit') {
-      await expect(progress).toContainText('Quiz');
+    // Steps 7–11: the quiz on §3.1; steps 12–13: delayed retrieval from the Chapter 1 lessons studied
+    // two or more sessions back (imported sessions 1–2), which the Ch1–2 questions made possible.
+    await expect(progress).toContainText('Step 7 of 13');
+    for (let i = 7; i <= 13; i++) {
+      await expect(progress).toContainText(`Step ${i} of 13 · ${i <= 11 ? 'Quiz' : 'Delayed retrieval'}`);
       await expect(page.getByTestId('q-why')).toHaveCount(0);
-      const right = await answerFor(page);
-      await page.getByTestId(`option-${right}`).click();
+      const stem = await page.getByTestId('q-stem').textContent();
+      expect(QUESTIONS.find((x) => x.stem === stem).chapter).toBe(i <= 11 ? 3 : 1);
+      await page.getByTestId(`option-${await answerFor(page)}`).click();
       await page.getByTestId('q-submit').click();
       await expect(page.getByTestId('q-verdict')).toContainText('Correct');
-      answered++;
       await page.getByTestId('session-next').click();
     }
-    expect(answered).toBe(5);
-    await expect(page.getByTestId('debrief-score')).toHaveText('5/5 (100 %)');
+    await expect(page.getByTestId('session-debrief')).toBeVisible();
+    await expect(page.getByTestId('debrief-score')).toHaveText('7/7 (100 %)');
     await page.getByTestId('debrief-done').click();
     await expect(page.getByTestId('istqb-gap')).toHaveText('Last session: today.');
   });
@@ -108,8 +113,8 @@ test('the Chapter 3 mini-mock and the full mock run, time and score', async ({ p
     await page.getByTestId(`mock-start-${id}`).click();
     await expect(page.getByTestId('mock-clock')).toHaveText(id === 'full' ? /^(1:00:00|59:5\d)$/ : /^(15:00|14:5\d)$/);
     const total = Number(/of (\d+)/.exec(await page.getByTestId('mock-progress').textContent())[1]);
-    expect(total).toBeGreaterThan(0);
-    expect(total).toBeLessThanOrEqual(id === 'full' ? 40 : 10);
+    // The bank is complete (all six chapters), so both mocks are full size.
+    expect(total).toBe(id === 'full' ? 40 : 10);
     for (let i = 0; i < total; i++) {
       await expect(page.getByTestId('mock-progress')).toContainText(`Question ${i + 1} of ${total}`);
       await page.getByTestId(`option-${await answerFor(page)}`).click();
@@ -120,9 +125,11 @@ test('the Chapter 3 mini-mock and the full mock run, time and score', async ({ p
     await expect(page.getByTestId('mock-score')).toHaveText(`${total}/${total} (100 %)`);
     await expect(page.getByTestId('mock-debrief')).toContainText('By chapter');
   }
-  // A short full mock (bank not complete) never meets the readiness gate.
+  // A complete 40-question full mock now counts: one at 100 % gives Approaching, not yet Ready
+  // (the gate needs two in a row at 80 % or more).
   await open(page, '#/istqb');
-  await expect(page.getByTestId('istqb-readiness')).toContainText('none yet');
+  await expect(page.getByTestId('istqb-readiness')).toContainText('Readiness: Approaching');
+  await expect(page.getByTestId('istqb-readiness')).toContainText('(recent: 100 %)');
 });
 
 test('wrong-answer review shows imported answers with their text, and the ISTQB screens fit the phone', async ({ page }) => {
