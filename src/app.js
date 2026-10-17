@@ -5,7 +5,7 @@ import { createRegistry } from './core/registry.js';
 import { NewerDataError, hooks, openStorage, requestPersistence } from './core/db.js';
 import { createBackupService } from './core/backup.js';
 import { renderRestore } from './core/backup-screens.js';
-import { startRouter } from './core/router.js';
+import { resolveRoute, startRouter } from './core/router.js';
 import { h, mount } from './core/dom.js';
 import { renderToday } from './core/today.js';
 import { applyTheme, loadSettings, renderSettings } from './core/settings.js';
@@ -109,14 +109,18 @@ async function route({ section, screen: sub }) {
   }
   const mod = registry.get(section);
   title.textContent = mod ? mod.name : 'TheHub';
-  const render = mod?.routes[sub];
-  if (!mod || !render) return renderComingSoon(screen, { section, screen: sub, built: Boolean(mod) });
+  const found = mod ? resolveRoute(mod.routes, sub) : null;
+  if (!mod || !found) return renderComingSoon(screen, { section, screen: sub, built: Boolean(mod) });
   const entry = state[mod.id];
   if (entry?.error && entry.data === null) return renderProblem(screen, mod.name, entry.error);
 
   // The context every module screen receives (see the module contract in part-0-overview.md).
-  return render({
+  const settings = await loadSettings(storage);
+  if (current.section !== section || current.screen !== sub) return undefined;
+  return found.render({
     root: screen,
+    params: found.params,
+    settings,
     data: entry.data,
     readOnly: entry.readOnly,
     save: async (data) => {

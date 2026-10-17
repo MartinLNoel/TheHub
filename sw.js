@@ -1,11 +1,11 @@
 // TheHub service worker: offline cache and updates.
 // VERSION must equal src/version.js (a unit test checks it). Bumping it changes this file's bytes,
 // which is how the phone notices a new version.
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 const CACHE = `thehub-${VERSION}`;
 
-// The app shell, cached on install. Every file under src/ and icons/ must be listed
-// (a unit test checks it), so the app opens offline after the first visit.
+// The app shell, cached on install. Every file under src/ (except README.md), icons/ and content/
+// must be listed (a unit test checks it), so the app opens offline after the first visit.
 const PRECACHE = [
   './',
   'index.html',
@@ -30,6 +30,15 @@ const PRECACHE = [
   'src/core/today.js',
   'src/core/transfer.js',
   'src/core/update.js',
+  'src/core/study/ask-claude.js',
+  'src/core/study/content.js',
+  'src/core/study/index.js',
+  'src/core/study/markdown.js',
+  'src/core/study/mock.js',
+  'src/core/study/progress.js',
+  'src/core/study/scheduler.js',
+  'src/core/study/screens.js',
+  'src/core/study/session.js',
   'src/modules/gym/data.js',
   'src/modules/gym/fighter.js',
   'src/modules/gym/import.js',

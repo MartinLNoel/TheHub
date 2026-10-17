@@ -1,6 +1,6 @@
 // Checks on the shipped files themselves: version, precache list, manifest.
 import { describe, expect, it } from 'vitest';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { VERSION } from '../../src/version.js';
 import modules from '../../src/modules.js';
@@ -9,6 +9,7 @@ const ROOT = join(import.meta.dirname, '..', '..');
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 
 function filesUnder(dir) {
+  if (!existsSync(join(ROOT, dir))) return [];
   return readdirSync(join(ROOT, dir)).flatMap((name) => {
     const p = join(dir, name);
     return statSync(join(ROOT, p)).isDirectory() ? filesUnder(p) : [p];
@@ -29,8 +30,10 @@ describe('version', () => {
 });
 
 describe('service worker precache', () => {
-  it('lists every file under src/ and icons/, plus the shell files', () => {
-    const shipped = [...filesUnder('src'), ...filesUnder('icons')].map((p) => relative(ROOT, join(ROOT, p)).replaceAll('\\', '/'));
+  it('lists every file under src/, icons/ and content/ (not READMEs), plus the shell files', () => {
+    const shipped = [...filesUnder('src'), ...filesUnder('icons'), ...filesUnder('content')]
+      .map((p) => relative(ROOT, join(ROOT, p)).replaceAll('\\', '/'))
+      .filter((p) => !p.endsWith('README.md'));
     for (const file of [...shipped, 'index.html', 'style.css', 'manifest.webmanifest']) {
       expect(precache, `${file} missing from PRECACHE in sw.js`).toContain(file);
     }

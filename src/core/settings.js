@@ -4,6 +4,7 @@ import { applyImport, countItems, downloadJSON, exportAll, readImport } from './
 import { assertNoSecret } from './backup.js';
 import { backupSettingsCard } from './backup-screens.js';
 import { importerCards } from './module-import.js';
+import { askClaudeSettingsCard } from './study/ask-claude.js';
 
 export const THEMES = ['system', 'light', 'dark'];
 
@@ -15,7 +16,7 @@ export function applyTheme(theme, doc = globalThis.document) {
 }
 
 export async function loadSettings(storage) {
-  return { theme: 'system', ...((await storage.getCore('settings')) || {}) };
+  return { theme: 'system', askClaude: 'share', ...((await storage.getCore('settings')) || {}) };
 }
 
 export async function saveSettings(storage, settings) {
@@ -79,6 +80,13 @@ export async function renderSettings(root, ctx) {
       'div',
       { class: 'stack', 'data-testid': 'settings' },
       h('section', { class: 'card' }, h('h2', {}, 'Theme'), h('div', { class: 'segmented', role: 'group', 'aria-label': 'Theme' }, themeButtons)),
+      askClaudeSettingsCard({
+        current: settings.askClaude,
+        onChoose: async (id) => {
+          settings.askClaude = id;
+          await saveSettings(ctx.storage, settings);
+        },
+      }),
       ctx.backup ? await backupSettingsCard({ backup: ctx.backup, onChange: ctx.onBackupChange }) : null,
       h(
         'section',

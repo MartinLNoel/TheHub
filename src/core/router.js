@@ -38,3 +38,19 @@ export function startRouter(onRoute, win = globalThis.window) {
     stop: () => win.removeEventListener('hashchange', handle),
   };
 }
+
+/**
+ * Finds a module's route for a screen: an exact key first ('log', 'history'), else a parameter route
+ * '<first>/*' for '<first>/<rest>' (e.g. 'lesson/*' for 'lesson/3.1'), with params = '<rest>'.
+ * Returns { render, params } or null.
+ */
+export function resolveRoute(routes, screen = '') {
+  if (!routes) return null;
+  if (typeof routes[screen] === 'function') return { render: routes[screen], params: '' };
+  const slash = screen.indexOf('/');
+  if (slash > 0) {
+    const wild = routes[`${screen.slice(0, slash)}/*`];
+    if (typeof wild === 'function') return { render: wild, params: screen.slice(slash + 1) };
+  }
+  return null;
+}

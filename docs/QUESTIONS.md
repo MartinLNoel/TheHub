@@ -66,6 +66,27 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   replaces them; Check-in links to Settings instead); gainz's fonts and yellow accent became TheHub's theme (the
   Fighter keeps its own colours); the Today card says "Rest day" once the week's target is met. OK? · Fidelity of
   the port. · `src/modules/gym/screens.js`, `src/modules/gym/index.js` · open
+- **Q-13** · **Ask Claude on your phone: which delivery works?** After the first push (Part 1), open TheHub →
+  **Settings → Ask Claude** and tap the three test buttons: **Test: Share sheet** (does Claude appear in the
+  Android share list, and does the text land in a new chat?), **Test: Link (experimental)** (opens
+  `https://claude.ai/new?q=…`: undocumented; does the message appear filled in?), **Test: Copy and open Claude**
+  (does the Claude app open, and does pasting work?). Tell Claude which work. · The goal is "tap, and Claude opens
+  with the message in it". Built while you were away, none of the three could be tried on the phone. Defaults:
+  share sheet when the phone has one (with "Copy instead" next to it), the link only if you choose it in Settings
+  (support.claude.com article 14898120, checked 2026-10-17, documents prefill links only for Claude Code), and
+  "copy" opens the app through the Android intent
+  `intent://claude.ai/new#Intent;scheme=https;package=com.anthropic.claude;…` (the package name
+  `com.anthropic.claude` is unverified; elsewhere `https://claude.ai/new`). Record the results in
+  `docs/BACKLOG.md` and make the working one the default. · `src/core/study/ask-claude.js` (`DEFAULT_DELIVERY`,
+  `CLAUDE_ANDROID_INTENT`, `PREFILL_URL`) · open
+- **Q-14** · Study engine defaults, chosen while you were away (Part 6 can change them per course): a session has
+  up to **4** review-drill items, a **5**-question quiz and **2** delayed-retrieval questions; below **65 %** on the
+  quiz the same lesson is taught again next session (the tutor prompt's "slow down, re-teach"); mastery: all
+  correct → *solid*, and *solid* → *exam-ready* only when the objective was also answered right in an earlier
+  session; half or more → *untested* becomes *shaky*, *exam-ready* drops to *solid*; under half → *shaky*;
+  flashcards: SM-2 with Again/Hard/Good/Easy and **10** new card sides a day. OK? · How sessions feel and how fast
+  objectives reach exam-ready. · `src/core/study/session.js` `SESSION_DEFAULTS`, `src/core/study/progress.js`
+  `nextMastery`, `src/core/study/scheduler.js` · open
 
 ## Answered
 

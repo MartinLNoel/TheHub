@@ -1,0 +1,33 @@
+[
+  {
+    "id": "s-1-1",
+    "chapter": 1,
+    "section": "1.1",
+    "title": "The Sun",
+    "objectives": [
+      "S-1.1"
+    ],
+    "body": "# A star nearby\nThe Sun is a **star**: a ball of hot gas that makes its own light.\n\n- It holds 99.8 % of the solar system's mass.\n- Its light takes about *8 minutes* to reach Earth.\n\n| Fact | Value |\n|---|---|\n| Type | Yellow dwarf |\n| Age | about 4.6 billion years |\n\nA `<script>` in lesson text is shown as text, never run."
+  },
+  {
+    "id": "s-1-2",
+    "chapter": 1,
+    "section": "1.2",
+    "title": "The inner planets",
+    "objectives": [
+      "S-1.2"
+    ],
+    "body": "# Rocky worlds\nThe four inner planets are rocky.\n\n1. Mercury\n2. Venus\n3. Earth\n4. Mars\n\nVenus is the **hottest**, because its thick air traps heat."
+  },
+  {
+    "id": "s-2-1",
+    "chapter": 2,
+    "section": "2.1",
+    "title": "The outer planets",
+    "objectives": [
+      "S-2.1",
+      "S-2.2"
+    ],
+    "body": "# Giants\nJupiter and Saturn are **gas giants**; Uranus and Neptune are **ice giants**.\n\nSaturn's rings are made mostly of ice."
+  }
+]

@@ -1,0 +1,224 @@
+[
+  {
+    "id": "q-1-1-a",
+    "objective": "S-1.1",
+    "kLevel": "K1",
+    "stem": "What kind of object is the Sun?",
+    "options": [
+      "A planet",
+      "A star",
+      "A moon",
+      "A comet"
+    ],
+    "answer": "B",
+    "why": "The Sun makes its own light from hot gas: that is a star.",
+    "distractorNotes": {
+      "A": "Planets do not make their own light.",
+      "C": "A moon orbits a planet.",
+      "D": "Comets are small icy bodies."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-1-1-b",
+    "objective": "S-1.1",
+    "kLevel": "K2",
+    "stem": "Light leaves the Sun now. Roughly when does it reach Earth?",
+    "options": [
+      "In 8 seconds",
+      "In 8 minutes",
+      "In 8 hours",
+      "In 8 days"
+    ],
+    "answer": "B",
+    "why": "Sunlight takes about 8 minutes to travel to Earth.",
+    "distractorNotes": {
+      "A": "Far too fast: that is about the Moon's distance times 6.",
+      "C": "Far too slow.",
+      "D": "Far too slow."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-1-1-c",
+    "objective": "S-1.1",
+    "kLevel": "K1",
+    "stem": "About how much of the solar system's mass is in the Sun?",
+    "options": [
+      "50 %",
+      "75 %",
+      "90 %",
+      "99.8 %"
+    ],
+    "answer": "D",
+    "why": "Almost everything: 99.8 %.",
+    "distractorNotes": {
+      "A": "Much too low.",
+      "B": "Much too low.",
+      "C": "Close, but still too low."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-1-2-a",
+    "objective": "S-1.2",
+    "kLevel": "K1",
+    "stem": "Which planet is the hottest?",
+    "options": [
+      "Mercury",
+      "Venus",
+      "Earth",
+      "Mars"
+    ],
+    "answer": "B",
+    "why": "Venus: its thick air traps heat.",
+    "distractorNotes": {
+      "A": "Mercury is closer to the Sun but cannot keep its heat.",
+      "C": "Earth is much cooler.",
+      "D": "Mars is cold."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-1-2-b",
+    "objective": "S-1.2",
+    "kLevel": "K2",
+    "stem": "Why is Venus hotter than Mercury?",
+    "options": [
+      "It is closer to the Sun",
+      "Its thick air traps heat",
+      "It spins faster",
+      "It has volcanoes only"
+    ],
+    "answer": "B",
+    "why": "A thick atmosphere traps heat (a greenhouse effect).",
+    "distractorNotes": {
+      "A": "Mercury is closer, so this is wrong.",
+      "C": "Spin does not explain it.",
+      "D": "Volcanoes are not the reason."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-1-2-c",
+    "objective": "S-1.2",
+    "kLevel": "K1",
+    "stem": "How many inner (rocky) planets are there?",
+    "options": [
+      "Two",
+      "Three",
+      "Four",
+      "Five"
+    ],
+    "answer": "C",
+    "why": "Mercury, Venus, Earth and Mars.",
+    "distractorNotes": {
+      "A": "Too few.",
+      "B": "Too few.",
+      "D": "Too many."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-2-1-a",
+    "objective": "S-2.1",
+    "kLevel": "K1",
+    "stem": "Which of these is a gas giant?",
+    "options": [
+      "Mars",
+      "Jupiter",
+      "Uranus",
+      "Mercury"
+    ],
+    "answer": "B",
+    "why": "Jupiter is a gas giant.",
+    "distractorNotes": {
+      "A": "Mars is rocky.",
+      "C": "Uranus is an ice giant.",
+      "D": "Mercury is rocky."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-2-1-b",
+    "objective": "S-2.1",
+    "kLevel": "K2",
+    "stem": "Uranus and Neptune are best called...",
+    "options": [
+      "Gas giants",
+      "Ice giants",
+      "Rocky planets",
+      "Dwarf planets"
+    ],
+    "answer": "B",
+    "why": "They are ice giants.",
+    "distractorNotes": {
+      "A": "That is Jupiter and Saturn.",
+      "C": "Those are the inner planets.",
+      "D": "They are full planets."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-2-2-a",
+    "objective": "S-2.2",
+    "kLevel": "K1",
+    "stem": "What are Saturn's rings mostly made of?",
+    "options": [
+      "Rock",
+      "Ice",
+      "Gas",
+      "Metal"
+    ],
+    "answer": "B",
+    "why": "Mostly ice.",
+    "distractorNotes": {
+      "A": "Some rock, but mostly ice.",
+      "C": "Rings are solid pieces.",
+      "D": "Not metal."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q-2-2-b",
+    "objective": "S-2.2",
+    "kLevel": "K2",
+    "stem": "A photo shows bright rings around a planet. Which planet is it most likely?",
+    "options": [
+      "Mars",
+      "Venus",
+      "Saturn",
+      "Mercury"
+    ],
+    "answer": "C",
+    "why": "Saturn has the brightest rings.",
+    "distractorNotes": {
+      "A": "Mars has no rings.",
+      "B": "Venus has no rings.",
+      "D": "Mercury has no rings."
+    },
+    "source": "generated",
+    "difficulty": 3
+  },
+  {
+    "id": "q-0-1-a",
+    "objective": "S-0.1",
+    "kLevel": "K1",
+    "stem": "Which of these is not a planet?",
+    "options": [
+      "Earth",
+      "Pluto",
+      "Mars",
+      "Venus"
+    ],
+    "answer": "B",
+    "why": "Pluto is a dwarf planet.",
+    "distractorNotes": {
+      "A": "Earth is a planet.",
+      "C": "Mars is a planet.",
+      "D": "Venus is a planet."
+    },
+    "source": "generated",
+    "chapter": 0
+  }
+]
