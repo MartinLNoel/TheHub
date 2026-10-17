@@ -106,6 +106,13 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   Chapter 1–2 questions exist); readiness levels: *Ready* = last two complete full mocks ≥ 80 %, *Approaching* =
   all chapters banked or the latest full mock passed, *Building* = any study. OK? · How mocks and the gate feel. ·
   `src/modules/istqb/rules.js` · open
+- **Q-17** · Lesson order while Chapters 4–5 have no lessons: the course runs in file order, so after §3.2 (and
+  the Chapter 3 mini-mock) the next lesson is **§6.1**, not §4.1. Default: left as it is, because nothing is
+  pushed yet and the Ch4 and Ch5 runs should come first. **Risk:** if you study §6.1–6.2 before the Ch4/Ch5 lessons
+  ship, the engine's "carry on after the last lesson studied" rule (the `"__done__"` pointer) finds nothing after
+  §6.2 and would skip the new Chapter 4–5 lessons. Options: (a) wait for the Ch4 run before studying past §3.2;
+  (b) let the Ch4 run change `nextLesson` to resume at the first lesson not yet studied. Which? · Course order
+  and whether Chapters 4–5 get offered. · `src/core/study/session.js` `nextLesson`, `docs/BACKLOG.md` · open
 
 ## Answered
 

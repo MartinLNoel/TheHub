@@ -1,1 +1,486 @@
-[]
+[
+  {
+    "id": "q6.1.1-a",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 1,
+    "stem": "Your team uses a tool that flags C# methods with excessive complexity and variables that are never used, without running the game. Which tool category is this?",
+    "options": [
+      "Static testing tool",
+      "Test execution and coverage tool",
+      "Collaboration tool",
+      "DevOps tool"
+    ],
+    "answer": "A",
+    "why": "A tool that analyses code without executing it supports static analysis: a static testing tool.",
+    "distractorNotes": {
+      "B": "Nothing is executed and no coverage is measured.",
+      "C": "Collaboration tools support communication, not code analysis.",
+      "D": "DevOps tools support the build and delivery pipeline."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-b",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Which of the following is an example of a static testing tool?",
+    "options": [
+      "The team wiki where designers publish the GDD and meeting notes",
+      "The chat app in which the team discusses review findings",
+      "A tool that measures which lines ran during play mode tests",
+      "A code analyser that checks shader code against the studio's coding standard"
+    ],
+    "answer": "D",
+    "why": "Checking code against a standard without running it is static analysis, so the analyser is a static testing tool.",
+    "distractorNotes": {
+      "A": "Category smear: a wiki is a collaboration tool, even if documents that are later reviewed live there.",
+      "B": "Category smear: chat is a collaboration tool.",
+      "C": "Measuring what ran is coverage: a test execution and coverage tool."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-c",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 1,
+    "stem": "A tool sends 5,000 simulated players into the game servers at once to measure response times. Which tool category fits BEST?",
+    "options": [
+      "Management tool",
+      "Non-functional testing tool",
+      "Static testing tool",
+      "Collaboration tool"
+    ],
+    "answer": "B",
+    "why": "Load testing is non-functional testing that is impossible by hand: a non-functional testing tool.",
+    "distractorNotes": {
+      "A": "Management tools manage requirements, tests, defects and configuration.",
+      "C": "Static tools work without execution; this tool runs the servers under load.",
+      "D": "Collaboration tools help people communicate."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-d",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Every commit to the main branch triggers an automated build of the game, runs smoke tests and deploys the build to the QA device farm. Which category does the tool that drives this pipeline belong to?",
+    "options": [
+      "Test management tool",
+      "Non-functional testing tool",
+      "DevOps tool",
+      "Test design and implementation tool"
+    ],
+    "answer": "C",
+    "why": "Automated builds and continuous integration and delivery are what DevOps tools support.",
+    "distractorNotes": {
+      "A": "Management tools manage tests, requirements and defects; they do not run the delivery pipeline.",
+      "B": "Nothing here tests non-functional characteristics.",
+      "D": "No test cases or test data are being generated."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-e",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "A tool generates hundreds of save files with valid and invalid combinations of inventory items for use in tests. Which tool category is this?",
+    "options": [
+      "Test design and implementation tool",
+      "Test execution and coverage tool",
+      "Static testing tool",
+      "Management tool"
+    ],
+    "answer": "A",
+    "why": "Generating test data (and test cases or procedures) is what test design and implementation tools do.",
+    "distractorNotes": {
+      "B": "The tool prepares data; it does not run tests or measure coverage.",
+      "C": "The tool does not review or analyse a work product.",
+      "D": "It does not manage tests, defects or configuration."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-f",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "The QA team starts identical containers of the dedicated server so that every tester works in the same environment. Which category of tool support is this?",
+    "options": [
+      "Tools that support static testing and analysis",
+      "Tools that support collaboration between testers",
+      "Tools that support test design and implementation",
+      "Tools that support scalability and deployment standardisation"
+    ],
+    "answer": "D",
+    "why": "Virtual machines and containers belong to the tools for scalability and deployment standardisation.",
+    "distractorNotes": {
+      "A": "Nothing is reviewed or analysed statically.",
+      "B": "Containers do not help people communicate.",
+      "C": "No test cases or test data are being generated."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-g",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Which statement about test tools is CORRECT?",
+    "options": [
+      "Only tools sold specifically for testing count as test tools",
+      "A spreadsheet used to track test cases and their results counts as a test tool",
+      "A chat app becomes a static testing tool when review findings are discussed in it",
+      "Tools support only test execution, not the other test activities"
+    ],
+    "answer": "B",
+    "why": "Any tool that assists in testing is a test tool in that context, a spreadsheet included.",
+    "distractorNotes": {
+      "A": "Any tool that assists in testing counts, whatever it was built for.",
+      "C": "Category smear: chat stays a collaboration tool.",
+      "D": "Tools support management, design, static testing and more, not only execution."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-h",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Match each tool to its category. Tools: 1 a bug tracker linking defects to requirements; 2 a linter for the C# code; 3 the test runner executing play mode tests with a coverage report; 4 the team chat. Categories: a) collaboration; b) management; c) static testing; d) test execution and coverage.",
+    "options": [
+      "1-a, 2-c, 3-d, 4-b",
+      "1-b, 2-d, 3-c, 4-a",
+      "1-b, 2-c, 3-d, 4-a",
+      "1-d, 2-c, 3-b, 4-a"
+    ],
+    "answer": "C",
+    "why": "Bug tracker = management, linter = static testing, test runner with coverage = execution and coverage, chat = collaboration.",
+    "distractorNotes": {
+      "A": "Bug tracker and chat swapped: tracking defects is management, chat is collaboration.",
+      "B": "Linter and test runner swapped: a linter runs nothing, so it is a static testing tool.",
+      "D": "A bug tracker does not execute tests, and a test runner does not manage defects."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-i",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 3,
+    "stem": "A colleague classifies the team's documentation wiki as a static testing tool, because the GDD is stored there before each review. Which response is BEST?",
+    "options": [
+      "No: storing and sharing documents is collaboration; static testing tools support carrying out reviews and static analysis",
+      "Yes: any tool that holds a work product that is later reviewed is a static testing tool",
+      "No: it is a DevOps tool, because it is part of the development workflow",
+      "Yes: every tool that is used without running the software is a static testing tool"
+    ],
+    "answer": "A",
+    "why": "Tools are categorised by the test support they give; a wiki supports communication, so it is a collaboration tool.",
+    "distractorNotes": {
+      "B": "Category smear: holding a document does not make a tool support the review itself.",
+      "C": "DevOps tools support the build and delivery pipeline, not documentation.",
+      "D": "Overgeneralisation: many tools (chat, wikis, trackers) are used without running the software."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.1.1-j",
+    "objective": "FL-6.1.1",
+    "kLevel": "K2",
+    "chapter": 6,
+    "difficulty": 1,
+    "stem": "A tool keeps the requirements, test cases, test runs and defects of the project in one place and shows how they are linked. Which tool category is this?",
+    "options": [
+      "Collaboration tool",
+      "Test design and implementation tool",
+      "DevOps tool",
+      "Management tool"
+    ],
+    "answer": "D",
+    "why": "Managing requirements, tests and defects (and their traceability) is what management tools do.",
+    "distractorNotes": {
+      "A": "Collaboration tools support communication, not the management of tests and defects.",
+      "B": "It does not generate test cases, test data or procedures.",
+      "C": "It does not run the build or delivery pipeline."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-a",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 1,
+    "stem": "Which of the following is a benefit of test automation?",
+    "options": [
+      "Removal of all human errors from the test process",
+      "Prevention of simple human errors through greater consistency and repeatability",
+      "Automated tests find more defects than manual tests",
+      "Test scripts no longer need maintenance once they are written"
+    ],
+    "answer": "B",
+    "why": "Running the same steps the same way every time prevents simple human errors.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: the benefit is preventing simple human errors, not all of them.",
+      "C": "Not a listed benefit; automation repeats checks, it does not find more defects as such.",
+      "D": "Script maintenance is a known cost; underestimating it is a risk."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-b",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 1,
+    "stem": "Which of the following is a risk of test automation?",
+    "options": [
+      "Reduced test execution times, leading to earlier defect detection",
+      "More objective assessment, such as coverage measurement",
+      "Relying on the tool too much, for example ignoring the need for human critical thinking",
+      "More time for testers to design new, deeper and more effective tests"
+    ],
+    "answer": "C",
+    "why": "Over-reliance on the tool, at the expense of human critical thinking, is a listed risk.",
+    "distractorNotes": {
+      "A": "That is a benefit, not a risk.",
+      "B": "That is a benefit, not a risk.",
+      "D": "That is a benefit, not a risk."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-c",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "A regression suite of 400 menu checks used to take two testers three days. Automated, it runs overnight and the results are there each morning. Which benefits does this BEST illustrate?",
+    "options": [
+      "Time saved by reducing repetitive manual work, and faster feedback through reduced execution time",
+      "More objective assessment, and measures too complicated for humans to derive",
+      "No more dependency on tool vendors, and lower costs for buying tools",
+      "A guarantee that every nightly build contains no regressions at all"
+    ],
+    "answer": "A",
+    "why": "Repetitive regression work moved to the tool (time saved) and results arrive overnight (reduced execution time, faster feedback).",
+    "distractorNotes": {
+      "B": "True benefits, but not the ones this scenario shows.",
+      "C": "Neither is a benefit of automation; vendor dependency is a risk.",
+      "D": "Overgeneralisation: no test suite guarantees the absence of defects."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-d",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "A studio buys an automation tool expecting it to make manual playtesting unnecessary and to be usable by anyone without training. Which risk does this BEST illustrate?",
+    "options": [
+      "Dependency on the tool vendor",
+      "The tool not being compatible with the development platform",
+      "Non-compliance with regulatory requirements or safety standards",
+      "Unrealistic expectations about the benefits of the tool"
+    ],
+    "answer": "D",
+    "why": "Expecting the tool to replace manual testing and to be effortless to use are unrealistic expectations about its functionality and ease of use.",
+    "distractorNotes": {
+      "A": "Nothing in the scenario concerns the vendor's support or future.",
+      "B": "Nothing suggests a compatibility problem.",
+      "C": "No regulation or safety standard is involved."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-e",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "A team built 2,000 tests on an open-source UI automation framework. Its maintainers stopped working on it two years ago, and no updates have appeared since. Which risk does this BEST illustrate?",
+    "options": [
+      "Dependency on a commercial vendor that may sell or retire the tool",
+      "Using open-source software that may be abandoned, so no further updates are available",
+      "Using a test tool when manual testing is more appropriate",
+      "Unrealistic expectations about the tool's ease of use"
+    ],
+    "answer": "B",
+    "why": "An open-source project whose maintainers stopped leaves its users without updates: the abandoned open-source risk.",
+    "distractorNotes": {
+      "A": "Adjacent risk: vendor dependency is about a commercial supplier; this is an abandoned open-source project.",
+      "C": "Nothing says these tests should have been manual.",
+      "D": "The problem is the lack of updates, not expectations."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-f",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Which of the following is NOT a benefit of test automation?",
+    "options": [
+      "Testers no longer need to think critically about the test results",
+      "Easier access to information about testing, such as statistics and graphs for reporting",
+      "Tests are executed in the same order and with the same frequency",
+      "Measures are provided that are too complicated for humans to derive"
+    ],
+    "answer": "A",
+    "why": "Ignoring the need for human critical thinking is a risk of automation, not a benefit.",
+    "distractorNotes": {
+      "B": "This is a listed benefit.",
+      "C": "This is part of the consistency and repeatability benefit.",
+      "D": "This is part of the more objective assessment benefit."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-g",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Which of the following is NOT a risk of test automation?",
+    "options": [
+      "Using the tool where manual testing would be more appropriate",
+      "Inaccurate estimates of the cost of introducing the tool",
+      "Testers getting more time to design new, deeper tests",
+      "A tool that does not comply with regulatory or safety standards"
+    ],
+    "answer": "C",
+    "why": "More time for testers to design new, deeper and more effective tests is a benefit.",
+    "distractorNotes": {
+      "A": "This is a listed risk.",
+      "B": "This is a listed risk.",
+      "D": "This is a listed risk."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-h",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "A team automates its check of how a new jump animation feels, using screenshot comparisons. The tests pass, but players say the jump feels floaty. Which risk does this BEST illustrate?",
+    "options": [
+      "Dependency on the tool vendor",
+      "Using open-source software that may be abandoned",
+      "Inaccurate estimates of the cost of introducing the tool",
+      "Using a test tool when manual testing is more appropriate"
+    ],
+    "answer": "D",
+    "why": "Game feel is judged by people; automating it with screenshots used a tool where manual testing was the better choice.",
+    "distractorNotes": {
+      "A": "Nothing concerns the vendor.",
+      "B": "Nothing concerns updates to the tool.",
+      "C": "The problem is the wrong kind of testing, not the cost."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-i",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "A test lead planned two weeks to introduce an automation tool. Three months later the team is still converting manual tests and repairing broken scripts after every build. Which risk is this?",
+    "options": [
+      "Relying on the tool too much and ignoring the need for human critical thinking",
+      "Inaccurate estimation of the time and effort to introduce the tool and maintain the scripts",
+      "Dependency on the tool vendor for support, upgrades and defect fixes",
+      "The tool not being compatible with the game's development platform"
+    ],
+    "answer": "B",
+    "why": "Two weeks planned against months of introduction and maintenance work is an inaccurate estimation of time and effort.",
+    "distractorNotes": {
+      "A": "The team is not over-trusting results; it is still struggling to get the tool working.",
+      "C": "Nothing concerns the vendor's support or future.",
+      "D": "The scripts break because they need maintenance, not because the tool cannot run on the platform."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-j",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "Which statement about test automation is CORRECT?",
+    "options": [
+      "Automation guarantees that the software contains no regressions",
+      "Once automated, tests need no maintenance when the game changes",
+      "Automation can give a more objective assessment, for example of coverage, than a person's estimate",
+      "Automation makes test design unnecessary, because the tool creates all the tests"
+    ],
+    "answer": "C",
+    "why": "More objective assessment, such as measured coverage, is a listed benefit.",
+    "distractorNotes": {
+      "A": "Overgeneralisation: testing never proves the absence of defects.",
+      "B": "Scripts need maintenance; underestimating it is a listed risk.",
+      "D": "Automation frees time for test design; it does not remove the need for it."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-k",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 2,
+    "stem": "The company that sells the team's commercial test tool is bought by a competitor, who announces that support will end next year. Which risk does this BEST illustrate?",
+    "options": [
+      "Dependency on the tool vendor",
+      "Using open-source software that may be abandoned",
+      "Unrealistic expectations about the benefits of the tool",
+      "Choosing a tool that does not comply with safety standards"
+    ],
+    "answer": "A",
+    "why": "A vendor that may be sold, retire the tool or stop support is the vendor dependency risk.",
+    "distractorNotes": {
+      "B": "Adjacent risk: that is about community projects; here a commercial vendor is involved.",
+      "C": "Nothing concerns what the team expected from the tool.",
+      "D": "No safety standard is involved."
+    },
+    "source": "generated"
+  },
+  {
+    "id": "q6.2.1-l",
+    "objective": "FL-6.2.1",
+    "kLevel": "K1",
+    "chapter": 6,
+    "difficulty": 1,
+    "stem": "After automating, the test manager's dashboard shows defect rates, progress and execution time per build, collected by the tool. Which benefit of test automation is this?",
+    "options": [
+      "Time saved by reducing repetitive manual work such as regression runs",
+      "Prevention of simple human errors through greater consistency",
+      "More time for testers to design new, deeper and more effective tests",
+      "Easier access to information about testing, supporting test management and reporting"
+    ],
+    "answer": "D",
+    "why": "Statistics, graphs and aggregated data on progress, defect rates and execution time are the easier-access-to-information benefit.",
+    "distractorNotes": {
+      "A": "A real benefit, but the scenario is about the information on the dashboard.",
+      "B": "A real benefit, but the scenario is about reporting data.",
+      "C": "A real benefit, but the scenario is about reporting data."
+    },
+    "source": "generated"
+  }
+]
