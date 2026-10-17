@@ -6,7 +6,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { checkCourse, chapterOf } from '../../src/core/study/content.js';
 import { defaultProgress, validateProgress } from '../../src/core/study/progress.js';
-import { buildSession } from '../../src/core/study/session.js';
+import { buildSession, pointerAfter } from '../../src/core/study/session.js';
 import { pickMockQuestions, startMock } from '../../src/core/study/mock.js';
 import { checkModule } from '../../src/core/registry.js';
 import istqb, { todayCard } from '../../src/modules/istqb/index.js';
@@ -131,7 +131,7 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     }
   });
 
-  it('lessons run in course order, and the lesson after §3.2 is §4.1 (QUESTIONS.md Q-17)', () => {
+  it('lessons run in course order, with no chapter gap between §3.1 and §6.2 (QUESTIONS.md Q-17)', () => {
     const ids = SHIPPED.lessons.map((l) => l.id);
     const sections = SHIPPED.lessons.map((l) => l.section.split('.').map(Number));
     for (let i = 1; i < sections.length; i++) {
@@ -140,10 +140,16 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     }
     expect(ids.indexOf('4.1')).toBe(ids.indexOf('3.2') + 1);
     expect(ids.slice(ids.indexOf('4.1'), ids.indexOf('4.5') + 1)).toEqual(['4.1', '4.2a', '4.2b', '4.3', '4.4', '4.5']);
+    // The Ch5 run (2026-10-18) closed the last gap: §4.5 leads to §5.1a, and §5.5 to §6.1.
+    expect(ids).toEqual(['3.1', '3.2', '4.1', '4.2a', '4.2b', '4.3', '4.4', '4.5', '5.1a', '5.1b', '5.1c', '5.2', '5.3', '5.4', '5.5', '6.1', '6.2']);
+    const course = checkCourse(SHIPPED).course;
+    expect(pointerAfter(course, '4.5')).toBe('5.1a');
+    expect(pointerAfter(course, '5.5')).toBe('6.1');
+    expect(pointerAfter(course, '6.2')).toBe('__done__');
   });
 
-  it('Chapter 4: each K3 objective has at least 10 questions (the Ch4 run target)', () => {
-    for (const o of OBJECTIVES.filter((x) => x.chapter === 4 && x.kLevel === 'K3')) {
+  it('Chapters 4 and 5: each K3 objective has at least 10 questions (the Ch4 and Ch5 run targets)', () => {
+    for (const o of OBJECTIVES.filter((x) => (x.chapter === 4 || x.chapter === 5) && x.kLevel === 'K3')) {
       const n = SHIPPED.questions.filter((q) => q.objective === o.code).length;
       expect(n, `${o.code} has ${n} questions`).toBeGreaterThanOrEqual(10);
     }
@@ -157,9 +163,9 @@ describe('shipped ISTQB content (content/istqb/)', () => {
     for (const c of SHIPPED.cards) if (c.objective) expect(LO.has(c.objective), c.id).toBe(true);
   });
 
-  // Add each chapter here when its content run is finished (Ch3 and Ch6 done 2026-10-17, Ch4 2026-10-18; still to
-  // come: Ch5, then the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
-  const FINISHED_CHAPTERS = [3, 4, 6];
+  // Add each chapter here when its content run is finished (Ch3 and Ch6 done 2026-10-17, Ch4 and Ch5 2026-10-18;
+  // still to come: the Ch1–2 questions); docs/content-loop.md and docs/istqb-content-guide.md say when.
+  const FINISHED_CHAPTERS = [3, 4, 5, 6];
   const minimum = (o) => (o.kLevel === 'K3' ? 8 : 6);
 
   // Skipped (pending) while no chapter is finished yet.

@@ -53,7 +53,7 @@ Each run writes one part of the course, then follows steps 6–8 above:
 |---|---|---|
 | Ch3 (done 2026-10-17, with Ch6) | `lessons-ch3.json` (§3.2; §3.1 exists) and `questions-ch3.json` to ≥ 6 per LO | add `3` to `FINISHED_CHAPTERS` in `tests/unit/istqb.test.js` |
 | Ch4 (done 2026-10-18) | `lessons-ch4.json` (4.1–4.5, 4.2 split into 4.2a/4.2b) and `questions-ch4.json` (≥ 6 per LO, ≥ 10 for the five K3) | added `4` |
-| Ch5 (Ch6 done 2026-10-17) | `lessons-ch5.json` and its questions (≥ 8 for 5.1.4, 5.1.5, 5.5.1) | add `5` |
+| Ch5 (done 2026-10-18) | `lessons-ch5.json` (5.1 split into 5.1a/5.1b/5.1c, then 5.2–5.5) and `questions-ch5.json` (≥ 6 per LO, ≥ 10 for 5.1.4, 5.1.5, 5.5.1) | added `5` |
 | Ch1–2 questions | `questions-ch1.json`, `questions-ch2.json` only, **no lessons** (≥ 6 per LO, more for the Legacy "extra drilling" LOs) | add `1, 2`; remove the `.skip` of the whole-bank test |
 
 Until all four are done, full mocks are short (the engine fills what it can and says so) and never count for the
