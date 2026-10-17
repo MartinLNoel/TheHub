@@ -47,6 +47,7 @@ TheHub/
 │   ├── version.js           the app version (bump with every app change; sw.js repeats it)
 │   ├── modules.js           the list of shipped modules, in nav order
 │   ├── core/
+│   │   ├── dates.js         local calendar dates (YYYY-MM-DD), addDays, daysBetween (not the Gym yet, Q-11)
 │   │   ├── db.js            IndexedDB wrapper + migrations runner
 │   │   ├── dom.js           tiny h()/mount() helper (text is always text, never HTML)
 │   │   ├── registry.js      module registry
@@ -200,7 +201,7 @@ Progress (per module, in IndexedDB and backups; schema version 1):
 - `attempts`: every answered question `{ questionId, objective, chosen, correct, at, sessionNo, kind }` (the
   wrong-answer log; *new:* `objective`, `kind` = drill | quiz | retrieval | mock; `chosen` is null for a mock
   question left unanswered; imports may add `legacyText`)
-- `sessions`: `{ no, date, section, score, correct, total, kind: "lesson" | "mini-mock" | "full-mock", … }`
+- `sessions`: `{ no, date (the local calendar day, `src/core/dates.js`), section, score, correct, total, kind: "lesson" | "mini-mock" | "full-mock", … }`
   (`section` = lesson id, or the mock's config id; `score` = percent; lesson sessions add `calibration`, `complete`;
   mocks add `elapsedMs`, `timedOut`)
 - `feedback`: `{ id, targetId, targetKind?, text, at, resolved: false }` (*new:* `id` for the content loop,

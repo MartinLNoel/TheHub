@@ -1,6 +1,7 @@
 // ISTQB course rules on top of the study engine (docs/plans/part-6-istqb.md), as pure functions:
 // the official mock weighting, chapter completion (X/6), the readiness gate, the 10-day warm-up,
 // and what the next session should be. The tutor prompt (v2) is the specification.
+import { daysBetween, localDate } from '../../core/dates.js';
 import { MASTERY, masteryOf, questionStats } from '../../core/study/progress.js';
 import { nextLesson, pickQuestions } from '../../core/study/session.js';
 import { chapterOf } from '../../core/study/content.js';
@@ -70,12 +71,6 @@ export function readiness(progress) {
   return { level, gateMet, recentFullMocks: mocks.slice(-3).map((s) => s.score), chaptersDone: chapters };
 }
 
-/** Local calendar date (YYYY-MM-DD) of a Date. */
-export function localISO(now = new Date()) {
-  const d = new Date(now);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-
 /** The date of the latest recorded session (any kind), or null. */
 export function lastSessionDate(progress) {
   const dates = progress.sessions.map((s) => s.date).filter((d) => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}/.test(d));
@@ -86,9 +81,7 @@ export function lastSessionDate(progress) {
 export function daysSinceLastSession(progress, now = new Date()) {
   const last = lastSessionDate(progress);
   if (!last) return null;
-  const [y, m, d] = last.split('-').map(Number);
-  const [ty, tm, td] = localISO(now).split('-').map(Number);
-  return Math.round((Date.UTC(ty, tm - 1, td) - Date.UTC(y, m - 1, d)) / 86_400_000);
+  return daysBetween(last, localDate(now));
 }
 
 /** The tutor prompt's rule: after a gap of more than 10 days, open with a 5-question cumulative warm-up. */

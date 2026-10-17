@@ -68,6 +68,7 @@ loader drops bad items and lists them on the home screen.
 | Calibration | `progress.js` `calibrate` | < 65 % slow · 65–85 % on pace · > 85 % accelerate |
 | Mocks | `mock.js` | per-chapter counts (filled from other chapters if short, reported), freshest questions first, timer from `startedAt`/`endsAt` timestamps, unanswered = wrong |
 | Cards | `scheduler.js` | SM-2 with again/hard/good/easy; local dates; `newPerDay` new sides a day |
+| Dates | `src/core/dates.js` | every stored or compared calendar day (session and mock `date`, card `due`) is the **local** date `localDate(now)`; timestamps (`at`, `startedAt`) stay ISO instants |
 
 Answers are recorded (attempts + review queue) the moment they are submitted; the session or mock in progress is
 in the data (`activeSession`, `activeMock`), so stopping, closing the app or a reload never loses work.

@@ -2,6 +2,7 @@
 // docs/plans/part-0-overview.md ("Backup file format"). The GitHub backups (backup.js) reuse
 // buildBackup and verifyBackup from here.
 
+import { localDate } from './dates.js';
 import { runMigrations } from './db.js';
 
 export const FORMAT = 'thehub-backup';
@@ -158,8 +159,7 @@ export async function applyImport(storage, verified, { beforeReplace } = {}) {
 }
 
 export function exportFileName(date = new Date()) {
-  const pad = (n) => String(n).padStart(2, '0');
-  return `thehub-export-${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}.json`;
+  return `thehub-export-${localDate(date)}.json`;
 }
 
 /** Starts a download of the export object as a .json file. */

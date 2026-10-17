@@ -14,20 +14,15 @@
 //
 // Two-way cards are scheduled per direction: key "<id>" is front -> back, "<id>~rev" is back -> front.
 
+import { addDays, localDate } from '../dates.js';
+
 export const GRADES = { again: 1, hard: 3, good: 4, easy: 5 };
 export const MIN_EF = 1.3;
 export const START_EF = 2.5;
 
-/** Today's local date as "YYYY-MM-DD" (local, not UTC: a review at 00:30 belongs to that day). */
-export function localDate(now = new Date()) {
-  const d = new Date(now);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-
-export function addDays(isoDate, days) {
-  const [y, m, d] = isoDate.split('-').map(Number);
-  return localDate(new Date(y, m - 1, d + days, 12));
-}
+// Today's local date as "YYYY-MM-DD" (local, not UTC: a review at 00:30 belongs to that day); the
+// helpers live in src/core/dates.js and are re-exported here for the engine's callers.
+export { addDays, localDate };
 
 export function newCardState(today) {
   return { reps: 0, interval: 0, ef: START_EF, due: today, lapses: 0 };

@@ -1,6 +1,7 @@
 // Timed mocks: N questions, a time limit, optional per-chapter counts, no feedback until the end,
 // then a per-objective debrief. The timer is pure timestamps (startedAt / endsAt in epoch ms), never
 // an interval count, so it is right after the screen locks, the app is closed, or the phone sleeps.
+import { localDate } from '../dates.js';
 import { applyMastery, nextSessionNo, questionStats, recordAttempt } from './progress.js';
 import { chapterOf } from './content.js';
 
@@ -137,7 +138,7 @@ export function finishMock(progress, course, { now = Date.now() } = {}) {
   const elapsedMs = Math.min(Number(now), mock.endsAt) - mock.startedAt;
   const session = {
     no: mock.no,
-    date: new Date(Number(now)).toISOString().slice(0, 10),
+    date: localDate(Number(now)), // the local calendar day (Q-18), not the UTC one
     section: mock.configId,
     score: percent,
     correct,
