@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-17, after the Ch3 + Ch6 content run)
+## Where things stand (2026-10-18, after the Ch4 content run)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -33,14 +33,19 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - **Part 6 content run Ch3 + Ch6: done** (version 0.6.1, branch `content/istqb-ch3-ch6`, merged into local
   `main`, not pushed). Lessons §3.2, §6.1, §6.2 (§3.1 kept, one line added); 77 questions (Ch3 55, Ch6 22; 6–12 per
   LO, more for the shaky FL-3.2.3, 3.2.4, 6.1.1 and for 6.2.1); 25 new flashcards (47 in all). The ≥ 6 per objective
-  check now runs for Chapters 3 and 6. PLACEHOLDER(Q-17): until the Ch4 and Ch5 lessons exist, the lesson after
-  §3.2 is §6.1 (course order follows the files); see Q-17 before studying past §3.2.
+  check now runs for Chapters 3 and 6. Q-17 (lesson order) was narrowed by the Ch4 run, below.
+- **Part 6 content run Ch4: done** (version 0.6.2, branch `content/istqb-ch4`, merged into local `main`, not
+  pushed). Six lessons: §4.1, §4.2 split in two (`4.2a` EP and BVA, `4.2b` decision tables and state transitions),
+  §4.3, §4.4, §4.5; 118 questions (6–12 per LO; 10–12 for each of the five K3 LOs; 8 for the extra-drilling
+  experience-based LOs 4.4.1 and 4.4.2); 36 new flashcards (83 in all). Every K3 answer and worked example was
+  checked with a throwaway script. The ≥ 6 per objective check now runs for Chapter 4, plus a ≥ 10 check for its
+  K3 LOs and a course-order check. **Q-17 narrowed:** the lesson after §3.2 is now §4.1; the same gap now sits
+  between §4.5 and §6.1 until the Ch5 run ships (see Q-17 before studying past §4.5).
 - **Next: the remaining Part 6 content runs**, one session each, with the prompt in `docs/content-loop.md`:
-  1. **Ch4**: lessons 4.1–4.5 + questions (≥ 8 for the five K3 LOs).
-  2. **Ch5**: lessons 5.1–5.5 + questions (≥ 8 for 5.1.4, 5.1.5, 5.5.1).
-  3. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
-  Until all four are done, full mocks are short and do not count for the readiness gate; Martin can study §3.1
-  now.
+  1. **Ch5**: lessons 5.1–5.5 + questions (≥ 8 for 5.1.4, 5.1.5, 5.5.1). Ship it before Martin reaches §4.5.
+  2. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
+  Until both are done, full mocks are short and do not count for the readiness gate; Martin can study §3.1 to
+  §4.5 now.
 - Next after Part 6: Part 8 (Fridge), then the book-free parts of Part 7.
 
 ## Martin's USER ACTIONS still open for Part 6
@@ -102,7 +107,7 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [x] Part 4: Gym (code done; Martin's export, import, side-by-side week and gainz-tracker's retirement open)
 - [x] Part 5: study engine (code done; Ask Claude on the phone open, Q-13)
 - [x] Part 6a: ISTQB module, progress import, scaffolding, content loop (Martin's import on the phone open)
-- [ ] Part 6 content runs: [x] Ch3 · [x] Ch6 · [ ] Ch4 · [ ] Ch5 · [ ] Ch1–2 questions
+- [ ] Part 6 content runs: [x] Ch3 · [x] Ch6 · [x] Ch4 · [ ] Ch5 · [ ] Ch1–2 questions
 - [ ] Part 7: Bulgarian (gated) · Part 8: Fridge
 
 ## Known gaps and notes
@@ -118,6 +123,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - The gainz import was tested only with a synthetic file of the same shape; the first real import is the real test
   (watch the preview counts against gainz-tracker).
 - Migrations are blocked while backups are not set up (Q-8).
+- Study sessions are dated in UTC but compared with the local date (Q-18): the e2e test "import progress, then a
+  session" fails between local midnight and 02:00 CEST. Fix in the next code session.
 - Study engine: the Today card learns the next lesson's title only once the course has loaded (the first Today
   render after opening may lack that line). Course content is fetched from `content/<course>/` (network first,
   cache fallback); Part 6 must add its content files to `PRECACHE` (the shell test now requires it) so the course

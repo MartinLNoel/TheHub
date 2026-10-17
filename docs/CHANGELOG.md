@@ -2,6 +2,28 @@
 
 Dated entries, newest first.
 
+## 2026-10-18 — Part 6 content run: Chapter 4 (version 0.6.2)
+
+Written autonomously while Martin was away, on branch `content/istqb-ch4`, merged into local `main` (not pushed).
+All content in our own words; no official sample-exam questions.
+
+- **Lessons (6):** §4.1 (the three technique families), §4.2 split into `4.2a` (EP with spec-based valid/invalid
+  partitions, Each Choice, 2-value and 3-value BVA) and `4.2b` (decision tables, state transition diagrams and
+  tables, the three coverage criteria), §4.3 (statement and branch coverage, the value of white-box testing),
+  §4.4 (error guessing and fault attacks, session-based exploratory testing, checklists), §4.5 (user stories,
+  acceptance criteria, ATDD). Every worked example has its working written out; game examples throughout.
+- **Questions:** 118 for Chapter 4 (6 to 12 per objective; EP 12, BVA 11, decision tables 10, state transitions
+  11, ATDD 10). Correct answers spread A 29 · B 30 · C 30 · D 29. Every K3 answer, coverage percentage and lesson
+  example was recomputed with a throwaway script (not committed), and each key re-read for a single correct
+  option. 3-value BVA questions name the boundary values they mean (the open-range count is read two ways).
+- **Flashcards:** 36 new (83 in all): technique terms, partitions, BVA variants, decision-table notation, state
+  transition criteria, coverage, experience-based and collaboration terms, four list cards.
+- **Tests:** the ≥ 6 questions per objective check now runs for Chapter 4; new checks: ≥ 10 for each Ch4 K3
+  objective, lessons in course order with §4.1 right after §3.2; lesson ids may carry a part letter (`4.2a`).
+- Q-17 updated: §3.2 → §4.1 is fixed by the file order; the gap moved to §4.5 → §6.1 until the Ch5 run.
+- New open question Q-18: a pre-existing UTC/local date mismatch in study sessions (one e2e test fails between
+  local midnight and 02:00; passes in UTC; fails the same on the base commit). Not fixed in this content run.
+
 ## 2026-10-17 — Part 6 content run: Chapters 3 and 6 (version 0.6.1)
 
 Written autonomously while Martin was away, on branch `content/istqb-ch3-ch6`, merged into local `main` (not
