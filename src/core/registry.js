@@ -42,6 +42,17 @@ export function checkModule(mod) {
   if (mod.todayCard !== undefined && mod.todayCard !== null && typeof mod.todayCard !== 'function') {
     problems.push('todayCard must be a function (or left out)');
   }
+  if (mod.importers !== undefined) {
+    if (!Array.isArray(mod.importers)) problems.push('importers must be a list (or left out)');
+    else {
+      mod.importers.forEach((imp, i) => {
+        if (!imp || typeof imp.id !== 'string' || !imp.id) problems.push(`importers[${i}].id is required`);
+        if (!imp || typeof imp.title !== 'string' || !imp.title) problems.push(`importers[${i}].title is required`);
+        if (!imp || typeof imp.prepare !== 'function') problems.push(`importers[${i}].prepare must be a function`);
+        if (imp?.findLocal !== undefined && typeof imp.findLocal !== 'function') problems.push(`importers[${i}].findLocal must be a function`);
+      });
+    }
+  }
   return problems;
 }
 

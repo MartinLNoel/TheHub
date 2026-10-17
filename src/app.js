@@ -110,7 +110,7 @@ async function route({ section, screen: sub }) {
   const mod = registry.get(section);
   title.textContent = mod ? mod.name : 'TheHub';
   const render = mod?.routes[sub];
-  if (!mod || !render) return renderComingSoon(screen, { section, screen: sub });
+  if (!mod || !render) return renderComingSoon(screen, { section, screen: sub, built: Boolean(mod) });
   const entry = state[mod.id];
   if (entry?.error && entry.data === null) return renderProblem(screen, mod.name, entry.error);
 

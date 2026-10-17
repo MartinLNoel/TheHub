@@ -58,10 +58,13 @@ TheHub/
 │   │   ├── backup-screens.js Settings → Backup card and the Restore screen (#/settings/restore)
 │   │   ├── github.js        GitHub REST calls for the backup repo (the only code that sends the token)
 │   │   ├── transfer.js      export / import of everything as a file
+│   │   ├── module-import.js Settings cards for module importers (e.g. Gym's "Import from gainz-tracker")
 │   │   ├── update.js        service worker registration + banner
 │   │   └── study/           shared study engine (Part 5)
 │   └── modules/
-│       ├── gym/             Part 4
+│       ├── gym/             Part 4: index.js (module), program.js (gainz program data, unchanged), logic.js
+│       │                    (gainz rules as pure functions), data.js (store + validate), screens.js,
+│       │                    fighter.js (the SVG character), import.js (gainz-tracker import)
 │       ├── istqb/           Part 6
 │       ├── bulgarian/       Part 7
 │       └── fridge/          Part 8
@@ -99,9 +102,18 @@ export default {
   defaultData: () => ({ /* fresh data */ }),
   validate: (data) => [],       // returns a list of problems; [] means complete (used by backup verify)
   routes: { '': renderHome, 'log': renderLog },   // #/gym, #/gym/log; '' is required
-  todayCard: (data) => ({ title, lines: [], action: { label, route } }) // or null; may be left out
+  todayCard: (data) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
+  importers: [                  // optional (Part 4): bring data in from another app, shown in Settings
+    { id, title, description, prepare: (text, currentData) => ({ ok, problems, summary, data, nothingNew }),
+      findLocal: () => text | null, localLabel }   // findLocal/localLabel optional
+  ],
 };
 ```
+
+An importer's `prepare` maps and merges but never writes. The core (`src/core/module-import.js`) shows its
+`summary`, takes a verified backup first when backups are set up (a failed backup stops the import), checks the
+result with the module's `validate`, then saves it as the module's data. Gym's routes: `''` and `log` (the workout
+to log, the "Log workout" shortcut), `history`, `fighter`, `protein`, `checkin`.
 
 Each route function is called as `render({ root, data, readOnly, save, navigate })`: `root` is the `<main>` element
 to fill, `data` the module's current data, `save(newData)` stores it (and rejects with `NewerDataError` when the

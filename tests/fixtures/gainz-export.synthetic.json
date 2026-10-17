@@ -1,0 +1,74 @@
+{
+  "workoutLogs": [
+    {
+      "id": 1767800000000, "date": "2026-01-09", "day": "Upper B", "mode": "home",
+      "exercises": [
+        { "name": "Wide Push-ups", "sets": [{"weight":0,"reps":12},{"weight":0,"reps":12},{"weight":0,"reps":11},{"weight":0,"reps":10}] },
+        { "name": "Hammer Curl (bottles)", "sets": [{"weight":3,"reps":12},{"weight":3,"reps":12},{"weight":3,"reps":12}] }
+      ]
+    },
+    {
+      "id": 1767600000000, "date": "2026-01-07", "day": "Lower A", "mode": "gym",
+      "exercises": [
+        { "name": "Leg Press", "sets": [{"weight":50,"reps":10},{"weight":55,"reps":10},{"weight":60,"reps":9},{"weight":60,"reps":8}] },
+        { "name": "Hamstring Curl", "sets": [{"weight":20,"reps":12},{"weight":20,"reps":12},{"weight":20,"reps":11}] },
+        { "name": "Plank", "sets": [{"weight":0,"reps":45},{"weight":0,"reps":45},{"weight":0,"reps":40}] }
+      ]
+    },
+    {
+      "id": 3, "date": "2026-01-05", "day": "Upper A", "mode": "gym",
+      "exercises": [
+        { "name": "Incline Chest Press", "sets": [{"weight":30,"reps":10},{"weight":30,"reps":9},{"weight":30,"reps":8}] },
+        { "name": "Lat Pulldown", "sets": [{"weight":35,"reps":10},{"weight":35,"reps":10},{"weight":35,"reps":9}] }
+      ]
+    },
+    {
+      "id": 2, "date": "2025-12-17", "day": "Lower A", "mode": "gym",
+      "exercises": [
+        { "name": "Leg Press", "sets": [{"weight":45,"reps":10},{"weight":50,"reps":10}] }
+      ]
+    },
+    {
+      "id": 1, "date": "2025-12-15", "day": "Upper A", "mode": "gym",
+      "exercises": [
+        { "name": "Incline Chest Press", "sets": [{"weight":27.5,"reps":10},{"weight":27.5,"reps":10},{"weight":27.5,"reps":9}] },
+        { "name": "Overhead Press", "sets": [{"weight":15,"reps":8},{"weight":15,"reps":8},{"weight":15,"reps":8}] }
+      ]
+    }
+  ],
+  "dayIndex": 5,
+  "_mondayFixed": true,
+  "personalBests": {
+    "Incline Chest Press": { "weight": 30, "reps": 10 },
+    "Lat Pulldown": { "weight": 35, "reps": 10 },
+    "Overhead Press": { "weight": 15, "reps": 8 },
+    "Leg Press": { "weight": 60, "reps": 9 },
+    "Hamstring Curl": { "weight": 20, "reps": 12 },
+    "Plank": { "weight": 0, "reps": 45 },
+    "Wide Push-ups": { "weight": 0, "reps": 12 },
+    "Hammer Curl (bottles)": { "weight": 3, "reps": 12 }
+  },
+  "proteinLogs": {
+    "2026-01-07": [
+      { "name": "Whey shake", "grams": 25 },
+      { "name": "Whey shake", "grams": 25 },
+      { "name": "Test food A", "grams": 31 }
+    ],
+    "2026-01-09": [
+      { "name": "4 eggs", "grams": 24 }
+    ]
+  },
+  "checkIns": [
+    { "date": "2025-12-21", "weight": 70.5, "cals": null, "notes": "" },
+    { "date": "2026-01-04", "weight": 71.2, "cals": 2800, "notes": "Synthetic test note" }
+  ],
+  "phase": "phase1",
+  "bodyweight": 71.2,
+  "myFoods": [
+    { "name": "Meal out - meat dish", "protein": 20 },
+    { "name": "Meal out - light protein", "protein": 12 },
+    { "name": "Snack - unknown", "protein": 8 },
+    { "name": "Test bar", "protein": 19 }
+  ],
+  "lastSeenStage": 1
+}

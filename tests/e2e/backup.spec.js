@@ -213,3 +213,32 @@ test('restore refuses a damaged backup', async ({ page }) => {
   await expect(page.getByTestId('restore-preview')).toContainText('Checksum mismatch');
   await expect(page.getByTestId('restore-confirm')).toHaveCount(0);
 });
+
+test('import from gainz-tracker takes a verified backup first, and stops if that fails', async ({ page }) => {
+  const gainz = readFileSync(new URL('../fixtures/gainz-export.synthetic.json', import.meta.url), 'utf8');
+  const fake = createFakeGitHub();
+  await routeGitHub(page, fake);
+  await open(page);
+  await seedCore(page, { backupToken: TEST_TOKEN, backupStatus: { lastVerifiedBackup: iso(HOUR) } });
+
+  // Backup fails (offline): nothing is imported.
+  await offlineGitHub(page);
+  await page.goto('./#/settings');
+  await page.getByTestId('import-gym-gainz-tracker').setInputFiles({ name: 'g.json', mimeType: 'application/json', buffer: Buffer.from(gainz) });
+  await expect(page.getByTestId('module-import-confirm')).toContainText('backed up to GitHub first');
+  await page.getByTestId('module-import-apply').click();
+  await expect(page.getByTestId('module-import-confirm')).toContainText('Import stopped');
+  await page.goto('./#/gym/history');
+  await expect(page.getByTestId('gym-history-empty')).toBeVisible();
+
+  // Backup works: the safety backup (with the empty Gym) comes first, then the import.
+  await routeGitHub(page, fake);
+  await page.goto('./#/settings');
+  await page.getByTestId('import-gym-gainz-tracker').setInputFiles({ name: 'g.json', mimeType: 'application/json', buffer: Buffer.from(gainz) });
+  await page.getByTestId('module-import-apply').click();
+  await expect(page.getByTestId('module-import-done')).toBeVisible();
+  expect(fake.latest().message).toMatch(/before import from gainz-tracker/);
+  expect(JSON.parse(fake.latest().text).modules.gym.data.workoutLogs).toHaveLength(0);
+  await page.goto('./#/gym/history');
+  await expect(page.getByTestId('gym-log-entry')).toHaveCount(5);
+});

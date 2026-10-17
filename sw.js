@@ -1,7 +1,7 @@
 // TheHub service worker: offline cache and updates.
 // VERSION must equal src/version.js (a unit test checks it). Bumping it changes this file's bytes,
 // which is how the phone notices a new version.
-const VERSION = '0.3.0';
+const VERSION = '0.4.0';
 const CACHE = `thehub-${VERSION}`;
 
 // The app shell, cached on install. Every file under src/ and icons/ must be listed
@@ -22,6 +22,7 @@ const PRECACHE = [
   'src/core/db.js',
   'src/core/dom.js',
   'src/core/github.js',
+  'src/core/module-import.js',
   'src/core/registry.js',
   'src/core/router.js',
   'src/core/screens.js',
@@ -29,6 +30,13 @@ const PRECACHE = [
   'src/core/today.js',
   'src/core/transfer.js',
   'src/core/update.js',
+  'src/modules/gym/data.js',
+  'src/modules/gym/fighter.js',
+  'src/modules/gym/import.js',
+  'src/modules/gym/index.js',
+  'src/modules/gym/logic.js',
+  'src/modules/gym/program.js',
+  'src/modules/gym/screens.js',
 ];
 
 self.addEventListener('install', (event) => {

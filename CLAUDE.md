@@ -30,9 +30,10 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | Longer-term ideas | `docs/ROADMAP.md` |
 
 ## Plan status
-Parts 0–8 written 2026-10-17. Parts 2 (core shell) and 3 (verified backup and restore) built 2026-10-17 and merged
-into local `main`; nothing pushed yet (Part 1's repos and Part 3's token are Martin's). Next: Part 4 (Gym). Bulgarian
-(Part 7) is gated on the course book.
+Parts 0–8 written 2026-10-17. Parts 2 (core shell), 3 (verified backup and restore) and 4 (Gym, from gainz-tracker)
+built 2026-10-17 and merged into local `main`; nothing pushed yet (Part 1's repos, Part 3's token and Part 4's
+export, import and side-by-side week are Martin's). Next: Part 5 (study engine). Bulgarian (Part 7) is gated on the
+course book.
 Details: `docs/BACKLOG.md`.
 
 ## Commands
