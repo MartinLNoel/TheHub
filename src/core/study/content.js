@@ -128,21 +128,58 @@ export function kLevelsByObjective(questions) {
   return out;
 }
 
+/** The default course files: one per kind. A course may list several per kind in a manifest instead. */
+export const DEFAULT_FILES = { lessons: ['lessons.json'], questions: ['questions.json'], cards: ['cards.json'] };
+
+/** Problems with a content manifest ({ lessons: [file], questions: [file], cards: [file] }); [] = fine. */
+export function manifestProblems(m) {
+  if (!isObject(m)) return ['the manifest must be an object { lessons, questions, cards }'];
+  const p = [];
+  for (const kind of Object.keys(DEFAULT_FILES)) {
+    if (m[kind] === undefined) continue;
+    if (!Array.isArray(m[kind]) || !m[kind].every((f) => text(f) && f.endsWith('.json') && !f.includes('/'))) {
+      p.push(`manifest.${kind} must be a list of .json file names in the same folder`);
+    }
+  }
+  return p;
+}
+
 /**
- * Loads a course from `base` (a URL ending in "/"): fetches lessons.json, questions.json, cards.json.
+ * Loads a course from `base` (a URL ending in "/"). By default it fetches lessons.json,
+ * questions.json and cards.json. With `manifest` (a file name, e.g. "index.json") it first fetches
+ * that manifest, which lists the files of each kind in course order (so content can be split per
+ * chapter, e.g. lessons-ch3.json, questions-ch1.json), and concatenates them.
  * A missing or broken file counts as empty and is reported. Never throws.
  */
-export async function loadCourse(base, fetchFn = globalThis.fetch) {
-  const raw = {};
+export async function loadCourse(base, fetchFn = globalThis.fetch, { manifest } = {}) {
+  const raw = { lessons: [], questions: [], cards: [] };
   const problems = [];
-  for (const name of ['lessons', 'questions', 'cards']) {
+  const get = async (name) => {
+    const res = await fetchFn(new URL(name, base).href);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  };
+  let files = DEFAULT_FILES;
+  if (manifest) {
     try {
-      const res = await fetchFn(new URL(`${name}.json`, base).href);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      raw[name] = await res.json();
+      const m = await get(manifest);
+      const mp = manifestProblems(m);
+      if (mp.length) throw new Error(mp.join('; '));
+      files = { lessons: m.lessons || [], questions: m.questions || [], cards: m.cards || [] };
     } catch (err) {
-      raw[name] = [];
-      problems.push(`${name}.json could not be loaded (${err.message})`);
+      problems.push(`${manifest} could not be loaded (${err.message})`);
+      files = { lessons: [], questions: [], cards: [] };
+    }
+  }
+  for (const kind of Object.keys(DEFAULT_FILES)) {
+    for (const name of files[kind]) {
+      try {
+        const list = await get(name);
+        if (!Array.isArray(list)) throw new Error('not a list');
+        raw[kind].push(...list);
+      } catch (err) {
+        problems.push(`${name} could not be loaded (${err.message})`);
+      }
     }
   }
   const checked = checkCourse(raw);

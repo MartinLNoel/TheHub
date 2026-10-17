@@ -1,0 +1,5 @@
+{
+  "lessons": ["lessons-ch3.json", "lessons-ch4.json", "lessons-ch5.json", "lessons-ch6.json"],
+  "questions": ["questions-ch1.json", "questions-ch2.json", "questions-ch3.json", "questions-ch4.json", "questions-ch5.json", "questions-ch6.json"],
+  "cards": ["cards.json"]
+}

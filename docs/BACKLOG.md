@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-17, after Part 5)
+## Where things stand (2026-10-17, after Part 6a)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -20,8 +20,34 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   test build shows it, so there is nothing to study on the phone until Part 6. **Ask Claude was not tested on the
   phone** (Q-13); Settings → Ask Claude has a test button for each delivery so Martin can try them without a
   course. Engine defaults: Q-14. API for module authors: `src/core/study/README.md`.
-- Next: **Part 6 (ISTQB)**, branch per `docs/plans/part-6-istqb.md`. It starts with Martin's Notion progress
-  (Q-1) and builds on `createStudyModule`.
+- **Part 6a (ISTQB module): built and merged into local `main`** (version 0.6.0), autonomously (paused once by
+  Martin and resumed). All unit and e2e tests pass locally. Built: the module on `createStudyModule` (home with
+  chapters X/6, readiness gate, next step; sessions; Chapter 3–6 mini-mocks; the 40-question full mock with the
+  official weighting; wrong-answer review; flashcards; feedback; Today card; 10-day warm-up; the Study shortcut;
+  Settings → **Import ISTQB progress**), the one-time Notion import (`scripts/istqb-import.mjs`), the content
+  scaffolding (`content/istqb/`: manifest, the 64 objectives, one example lesson §3.1 with 9 questions, 22
+  flashcards), `docs/istqb-content-guide.md` and `docs/content-loop.md`. Small engine additions (content manifest,
+  `adjustSession`/`homeCards` hooks, step labels, `"__done__"` pointer resumes, imported-session objectives).
+  Martin's progress is in **`private/istqb-progress.json`** (git-ignored, never committed); its
+  summary is in `private/istqb-notes.md` (Q-1, Q-15). New placeholders: Q-15, Q-16.
+- **Next: the Part 6 content runs**, one session each, with the prompt in `docs/content-loop.md`:
+  1. **Ch3**: lesson §3.2 + Ch3 questions to ≥ 6 per LO.
+  2. **Ch4**: lessons 4.1–4.5 + questions (≥ 8 for the five K3 LOs).
+  3. **Ch5–6**: lessons 5.1–5.5, 6.1–6.2 + questions.
+  4. **Ch1–2 questions only** (no lessons), for full mocks and warm-ups.
+  Until all four are done, full mocks are short and do not count for the readiness gate; Martin can study §3.1
+  now.
+- Next after Part 6: Part 8 (Fridge), then the book-free parts of Part 7.
+
+## Martin's USER ACTIONS still open for Part 6
+
+(After Part 1 and the first push.)
+1. Copy `private/istqb-progress.json` to the phone (email it to yourself, or put it in the private backup repo
+   and download it), then **Settings → Import ISTQB progress** → pick the file → **Import**.
+2. Check the ISTQB home shows the chapters done and the next session listed in the import summary.
+3. Answer Q-1 (did a Session 10 happen on 12 October?), Q-15 and Q-16.
+4. Do the next commute session in TheHub; use **Ask Claude** and **📝 Feedback**. Stop using the Claude Project
+   for sessions (keep it as an archive).
 
 ## Martin's USER ACTIONS still open for Part 5
 
@@ -71,7 +97,9 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [x] Part 3: verified backup and restore (code done; Martin's token, first real backup and restore drill open)
 - [x] Part 4: Gym (code done; Martin's export, import, side-by-side week and gainz-tracker's retirement open)
 - [x] Part 5: study engine (code done; Ask Claude on the phone open, Q-13)
-- [ ] Part 6: ISTQB · Part 7: Bulgarian (gated) · Part 8: Fridge
+- [x] Part 6a: ISTQB module, progress import, scaffolding, content loop (Martin's import on the phone open)
+- [ ] Part 6 content runs: Ch3 · Ch4 · Ch5–6 · Ch1–2 questions
+- [ ] Part 7: Bulgarian (gated) · Part 8: Fridge
 
 ## Known gaps and notes
 

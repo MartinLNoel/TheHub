@@ -27,13 +27,17 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | Where things stand, what is next | `docs/BACKLOG.md` |
 | What changed | `docs/CHANGELOG.md` |
 | Open questions for Martin and every placeholder | `docs/QUESTIONS.md` |
+| Writing ISTQB lessons, questions or cards (house style, copyright, file layout) | `docs/istqb-content-guide.md` |
+| Improving content from Martin's feedback and wrong answers; the Part 6 content runs | `docs/content-loop.md` |
 | Longer-term ideas | `docs/ROADMAP.md` |
 
 ## Plan status
 Parts 0–8 written 2026-10-17. Parts 2 (core shell), 3 (verified backup and restore), 4 (Gym, from gainz-tracker)
 and 5 (shared study engine, `src/core/study/README.md`) built 2026-10-17 and merged into local `main`; nothing
 pushed yet (Part 1's repos, Part 3's token, Part 4's export, import and side-by-side week, and Part 5's Ask Claude
-phone test are Martin's). Next: Part 6 (ISTQB). Bulgarian (Part 7) is gated on the course book.
+phone test are Martin's). Part 6a (ISTQB module, Notion progress import, content scaffolding with §3.1, the
+content loop) built and merged 2026-10-17; next: the Part 6 content runs (Ch3, Ch4, Ch5–6, Ch1–2 questions) per
+`docs/content-loop.md`. Bulgarian (Part 7) is gated on the course book.
 Details: `docs/BACKLOG.md`.
 
 ## Commands
