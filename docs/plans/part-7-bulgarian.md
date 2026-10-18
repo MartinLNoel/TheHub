@@ -7,6 +7,36 @@
 
 ---
 
+## Built before the book (2026-10-18)
+
+Built autonomously on branch `part-7/bulgarian-prebook` (version 0.8.1), merged into local `main`, not pushed.
+Only what does not depend on the book; nothing pretends to follow it.
+
+**Done:**
+- `src/modules/bulgarian/` on the shared study engine (no fork; four small engine hooks: `tabs`, `cardExtras`,
+  `onCardGraded`, `feedbackTitle`). Home: words learned, streak, cards due, alphabet progress, the "From my home"
+  deck, and a **"Lessons start when your course book is added"** panel in place of lessons. Two-way cards (each
+  direction scheduled separately), Ask Claude and Feedback from the engine. Today card: cards due, alphabet
+  progress, streak.
+- **Cyrillic alphabet trainer** (`#/bulgarian/alphabet`): the 30 letters (upper and lower case), each with its
+  sound, an English approximation, an example word and, for Е, О, Щ, Ъ and Ь, where Bulgarian differs from
+  Russian; practice rounds of 10: letter → sound, sound → letter, and reading practice on 42 everyday words
+  (greetings, courtesy, numbers 1–10, food and drink, people, places), all our own selection.
+- **"From my home" deck**: `accept(item, data)` turns the Fridge's `hub.offer('bulgarian', { bg, en, topic })`
+  into a two-way card, `null` for a duplicate. Item 3 above is done.
+- **Pronunciation** (item 2): a 🔊 button through `speechSynthesis`, shown only when a `bg-BG` voice exists at
+  runtime; Settings → Diagnostics says whether one does. Not yet tried on the phone (Q-22).
+- Content `content/bulgarian/` (manifest with empty `chapters`, lessons, questions and cards; `alphabet.json`;
+  `reading.json`; `handled-feedback.json`), validated by `tests/unit/bulgarian.test.js`. House style and the book
+  run: `docs/bulgarian-content-guide.md`. Content loop: extended (item 5 done).
+
+**Still for the book run** (after the USER ACTIONS below): the course map with Martin; lessons, vocabulary cards
+and chapter quizzes per chapter in the book's order (item 4); the lesson UI (session card, Lessons tab, chapter
+progress, "next lesson" on Today; item 1's lessons and quizzes); e2e for a lesson; Martin checks chapter 1 before
+more is written. Start from `docs/bulgarian-content-guide.md`, "The book run", on a branch `part-7/bulgarian`.
+
+---
+
 ## USER ACTIONS REQUIRED
 
 1. **Get the course book as a file**: a PDF, or clear photos of each page (one file per page, named in order).

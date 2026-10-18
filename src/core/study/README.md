@@ -30,8 +30,16 @@ export default createStudyModule({
   todayCard: (data, course) => ({ ... }),    // replaces the default card; course is null while loading
   adjustSession: (session, course, data) => session,  // change a new session before it starts (ISTQB warm-up)
   homeCards: async (ctx, course, data) => node,       // extra card(s) at the top of the course home
+  // Part 7 (Bulgarian):
+  tabs: [['', 'Home'], ['alphabet', 'Alphabet'], ['cards', 'Cards'], ['feedback', 'Feedback']], // own sub-tabs
+  cardExtras: ({ card, reverse, face, text, lang }) => node | null,  // under a flashcard face (the 🔊 button)
+  onCardGraded: (data, { key, grade, today }) => data,              // change the data saved after a grade
+  feedbackTitle: (feedback) => 'Letter Щ щ' | null,                 // titles for the module's own targets
 });
 ```
+
+Module screens may reuse the engine's pieces, exported from `screens.js`: `tabs(env, current)`, `store(ctx)`,
+`feedbackBox(st, { targetId, targetKind })`, `askButtons(ctx, makeMessage)`, `questionView`, `toast`.
 
 Then list it in `src/modules.js`. The returned object is a normal module (`checkModule` passes) with
 `study: true` and `getCourse()` (a promise of `{ course, problems }`).
@@ -91,4 +99,6 @@ Martin's phone is open: `docs/QUESTIONS.md` Q-13.
 - A step may carry `label` (shown instead of its type) and imported sessions may list `objectives` for delayed
   retrieval (Part 6).
 - Bulgarian: cards with `twoWay: true` and `lang`; offered words go in the progress and reach the engine through
-  `extraCards`.
+  `extraCards`. *Built 2026-10-18 (before the book):* `src/modules/bulgarian/` uses `extraCards` (the "From my
+  home" deck), `tabs`, `cardExtras` (🔊), `onCardGraded` (its streak) and `feedbackTitle`, and replaces the
+  engine's home with its own (no lessons until the book).

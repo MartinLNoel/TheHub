@@ -1,7 +1,7 @@
 // TheHub service worker: offline cache and updates.
 // VERSION must equal src/version.js (a unit test checks it). Bumping it changes this file's bytes,
 // which is how the phone notices a new version.
-const VERSION = '0.8.0';
+const VERSION = '0.8.1';
 const CACHE = `thehub-${VERSION}`;
 
 // The app shell, cached on install. Every file under src/ (except README.md), icons/ and content/
@@ -30,6 +30,7 @@ const PRECACHE = [
   'src/core/router.js',
   'src/core/screens.js',
   'src/core/settings.js',
+  'src/core/speech.js',
   'src/core/today.js',
   'src/core/transfer.js',
   'src/core/update.js',
@@ -53,6 +54,10 @@ const PRECACHE = [
   'src/modules/istqb/index.js',
   'src/modules/istqb/rules.js',
   'src/modules/istqb/screens.js',
+  'src/modules/bulgarian/content.js',
+  'src/modules/bulgarian/data.js',
+  'src/modules/bulgarian/index.js',
+  'src/modules/bulgarian/screens.js',
   'src/modules/fridge/barcode.js',
   'src/modules/fridge/data.js',
   'src/modules/fridge/index.js',
@@ -79,6 +84,10 @@ const PRECACHE = [
   'content/istqb/questions-ch5.json',
   'content/istqb/questions-ch6.json',
   'content/istqb/cards.json',
+  'content/bulgarian/index.json',
+  'content/bulgarian/alphabet.json',
+  'content/bulgarian/reading.json',
+  'content/bulgarian/handled-feedback.json',
 ];
 
 self.addEventListener('install', (event) => {

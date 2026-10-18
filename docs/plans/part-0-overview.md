@@ -51,11 +51,14 @@ TheHub/
 │   │   ├── db.js            IndexedDB wrapper + migrations runner
 │   │   ├── dom.js           tiny h()/mount() helper (text is always text, never HTML)
 │   │   ├── hub.js           hub.offer(target, item) / hub.accepts(target): cross-module offers (Part 8)
-│   │   ├── diagnostics.js   Settings → Diagnostics: the phone's BarcodeDetector formats, camera (Part 8)
+│   │   ├── diagnostics.js   Settings → Diagnostics: the phone's BarcodeDetector formats, camera (Part 8),
+│   │   │                    whether a bg-BG speech voice exists (Part 7)
 │   │   ├── registry.js      module registry
 │   │   ├── router.js        hash routes: #/today, #/gym/log, ...
 │   │   ├── screens.js       "coming soon" and error screens
 │   │   ├── settings.js      Settings screen: theme, export, import
+│   │   ├── speech.js        speechSynthesis helpers: findVoice, the 🔊 button (shown only when a voice for the
+│   │   │                    language exists), the Diagnostics voice line (Part 7)
 │   │   ├── today.js         Today screen
 │   │   ├── backup.js        build, verify, upload, read back, schedule, restore (the backup service)
 │   │   ├── backup-screens.js Settings → Backup card and the Restore screen (#/settings/restore)
@@ -73,7 +76,10 @@ TheHub/
 │       ├── istqb/           Part 6: index.js (createStudyModule config, Today card, importer), rules.js
 │       │                    (official weighting, chapters X/6, readiness gate, 10-day warm-up), import.js
 │       │                    ("Import ISTQB progress"), screens.js (home summary, wrong-answer review)
-│       ├── bulgarian/       Part 7
+│       ├── bulgarian/       Part 7 (built before the book, 2026-10-18): index.js (createStudyModule config,
+│       │                    accept, Today card), data.js (trainer progress, streak, rounds, transliteration,
+│       │                    the "From my home" deck), content.js (alphabet/reading loading and checks),
+│       │                    screens.js (home, alphabet, practice rounds)
 │       └── fridge/          Part 8: index.js (module, Today card), data.js (store, validate, expiry rules,
 │                            offline lookup queue), barcode.js (EAN/UPC checks), off.js (Open Food Facts),
 │                            scanner.js (camera + BarcodeDetector or the vendored fallback), screens.js
@@ -82,7 +88,8 @@ TheHub/
 ├── content/
 │   ├── istqb/               index.json (manifest) · objectives.json (64 LOs) · lessons-ch3..6.json ·
 │   │                        questions-ch1..6.json · cards.json · handled-feedback.json (docs/istqb-content-guide.md)
-│   └── bulgarian/
+│   └── bulgarian/           index.json (manifest: empty chapters/lessons/questions/cards until the book) ·
+│                            alphabet.json (30 letters) · reading.json (reading words) (docs/bulgarian-content-guide.md)
 ├── tests/
 │   ├── unit/                Vitest (jsdom + fake-indexeddb)
 │   ├── e2e/                 Playwright, mobile viewport (412×915, Galaxy size)
@@ -151,7 +158,7 @@ or ignores:
   with `validate`, saves it and updates the live state.
 - Items offered so far: the Fridge offers `{ bg, en, topic: 'food' }` to `bulgarian` (`bg` typed or confirmed by
   Martin, prefilled from Open Food Facts' Bulgarian name when there is one; `en` = the English product name or the
-  item's name). Part 7's `accept` adds it to the "From my home" deck and returns `null` for a word already there.
+  item's name). Part 7's `accept` (built 2026-10-18) adds it to the "From my home" deck and returns `null` for a word already there.
 
 ---
 
@@ -235,6 +242,15 @@ Progress (per module, in IndexedDB and backups; schema version 1):
 Core settings gain `askClaude`: `"share"` (default) | `"link"` | `"copy"` (Settings → Ask Claude).
 
 ---
+
+## Bulgarian data (Part 7)
+
+Study progress (above) plus, schema version 1 (the full comment is in `src/modules/bulgarian/data.js`):
+`alphabet` `{ [letterId]: { toSound?, toLetter? } }` and `reading` `{ [wordId]: … }`, each `{ right, wrong, streak }`;
+`activity` (local days with practice or card reviews, for the streak); `homeDeck` (the "From my home" cards:
+`{ id: "home-<n>", front: bg, back: en, topic, twoWay: true, lang: { front: "bg", back: "en" }, deck: "home",
+added }`). `accept` declines (null) an item whose Bulgarian word is already a card (case, spacing and Unicode form
+ignored), or that has no Cyrillic `bg` or no `en`.
 
 ## Fridge data (Part 8)
 

@@ -11,7 +11,7 @@ const SAMPLE = join(ROOT, 'tests', 'fixtures', 'sample-course');
 // A course folder may list its files in index.json (split per chapter); otherwise the default names.
 const MANIFEST = 'index.json';
 // Files a course folder may hold besides its course files (read by the module itself).
-const EXTRA_FILES = ['objectives.json', 'handled-feedback.json'];
+const EXTRA_FILES = ['objectives.json', 'handled-feedback.json', 'alphabet.json', 'reading.json'];
 
 function courseFiles(dir) {
   if (!existsSync(join(dir, MANIFEST))) return DEFAULT_FILES;

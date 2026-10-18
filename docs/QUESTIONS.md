@@ -34,12 +34,18 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   Pages to "GitHub Actions"; then push. Nothing has been pushed anywhere. · Nothing is online until this is done. ·
   Part 1 · open (action, not a question)
 - **Q-4** · Bulgarian course book: still to find. · Part 7's lessons follow it. · Part 7 · open
+  - *2026-10-18:* everything that does not need the book is built (version 0.8.1): the module, the alphabet
+    trainer, reading practice, the "From my home" deck and the 🔊 button. The home says "Lessons start when your
+    course book is added". When you have it, put it in `C:\Users\marti\Documents\Education\Bulgarian\` (not
+    TheHub) and start the book run (`docs/bulgarian-content-guide.md`).
 - **Q-5** · App icon and colours: Part 2 ships a generated placeholder icon (a white "hub" wheel on blue, #2f6fde)
   and a neutral blue accent. Do you want a different icon or colour? · It is what you see on the home screen. ·
   `scripts/make-icons.mjs` (regenerate with `npm run icons`), `icons/`, `style.css` tokens · open
 - **Q-6** · Version numbers: Part 2 starts at `0.2.0` and the plan is to bump the middle number per plan part and the
   last number per fix, reaching `1.0.0` when you use TheHub daily. OK? · The version shows in Settings and names the
   offline cache. · `src/version.js` (and `sw.js`) · open
+  - *2026-10-18:* Part 7's book-free half shipped as **0.8.1**, not 0.7.0: the Fridge already took 0.8.0, and a
+    lower number would read as a downgrade. The book run continues from there (0.8.2, …) unless you prefer otherwise.
 - **Q-7** · The backup token is stored in the app's IndexedDB. Every GitHub Pages site you have lives on the same
   origin, `martinlnoel.github.io`, so in principle a script on another of your Pages sites could read it. Part 3
   accepts this (the token can only touch `thehub-backup`, Contents only, and the other sites are your own code). Do
@@ -135,6 +141,23 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   offered as the English side of a Bulgarian card; Fridge words reach Bulgarian with `topic: 'food'`. OK? · How
   the Fridge and its Today card behave. · `src/modules/fridge/data.js` (`LOCATIONS`, `SOON_DAYS`, `OFFER_TOPIC`),
   `src/modules/fridge/screens.js` · open
+- **Q-22** · **Is there a Bulgarian voice on your phone?** After the first push, open TheHub → **Settings →
+  Diagnostics** and send Claude the "Speech voice bg-BG: …" line. If it says *available*, open Bulgarian →
+  Alphabet → a letter, tap 🔊 and say whether it sounds Bulgarian (and whether it works in aeroplane mode: the line
+  says "online" for a voice that needs the network). If it says *not available*: Android's text-to-speech settings
+  (Google's speech engine → install voice data → Bulgarian; the menu names differ per phone, unverified) may add
+  one; then check the line again. · The 🔊 buttons show only when a `bg-BG` voice exists (a non-Bulgarian voice
+  would teach the wrong sounds). Built while you were away, so no real voice was tried: the tests use mocked
+  voices. Record the answer in `docs/BACKLOG.md`. · `src/core/speech.js`, `src/core/diagnostics.js` · open
+- **Q-23** · Bulgarian trainer defaults, chosen while you were away: a letter counts as **learned** after **2
+  right answers in a row in both directions** (letter → sound and sound → letter; a miss starts that direction
+  again); a practice round has **10** questions, letters you do not know yet first; the app writes Ъ as **"ă"** in
+  Latin (official signs write "a", as in Targovishte); the 42 reading words (greetings, numbers, food…) are for
+  reading practice only and are **not flashcards**, because the spec says vocabulary comes from the book (say if
+  you want them as a starter deck); new cards: **10 sides a day** (5 two-way words); a Fridge word is declined when
+  it has no Cyrillic letter or is already a card. OK? · How fast the alphabet counts as learned, and what you can
+  review before the book arrives. · `src/modules/bulgarian/data.js` (`LEARNED_STREAK`, `ROUND_SIZE`,
+  `acceptOffer`), `src/modules/bulgarian/screens.js` (`CARDS`), `content/bulgarian/alphabet.json` (`latin`) · open
 - **Q-18** · **Bug found (not fixed: the Ch4 content run may only edit content, tests and docs).** A study session
   is saved with its **UTC** date (`finishSession`: `new Date(now).toISOString().slice(0, 10)`), but the ISTQB home
   compares it with the **local** date (`daysSinceLastSession` uses `localISO`). Between midnight and 01:00 (02:00

@@ -2,7 +2,28 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-18, after Part 8: the Fridge)
+## Waiting on Martin, in priority order (2026-10-18, end of the autonomous build)
+
+Part 7's book-free half was the last part that could be built without you. Everything below needs you; the first
+item unblocks most of the rest.
+
+1. **Part 1: create the two GitHub repos and push `main`** (Q-3). Nothing is online, CI has never run, and every
+   phone check below waits for it.
+2. **Backups for real** (Part 3): the fine-grained token, the first backup, the restore drill; then decide Q-8
+   (block migrations without backups?) and Q-9. Do this before relying on TheHub for real data.
+3. **Gym move** (Part 4): gainz-tracker's `export-button` branch, export, import (Q-2, Q-10), the side-by-side
+   week, then Q-11 and Q-12, then gainz-tracker's retirement.
+4. **ISTQB** (Part 6): import `private/istqb-progress.json` on the phone, answer Q-1, Q-15, Q-16, study in TheHub.
+5. **Ask Claude on the phone** (Q-13: which delivery works) and the study defaults (Q-14).
+6. **Fridge on the phone** (Part 8): the Diagnostics line and five real scans (Q-19, Q-20), then Q-21.
+7. **Bulgarian** (Part 7): the Diagnostics voice line and a 🔊 try (Q-22), the trainer defaults (Q-23), then the
+   **course book** (Q-4), which starts the book run.
+8. When convenient: icon and colours (Q-5), the version scheme (Q-6), a custom domain for the token (Q-7).
+9. Outside TheHub (not done: these builds may not touch other folders): the project hub has **no TheHub entry**
+   yet, and its Bulgarian and MiniFridge entries should say they now live in TheHub
+   (`C:\Users\marti\Documents\hub\update-project-entry.md`); MiniFridge's spec needs a "superseded" note.
+
+## Where things stand (2026-10-18, after Part 7 before the book)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -63,8 +84,27 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   barcode-detector 3.2.2 / zxing-wasm 3.1.3 fallback, offline-capable), Open Food Facts lookups with a cache and an
   offline queue, manual entry, and the core's **`hub.offer`** (Part 0). **Scanning and Open Food Facts were never
   tried for real:** no phone camera, and no test may call OFF (all mocked): Q-19, Q-20. The Bulgarian link is
-  wired but dormant until Part 7 ships a module with `accept`. New placeholders: Q-19, Q-20, Q-21.
-- Next: the book-free parts of Part 7 (Bulgarian), when Martin wants them; Part 7 proper waits for the book (Q-4).
+  wired, and live since Part 7's book-free half (0.8.1) added `accept`. New placeholders: Q-19, Q-20, Q-21.
+- **Part 7 before the book (Bulgarian): built and merged into local `main`** (version 0.8.1, branch
+  `part-7/bulgarian-prebook`), autonomously. All unit and e2e tests pass locally and with `TZ=UTC`. Built: the
+  module on the study engine (home with words learned, streak, cards due, alphabet progress and a "Lessons start
+  when your course book is added" panel; Today card), the Cyrillic alphabet trainer (30 letters with sounds,
+  approximations, examples and Russian-trap notes; letter → sound, sound → letter, reading practice on 42 everyday
+  words), two-way cards, the **"From my home" deck** (`accept`: the Fridge's words now arrive, and the Fridge asks
+  for the Bulgarian word after each item added), and the 🔊 button (`speechSynthesis`, only with a `bg-BG` voice)
+  with a Diagnostics line. **Never tried on a phone, and no real voice was used** (mocked in tests): Q-22. New
+  placeholders: Q-22, Q-23. The book run is described in `docs/bulgarian-content-guide.md`.
+- Next: nothing more can be built without Martin (see "Waiting on Martin" above). Part 7 proper waits for the book
+  (Q-4).
+
+## Martin's USER ACTIONS still open for Part 7 (before the book)
+
+(After Part 1 and the first push.)
+1. Settings → **Diagnostics**: send Claude the "Speech voice bg-BG: …" line; if available, try a 🔊 (Q-22).
+   Record it here: *bg-BG voice: not checked yet*.
+2. Bulgarian → **Alphabet**: do a round of each practice; add one Fridge item and its Bulgarian word, and review
+   its two cards. Answer Q-23.
+3. Get the course book (Q-4) and put it in the private Bulgarian folder; then start the book run.
 
 ## Martin's USER ACTIONS still open for Part 8
 
@@ -135,7 +175,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [x] Part 6a: ISTQB module, progress import, scaffolding, content loop (Martin's import on the phone open)
 - [x] Part 6 content runs: [x] Ch3 · [x] Ch6 · [x] Ch4 · [x] Ch5 · [x] Ch1–2 questions (Martin's USER ACTIONS open)
 - [x] Part 8: Fridge (code done; scanning on the phone, Q-19 to Q-21 and the MiniFridge note open)
-- [ ] Part 7: Bulgarian (gated on the book; `hub.offer` from the Fridge is ready for its `accept`)
+- [x] Part 7 before the book: module, alphabet trainer, reading practice, "From my home" deck, 🔊 (Q-22, Q-23 open)
+- [ ] Part 7 book run: lessons, vocabulary and quizzes per chapter (gated on the book, Q-4)
 
 ## Known gaps and notes
 
@@ -153,7 +194,7 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - Fridge: the fallback scanner adds about 1.1 MB (`zxing_reader.wasm`) to the first-install download (it is in
   `PRECACHE` so scanning works offline); it is loaded into memory only when the phone has no usable
   `BarcodeDetector`. To update it, follow `src/vendor/barcode-detector/README.md`.
-- Calendar dates: the study engine, ISTQB and the Fridge use the local day (`src/core/dates.js`, Q-18 fixed in 0.6.3); the Gym
+- Calendar dates: the study engine, ISTQB, Bulgarian and the Fridge use the local day (`src/core/dates.js`, Q-18 fixed in 0.6.3); the Gym
   still uses the UTC day on purpose until Q-11 is answered.
 - Study engine: the Today card learns the next lesson's title only once the course has loaded (the first Today
   render after opening may lack that line). Course content is fetched from `content/<course>/` (network first,

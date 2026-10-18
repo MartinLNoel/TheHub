@@ -30,7 +30,7 @@ export function toast(msg) {
 }
 
 /** Keeps the latest data and saves through the context; refuses politely when read-only. */
-function store(ctx) {
+export function store(ctx) {
   const s = {
     data: ctx.data,
     async commit(next) {
@@ -46,14 +46,18 @@ function store(ctx) {
   return s;
 }
 
-function tabs(env, current) {
-  const items = [
-    ['', 'Home'],
-    ['lessons', 'Lessons'],
-    ['cards', 'Cards'],
-    ['mock', 'Mocks'],
-    ['feedback', 'Feedback'],
-  ];
+/** The engine's sub-tabs; a course may list its own with `config.tabs` ([route, label] pairs). */
+export const DEFAULT_TABS = [
+  ['', 'Home'],
+  ['lessons', 'Lessons'],
+  ['cards', 'Cards'],
+  ['mock', 'Mocks'],
+  ['feedback', 'Feedback'],
+];
+
+/** The course's sub-tab bar (exported for module screens; env needs id, name and config). */
+export function tabs(env, current) {
+  const items = env.config?.tabs || DEFAULT_TABS;
   return h(
     'nav',
     { class: 'subtabs', 'aria-label': `${env.name} screens` },
@@ -89,8 +93,8 @@ function objectiveChips(objectives, course, progress) {
   );
 }
 
-/** The Feedback button and its inline form. targetKind: lesson | question | card. */
-function feedbackBox(st, { targetId, targetKind }) {
+/** The Feedback button and its inline form. targetKind: lesson | question | card (a module may add its own). */
+export function feedbackBox(st, { targetId, targetKind }) {
   const area = h('textarea', { class: 'input', rows: '3', 'data-testid': 'feedback-text', 'aria-label': 'Your feedback' });
   const form = h(
     'div',
@@ -141,7 +145,7 @@ function feedbackBox(st, { targetId, targetKind }) {
   );
 }
 
-function askButtons(ctx, makeMessage) {
+export function askButtons(ctx, makeMessage) {
   return askClaudeButtons({ makeMessage, delivery: ctx.settings?.askClaude || DEFAULT_DELIVERY, toast });
 }
 
@@ -683,8 +687,11 @@ export async function renderCards(ctx, env) {
     const { card, reverse } = side;
     const [front, back] = reverse ? [card.back, card.front] : [card.front, card.back];
     const [frontLang, backLang] = reverse ? [card.lang?.back, card.lang?.front] : [card.lang?.front, card.lang?.back];
+    // A course may add something under a face's text (Bulgarian: the 🔊 button), via config.cardExtras.
+    const faceExtras = (face, text, lang) => (env.config.cardExtras ? env.config.cardExtras({ card, reverse, face, text, lang: lang || null }) : null);
     const grade = (g) => async () => {
-      const next = { ...st.data, cardState: gradeSide(st.data.cardState, side.key, g, today) };
+      let next = { ...st.data, cardState: gradeSide(st.data.cardState, side.key, g, today) };
+      if (env.config.onCardGraded) next = env.config.onCardGraded(next, { key: side.key, grade: g, today });
       if (!(await st.commit(next))) return;
       queue.shift();
       if (g === 'again') queue.push(side); // shown again before the run ends
@@ -702,8 +709,10 @@ export async function renderCards(ctx, env) {
           'section',
           { class: 'card flashcard', 'data-testid': 'flashcard', 'data-card': side.key },
           h('p', { class: 'flashcard__text', lang: frontLang || null, 'data-testid': 'card-front' }, front),
+          faceExtras('front', front, frontLang),
           flipped ? h('hr') : null,
           flipped ? h('p', { class: 'flashcard__text', lang: backLang || null, 'data-testid': 'card-back' }, back) : null,
+          flipped ? faceExtras('back', back, backLang) : null,
         ),
         flipped
           ? h(
@@ -731,6 +740,8 @@ export async function renderFeedback(ctx, env) {
   const { course } = await env.getCourse();
   const st = store(ctx);
   const titleOf = (f) => {
+    const own = env.config.feedbackTitle ? env.config.feedbackTitle(f) : null;
+    if (own) return own;
     const l = course.lessons.find((x) => x.id === f.targetId);
     if (l) return `Lesson ${l.section} ${l.title}`;
     const q = course.questions.find((x) => x.id === f.targetId);

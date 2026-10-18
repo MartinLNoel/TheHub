@@ -100,6 +100,7 @@ test.describe('with page.route mocks', () => {
       await page.getByTestId('fridge-exp-plus-0').click();
       await expect(page.getByTestId('fridge-expiry')).toHaveValue('2026-10-18');
       await page.getByTestId('fridge-save').click();
+      await page.getByTestId('fridge-bg-skip').click(); // the Bulgarian module now asks for the word (Part 7)
       await expect(page.getByTestId('fridge-flash')).toHaveText('Added Milk.');
       await expect(page.getByTestId('fridge-item')).toHaveCount(1);
       await expect(page.getByTestId('fridge-item').first()).toContainText('Expires today');
@@ -109,6 +110,7 @@ test.describe('with page.route mocks', () => {
       await page.getByTestId('fridge-place-pantry').click();
       await page.getByTestId('fridge-expiry').fill('2026-12-01');
       await page.getByTestId('fridge-save').click();
+      await page.getByTestId('fridge-bg-skip').click(); // the Bulgarian module now asks for the word (Part 7)
       await expect(page.getByTestId('fridge-item')).toHaveCount(2);
       await expect(page.getByTestId('fridge-item').nth(1)).toContainText('Expires 01-12-2026');
 
@@ -156,6 +158,7 @@ test.describe('with page.route mocks', () => {
 
     await page.getByTestId('fridge-exp-plus-7').click();
     await page.getByTestId('fridge-save').click();
+    await page.getByTestId('fridge-bg-skip').click(); // the Bulgarian module now asks for the word (Part 7)
     await expect(page.getByTestId('fridge-flash')).toHaveText('Added Test Cola.');
     await expect(page.getByTestId('fridge-item').first()).toContainText('Test Cola');
     await expect(page.getByTestId('fridge-item').first()).toContainText('Expires in 7 days');
@@ -181,6 +184,7 @@ test.describe('with page.route mocks', () => {
     await expect(page.getByTestId('fridge-lookup')).toContainText('looks the barcode up later');
 
     await page.getByTestId('fridge-save').click(); // no name needed while the lookup waits
+    await page.getByTestId('fridge-bg-skip').click(); // the Bulgarian module now asks for the word (Part 7)
     await expect(page.getByTestId('fridge-flash')).toHaveText(`Added Barcode ${CODE}. Its barcode is looked up when you are online.`);
     await expect(page.getByTestId('fridge-pending')).toContainText('1 scanned item still to look up');
     await expect(page.getByTestId('fridge-item').first()).toContainText('lookup waiting');
@@ -215,6 +219,7 @@ test.describe('with page.route mocks', () => {
     await expect(page.getByTestId('fridge-lookup')).toContainText('Not on Open Food Facts');
     await page.getByTestId('fridge-name').fill('Cola');
     await page.getByTestId('fridge-save').click();
+    await page.getByTestId('fridge-bg-skip').click(); // the Bulgarian module now asks for the word (Part 7)
     await expect(page.getByTestId('fridge-flash')).toHaveText('Added Cola.');
   });
 
@@ -246,6 +251,7 @@ test.describe('offline, from the service worker cache', () => {
     await expect(page).toHaveURL(new RegExp(`#/fridge/add/${CODE}$`), { timeout: 20_000 });
     await expect(page.getByTestId('fridge-lookup')).toContainText('Offline');
     await page.getByTestId('fridge-save').click();
+    await page.getByTestId('fridge-bg-skip').click(); // the Bulgarian module now asks for the word (Part 7)
     await expect(page.getByTestId('fridge-pending')).toContainText('1 scanned item still to look up');
     // Stays offline to the end, so nothing tries Open Food Facts.
   });
