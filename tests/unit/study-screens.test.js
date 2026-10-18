@@ -135,6 +135,38 @@ describe('flashcards', () => {
   });
 });
 
+describe('course hooks on the engine screens (Part 7)', () => {
+  it('config.tabs replaces the sub-tabs; the default stays the five engine tabs', async () => {
+    const plain = mountModule(createStudyModule({ id: 'sample', name: 'Sample', icon: '📚', content }), 'cards', defaultProgress());
+    await plain.done;
+    expect([...plain.root.querySelectorAll('.subtab')].map((a) => a.textContent)).toEqual(['Home', 'Lessons', 'Cards', 'Mocks', 'Feedback']);
+    const own = mountModule(createStudyModule({ id: 'sample', name: 'Sample', icon: '📚', content, tabs: [['', 'Home'], ['cards', 'Cards']] }), 'cards', defaultProgress());
+    await own.done;
+    expect([...own.root.querySelectorAll('.subtab')].map((a) => a.getAttribute('href'))).toEqual(['#/sample', '#/sample/cards']);
+  });
+
+  it('cardExtras adds to each shown face, onCardGraded changes the saved data, feedbackTitle names targets', async () => {
+    const faces = [];
+    const mod = createStudyModule({
+      id: 'sample', name: 'Sample', icon: '📚', content,
+      cardExtras: ({ face, text, lang }) => (faces.push([face, text, lang]), document.createElement('i')),
+      onCardGraded: (d, info) => ({ ...d, graded: info }),
+      feedbackTitle: (f) => (f.targetKind === 'letter' ? `Letter ${f.targetId}` : null),
+    });
+    const { root, done, saved } = mountModule(mod, 'cards', defaultProgress());
+    await done;
+    expect(faces).toEqual([['front', 'Здравей', 'bg']]);
+    root.querySelector('[data-testid="card-show"]').click();
+    expect(faces.slice(-2)).toEqual([['front', 'Здравей', 'bg'], ['back', 'Hello', 'en']]);
+    root.querySelector('[data-testid="grade-good"]').click();
+    await flush();
+    expect(saved[0].graded).toMatchObject({ key: 'c-hello', grade: 'good' });
+    const fb = mountModule(mod, 'feedback', { ...defaultProgress(), feedback: [{ id: 'f1', targetId: 'sht', targetKind: 'letter', text: 'x', at: '2026-10-18T08:00:00Z', resolved: false }] });
+    await fb.done;
+    expect(fb.root.querySelector('[data-testid="feedback-item"] strong').textContent).toBe('Letter sht');
+  });
+});
+
 describe('Ask Claude', () => {
   const lesson = course.lessons[0];
   const q = course.questions.find((x) => x.id === 'q-1-1-b');

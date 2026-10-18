@@ -2,7 +2,8 @@
 
 Studying in TheHub needs no AI. Every week or two, Martin runs **one Claude Code session** that turns his feedback
 notes and wrong answers into better lessons and questions, and ships them as a normal update. It costs nothing
-beyond his Claude subscription. This file is the procedure and the prompt.
+beyond his Claude subscription. This file is the procedure and the prompt. It covers both courses: ISTQB (written for it
+first, below) and Bulgarian ("The Bulgarian course", further down).
 
 Also used for the remaining **Part 6 content runs** (Chapter 3, Chapter 4, Chapters 5–6, then Chapters 1–2
 questions only): the same prompt, with the run named in the first line (see "Content runs" below).
@@ -59,6 +60,28 @@ Each run writes one part of the course, then follows steps 6–8 above:
 All four runs are done (2026-10-18): the bank covers every objective, so a full mock has its 40 questions with the
 official weighting and counts for the readiness gate. From now on, content changes come from the content loop above.
 
+## The Bulgarian course
+
+The same loop runs for Bulgarian (`modules.bulgarian.data` in `backup.json`), with
+`docs/bulgarian-content-guide.md` as the house style instead of the ISTQB guide:
+
+- **Feedback** targets: `letter-<id>` (a letter of `content/bulgarian/alphabet.json`, `targetKind: "letter"`),
+  `word-<id>` (a reading word of `reading.json`, `targetKind: "word"`), or a card id (`home-<n>` = a word from
+  Martin's home, which lives in his data, not in the repo: answer such notes in the report, do not edit his data;
+  once the book is in, `ch<N>-…` = a course card). Handled ids go in `content/bulgarian/handled-feedback.json`.
+- **Mistakes**: there are no question `attempts` before the book. Look at `alphabet` (letters whose `wrong` count is
+  high or whose `streak` keeps falling back to 0, per direction `toSound` / `toLetter`), `reading` (words read
+  wrong), and `cardState` (sides with `lapses` ≥ 2). Fix the letter's explanation (`approx`, `russian`) or add a
+  reading word that practises the confused letter; once lessons exist, write new questions as for ISTQB.
+- **Content runs** (the book, Part 7 proper): one chapter per run, following `docs/bulgarian-content-guide.md`
+  ("The book run"); Martin checks chapter 1 before chapter 2 is written.
+
+| Run | Writes | Then |
+|---|---|---|
+| Before the book (done 2026-10-18) | `alphabet.json` (30 letters), `reading.json` (42 words), the empty manifest | the book run |
+| Bulgarian Ch1 (waits for the book, Q-4) | the course map in `index.json` `chapters`; `lessons-ch1.json`, `cards-ch1.json`, `questions-ch1.json`; the lesson UI | **stop**: Martin checks chapter 1 |
+| Bulgarian Ch2… | one chapter per run, in book order | as above |
+
 ## The prompt (paste into Claude Code, started in the TheHub folder)
 
 ```text
@@ -66,6 +89,7 @@ Run the TheHub content loop. Read CLAUDE.md, docs/content-loop.md (this procedur
 docs/istqb-content-guide.md (the house style) first, then follow the procedure step by step.
 
 Run: content loop  [or: Part 6 content run "Ch3" | "Ch4" | "Ch5–6" | "Ch1–2 questions"]
+Course: ISTQB  [or: Bulgarian (house style docs/bulgarian-content-guide.md; run "content loop" or "Bulgarian Ch<N>")]
 
 Rules: the backup repo MartinLNoel/thehub-backup goes into private/ only and is never committed; nothing
 personal (my answers, notes, scores) goes into tracked files or commit messages. Write all content in your own

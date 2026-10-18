@@ -2,6 +2,56 @@
 
 Dated entries, newest first.
 
+## 2026-10-18 — Part 7 before the book: the Bulgarian module (version 0.8.1)
+
+Built autonomously while Martin was away, on branch `part-7/bulgarian-prebook`, merged into local `main` (not
+pushed). Only what does not depend on the course book (Q-4); nothing pretends to follow it. Plan:
+`docs/plans/part-7-bulgarian.md` ("Built before the book").
+
+- **Version 0.8.1, not 0.7.0.** 0.7.0 was kept for Part 7, but the Fridge shipped as 0.8.0 first; going back to
+  0.7.x would look like a downgrade, and the service worker's cache name (`thehub-<version>`) must change with
+  every update, so the phone sees it. 0.8.1 does both (Q-6).
+- **Module** `src/modules/bulgarian/` (nav tab 🇧🇬 Bulgarian, between ISTQB and Fridge), made with
+  `createStudyModule`: its own home (words learned, streak, cards due, alphabet progress, the "From my home" deck
+  with 🔊 and Remove, and a **"Lessons start when your course book is added"** panel instead of lessons), sub-tabs
+  Home · Alphabet · Cards · Feedback, the engine's two-way cards (each direction scheduled separately), Ask Claude
+  and Feedback. Today card: cards due, alphabet progress, streak; one tap to review cards or practise letters.
+  Schema version 1 (study progress plus `alphabet`, `reading`, `activity`, `homeDeck`; Part 0).
+- **Cyrillic alphabet trainer** (`#/bulgarian/alphabet`): all 30 letters, upper and lower case, each with its sound,
+  an English approximation and an example word, in our own words; notes where Bulgarian differs from Russian (Е is
+  never "ye", unstressed О stays "o", Щ is "sht", Ъ is a vowel, Ь only before О; no Ё, Ы, Э). Practice rounds of
+  10 (`#/bulgarian/practice/to-sound | to-letter | reading`): letter → sound, sound → letter, and reading practice
+  on 42 short everyday words (greetings, courtesy, numbers 1–10, food and drink, people, places), with
+  similar-length distractors. Every answer is saved at once; a letter is "learned" after 2 right in a row both
+  ways (Q-23).
+- **"From my home" deck**: the module's `accept(item, data)` turns the Fridge's
+  `hub.offer('bulgarian', { bg, en, topic })` into a two-way bg ↔ en card (`home-<n>`), and returns `null` for a
+  word already there (case, spacing and Unicode form ignored), already a course card, or without Cyrillic or an
+  English side. The Fridge's "Learn its Bulgarian name" prompt is therefore live.
+- **Pronunciation**: `src/core/speech.js` (new): a 🔊 button through the browser's `speechSynthesis`, on the
+  Bulgarian side of cards, letters' example words and reading words, shown **only when a `bg-BG` voice exists at
+  runtime** (re-checked when Chrome's voice list arrives late), never with another language's voice. Settings →
+  **Diagnostics** gains "Speech voice bg-BG: available / not available" (Q-22).
+- **Content** `content/bulgarian/`: `index.json` (manifest ready for book chapters: empty `chapters`, `lessons`,
+  `questions`, `cards`; names the trainer files), `alphabet.json`, `reading.json`, `handled-feedback.json`, all in
+  `PRECACHE`. `docs/bulgarian-content-guide.md` (new) holds the rules and the book run; `docs/content-loop.md`
+  covers the Bulgarian course.
+- **Engine (small, optional hooks, documented in `src/core/study/README.md`):** `tabs` (a course's own sub-tabs),
+  `cardExtras` (a node under a flashcard face), `onCardGraded` (change the saved data after a grade: the
+  streak), `feedbackTitle` (Feedback list titles for module targets); `tabs`, `store`, `feedbackBox`, `askButtons`
+  exported for module screens. ISTQB and the sample course are unchanged (default tabs tested).
+- **Tests:** unit `tests/unit/bulgarian.test.js` (the 30 letters by code point and in order, Latin look-alikes
+  rejected, every Latin form equal to what its letters spell, unique sounds, Russian-trap notes, numbers 1–10,
+  manifest and `PRECACHE`; Cyrillic rendered unchanged, through export → import (same checksum, byte-identical),
+  a tampered letter failing the checksum, and the GitHub backup's base64 upload and read-back; two-way cards
+  scheduled per direction; `accept` adding and declining duplicates, also through `hub.offer`; the 🔊 hidden without
+  a `bg-BG` voice and shown with a mocked one, also on the cards screen; streak, rounds, Today card, Diagnostics
+  line), and engine hook tests in `study-screens.test.js`. E2E `tests/e2e/bulgarian.spec.js`: an alphabet round
+  (one mistake, 9/10, saved, streak on Today), the Fridge → Bulgarian flow with the duplicate declined, a two-way
+  card session with the mocked voice, Diagnostics with and without a voice, phone width and 48 px targets. The
+  Fridge e2e tests now tap "Not now" on the Bulgarian prompt that appears after adding an item.
+- New questions: Q-22 (a Bulgarian voice on the phone), Q-23 (trainer defaults). Q-4 and Q-6 have notes.
+
 ## 2026-10-18 — Part 8: the Fridge module (version 0.8.0)
 
 Built autonomously while Martin was away, on branch `part-8/fridge`, merged into local `main` (not pushed). Version

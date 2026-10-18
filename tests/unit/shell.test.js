@@ -77,8 +77,8 @@ describe('index.html', () => {
 });
 
 describe('shipped modules', () => {
-  it('ships the Gym, ISTQB and Fridge modules, and never the demo or sample module', () => {
-    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb', 'fridge']);
+  it('ships the Gym, ISTQB, Bulgarian and Fridge modules, and never the demo or sample module', () => {
+    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb', 'bulgarian', 'fridge']);
     expect(modules.map((m) => m.id)).not.toContain('sample');
     expect(modules.map((m) => m.id)).not.toContain('demo');
   });

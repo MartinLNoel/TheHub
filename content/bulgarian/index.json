@@ -1,0 +1,9 @@
+{
+  "about": "The Bulgarian course. lessons, questions and cards list the course files per kind, in book order; chapters lists the book chapters written so far. All empty until the course book is added (docs/QUESTIONS.md Q-4, docs/bulgarian-content-guide.md). alphabet and reading are the book-independent alphabet trainer files.",
+  "chapters": [],
+  "lessons": [],
+  "questions": [],
+  "cards": [],
+  "alphabet": "alphabet.json",
+  "reading": "reading.json"
+}

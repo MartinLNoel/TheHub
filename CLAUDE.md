@@ -28,7 +28,8 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | What changed | `docs/CHANGELOG.md` |
 | Open questions for Martin and every placeholder | `docs/QUESTIONS.md` |
 | Writing ISTQB lessons, questions or cards (house style, copyright, file layout) | `docs/istqb-content-guide.md` |
-| Improving content from Martin's feedback and wrong answers; the Part 6 content runs | `docs/content-loop.md` |
+| Writing Bulgarian content (alphabet, reading words, the book run, copyright) | `docs/bulgarian-content-guide.md` |
+| Improving content from Martin's feedback and wrong answers; the Part 6 and Bulgarian content runs | `docs/content-loop.md` |
 | Longer-term ideas | `docs/ROADMAP.md` |
 
 ## Plan status
@@ -39,7 +40,10 @@ phone test are Martin's). Part 6a (ISTQB module, Notion progress import, content
 content loop) built and merged 2026-10-17; Ch3 and Ch6 content written 2026-10-17, Ch4 2026-10-18 (version 0.6.2); the Q-18 local-date fix 2026-10-18 (0.6.3); Ch5 2026-10-18 (0.6.4); the Ch1–2 questions 2026-10-18 (0.6.5): **Part 6 content
 complete** (Part 6's phone import and Q-1, Q-15, Q-16 are Martin's). Part 8 (Fridge, with the core's `hub.offer`
 and a vendored fallback barcode scanner) built and merged 2026-10-18 (0.8.0); scanning on the phone and Q-19 to
-Q-21 are Martin's. Next: Bulgarian (Part 7), gated on the course book.
+Q-21 are Martin's. Part 7's book-free half (Bulgarian module: alphabet trainer, reading practice, "From my
+home" deck from the Fridge, 🔊 with a bg-BG voice only) built and merged 2026-10-18 (0.8.1); Q-22, Q-23 are
+Martin's. **That was the last part buildable without Martin**: what waits on him, in priority order, is at the top of
+`docs/BACKLOG.md`. Next: Part 7's book run, gated on the course book (Q-4).
 Details: `docs/BACKLOG.md`.
 
 ## Commands

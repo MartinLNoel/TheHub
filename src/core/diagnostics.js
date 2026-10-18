@@ -1,6 +1,8 @@
 // Settings → Diagnostics: what this phone's browser can do, for checks Claude cannot make from the PC
-// (Q-19: which barcode formats the phone's own BarcodeDetector reads).
+// (Q-19: which barcode formats the phone's own BarcodeDetector reads; Q-22: whether it has a Bulgarian
+// voice for the 🔊 buttons).
 import { h } from './dom.js';
+import { voiceLine } from './speech.js';
 
 /** One line on the browser's own BarcodeDetector. Never throws. */
 export async function barcodeSupportLine(win = globalThis) {
@@ -24,12 +26,15 @@ export function cameraLine(win = globalThis) {
 export function diagnosticsCard(win = globalThis) {
   const barcode = h('p', { 'data-testid': 'diag-barcode' }, 'BarcodeDetector: checking…');
   barcodeSupportLine(win).then((line) => (barcode.textContent = line));
+  const voice = h('p', { 'data-testid': 'diag-voice-bg' }, 'Speech voice bg-BG: checking…');
+  voiceLine('bg-BG', win.speechSynthesis).then((line) => (voice.textContent = line));
   return h(
     'section',
     { class: 'card', 'data-testid': 'diagnostics' },
     h('h2', {}, 'Diagnostics'),
     barcode,
     h('p', { 'data-testid': 'diag-camera' }, cameraLine(win)),
+    voice,
     h('p', { class: 'muted' }, 'If Claude asks what your phone supports, copy these lines.'),
   );
 }

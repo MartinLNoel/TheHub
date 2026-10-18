@@ -31,6 +31,12 @@ export { checkCourse, loadCourse } from './content.js';
  *   adjustSession(session, course, data)   may change a newly built session before it starts
  *                                  (ISTQB's 10-day warm-up); returns the session to start
  *   homeCards(ctx, course, data)   extra cards (DOM nodes) shown at the top of the course home
+ *   tabs                           [[route, label]] the course's sub-tabs (default Home, Lessons, Cards,
+ *                                  Mocks, Feedback); Bulgarian has no lessons or mocks before its book
+ *   cardExtras({ card, reverse, face, text, lang })   a node under a flashcard face's text, or null
+ *                                  (Bulgarian: the 🔊 button on its Bulgarian sides)
+ *   onCardGraded(data, { key, grade, today })   returns the data to save after a card grade (a streak)
+ *   feedbackTitle(feedback)        a title for the Feedback list, for targets the engine does not know
  */
 export function createStudyModule(config) {
   let loading = null;

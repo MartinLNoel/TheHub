@@ -36,7 +36,7 @@ test('Today shows the demo module card and the backup placeholder', async ({ pag
 test('the bottom nav and the header move between screens', async ({ page }) => {
   await open(page);
   const tabs = page.locator('#nav .tab');
-  await expect(tabs).toHaveText([/Today/, /Gym/, /ISTQB/, /Fridge/, /Demo/, /Sample/]);
+  await expect(tabs).toHaveText([/Today/, /Gym/, /ISTQB/, /Bulgarian/, /Fridge/, /Demo/, /Sample/]);
 
   await page.locator('#nav [data-section="demo"]').click();
   await expect(page).toHaveURL(/#\/demo$/);
