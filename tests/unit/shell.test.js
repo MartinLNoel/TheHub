@@ -77,9 +77,31 @@ describe('index.html', () => {
 });
 
 describe('shipped modules', () => {
-  it('ships the Gym and ISTQB modules, and never the demo or sample module', () => {
-    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb']);
+  it('ships the Gym, ISTQB and Fridge modules, and never the demo or sample module', () => {
+    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb', 'fridge']);
     expect(modules.map((m) => m.id)).not.toContain('sample');
     expect(modules.map((m) => m.id)).not.toContain('demo');
+  });
+});
+
+describe('vendored files', () => {
+  it('match the SHA-256 recorded in their README (unchanged from the npm packages)', async () => {
+    const { createHash } = await import('node:crypto');
+    const dir = 'src/vendor/barcode-detector';
+    const readme = read(`${dir}/README.md`);
+    const rows = [...readme.matchAll(/^\| `([^`]+)` \|.*\| `([0-9a-f]{64})`/gm)];
+    expect(rows.map((r) => r[1]).sort()).toEqual(['ponyfill.js', 'zxing-exported.js', 'zxing_reader.wasm']);
+    for (const [, file, sha] of rows) {
+      expect(createHash('sha256').update(readFileSync(join(ROOT, dir, file))).digest('hex'), file).toBe(sha);
+    }
+    for (const licence of ['LICENSE-barcode-detector.txt', 'LICENSE-zxing-wasm.txt', 'LICENSE-zxing-cpp-Apache-2.0.txt']) {
+      expect(existsSync(join(ROOT, dir, licence)), licence).toBe(true);
+    }
+  });
+
+  it('never load anything from a CDN at run time (the scanner points the .wasm at the local copy)', () => {
+    const scanner = read('src/modules/fridge/scanner.js');
+    expect(scanner).toContain('locateFile');
+    expect(scanner).toContain("new URL('../../vendor/barcode-detector/', import.meta.url)");
   });
 });

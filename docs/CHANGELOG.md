@@ -2,6 +2,51 @@
 
 Dated entries, newest first.
 
+## 2026-10-18 — Part 8: the Fridge module (version 0.8.0)
+
+Built autonomously while Martin was away, on branch `part-8/fridge`, merged into local `main` (not pushed). Version
+0.8.0 (0.7 is left for Part 7, which waits for the book; Q-6). Plan: `docs/plans/part-8-fridge.md`; the superseded
+MiniFridge plan gave the feature list and the Open Food Facts notes (its folder was not touched).
+
+- **Module** `src/modules/fridge/` (nav tab 🧊 Fridge): items with name, brand, place (fridge / freezer / pantry),
+  quantity, expiry date and added date, both local calendar dates through `src/core/dates.js`; lists sorted by
+  expiry (no date last) with a place filter; expired items outlined red, today to +2 days amber; an item screen to
+  edit it or mark it **used** or **thrown away** (the waste count; "added by mistake" counts neither). Text only:
+  no photos. Schema version 1, `validate` used by backups.
+- **Scan** (`#/fridge/scan`, the "Scan item" shortcut, so it no longer shows "coming soon"): the camera is asked for
+  only when this screen opens; a refusal gets a clear message, and typing the barcode or adding by hand always
+  works. Reader: the phone's `BarcodeDetector` when it reads EAN-13; otherwise the vendored **barcode-detector
+  3.2.2** ponyfill with **zxing-wasm 3.1.3** (MIT; the zxing-cpp code in the `.wasm` is Apache 2.0), copied
+  unchanged into `src/vendor/barcode-detector/` with its licences and SHA-256 sums, loaded on demand, its `.wasm`
+  pointed at the local copy and listed in `PRECACHE`, so it works offline. EAN-13, EAN-8, UPC-A and UPC-E (stored
+  as UPC-A), check digits verified.
+- **Open Food Facts** (`off.js`): `GET /api/v2/product/<code>` with only the needed fields and
+  `app_name=TheHub&app_version=…` (a browser cannot set `User-Agent`; Q-20); found → name and brand prefilled (and
+  cached by barcode, so a rescan works offline); not found → Martin types the name; error or offline → the item is
+  saved with its barcode (a stand-in name if none was typed) and **queued**; the Fridge home looks queued codes up
+  when online (or "Look up now") and fills in stand-in names and empty brands. The attribution is shown.
+- **Today card:** what expires today or in the next 2 days, plus anything already expired (up to 4 lines), and the
+  number of scans still to look up; "Open Fridge" or "Scan item".
+- **Core: `hub.offer`** (`src/core/hub.js`, new): `hub.offer(target, item)` and `hub.accepts(target)`, passed to
+  every screen as `hub`; a module may declare `accept(item, data)` (registry-checked). Ignored when no module
+  accepts, which is the case until Part 7: the Fridge then shows no Bulgarian prompt. When one accepts, after adding
+  an item the Fridge asks for the Bulgarian word (prefilled from OFF's Bulgarian name) and offers
+  `{ bg, en, topic: 'food' }`. Documented in Part 0.
+- **Core: Settings → Diagnostics** (`src/core/diagnostics.js`): the phone's `BarcodeDetector.getSupportedFormats()`
+  and camera availability, for Q-19.
+- `src/core/dates.js` gains `isCalendarDate`. `scripts/serve.mjs` serves `.wasm` as `application/wasm`.
+  `.gitattributes` keeps `src/vendor/` byte-for-byte.
+- **Tests:** unit `tests/unit/fridge.test.js` and `fridge-screens.test.js` (barcodes; expiry sorting and the 2-day
+  window, also at 00:30 local; Open Food Facts found / not found / error / timeout / offline with a mocked `fetch`;
+  the offline queue resolved later; Today card; `validate`; `hub.offer` in the core and called by the Fridge with
+  the right item; the scanner loop with a faked camera and detector; camera refusal; diagnostics) and a check of
+  the vendored files' SHA-256. E2E `tests/e2e/fridge.spec.js`: manual entry at 00:30 Amsterdam time showing on
+  Today; a scan with a faked camera and `BarcodeDetector` (OFF mocked, camera released, cached rescan); the **real
+  vendored zxing reader decoding an EAN-13 drawn into a fake camera stream**, then the offline queue resolved; a
+  refused camera; touch targets; the scanner working offline from the service-worker cache. No test reaches Open
+  Food Facts (every OFF request is mocked or blocked). Unit and e2e suites pass in local time and with `TZ=UTC`.
+- New questions: Q-19 (test scanning on the phone), Q-20 (OFF identification and limits), Q-21 (Fridge defaults).
+
 ## 2026-10-18 — Part 6 content run: Chapter 1–2 questions (version 0.6.5)
 
 Written autonomously while Martin was away, on branch `content/istqb-ch1-ch2`, merged into local `main` (not

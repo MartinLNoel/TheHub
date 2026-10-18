@@ -2,7 +2,8 @@
 // for src/modules.js with this file, so the import below resolves from /TheHub/src/.
 import gym from './modules/gym/index.js';
 import istqb from './modules/istqb/index.js';
+import fridge from './modules/fridge/index.js';
 import demo from '../tests/fixtures/demo-module.js';
 import sample from '../tests/fixtures/sample-study-module.js';
 
-export default [gym, istqb, demo, sample];
+export default [gym, istqb, fridge, demo, sample];

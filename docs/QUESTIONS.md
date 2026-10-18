@@ -110,6 +110,31 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   Chapter 1–2 questions exist); readiness levels: *Ready* = last two complete full mocks ≥ 80 %, *Approaching* =
   all chapters banked or the latest full mock passed, *Building* = any study. OK? · How mocks and the gate feel. ·
   `src/modules/istqb/rules.js` · open
+- **Q-19** · **Barcode scanning on your phone: please test it.** Built while you were away; no real camera or
+  phone could be tried. After the first push: (1) open TheHub → **Settings → Diagnostics** and send Claude the
+  "BarcodeDetector …" line (it lists what `BarcodeDetector.getSupportedFormats()` reports; Chrome on Android
+  normally includes `ean_13`); (2) **Fridge → 📷 Scan item** (or long-press the icon → Scan item): allow the camera,
+  scan five real products, and note for each whether it read, how fast, and whether the name was right. The scan
+  screen says which reader it used ("the phone's own" or "TheHub's built-in reader (zxing)"). · If the phone's own
+  reader is missing, the fallback (barcode-detector 3.2.2 with zxing-wasm 3.1.3, MIT; zxing-cpp Apache 2.0,
+  vendored in `src/vendor/barcode-detector/`, about 1.1 MB, cached for offline use) takes over; it was proven only
+  in desktop Chromium against a drawn EAN-13. · `src/modules/fridge/scanner.js`, `src/core/diagnostics.js` · open
+- **Q-20** · **Open Food Facts from a web app.** OFF asks apps to identify themselves with a `User-Agent` such as
+  "AppName/Version (contact)". A browser cannot set that header (and a custom header would make Chrome send a CORS
+  preflight that OFF may refuse), so TheHub sends `app_name=TheHub&app_version=<version>` in the query instead,
+  with no contact address (your e-mail would then sit in a public repo and in every request). Unverified: that OFF
+  accepts this from a browser (CORS on `/api/v2/product/`), and its read limit (about 100 product reads a minute,
+  from memory; TheHub makes one per scan and at most 10 per "Look up now"). No test has called OFF: all are mocked.
+  If the first real scans say "Offline (or Open Food Facts did not answer)" while you are online, tell Claude. ·
+  Names prefilled or not. · `src/modules/fridge/off.js` (`productUrl`) · open
+- **Q-21** · Fridge defaults chosen while you were away: three places (**Fridge, Freezer, Pantry**; MiniFridge also
+  had shelves and a counter); "expiring soon" on Today = **today and the next 2 days, plus anything already
+  expired**; the waste count is two totals (**used up / thrown away**; "Remove (added by mistake)" counts neither);
+  expiry is optional (rice, salt) and has quick buttons (Today, +3 days, +1 week, +1 month); dates show as
+  DD-MM-YYYY; the name Open Food Facts gives is the product's main-language name (often Dutch), with its English name
+  offered as the English side of a Bulgarian card; Fridge words reach Bulgarian with `topic: 'food'`. OK? · How
+  the Fridge and its Today card behave. · `src/modules/fridge/data.js` (`LOCATIONS`, `SOON_DAYS`, `OFFER_TOPIC`),
+  `src/modules/fridge/screens.js` · open
 - **Q-18** · **Bug found (not fixed: the Ch4 content run may only edit content, tests and docs).** A study session
   is saved with its **UTC** date (`finishSession`: `new Date(now).toISOString().slice(0, 10)`), but the ISTQB home
   compares it with the **local** date (`daysSinceLastSession` uses `localISO`). Between midnight and 01:00 (02:00

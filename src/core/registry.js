@@ -42,6 +42,9 @@ export function checkModule(mod) {
   if (mod.todayCard !== undefined && mod.todayCard !== null && typeof mod.todayCard !== 'function') {
     problems.push('todayCard must be a function (or left out)');
   }
+  if (mod.accept !== undefined && typeof mod.accept !== 'function') {
+    problems.push('accept must be a function (or left out)');
+  }
   if (mod.importers !== undefined) {
     if (!Array.isArray(mod.importers)) problems.push('importers must be a list (or left out)');
     else {

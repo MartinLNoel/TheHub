@@ -2,6 +2,7 @@
 import { VERSION } from './version.js';
 import modules from './modules.js';
 import { createRegistry } from './core/registry.js';
+import { createHub } from './core/hub.js';
 import { NewerDataError, hooks, openStorage, requestPersistence } from './core/db.js';
 import { createBackupService } from './core/backup.js';
 import { renderRestore } from './core/backup-screens.js';
@@ -20,6 +21,7 @@ const registry = createRegistry(modules);
 const state = {}; // { [moduleId]: { data, readOnly, error } }
 let storage;
 let backup;
+let hub;
 let router;
 let current = { section: 'today', screen: '' };
 
@@ -121,6 +123,7 @@ async function route({ section, screen: sub }) {
     root: screen,
     params: found.params,
     settings,
+    hub,
     data: entry.data,
     readOnly: entry.readOnly,
     save: async (data) => {
@@ -144,6 +147,7 @@ async function boot() {
     return;
   }
   backup = createBackupService({ storage, registry, appVersion: VERSION });
+  hub = createHub({ registry, state, save: (mod, data) => storage.save(mod, data) });
   // Every migration waits for a verified backup; if it fails, nothing is migrated.
   hooks.beforeMigrate = (info) => backup.beforeMigrate(info);
   const settings = await loadSettings(storage);

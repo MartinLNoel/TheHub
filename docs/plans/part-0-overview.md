@@ -47,9 +47,11 @@ TheHub/
 │   ├── version.js           the app version (bump with every app change; sw.js repeats it)
 │   ├── modules.js           the list of shipped modules, in nav order
 │   ├── core/
-│   │   ├── dates.js         local calendar dates (YYYY-MM-DD), addDays, daysBetween (not the Gym yet, Q-11)
+│   │   ├── dates.js         local calendar dates (YYYY-MM-DD), addDays, daysBetween, isCalendarDate (not the Gym yet, Q-11)
 │   │   ├── db.js            IndexedDB wrapper + migrations runner
 │   │   ├── dom.js           tiny h()/mount() helper (text is always text, never HTML)
+│   │   ├── hub.js           hub.offer(target, item) / hub.accepts(target): cross-module offers (Part 8)
+│   │   ├── diagnostics.js   Settings → Diagnostics: the phone's BarcodeDetector formats, camera (Part 8)
 │   │   ├── registry.js      module registry
 │   │   ├── router.js        hash routes: #/today, #/gym/log, ...
 │   │   ├── screens.js       "coming soon" and error screens
@@ -72,7 +74,11 @@ TheHub/
 │       │                    (official weighting, chapters X/6, readiness gate, 10-day warm-up), import.js
 │       │                    ("Import ISTQB progress"), screens.js (home summary, wrong-answer review)
 │       ├── bulgarian/       Part 7
-│       └── fridge/          Part 8
+│       └── fridge/          Part 8: index.js (module, Today card), data.js (store, validate, expiry rules,
+│                            offline lookup queue), barcode.js (EAN/UPC checks), off.js (Open Food Facts),
+│                            scanner.js (camera + BarcodeDetector or the vendored fallback), screens.js
+│   └── vendor/              third-party files copied unchanged (no build step), each folder with a README
+│                            (version, SHA-256, licences): barcode-detector/ (Part 8, zxing-wasm scanner)
 ├── content/
 │   ├── istqb/               index.json (manifest) · objectives.json (64 LOs) · lessons-ch3..6.json ·
 │   │                        questions-ch1..6.json · cards.json · handled-feedback.json (docs/istqb-content-guide.md)
@@ -112,6 +118,7 @@ export default {
   routes: { '': renderHome, 'log': renderLog, 'lesson/*': renderLesson },
                                 // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
   todayCard: (data) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
+  accept: (item, data) => newData | null, // optional (Part 8): take an item another module offers (below)
   importers: [                  // optional (Part 4): bring data in from another app, shown in Settings
     { id, title, description, prepare: (text, currentData) => ({ ok, problems, summary, data, nothingNew }),
       findLocal: () => text | null, localLabel }   // findLocal/localLabel optional
@@ -124,16 +131,27 @@ An importer's `prepare` maps and merges but never writes. The core (`src/core/mo
 result with the module's `validate`, then saves it as the module's data. Gym's routes: `''` and `log` (the workout
 to log, the "Log workout" shortcut), `history`, `fighter`, `protein`, `checkin`.
 
-Each route function is called as `render({ root, data, readOnly, save, navigate, settings, params })`: `root` is the `<main>` element
+Each route function is called as `render({ root, data, readOnly, save, navigate, settings, params, hub })`: `root` is the `<main>` element
 to fill, `data` the module's current data, `save(newData)` stores it (and rejects with `NewerDataError` when the
 stored data is newer than the code), `navigate('#/gym/log')` changes screen, `settings` is the core settings (read-only copy: theme, `askClaude`),
 `params` is what a `'x/*'` route matched (`'3.1'` for `#/istqb/lesson/3.1`), else `''` (Part 5; exact keys win,
-`src/core/router.js` `resolveRoute`). An action `route` may be `'gym/log'`
+`src/core/router.js` `resolveRoute`), `hub` is the cross-module offer API below (Part 8). An action `route` may be `'gym/log'`
 or `'#/gym/log'`. The registry (`src/core/registry.js`) rejects a module that breaks this contract.
 
-The core never reaches into a module's data except through `validate`, `migrations` and `defaultData`. Modules never
-touch another module's store; cross-module features (Fridge → Bulgarian cards) go through a small core API,
-`hub.offer(targetModuleId, item)`, which the target module accepts or ignores.
+The core never reaches into a module's data except through `validate`, `migrations`, `defaultData` and `accept`.
+Modules never touch another module's store; cross-module features (Fridge → Bulgarian cards) go through a small
+core API, `hub.offer(targetModuleId, item)` (`src/core/hub.js`, built in Part 8), which the target module accepts
+or ignores:
+- `hub.accepts(id)`: true when a module with that id is installed, has `accept`, and its data is writable. The
+  Fridge asks this first and shows its "Learn the Bulgarian name" prompt only then.
+- `hub.offer(id, item)` resolves (never throws) to `{ accepted: true }` or `{ accepted: false, reason }` with reason
+  `no-module` (not installed: the Fridge before Part 7), `not-accepting`, `declined` (`accept` returned `null`,
+  e.g. a duplicate), `invalid` (the result failed the target's `validate`) or `error`.
+- The target's `accept(item, data)` is pure: it gets copies and returns its new data (or `null`); the core checks it
+  with `validate`, saves it and updates the live state.
+- Items offered so far: the Fridge offers `{ bg, en, topic: 'food' }` to `bulgarian` (`bg` typed or confirmed by
+  Martin, prefilled from Open Food Facts' Bulgarian name when there is one; `en` = the English product name or the
+  item's name). Part 7's `accept` adds it to the "From my home" deck and returns `null` for a word already there.
 
 ---
 
@@ -217,6 +235,19 @@ Progress (per module, in IndexedDB and backups; schema version 1):
 Core settings gain `askClaude`: `"share"` (default) | `"link"` | `"copy"` (Settings → Ask Claude).
 
 ---
+
+## Fridge data (Part 8)
+
+Schema version 1, text only (no photos); the full comment is in `src/modules/fridge/data.js`:
+- `items`: `{ id, name, brand, location: "fridge" | "freezer" | "pantry", quantity (text), expiry ("YYYY-MM-DD" local
+  calendar date, or null), added (local date), barcode (string or null), lookup ("pending" or null), nameAuto }`.
+  `lookup: "pending"` is the offline queue: a barcode scanned without network is saved (with the stand-in name
+  "Barcode <code>" if Martin typed none) and looked up when the Fridge opens online, or with "Look up now".
+- `waste`: `{ used, thrown }` counts. `products`: Open Food Facts answers by barcode (`{ name, brand, nameEn,
+  nameBg, fetchedAt }`), so a product scanned before is filled in offline.
+- Lookups: `GET https://world.openfoodfacts.org/api/v2/product/<code>?fields=…&app_name=TheHub&app_version=…`
+  (a browser cannot set `User-Agent`; Q-20). Scanning: the phone's `BarcodeDetector` when it reads EAN-13, else the
+  vendored `barcode-detector` ponyfill (zxing-wasm) from `src/vendor/`, never a CDN.
 
 ## Tests and deploy
 
