@@ -22,6 +22,8 @@ item unblocks most of the rest.
 9. Outside TheHub (not done: these builds may not touch other folders): the project hub has **no TheHub entry**
    yet, and its Bulgarian and MiniFridge entries should say they now live in TheHub
    (`C:\Users\marti\Documents\hub\update-project-entry.md`); MiniFridge's spec needs a "superseded" note.
+   *Update 2026-10-18: the hub's TheHub, Bulgarian and MiniFridge entries are now up to date; only MiniFridge's own
+   "superseded" note remains (Part 8 USER ACTIONS).*
 
 ## Where things stand (2026-10-18, after Part 7 before the book)
 
