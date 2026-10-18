@@ -42,7 +42,8 @@ content. Create branch `part-7/bulgarian` from `main`.
 2. Pronunciation: try the browser's speech synthesis for Bulgarian (`speechSynthesis`, voice `bg-BG`) on Martin's
    phone; if a Bulgarian voice exists, add a 🔊 button on cards; if not, record that in `docs/BACKLOG.md` and skip.
 3. Accept items offered by other modules through `hub.offer('bulgarian', { bg, en, topic })` (the Fridge sends
-   food words in Part 8) into a "From my home" card deck.
+   food words in Part 8) into a "From my home" card deck. *(Part 8 built the core side: give the module an
+   `accept(item, data)` that returns the new data, or `null` for a duplicate; see Part 0, "The module contract".)*
 4. Content in `content/bulgarian/`, **in your own words, following the book's order and vocabulary**. Do not copy
    the book's texts, exercises or dialogues into the repo; vocabulary lists of single words with translations are
    fine. Have Martin check the first chapter before writing more. Commit per chapter.

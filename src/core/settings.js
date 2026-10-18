@@ -1,10 +1,11 @@
-// Settings screen (#/settings): theme, backup, export and import, and module importers.
+// Settings screen (#/settings): theme, backup, export and import, module importers and diagnostics.
 import { h, mount } from './dom.js';
 import { applyImport, countItems, downloadJSON, exportAll, readImport } from './transfer.js';
 import { assertNoSecret } from './backup.js';
 import { backupSettingsCard } from './backup-screens.js';
 import { importerCards } from './module-import.js';
 import { askClaudeSettingsCard } from './study/ask-claude.js';
+import { diagnosticsCard } from './diagnostics.js';
 
 export const THEMES = ['system', 'light', 'dark'];
 
@@ -121,6 +122,7 @@ export async function renderSettings(root, ctx) {
         status,
       ),
       importerCards(root, ctx, () => renderSettings(root, ctx)),
+      diagnosticsCard(),
       h('p', { class: 'muted' }, `TheHub version ${ctx.appVersion}`),
     ),
   );

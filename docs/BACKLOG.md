@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## Where things stand (2026-10-18, after the Ch1–2 questions run: Part 6 content complete)
+## Where things stand (2026-10-18, after Part 8: the Fridge)
 
 - **Part 1 (repos, Pages): not done.** It is manual and Martin's to do (Q-3). Nothing has been pushed anywhere.
 - **Part 2 (core shell): built and merged into local `main`.** It was built **autonomously while Martin was away**:
@@ -57,7 +57,22 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
   Chapters 1–2. Further content changes come through the content loop (`docs/content-loop.md`) from Martin's
   feedback and wrong answers. **Part 6's USER ACTIONS below are still Martin's** (import on the phone, Q-1, Q-15,
   Q-16, first commute session).
-- Next after Part 6: Part 8 (Fridge), then the book-free parts of Part 7.
+- **Part 8 (Fridge): built and merged into local `main`** (version 0.8.0, branch `part-8/fridge`), autonomously.
+  All unit and e2e tests pass locally and with `TZ=UTC`. Built: the Fridge module (items, places, expiry order,
+  used / thrown-away counts, Today card for today + 2 days), scanning (`BarcodeDetector`, else the vendored
+  barcode-detector 3.2.2 / zxing-wasm 3.1.3 fallback, offline-capable), Open Food Facts lookups with a cache and an
+  offline queue, manual entry, and the core's **`hub.offer`** (Part 0). **Scanning and Open Food Facts were never
+  tried for real:** no phone camera, and no test may call OFF (all mocked): Q-19, Q-20. The Bulgarian link is
+  wired but dormant until Part 7 ships a module with `accept`. New placeholders: Q-19, Q-20, Q-21.
+- Next: the book-free parts of Part 7 (Bulgarian), when Martin wants them; Part 7 proper waits for the book (Q-4).
+
+## Martin's USER ACTIONS still open for Part 8
+
+(After Part 1 and the first push.)
+1. Settings → **Diagnostics**: send Claude the "BarcodeDetector …" line (Q-19).
+2. Fridge → **📷 Scan item**: allow the camera, scan five real products; check names, brands and the expiry dates
+   you set; note which reader the scan screen says it used (Q-19, Q-20). Then answer Q-21.
+3. MiniFridge: add a "superseded by TheHub" note to its spec and update its hub entry (not done: outside TheHub).
 
 ## Martin's USER ACTIONS still open for Part 6
 
@@ -119,7 +134,8 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - [x] Part 5: study engine (code done; Ask Claude on the phone open, Q-13)
 - [x] Part 6a: ISTQB module, progress import, scaffolding, content loop (Martin's import on the phone open)
 - [x] Part 6 content runs: [x] Ch3 · [x] Ch6 · [x] Ch4 · [x] Ch5 · [x] Ch1–2 questions (Martin's USER ACTIONS open)
-- [ ] Part 7: Bulgarian (gated) · Part 8: Fridge
+- [x] Part 8: Fridge (code done; scanning on the phone, Q-19 to Q-21 and the MiniFridge note open)
+- [ ] Part 7: Bulgarian (gated on the book; `hub.offer` from the Fridge is ready for its `accept`)
 
 ## Known gaps and notes
 
@@ -134,7 +150,10 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 - The gainz import was tested only with a synthetic file of the same shape; the first real import is the real test
   (watch the preview counts against gainz-tracker).
 - Migrations are blocked while backups are not set up (Q-8).
-- Calendar dates: the study engine and ISTQB use the local day (`src/core/dates.js`, Q-18 fixed in 0.6.3); the Gym
+- Fridge: the fallback scanner adds about 1.1 MB (`zxing_reader.wasm`) to the first-install download (it is in
+  `PRECACHE` so scanning works offline); it is loaded into memory only when the phone has no usable
+  `BarcodeDetector`. To update it, follow `src/vendor/barcode-detector/README.md`.
+- Calendar dates: the study engine, ISTQB and the Fridge use the local day (`src/core/dates.js`, Q-18 fixed in 0.6.3); the Gym
   still uses the UTC day on purpose until Q-11 is answered.
 - Study engine: the Today card learns the next lesson's title only once the course has loaded (the first Today
   render after opening may lack that line). Course content is fetched from `content/<course>/` (network first,

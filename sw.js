@@ -1,7 +1,7 @@
 // TheHub service worker: offline cache and updates.
 // VERSION must equal src/version.js (a unit test checks it). Bumping it changes this file's bytes,
 // which is how the phone notices a new version.
-const VERSION = '0.6.5';
+const VERSION = '0.8.0';
 const CACHE = `thehub-${VERSION}`;
 
 // The app shell, cached on install. Every file under src/ (except README.md), icons/ and content/
@@ -22,7 +22,9 @@ const PRECACHE = [
   'src/core/dates.js',
   'src/core/db.js',
   'src/core/dom.js',
+  'src/core/diagnostics.js',
   'src/core/github.js',
+  'src/core/hub.js',
   'src/core/module-import.js',
   'src/core/registry.js',
   'src/core/router.js',
@@ -51,6 +53,18 @@ const PRECACHE = [
   'src/modules/istqb/index.js',
   'src/modules/istqb/rules.js',
   'src/modules/istqb/screens.js',
+  'src/modules/fridge/barcode.js',
+  'src/modules/fridge/data.js',
+  'src/modules/fridge/index.js',
+  'src/modules/fridge/off.js',
+  'src/modules/fridge/scanner.js',
+  'src/modules/fridge/screens.js',
+  'src/vendor/barcode-detector/ponyfill.js',
+  'src/vendor/barcode-detector/zxing-exported.js',
+  'src/vendor/barcode-detector/zxing_reader.wasm',
+  'src/vendor/barcode-detector/LICENSE-barcode-detector.txt',
+  'src/vendor/barcode-detector/LICENSE-zxing-wasm.txt',
+  'src/vendor/barcode-detector/LICENSE-zxing-cpp-Apache-2.0.txt',
   'content/istqb/index.json',
   'content/istqb/objectives.json',
   'content/istqb/handled-feedback.json',
