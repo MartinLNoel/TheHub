@@ -55,9 +55,9 @@ describe('the plan data', () => {
 });
 
 describe('schema 2: the program field', () => {
-  it('is version 2, and a fresh store is on the gym program and valid', () => {
-    expect(SCHEMA_VERSION).toBe(2);
-    expect(gym.schemaVersion).toBe(2);
+  it('is version 2 or later, and a fresh store is on the gym program and valid', () => {
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(2);
+    expect(gym.schemaVersion).toBe(SCHEMA_VERSION);
     expect(defaultData().program).toBe('gym');
     expect(validate(defaultData())).toEqual([]);
     expect(validate(home())).toEqual([]);

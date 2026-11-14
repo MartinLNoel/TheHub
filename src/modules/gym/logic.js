@@ -266,3 +266,64 @@ export function formatDate(d) {
 export function fmtTime(s) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 }
+
+// ============================================================
+// OFFICE DAYS (schema 3): rest days the week plan works around. They never block a session: any day
+// can be trained, and 3 sessions in the Monday-to-Sunday week is all that counts.
+// ============================================================
+export const WEEKDAY_SHORT = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+/** 1 (Monday) to 7 (Sunday) for a "YYYY-MM-DD" date. */
+export function weekdayOf(date) {
+  const d = new Date(date + 'T12:00:00Z').getUTCDay();
+  return d === 0 ? 7 : d;
+}
+
+function addDays(date, n) {
+  const d = new Date(date + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+/** The office days of a week ("YYYY-Www"): that week's own list, or the usual days. */
+export function officeDaysFor(data, weekKey) {
+  return data.officeWeeks?.[weekKey] ?? data.officeDays ?? [];
+}
+
+/** Marks or unmarks one weekday as an office day for that week only; the usual days stay. */
+export function toggleOfficeDay(data, weekKey, weekday) {
+  const next = structuredClone(data);
+  const days = new Set(officeDaysFor(data, weekKey));
+  if (days.has(weekday)) days.delete(weekday);
+  else days.add(weekday);
+  next.officeWeeks = { ...(next.officeWeeks || {}), [weekKey]: [...days].sort((a, b) => a - b) };
+  return next;
+}
+
+/**
+ * This week at a glance: each day (date, weekday, office, trained, today, past), the sessions left,
+ * the free days left (from today, not office days, not today once trained) and a warning when the
+ * free days left are no more than the sessions left.
+ */
+export function weekStatus(data, now = new Date()) {
+  const today = todayISO(now);
+  const todayWd = weekdayOf(today);
+  const weekKey = getWeekKey(today);
+  const office = officeDaysFor(data, weekKey);
+  const trainedOn = (date) => data.workoutLogs.filter((l) => l.date === date).length;
+  const days = WEEKDAY_SHORT.map((label, i) => {
+    const date = addDays(today, i + 1 - todayWd);
+    return { label, date, weekday: i + 1, office: office.includes(i + 1), trained: trainedOn(date), today: i + 1 === todayWd, past: i + 1 < todayWd };
+  });
+  const trainedToday = days[todayWd - 1].trained > 0;
+  const left = Math.max(0, targetSessions(data) - sessionsThisWeek(data, now));
+  const freeLeft = days.filter((d) => !d.past && !d.office && !(d.today && trainedToday)).length;
+  let warning = null;
+  if (left > 0 && freeLeft < left) {
+    warning = `⚠ ${left} session${left === 1 ? '' : 's'} left, ${freeLeft} free day${freeLeft === 1 ? '' : 's'}: an office day will have to count.`;
+  } else if (left > 0 && freeLeft === left) {
+    warning = `⚠ ${left} session${left === 1 ? '' : 's'} left, ${freeLeft} free day${freeLeft === 1 ? '' : 's'}: no room to skip.`;
+  }
+  const officeToday = days[todayWd - 1].office;
+  return { weekKey, days, left, freeLeft, trainedToday, officeToday, warning };
+}

@@ -87,6 +87,8 @@ export function mapGainzState(raw) {
     phase: raw.phase === 'phase2' ? 'phase2' : 'phase1',
     dayIndex: Number.isInteger(raw.dayIndex) && raw.dayIndex >= 0 ? raw.dayIndex : workoutLogs.length,
     lastSeenStage: stage,
+    officeDays: base.officeDays, // gainz-tracker has no office days; a merge keeps the current ones
+    officeWeeks: {},
   };
 }
 

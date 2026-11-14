@@ -267,6 +267,20 @@ summary { min-height: var(--tap); display: flex; align-items: center; cursor: po
 .gym-note { text-align: center; font-size: 0.8125rem; color: var(--muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; }
 .gym-note--go { width: 100%; color: var(--accent); border-color: var(--accent); margin: 0; }
 .gym-modes .seg { font-weight: 700; }
+/* This week: office days and free days left */
+.gym-weekcard p { margin: 0.5rem 0 0; }
+.gym-weekstrip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.25rem; margin-top: 0.5rem; }
+.gym-wd {
+  min-height: var(--tap); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.125rem;
+  padding: 0.25rem 0; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--surface); color: var(--text);
+  font: inherit; font-size: 0.75rem; font-weight: 600; cursor: pointer;
+}
+.gym-wd[aria-pressed="true"] { background: var(--surface-2); border-style: dashed; color: var(--muted); }
+.gym-wd.is-today { border: 2px solid var(--accent); }
+.gym-wd.is-past { opacity: 0.55; cursor: default; }
+.gym-wd:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.gym-wd__mark { font-size: 0.875rem; }
+.gym-week-warn { color: var(--warn-border); font-weight: 600; font-size: 0.8125rem; }
 /* Home plan: block labels and each exercise's moving demonstration (src/modules/gym/demos.js) */
 .gym-part { margin-top: 1rem; }
 .gym-ex__demo { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.625rem; }

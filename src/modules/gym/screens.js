@@ -8,7 +8,8 @@ import { QUICK_FOODS, STAGES } from './program.js';
 import {
   activeProgram, addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
   formatDate, getStreak, initExInputs, isHomePlan, logWorkout, nextStage, proteinTarget, removeProtein, sessionsThisWeek,
-  sessionsUntilPhase2, setBodyweight, setProgram, targetSessions, todayProtein, todayProteinLog, upgradePhase, workoutFor,
+  sessionsUntilPhase2, setBodyweight, setProgram, targetSessions, todayProtein, todayProteinLog, toggleOfficeDay, upgradePhase,
+  weekStatus, workoutFor,
 } from './logic.js';
 
 // Screen state that is not stored (as in gainz-tracker: it lives until the app closes).
@@ -172,6 +173,47 @@ function demoBlock(ex) {
 
 const PART_LABELS = { main: 'Main block', add: 'Arm + shoulder add-on' };
 
+/** This week: a button per day (tap to mark or unmark an office day, this week only), sessions and free days left. */
+function weekCard(c, now) {
+  const week = weekStatus(c.data, now);
+  const officeRest = week.officeToday && week.left > 0 && !week.trainedToday;
+  return h(
+    'section',
+    { class: 'card gym-weekcard', 'data-testid': 'gym-weekcard' },
+    h(
+      'div',
+      { class: 'gym-between' },
+      h('h2', {}, 'This week'),
+      h('span', { class: 'muted gym-small', 'data-testid': 'gym-week-left' }, `${week.left} left · ${week.freeLeft} free day${week.freeLeft === 1 ? '' : 's'} left`),
+    ),
+    h(
+      'div',
+      { class: 'gym-weekstrip', role: 'group', 'aria-label': 'Office days this week' },
+      week.days.map((d) =>
+        h(
+          'button',
+          {
+            type: 'button',
+            class: `gym-wd${d.today ? ' is-today' : ''}${d.past ? ' is-past' : ''}`,
+            'aria-pressed': String(d.office),
+            'aria-label': `${d.label}: ${d.office ? 'office day' : 'free day'}${d.trained ? `, ${d.trained} session${d.trained === 1 ? '' : 's'} done` : ''}`,
+            'data-testid': `wd-${d.weekday}`,
+            disabled: d.past,
+            onclick: async () => {
+              if (await c.commit(toggleOfficeDay(c.data, week.weekKey, d.weekday))) c.rerender();
+            },
+          },
+          h('span', {}, d.label),
+          h('span', { class: 'gym-wd__mark' }, d.trained ? '✓' : d.office ? '🏢' : '·'),
+        ),
+      ),
+    ),
+    week.warning ? h('p', { class: 'gym-week-warn', 'data-testid': 'gym-week-warning' }, week.warning) : null,
+    officeRest ? h('p', { class: 'muted gym-small' }, '🏢 Office day: rest. An extra session still counts.') : null,
+    h('p', { class: 'muted gym-small' }, 'Tap a day to mark it as an office day for this week. You can train on any day.'),
+  );
+}
+
 function renderWorkout(c) {
   const now = new Date();
   const data = c.data;
@@ -306,6 +348,7 @@ function renderWorkout(c) {
   return [
     h('div', { class: 'gym-badge' }, h('strong', {}, phase.label), `  ·  ${phase.weeks}`),
     programSwitch,
+    weekCard(c, now),
     // The gym program's GYM/HOME versions of each day; the home plan has only one.
     home
       ? null
