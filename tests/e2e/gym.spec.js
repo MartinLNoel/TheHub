@@ -167,7 +167,7 @@ test('home plan: switch to it, the figures move, log Day A, and the choice survi
   await page.getByTestId('program-home').click();
   await expect(page.locator('#gym-toast')).toHaveText('HOME PLAN ON 🏠');
   await expect(page.getByTestId('gym-day')).toHaveText('Day A');
-  await expect(page.locator('.gym-ex svg.gym-demo')).toHaveCount(9);
+  await expect(page.locator('.gym-ex svg.gym-demo')).toHaveCount(10);
   await expect(page.getByTestId('mode-home')).toHaveCount(0);
 
   // The curl's forearm moves: its wrist is somewhere else a moment later.
@@ -193,7 +193,7 @@ test('home plan: fits the phone width and its links and buttons are 48 px', asyn
   await expect(page.getByTestId('gym-day')).toHaveText('Day A');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
-  const targets = page.locator('#screen .btn, #screen .seg, #screen .gym-ex__video');
+  const targets = page.locator('#screen .btn, #screen .seg, #screen .gym-ex__video, #screen .gym-wd');
   const count = await targets.count();
   expect(count).toBeGreaterThan(9);
   for (let i = 0; i < count; i++) {

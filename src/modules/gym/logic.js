@@ -6,7 +6,7 @@
 // (PLACEHOLDER(Q-11)): "today" is the UTC date (toISOString), as in gainz-tracker, so between
 // midnight and 01:00/02:00 Dutch time a session is dated the day before; and the Check-in screen's
 // "This Week" counts from Sunday, while everything else uses Monday-to-Sunday weeks.
-import { HOME_PLAN, HOME_PROGRAM, HOME_WORKOUTS, PROGRAM, STAGES, WORKOUTS } from './program.js';
+import { HOME_PLAN, HOME_PROGRAM, HOME_WORKOUTS, LADDERS, PROGRAM, STAGES, WORKOUTS } from './program.js';
 
 /** True when the home plan is the chosen program (data.program, schema 2). */
 export function isHomePlan(data) {
@@ -166,12 +166,63 @@ export function beatsPB(set, pb) {
   return !pb || set.weight > pb.weight || (set.weight === pb.weight && set.reps > pb.reps);
 }
 
+// ============================================================
+// LADDERS: a ladder exercise records its step with each session (exercises[].step, 1-based)
+// ============================================================
+
+/** The ladder of an exercise (program.js, LADDERS), or null. */
+export function ladderOf(ex) {
+  return (ex && LADDERS[ex.ladder]) || null;
+}
+
+/** The step's name, e.g. "Deficit push-up (hands on the dumbbells)". */
+export function stepName(ex, step) {
+  return ladderOf(ex)?.steps[step - 1] ?? '';
+}
+
+/** The step to use now: the step of the last session with this exercise, or the ladder's start. */
+export function currentStep(data, ex) {
+  const ladder = ladderOf(ex);
+  if (!ladder) return null;
+  for (const log of data.workoutLogs) {
+    const done = log.exercises.find((e) => e.name === ex.name && Number.isInteger(e.step));
+    if (done) return Math.min(Math.max(done.step, 1), ladder.steps.length);
+  }
+  return ladder.start;
+}
+
+/** The top of a rep range: "5–8" → 8, "12" → 12, "8–12/side" → 12. */
+export function topOfRange(reps) {
+  const nums = String(reps).match(/\d+/g);
+  return nums ? Math.max(...nums.map(Number)) : 0;
+}
+
+/** True when the last session at this step reached the top of the range on every set: time to move up. */
+export function readyToMoveUp(data, ex, step) {
+  const ladder = ladderOf(ex);
+  if (!ladder || step >= ladder.steps.length) return false;
+  for (const log of data.workoutLogs) {
+    const done = log.exercises.find((e) => e.name === ex.name);
+    if (!done) continue;
+    if (done.step !== step) return false;
+    const top = topOfRange(ex.reps);
+    return done.sets.length >= ex.sets && done.sets.every((s) => s.reps >= top);
+  }
+  return false;
+}
+
+/** Personal bests of a ladder are kept per step: "Push-up ladder · step 3". */
+export function pbKey(name, step) {
+  return Number.isInteger(step) ? `${name} · step ${step}` : name;
+}
+
 /**
  * gainz saveWorkout(), without the side effects. inputs: { [exerciseName]: [{ weight, reps }] }
- * (strings or numbers, as typed). Returns { error } when nothing was entered, otherwise
+ * (strings or numbers, as typed); steps: { [exerciseName]: step } for ladder exercises (default: the
+ * current step). Returns { error } when nothing was entered, otherwise
  * { data (a new object), log, oldStage, newStage }.
  */
-export function logWorkout(data, { dayName, mode, inputs, now = new Date(), id = now.getTime() }) {
+export function logWorkout(data, { dayName, mode, inputs, steps = {}, now = new Date(), id = now.getTime() }) {
   const next = structuredClone(data);
   const workout = workoutFor(dayName, mode);
   const loggedExercises = [];
@@ -180,9 +231,11 @@ export function logWorkout(data, { dayName, mode, inputs, now = new Date(), id =
       .filter((s) => s && (s.weight || s.reps))
       .map((s) => ({ weight: parseFloat(s.weight) || 0, reps: parseInt(s.reps) || 0 }));
     if (sets.length > 0) {
-      loggedExercises.push({ name: ex.name, sets });
+      const step = ladderOf(ex) ? (steps[ex.name] ?? currentStep(data, ex)) : null;
+      loggedExercises.push(step ? { name: ex.name, step, sets } : { name: ex.name, sets });
+      const key = pbKey(ex.name, step);
       sets.forEach((s) => {
-        if (beatsPB(s, next.personalBests[ex.name])) next.personalBests[ex.name] = { weight: s.weight, reps: s.reps };
+        if (beatsPB(s, next.personalBests[key])) next.personalBests[key] = { weight: s.weight, reps: s.reps };
       });
     }
   });
@@ -265,4 +318,65 @@ export function formatDate(d) {
 
 export function fmtTime(s) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
+// ============================================================
+// OFFICE DAYS (schema 3): rest days the week plan works around. They never block a session: any day
+// can be trained, and 3 sessions in the Monday-to-Sunday week is all that counts.
+// ============================================================
+export const WEEKDAY_SHORT = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+/** 1 (Monday) to 7 (Sunday) for a "YYYY-MM-DD" date. */
+export function weekdayOf(date) {
+  const d = new Date(date + 'T12:00:00Z').getUTCDay();
+  return d === 0 ? 7 : d;
+}
+
+function addDays(date, n) {
+  const d = new Date(date + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+/** The office days of a week ("YYYY-Www"): that week's own list, or the usual days. */
+export function officeDaysFor(data, weekKey) {
+  return data.officeWeeks?.[weekKey] ?? data.officeDays ?? [];
+}
+
+/** Marks or unmarks one weekday as an office day for that week only; the usual days stay. */
+export function toggleOfficeDay(data, weekKey, weekday) {
+  const next = structuredClone(data);
+  const days = new Set(officeDaysFor(data, weekKey));
+  if (days.has(weekday)) days.delete(weekday);
+  else days.add(weekday);
+  next.officeWeeks = { ...(next.officeWeeks || {}), [weekKey]: [...days].sort((a, b) => a - b) };
+  return next;
+}
+
+/**
+ * This week at a glance: each day (date, weekday, office, trained, today, past), the sessions left,
+ * the free days left (from today, not office days, not today once trained) and a warning when the
+ * free days left are no more than the sessions left.
+ */
+export function weekStatus(data, now = new Date()) {
+  const today = todayISO(now);
+  const todayWd = weekdayOf(today);
+  const weekKey = getWeekKey(today);
+  const office = officeDaysFor(data, weekKey);
+  const trainedOn = (date) => data.workoutLogs.filter((l) => l.date === date).length;
+  const days = WEEKDAY_SHORT.map((label, i) => {
+    const date = addDays(today, i + 1 - todayWd);
+    return { label, date, weekday: i + 1, office: office.includes(i + 1), trained: trainedOn(date), today: i + 1 === todayWd, past: i + 1 < todayWd };
+  });
+  const trainedToday = days[todayWd - 1].trained > 0;
+  const left = Math.max(0, targetSessions(data) - sessionsThisWeek(data, now));
+  const freeLeft = days.filter((d) => !d.past && !d.office && !(d.today && trainedToday)).length;
+  let warning = null;
+  if (left > 0 && freeLeft < left) {
+    warning = `⚠ ${left} session${left === 1 ? '' : 's'} left, ${freeLeft} free day${freeLeft === 1 ? '' : 's'}: an office day will have to count.`;
+  } else if (left > 0 && freeLeft === left) {
+    warning = `⚠ ${left} session${left === 1 ? '' : 's'} left, ${freeLeft} free day${freeLeft === 1 ? '' : 's'}: no room to skip.`;
+  }
+  const officeToday = days[todayWd - 1].office;
+  return { weekKey, days, left, freeLeft, trainedToday, officeToday, warning };
 }

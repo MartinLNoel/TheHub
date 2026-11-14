@@ -1,8 +1,10 @@
-// The Gym store's data (schema version 2): the same fields gainz-tracker keeps in its `state`,
-// minus `_mondayFixed` (gainz's one-time date fix, not needed here), plus `program`. No Notion token, ever.
+// The Gym store's data (schema version 3): the same fields gainz-tracker keeps in its `state`,
+// minus `_mondayFixed` (gainz's one-time date fix, not needed here), plus `program` and the office days.
+// No Notion token, ever.
 //
 //   workoutLogs   [{ id, date: "YYYY-MM-DD", day: "Upper A" | "Day A"…, mode: "gym"|"home",
-//                    exercises: [{ name, sets: [{ weight, reps }] }] }]   newest first
+//                    exercises: [{ name, step?, sets: [{ weight, reps }] }] }]   newest first
+//                    step: a ladder exercise's step, 1-based (optional, v3)
 //   proteinLogs   { "YYYY-MM-DD": [{ name, grams }] }
 //   checkIns      [{ date, weight, cals (number|null), notes }]           oldest first
 //   myFoods       [{ name, protein }]
@@ -12,16 +14,23 @@
 //   phase         "phase1" | "phase2" (the gym program's phase, kept while on the home plan)
 //   dayIndex      sessions logged since the phase started (gainz shows "DAY n OF m" from it)
 //   lastSeenStage the highest fighter stage already shown (for the unlock animation)
+//   officeDays    the usual office days, weekday numbers 1 (Monday) to 7 (Sunday): rest days       v3
+//   officeWeeks   { "YYYY-Www": [weekdays] } a week whose office days differ from the usual        v3
 import { DEFAULT_MY_FOODS, PROGRAM, STAGES } from './program.js';
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 export const PROGRAMS = ['gym', 'home'];
+
+/** Tuesday and Thursday. */
+export const DEFAULT_OFFICE_DAYS = [2, 4];
 
 /** migrations[n] turns version n-1 into version n (src/core/db.js runs them, backing up first). */
 export const migrations = {
   // v2: the program switch. Everything stored before it was the gym program.
   2: (data) => ({ ...data, program: 'gym' }),
+  // v3: office days, busy days the week plan works around (2026-11-14).
+  3: (data) => ({ ...data, officeDays: [...DEFAULT_OFFICE_DAYS], officeWeeks: {} }),
 };
 
 /**
@@ -41,6 +50,8 @@ export function defaultData() {
     phase: 'phase1',
     dayIndex: 0,
     lastSeenStage: 0,
+    officeDays: [...DEFAULT_OFFICE_DAYS],
+    officeWeeks: {},
   };
 }
 
@@ -53,6 +64,8 @@ export function isISODate(value) {
 
 const nonNegative = (n) => typeof n === 'number' && Number.isFinite(n) && n >= 0;
 const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const isWeekdayList = (v) =>
+  Array.isArray(v) && v.every((d) => Number.isInteger(d) && d >= 1 && d <= 7) && new Set(v).size === v.length;
 
 /** Problems with the data; [] means complete. Used by backup verification and imports. */
 export function validate(data) {
@@ -73,6 +86,9 @@ export function validate(data) {
         }
         if (ex.sets.some((s) => !isObject(s) || !nonNegative(s.weight) || !nonNegative(s.reps))) {
           problems.push(`${where}, ${ex.name}: weights and reps must be numbers of 0 or more`);
+        }
+        if (ex.step !== undefined && !(Number.isInteger(ex.step) && ex.step >= 1)) {
+          problems.push(`${where}, ${ex.name}: the ladder step must be 1 or more`);
         }
       });
     });
@@ -112,6 +128,14 @@ export function validate(data) {
   if (!Number.isInteger(data.dayIndex) || data.dayIndex < 0) problems.push('dayIndex must be a whole number of 0 or more');
   if (!Number.isInteger(data.lastSeenStage) || data.lastSeenStage < 0 || data.lastSeenStage >= STAGES.length) {
     problems.push('lastSeenStage must be a stage number');
+  }
+  if (!isWeekdayList(data.officeDays)) problems.push('officeDays must be a list of weekdays 1 to 7');
+  if (!isObject(data.officeWeeks)) problems.push('officeWeeks must be an object of weeks');
+  else {
+    for (const [week, days] of Object.entries(data.officeWeeks)) {
+      if (!/^\d{4}-W\d{2}$/.test(week)) problems.push(`office week "${week}" is not a week`);
+      if (!isWeekdayList(days)) problems.push(`office days in ${week} must be weekdays 1 to 7`);
+    }
   }
   return problems;
 }

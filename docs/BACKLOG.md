@@ -2,19 +2,27 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## 2026-11-01: the Gym's home plan (version 0.8.2, branch `gym/home-plan`)
+## 2026-11-14: the Gym's home plan and its additions (versions 0.8.2 and 0.8.3)
 
-Martin trains at home now; the Gym now has a **home plan** (Day A/B/C, bodyweight and dumbbells) with
-a moving figure for every exercise, chosen with a program switch on the Workout screen (CHANGELOG, 2026-11-01).
-All tests pass locally. The work is on branch `gym/home-plan`, **not yet committed** (Martin to say), not merged
-into `main` and not pushed.
+Martin trains at home now. The Gym has a **home plan** (Day A/B/C, bodyweight and dumbbells, a moving
+figure for every exercise), a calf raise every day, loads as the kg to log, office days and ladder steps
+(CHANGELOG, 2026-11-01 and 2026-11-14). Both branches are merged into local `main`; nothing is pushed.
 
-- **Schema 2 and Q-8:** the Gym's data is now version 2. Data saved by 0.8.1 or older migrates on first open, and
-  under Q-8 that migration is **blocked until backups are set up**. Nothing has been pushed, so on the phone the Gym
-  starts fresh at version 2 and nothing is blocked; this only matters for a browser that already ran 0.8.1.
-- **Martin's part:** Q-24 (what to type in the kg boxes, the handle's weight, untracked ladder steps). It changes
-  nothing in the order of "Waiting on Martin" below: the home plan is used through the Gym, so it waits on Part 1.
-- **Ideas, not planned:** record the ladder step with each session; a "plates" picker instead of kg for dumbbells.
+- **Decided 2026-11-14: a fresh start.** Martin's gainz-tracker history is months old and the gains are gone, so
+  the Fighter and streak start at zero with the home plan. **No import** and **no side-by-side week**: item 3 below
+  shrinks to "export gainz-tracker's data once, as an archive in `private/` (never imported), then retire it".
+- **Next build: the Fighter as a story** (Martin's brief, 2026-11-14): detailed pixel art; a fantasy world of frog
+  bounty hunters, where bounty hunting is the main income and hunters belong to classes with their own gear and
+  abilities; the hero is a beginner who has chosen a class. Stage 1 introduces him, stage 2 shows his quest, the
+  rest is the adventure; upgrades are gear as well as muscle; the order must surprise him, so **never show Martin
+  the stages ahead of time**. More than 10 stages (gainz's 10 ran to 120 sessions). Stage 1 sample (hero Tad, a Bogbrawler who
+  fights with his fists, in the marsh town of Lilyhollow): https://claude.ai/artifact/QEUbKDm5f5WRKpYbiG1eBc, source
+  `docs/fighter/stage-1-sample.html` (canvas pixel art, 160 × 120). Waiting on Martin's verdict on the style. Replacing the 10 STAGES breaks
+  the "identical to gainz-tracker" Fighter test on purpose; with the fresh start no stored stage needs mapping.
+- **Schema 3 and Q-8:** data saved by 0.8.1 or older migrates on first open, and under Q-8 that migration is
+  blocked until backups are set up. Nothing was ever on the phone, so there the Gym starts fresh at version 3.
+- **Ideas, not planned:** change the usual office days in the app (now: per week only, default Tue/Thu); a
+  plates picker instead of kg.
 
 ## Waiting on Martin, in priority order (2026-10-18, end of the autonomous build)
 
@@ -25,8 +33,9 @@ item unblocks most of the rest.
    phone check below waits for it.
 2. **Backups for real** (Part 3): the fine-grained token, the first backup, the restore drill; then decide Q-8
    (block migrations without backups?) and Q-9. Do this before relying on TheHub for real data.
-3. **Gym move** (Part 4): gainz-tracker's `export-button` branch, export, import (Q-2, Q-10), the side-by-side
-   week, then Q-11 and Q-12, then gainz-tracker's retirement.
+3. **Gym move** (Part 4), **shortened 2026-11-14 (fresh start)**: gainz-tracker's `export-button` branch and one
+   export, kept as an archive in `private/` and not imported; then Q-11 and gainz-tracker's retirement. Q-2, Q-10
+   and Q-12 are moot unless Martin changes his mind.
 4. **ISTQB** (Part 6): import `private/istqb-progress.json` on the phone, answer Q-1, Q-15, Q-16, study in TheHub.
 5. **Ask Claude on the phone** (Q-13: which delivery works) and the study defaults (Q-14).
 6. **Fridge on the phone** (Part 8): the Diagnostics line and five real scans (Q-19, Q-20), then Q-21.

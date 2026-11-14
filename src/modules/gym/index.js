@@ -2,10 +2,15 @@
 // docs/plans/part-0-overview.md.
 import { SCHEMA_VERSION, defaultData, migrations, validate } from './data.js';
 import { findGainzOnThisPhone, prepareGainzImport } from './import.js';
-import { currentDayName, getStreak, isHomePlan, proteinTarget, sessionsThisWeek, targetSessions, todayProtein, workoutFor } from './logic.js';
+import {
+  currentDayName, getStreak, isHomePlan, proteinTarget, sessionsThisWeek, targetSessions, todayProtein, weekStatus, workoutFor,
+} from './logic.js';
 import { routes } from './screens.js';
 
-/** Today's card: the planned workout (or a rest day once the week's target is met), the week, protein, streak. */
+/**
+ * Today's card: the planned workout (or a rest day once the week's target is met), the week, protein,
+ * streak; then, when they apply, an office-day line and a warning when the week has no room left.
+ */
 export function todayCard(data, now = new Date()) {
   if (!data) return null;
   const done = sessionsThisWeek(data, now);
@@ -21,6 +26,8 @@ export function todayCard(data, now = new Date()) {
         : `Today: ${day} — ${focus}`;
   const left = Math.max(0, proteinTarget(data) - todayProtein(data, now));
   const streak = getStreak(data, now);
+  const week = weekStatus(data, now);
+  const officeLine = week.officeToday && week.left > 0 && !week.trainedToday ? '🏢 Office day: rest. An extra session still counts.' : null;
   return {
     title: 'Gym',
     lines: [
@@ -28,7 +35,9 @@ export function todayCard(data, now = new Date()) {
       `This week: ${done}/${target} sessions`,
       left > 0 ? `Protein: ${left}g left today` : 'Protein: target hit today ✅',
       `Streak: ${streak} week${streak === 1 ? '' : 's'}${streak > 0 ? ' 🔥' : ''}`,
-    ],
+      officeLine,
+      week.warning,
+    ].filter(Boolean),
     action: { label: 'Log workout', route: 'gym/log' },
   };
 }

@@ -20,29 +20,44 @@ describe('the plan data', () => {
     expect(HOME_PROGRAM.days).toEqual(Object.keys(HOME_PLAN));
     for (const day of HOME_PROGRAM.days) {
       const parts = HOME_PLAN[day].exercises.map((ex) => ex.part);
-      expect(parts).toEqual([...Array(6).fill('main'), ...Array(3).fill('add')]);
+      expect(parts).toEqual([...Array(7).fill('main'), ...Array(3).fill('add')]);
     }
     expect(all.every((ex) => ex.sets === 3 && ex.name && ex.reps && ex.muscle && ex.demo)).toBe(true);
+  });
+
+  it('every day is full body: legs (two moves and a calf raise), core and lower abs, not only the upper body', () => {
+    for (const day of HOME_PROGRAM.days) {
+      const muscles = HOME_PLAN[day].exercises.map((ex) => ex.muscle);
+      const legMoves = muscles.filter((m) => ['Legs', 'Glutes', 'Hamstrings'].includes(m));
+      expect(legMoves, day).toHaveLength(2);
+      expect(muscles, day).toEqual(expect.arrayContaining(['Calves', 'Core', 'Lower abs']));
+    }
   });
 
   it('no band or towel is needed, and no exercise jumps', () => {
     expect(JSON.stringify(HOME_PLAN)).not.toMatch(/band|towel|jump/i);
   });
 
-  it('starting loads are only settings the plates allow (2 × 1.25 and 2 × 2.5 per side at most)', () => {
-    const allowed = /^(Both DBs|One DB) · (1\.25|2\.5|2\.5 \+ 1\.25|2\.5 \+ 2\.5) each side$/i;
-    for (const ex of all.filter((e) => e.load)) {
-      const load = ex.load.replace(/^Bodyweight first, then /, '');
-      expect(load, ex.name).toMatch(allowed);
-      if (load.startsWith('Both DBs')) expect(load, `${ex.name}: a pair cannot both have two 2.5s per side`).not.toContain('2.5 + 2.5');
+  it('starting loads are settings the plates allow, and the kg to log is the plates on one dumbbell', () => {
+    const shape = /^(\d+(?:\.\d+)?) kg · (both DBs|one DB), (1\.25|2\.5|2\.5 \+ 1\.25|2\.5 \+ 2\.5) each side$/;
+    const loads = all.filter((e) => e.load);
+    expect(loads).toHaveLength(13);
+    for (const ex of loads) {
+      const load = ex.load.replace(/^0 kg at first, then /, '');
+      const m = load.match(shape);
+      expect(m, `${ex.name}: ${ex.load}`).not.toBeNull();
+      const perSide = m[3].split(' + ').reduce((sum, p) => sum + Number(p), 0);
+      expect(Number(m[1]), `${ex.name}: kg is both sides' plates`).toBe(perSide * 2);
+      // 2 × 2.5 kg per side uses all four 2.5 kg plates: only one dumbbell can have that
+      if (m[2] === 'both DBs') expect(m[3], ex.name).not.toBe('2.5 + 2.5');
     }
   });
 });
 
 describe('schema 2: the program field', () => {
-  it('is version 2, and a fresh store is on the gym program and valid', () => {
-    expect(SCHEMA_VERSION).toBe(2);
-    expect(gym.schemaVersion).toBe(2);
+  it('is version 2 or later, and a fresh store is on the gym program and valid', () => {
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(2);
+    expect(gym.schemaVersion).toBe(SCHEMA_VERSION);
     expect(defaultData().program).toBe('gym');
     expect(validate(defaultData())).toEqual([]);
     expect(validate(home())).toEqual([]);
@@ -104,7 +119,8 @@ describe('the rules on the home plan', () => {
     });
     expect(r.log).toMatchObject({ date: '2026-01-07', day: 'Day A', mode: 'home' });
     expect(r.log.exercises.map((e) => e.name)).toEqual(['Push-up ladder', 'Dumbbell curl']);
-    expect(r.data.personalBests['Push-up ladder']).toEqual({ weight: 0, reps: 8 });
+    expect(r.log.exercises[0].step).toBe(3); // the push-up ladder starts at the deficit push-up
+    expect(r.data.personalBests['Push-up ladder · step 3']).toEqual({ weight: 0, reps: 8 });
     expect(validate(r.data)).toEqual([]);
   });
 
