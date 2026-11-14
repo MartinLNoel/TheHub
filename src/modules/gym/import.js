@@ -83,6 +83,7 @@ export function mapGainzState(raw) {
     myFoods,
     personalBests,
     bodyweight: num(raw.bodyweight) > 0 ? num(raw.bodyweight) : base.bodyweight,
+    program: 'gym', // gainz-tracker has only the gym program; a merge keeps the current choice
     phase: raw.phase === 'phase2' ? 'phase2' : 'phase1',
     dayIndex: Number.isInteger(raw.dayIndex) && raw.dayIndex >= 0 ? raw.dayIndex : workoutLogs.length,
     lastSeenStage: stage,

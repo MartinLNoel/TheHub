@@ -6,7 +6,22 @@
 // (PLACEHOLDER(Q-11)): "today" is the UTC date (toISOString), as in gainz-tracker, so between
 // midnight and 01:00/02:00 Dutch time a session is dated the day before; and the Check-in screen's
 // "This Week" counts from Sunday, while everything else uses Monday-to-Sunday weeks.
-import { HOME_WORKOUTS, PROGRAM, STAGES, WORKOUTS } from './program.js';
+import { HOME_PLAN, HOME_PROGRAM, HOME_WORKOUTS, PROGRAM, STAGES, WORKOUTS } from './program.js';
+
+/** True when the home plan is the chosen program (data.program, schema 2). */
+export function isHomePlan(data) {
+  return data.program === 'home';
+}
+
+/** The chosen program's label, weeks and days: the home plan, or the gym program's phase. */
+export function activeProgram(data) {
+  return isHomePlan(data) ? HOME_PROGRAM : PROGRAM[data.phase];
+}
+
+/** Switches between the gym program and the home plan; the phase and history stay as they are. */
+export function setProgram(data, program) {
+  return { ...structuredClone(data), program: program === 'home' ? 'home' : 'gym' };
+}
 
 /** gainz today(): the UTC calendar date, "YYYY-MM-DD". */
 export function todayISO(now = new Date()) {
@@ -26,6 +41,7 @@ export function getWeekKey(date) {
 }
 
 export function targetSessions(data) {
+  if (isHomePlan(data)) return HOME_PROGRAM.days.length;
   return data.phase === 'phase2' ? 4 : 3;
 }
 
@@ -70,11 +86,12 @@ export function getStreak(data, now = new Date()) {
 }
 
 /**
- * gainz getCurrentDayName(): every Monday the cycle resets to the first day (Upper A); within the
- * week it continues after the last day logged this week.
+ * gainz getCurrentDayName(): every Monday the cycle resets to the first day (Upper A, or Day A on the
+ * home plan); within the week it continues after the last day logged this week. A day from the other
+ * program (after a switch mid-week) restarts the cycle.
  */
 export function currentDayName(data, now = new Date()) {
-  const days = PROGRAM[data.phase].days;
+  const days = activeProgram(data).days;
   const thisWeek = getWeekKey(todayISO(now));
   const thisWeekLogs = data.workoutLogs
     .filter((l) => getWeekKey(l.date) === thisWeek)
@@ -111,8 +128,12 @@ export function todayProtein(data, now = new Date()) {
   return todayProteinLog(data, now).reduce((sum, item) => sum + (item.grams || 0), 0);
 }
 
-/** The exercises for a day in a mode ('gym' or 'home'), as on gainz's Today screen. */
+/**
+ * The exercises for a day in a mode ('gym' or 'home'), as on gainz's Today screen. A home-plan day
+ * (Day A, B, C) has one version.
+ */
 export function workoutFor(dayName, mode) {
+  if (HOME_PLAN[dayName]) return HOME_PLAN[dayName];
   if (mode === 'gym') return WORKOUTS[dayName];
   return {
     focus: HOME_WORKOUTS[dayName] ? 'Home Version' : WORKOUTS[dayName].focus,
