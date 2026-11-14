@@ -180,7 +180,7 @@ export function stepName(ex, step) {
   return ladderOf(ex)?.steps[step - 1] ?? '';
 }
 
-/** The step to use now: the step of the last session with this exercise, or the ladder's start. */
+/** The step to use now: the step of the last session with this exercise, or 1 (the bottom). */
 export function currentStep(data, ex) {
   const ladder = ladderOf(ex);
   if (!ladder) return null;
@@ -188,7 +188,7 @@ export function currentStep(data, ex) {
     const done = log.exercises.find((e) => e.name === ex.name && Number.isInteger(e.step));
     if (done) return Math.min(Math.max(done.step, 1), ladder.steps.length);
   }
-  return ladder.start;
+  return 1;
 }
 
 /** The top of a rep range: "5–8" → 8, "12" → 12, "8–12/side" → 12. */

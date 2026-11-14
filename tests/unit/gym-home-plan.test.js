@@ -119,8 +119,8 @@ describe('the rules on the home plan', () => {
     });
     expect(r.log).toMatchObject({ date: '2026-01-07', day: 'Day A', mode: 'home' });
     expect(r.log.exercises.map((e) => e.name)).toEqual(['Push-up ladder', 'Dumbbell curl']);
-    expect(r.log.exercises[0].step).toBe(3); // the push-up ladder starts at the deficit push-up
-    expect(r.data.personalBests['Push-up ladder · step 3']).toEqual({ weight: 0, reps: 8 });
+    expect(r.log.exercises[0].step).toBe(1); // the push-up ladder starts at the regular push-up
+    expect(r.data.personalBests['Push-up ladder · step 1']).toEqual({ weight: 0, reps: 8 });
     expect(validate(r.data)).toEqual([]);
   });
 
