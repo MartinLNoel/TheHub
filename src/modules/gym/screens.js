@@ -2,12 +2,13 @@
 // renderFighter, renderNutrition, renderCheckin) into TheHub's shell and theme. Same content and
 // rules; built with h() instead of HTML strings, so stored text is always shown as text.
 import { h, mount } from '../../core/dom.js';
+import { DEMOS, demoFigure, demoVideoUrl } from './demos.js';
 import { characterElement } from './fighter.js';
-import { PROGRAM, QUICK_FOODS, STAGES } from './program.js';
+import { QUICK_FOODS, STAGES } from './program.js';
 import {
-  addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
-  formatDate, getStreak, initExInputs, logWorkout, nextStage, proteinTarget, removeProtein, sessionsThisWeek,
-  sessionsUntilPhase2, setBodyweight, targetSessions, todayProtein, todayProteinLog, upgradePhase, workoutFor,
+  activeProgram, addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
+  formatDate, getStreak, initExInputs, isHomePlan, logWorkout, nextStage, proteinTarget, removeProtein, sessionsThisWeek,
+  sessionsUntilPhase2, setBodyweight, setProgram, targetSessions, todayProtein, todayProteinLog, upgradePhase, workoutFor,
 } from './logic.js';
 
 // Screen state that is not stored (as in gainz-tracker: it lives until the app closes).
@@ -151,13 +152,35 @@ function screen(renderFn, active) {
 // ============================================================
 // WORKOUT (gainz "Today")
 // ============================================================
+/** How to do a home-plan exercise: the moving figure, the starting load, the cue and a video link. */
+function demoBlock(ex) {
+  const demo = DEMOS[ex.demo];
+  if (!demo) return null;
+  return h(
+    'div',
+    { class: 'gym-ex__demo' },
+    demoFigure(ex.demo, ex.name),
+    h(
+      'div',
+      { class: 'gym-ex__how' },
+      ex.load ? h('p', { class: 'gym-ex__load' }, h('strong', {}, 'Start: '), ex.load) : null,
+      h('p', { class: 'gym-ex__cue' }, demo.cue),
+      h('a', { class: 'gym-ex__video', href: demoVideoUrl(ex.demo), target: '_blank', rel: 'noopener' }, 'Watch a demo ↗'),
+    ),
+  );
+}
+
+const PART_LABELS = { main: 'Main block', add: 'Arm + shoulder add-on' };
+
 function renderWorkout(c) {
   const now = new Date();
   const data = c.data;
+  const home = isHomePlan(data);
   const dayName = currentDayName(data, now);
-  const phase = PROGRAM[data.phase];
-  const workout = workoutFor(dayName, sessionMode);
-  const key = `${dayName}|${sessionMode}`;
+  const phase = activeProgram(data);
+  const mode = home ? 'home' : sessionMode; // the home plan is always done at home
+  const workout = workoutFor(dayName, mode);
+  const key = `${dayName}|${mode}`;
   if (key !== sessionKey) {
     sessionInputs = {};
     sessionKey = key;
@@ -166,6 +189,8 @@ function renderWorkout(c) {
   const protein = todayProtein(data, now);
 
   const exercises = workout.exercises.map((ex, exIdx) => {
+    const prevPart = workout.exercises[exIdx - 1]?.part;
+    const partLabel = ex.part && ex.part !== prevPart ? h('h3', { class: 'gym-section gym-part' }, PART_LABELS[ex.part]) : null;
     const pb = data.personalBests[ex.name];
     const inputs = sessionInputs[ex.name] || initExInputs(data, ex, dayName);
     sessionInputs[ex.name] = inputs;
@@ -189,19 +214,23 @@ function renderWorkout(c) {
         });
       sets.push(h('div', { class: 'gym-set' }, h('span', { class: 'gym-set__label' }, `S${s + 1}`), set('weight'), h('span', { class: 'muted' }, '×'), set('reps')));
     }
-    return h(
-      'div',
-      { class: 'gym-ex' },
-      h('div', { class: 'gym-ex__name' }, ex.name),
+    return [
+      partLabel,
       h(
         'div',
-        { class: 'gym-ex__meta' },
-        `${ex.sets} sets · ${ex.reps} reps · `,
-        h('span', { class: 'gym-hl' }, ex.muscle),
-        pb ? [' · PB: ', h('span', { class: 'gym-hl' }, `${pb.weight}kg × ${pb.reps}`)] : null,
+        { class: 'gym-ex', 'data-testid': `gym-ex-${exIdx}` },
+        h('div', { class: 'gym-ex__name' }, ex.name),
+        h(
+          'div',
+          { class: 'gym-ex__meta' },
+          `${ex.sets} sets · ${ex.reps} reps · `,
+          h('span', { class: 'gym-hl' }, ex.muscle),
+          pb ? [' · PB: ', h('span', { class: 'gym-hl' }, `${pb.weight}kg × ${pb.reps}`)] : null,
+        ),
+        ex.demo ? demoBlock(ex) : null,
+        h('div', { class: 'gym-sets' }, sets),
       ),
-      h('div', { class: 'gym-sets' }, sets),
-    );
+    ];
   });
 
   const pct = Math.min(100, Math.round((protein / target) * 100));
@@ -222,7 +251,7 @@ function renderWorkout(c) {
   );
 
   let phasePrompt = null;
-  if (data.phase === 'phase1') {
+  if (!home && data.phase === 'phase1') {
     const left = sessionsUntilPhase2(data);
     phasePrompt =
       left > 0
@@ -244,35 +273,69 @@ function renderWorkout(c) {
           );
   }
 
-  return [
-    h('div', { class: 'gym-badge' }, h('strong', {}, phase.label), `  ·  ${phase.weeks}`),
-    h(
-      'div',
-      { class: 'segmented gym-modes', role: 'group', 'aria-label': 'Where' },
-      [['gym', '🏋️ GYM'], ['home', '🏠 HOME']].map(([mode, label]) =>
-        h(
-          'button',
-          {
-            type: 'button',
-            class: 'seg',
-            'aria-pressed': String(sessionMode === mode),
-            'data-testid': `mode-${mode}`,
-            onclick: () => {
-              sessionMode = mode;
+  const programSwitch = h(
+    'div',
+    { class: 'segmented gym-modes', role: 'group', 'aria-label': 'Program' },
+    [['gym', '🏋️ GYM PROGRAM'], ['home', '🏠 HOME PLAN']].map(([program, label]) =>
+      h(
+        'button',
+        {
+          type: 'button',
+          class: 'seg',
+          'aria-pressed': String((home ? 'home' : 'gym') === program),
+          'data-testid': `program-${program}`,
+          onclick: async () => {
+            if ((home ? 'home' : 'gym') === program) return;
+            if (await c.commit(setProgram(c.data, program))) {
               sessionInputs = {};
+              sessionKey = '';
+              showToast(program === 'home' ? 'HOME PLAN ON 🏠' : 'GYM PROGRAM ON 🏋️');
               c.rerender();
-            },
+            }
           },
-          label,
-        ),
+        },
+        label,
       ),
     ),
+  );
+
+  const dayOfPlan = home
+    ? `HOME PLAN · DAY ${phase.days.indexOf(dayName) + 1} OF ${phase.days.length} · FULL BODY`
+    : `${phase.days.length}-DAY SPLIT · DAY ${(data.dayIndex % phase.days.length) + 1} OF ${phase.days.length}`;
+
+  return [
+    h('div', { class: 'gym-badge' }, h('strong', {}, phase.label), `  ·  ${phase.weeks}`),
+    programSwitch,
+    // The gym program's GYM/HOME versions of each day; the home plan has only one.
+    home
+      ? null
+      : h(
+          'div',
+          { class: 'segmented gym-modes', role: 'group', 'aria-label': 'Where' },
+          [['gym', '🏋️ GYM'], ['home', '🏠 HOME']].map(([where, label]) =>
+            h(
+              'button',
+              {
+                type: 'button',
+                class: 'seg',
+                'aria-pressed': String(sessionMode === where),
+                'data-testid': `mode-${where}`,
+                onclick: () => {
+                  sessionMode = where;
+                  sessionInputs = {};
+                  c.rerender();
+                },
+              },
+              label,
+            ),
+          ),
+        ),
     h(
       'section',
       { class: 'card' },
       h('div', { class: 'gym-day-badge', 'data-testid': 'gym-day' }, dayName),
       h('div', { class: 'gym-day-name' }, workout.focus),
-      h('div', { class: 'gym-day-sub' }, `${phase.days.length}-DAY SPLIT · DAY ${(data.dayIndex % phase.days.length) + 1} OF ${phase.days.length}`),
+      h('div', { class: 'gym-day-sub' }, dayOfPlan),
       exercises,
     ),
     h(
@@ -298,7 +361,7 @@ function renderWorkout(c) {
         'data-testid': 'gym-log-workout',
         disabled: c.readOnly,
         onclick: async () => {
-          const result = logWorkout(c.data, { dayName, mode: sessionMode, inputs: sessionInputs, now: new Date() });
+          const result = logWorkout(c.data, { dayName, mode, inputs: sessionInputs, now: new Date() });
           if (result.error) return showToast(result.error);
           if (!(await c.commit(result.data))) return;
           sessionInputs = {};
@@ -663,7 +726,7 @@ function renderCheckin(c) {
       stat(String(data.workoutLogs.length), 'Total sessions'),
       stat(`${streak}🔥`, 'Week streak'),
       stat(String(checkinThisWeek(data, now)), 'This week'),
-      stat(String(PROGRAM[data.phase].days.length), 'Days/week'),
+      stat(String(activeProgram(data).days.length), 'Days/week'),
     ),
     sectionHeader('Weekly check-in'),
     h(
