@@ -9,13 +9,14 @@ import {
   activeProgram, addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
   formatDate, getStreak, initExInputs, isHomePlan, logWorkout, nextStage, proteinTarget, removeProtein, sessionsThisWeek,
   sessionsUntilPhase2, setBodyweight, setProgram, targetSessions, todayProtein, todayProteinLog, toggleOfficeDay, upgradePhase,
-  weekStatus, workoutFor,
+  weekStatus, workoutFor, currentStep, ladderOf, pbKey, readyToMoveUp, stepName,
 } from './logic.js';
 
 // Screen state that is not stored (as in gainz-tracker: it lives until the app closes).
 let sessionMode = 'gym'; // 'gym' or 'home'
 let sessionInputs = {}; // { exerciseName: [{ weight, reps }] }
 let sessionKey = ''; // day + mode the inputs belong to
+let sessionSteps = {}; // { exerciseName: ladder step } chosen on screen, not saved until logged
 let selectedRestTime = 60;
 let restInterval = null;
 let previewStageId = null; // null = show the current stage
@@ -25,6 +26,7 @@ export function resetScreenState() {
   sessionMode = 'gym';
   sessionInputs = {};
   sessionKey = '';
+  sessionSteps = {};
   selectedRestTime = 60;
   previewStageId = null;
   if (restInterval) clearInterval(restInterval);
@@ -173,6 +175,33 @@ function demoBlock(ex) {
 
 const PART_LABELS = { main: 'Main block', add: 'Arm + shoulder add-on' };
 
+/**
+ * A ladder exercise's step: − and + change it for this session (saved when the workout is logged), with
+ * a nudge to move up when the last session at this step reached the top of the range on every set.
+ */
+function stepPicker(c, ex, step, saved) {
+  const total = ladderOf(ex).steps.length;
+  const go = (n) => {
+    sessionSteps[ex.name] = n;
+    c.rerender();
+  };
+  const moveUp = step === saved && readyToMoveUp(c.data, ex, step);
+  return h(
+    'div',
+    { class: 'gym-step', 'data-testid': `gym-step-${ex.ladder}` },
+    h(
+      'div',
+      { class: 'gym-step__row' },
+      h('button', { type: 'button', class: 'btn gym-step__btn', 'aria-label': 'Easier step', disabled: step <= 1, onclick: () => go(step - 1) }, '−'),
+      h('div', { class: 'gym-step__name' }, h('span', { class: 'muted gym-small' }, `Ladder step ${step} of ${total}`), h('strong', {}, stepName(ex, step))),
+      h('button', { type: 'button', class: 'btn gym-step__btn', 'aria-label': 'Harder step', disabled: step >= total, onclick: () => go(step + 1) }, '+'),
+    ),
+    moveUp
+      ? h('p', { class: 'gym-step__up', 'data-testid': 'gym-step-up' }, `⬆ Last time every set reached the top of the range. Move up to step ${step + 1}: ${stepName(ex, step + 1)}?`)
+      : null,
+  );
+}
+
 /** This week: a button per day (tap to mark or unmark an office day, this week only), sessions and free days left. */
 function weekCard(c, now) {
   const week = weekStatus(c.data, now);
@@ -225,6 +254,7 @@ function renderWorkout(c) {
   const key = `${dayName}|${mode}`;
   if (key !== sessionKey) {
     sessionInputs = {};
+    sessionSteps = {};
     sessionKey = key;
   }
   const target = proteinTarget(data);
@@ -233,7 +263,10 @@ function renderWorkout(c) {
   const exercises = workout.exercises.map((ex, exIdx) => {
     const prevPart = workout.exercises[exIdx - 1]?.part;
     const partLabel = ex.part && ex.part !== prevPart ? h('h3', { class: 'gym-section gym-part' }, PART_LABELS[ex.part]) : null;
-    const pb = data.personalBests[ex.name];
+    const ladder = ladderOf(ex);
+    const saved = ladder ? currentStep(data, ex) : null;
+    const step = ladder ? (sessionSteps[ex.name] ?? saved) : null;
+    const pb = data.personalBests[pbKey(ex.name, step)];
     const inputs = sessionInputs[ex.name] || initExInputs(data, ex, dayName);
     sessionInputs[ex.name] = inputs;
     const sets = [];
@@ -270,6 +303,7 @@ function renderWorkout(c) {
           pb ? [' · PB: ', h('span', { class: 'gym-hl' }, `${pb.weight}kg × ${pb.reps}`)] : null,
         ),
         ex.demo ? demoBlock(ex) : null,
+        ladder ? stepPicker(c, ex, step, saved) : null,
         h('div', { class: 'gym-sets' }, sets),
       ),
     ];
@@ -407,11 +441,12 @@ function renderWorkout(c) {
         'data-testid': 'gym-log-workout',
         disabled: c.readOnly,
         onclick: async () => {
-          const result = logWorkout(c.data, { dayName, mode, inputs: sessionInputs, now: new Date() });
+          const result = logWorkout(c.data, { dayName, mode, inputs: sessionInputs, steps: sessionSteps, now: new Date() });
           if (result.error) return showToast(result.error);
           if (!(await c.commit(result.data))) return;
           sessionInputs = {};
           sessionKey = '';
+          sessionSteps = {};
           if (result.newStage.id > result.oldStage.id) {
             setTimeout(() => {
               showToast('🔓 STAGE UNLOCKED: ' + result.newStage.name);
@@ -448,7 +483,7 @@ function renderHistory(c) {
       h(
         'div',
         { class: 'gym-log__exercises' },
-        log.exercises.map((ex) => h('div', {}, h('strong', {}, ex.name), ': ', ex.sets.map((s) => `${s.weight}kg×${s.reps}`).join(', '))),
+        log.exercises.map((ex) => h('div', {}, h('strong', {}, ex.name), ex.step ? ` (step ${ex.step})` : '', ': ', ex.sets.map((s) => `${s.weight}kg×${s.reps}`).join(', '))),
       ),
     ),
   );

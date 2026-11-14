@@ -3,7 +3,8 @@
 // No Notion token, ever.
 //
 //   workoutLogs   [{ id, date: "YYYY-MM-DD", day: "Upper A" | "Day A"…, mode: "gym"|"home",
-//                    exercises: [{ name, sets: [{ weight, reps }] }] }]   newest first
+//                    exercises: [{ name, step?, sets: [{ weight, reps }] }] }]   newest first
+//                    step: a ladder exercise's step, 1-based (optional, v3)
 //   proteinLogs   { "YYYY-MM-DD": [{ name, grams }] }
 //   checkIns      [{ date, weight, cals (number|null), notes }]           oldest first
 //   myFoods       [{ name, protein }]
@@ -85,6 +86,9 @@ export function validate(data) {
         }
         if (ex.sets.some((s) => !isObject(s) || !nonNegative(s.weight) || !nonNegative(s.reps))) {
           problems.push(`${where}, ${ex.name}: weights and reps must be numbers of 0 or more`);
+        }
+        if (ex.step !== undefined && !(Number.isInteger(ex.step) && ex.step >= 1)) {
+          problems.push(`${where}, ${ex.name}: the ladder step must be 1 or more`);
         }
       });
     });

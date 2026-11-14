@@ -38,7 +38,7 @@ const CURL_B = M(STAND, { e: [100, 60], w: [114, 46] });
  */
 export const DEMOS = {
   pushup: {
-    cue: 'Body in one straight line, chest to a fist above the floor. Too hard? Start with your hands on a table.',
+    cue: 'Body in one straight line, chest down to a fist above the floor (or the handles). Do the ladder step shown below.',
     query: 'push up proper form beginner',
     A: { f: [40, 123], k: [67, 112], hp: [95, 102], n: [148, 84], h: [160, 79], e: [149, 104], w: [150, 123] },
     B: { f: [40, 123], k: [67, 120], hp: [95, 116], n: [148, 110], h: [161, 107], e: [132, 106], w: [150, 123] },

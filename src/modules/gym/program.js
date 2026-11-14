@@ -110,11 +110,47 @@ export const HOME_PROGRAM = {
 const main = (name, reps, muscle, demo, load) => ({ name, sets: 3, reps, muscle, demo, load, part: "main" });
 const addOn = (name, reps, muscle, demo, load) => ({ name, sets: 3, reps, muscle, demo, load, part: "add" });
 
+// The ladders: one movement from easier to harder versions. Each session uses one step for all its sets;
+// when every set reaches the top of the rep range, move up a step. `start` is the first session's step.
+export const LADDERS = {
+  push: {
+    start: 3,
+    steps: [
+      "Incline push-up (hands on a table)",
+      "Push-up",
+      "Deficit push-up (hands on the dumbbells)",
+      "Feet-raised push-up (feet on a chair)",
+      "Archer push-up",
+      "One-arm push-up negative (lower in 5 s)"
+    ]
+  },
+  pike: {
+    start: 1,
+    steps: [
+      "Pike push-up",
+      "Feet-raised pike push-up (feet on a chair)",
+      "Deep feet-raised pike (hands on the dumbbells)",
+      "Wall handstand push-up negative (lower in 5 s)",
+      "Wall handstand push-up"
+    ]
+  },
+  dip: {
+    start: 2,
+    steps: [
+      "Chair dip, knees bent",
+      "Chair dip, legs straight",
+      "Feet-raised chair dip (feet on a second chair)",
+      "Feet-raised chair dip, plates on your lap (log their kg)"
+    ]
+  }
+};
+const ladder = (key, exercise) => ({ ...exercise, ladder: key });
+
 export const HOME_PLAN = {
   "Day A": {
     focus: "Push emphasis",
     exercises: [
-      main("Push-up ladder", "5–8", "Chest", "pushup"),
+      ladder("push", main("Push-up ladder", "5–8", "Chest", "pushup")),
       main("Bent-over dumbbell row", "10–15", "Back", "bentrow", "5 kg · both DBs, 2.5 each side"),
       main("Split squat", "8/leg", "Legs", "splitsquat"),
       main("Glute bridge", "10", "Glutes", "bridge"),
@@ -129,7 +165,7 @@ export const HOME_PLAN = {
   "Day B": {
     focus: "Shoulders + width",
     exercises: [
-      main("Pike push-up ladder", "5–8", "Shoulders", "pike"),
+      ladder("pike", main("Pike push-up ladder", "5–8", "Shoulders", "pike")),
       main("Floor pullover", "10–15", "Lats", "pullover", "7.5 kg · one DB, 2.5 + 1.25 each side"),
       main("Bulgarian split squat", "8/leg", "Legs", "bulgarian"),
       main("Single-leg Romanian deadlift", "10/leg", "Hamstrings", "slrdl", "0 kg at first, then 7.5 kg · one DB, 2.5 + 1.25 each side"),
@@ -144,7 +180,7 @@ export const HOME_PLAN = {
   "Day C": {
     focus: "Dips + back",
     exercises: [
-      main("Chair dip ladder", "8–12", "Triceps", "dip"),
+      ladder("dip", main("Chair dip ladder", "8–12", "Triceps", "dip")),
       main("One-arm dumbbell row", "8–12/side", "Back", "dbrow", "10 kg · one DB, 2.5 + 2.5 each side"),
       main("Slow squat", "12", "Legs", "squat"),
       main("Single-leg glute bridge", "10/leg", "Glutes", "slbridge"),

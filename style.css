@@ -302,6 +302,11 @@ summary { min-height: var(--tap); display: flex; align-items: center; cursor: po
 .gym-demo__body circle { fill: var(--text); }
 .gym-demo__db { fill: var(--accent); }
 .gym-demo__hold { fill: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; }
+.gym-step { margin-bottom: 0.625rem; }
+.gym-step__row { display: flex; align-items: center; gap: 0.5rem; }
+.gym-step__btn { min-width: var(--tap); margin: 0; font-size: 1.25rem; font-weight: 700; }
+.gym-step__name { flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: center; font-size: 0.875rem; }
+.gym-step__up { margin: 0.375rem 0 0; font-size: 0.8125rem; font-weight: 600; color: var(--good); }
 .gym-progress { background: var(--surface-2); border-radius: 0.25rem; height: 0.4rem; overflow: hidden; margin-top: 0.4rem; }
 .gym-progress__fill { height: 100%; background: var(--accent); border-radius: 0.25rem; transition: width 0.5s ease; }
 .gym-between { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
