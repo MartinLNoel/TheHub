@@ -11,7 +11,10 @@ figure for every exercise), a calf raise every day, loads as the kg to log, offi
 - **Decided 2026-11-14: a fresh start.** Martin's gainz-tracker history is months old and the gains are gone, so
   the Fighter and streak start at zero with the home plan. **No import** and **no side-by-side week**: item 3 below
   shrinks to "export gainz-tracker's data once, as an archive in `private/` (never imported), then retire it".
-- **Next build: the Fighter as a story** (Martin's brief, 2026-11-14): detailed pixel art; a fantasy world of frog
+- **Built 2026-11-14 (0.9.0): the Fighter as a story**, Season 1, 20 stages, real weather, plus a quote of the day.
+  `src/modules/gym/story/season1.js` and `docs/fighter/` are SPOILERS: never show Martin a locked stage. Martin's
+  first-run step: Settings → Fighter weather → his town (he named it on 2026-11-14; not written here, the repo is
+  public). Later seasons are new adventures (Martin: "seasons", "arcs"). The brief, kept for Season 2: detailed pixel art; a fantasy world of frog
   bounty hunters, where bounty hunting is the main income and hunters belong to classes with their own gear and
   abilities; the hero is a beginner who has chosen a class. Stage 1 introduces him, stage 2 shows his quest, the
   rest is the adventure; upgrades are gear as well as muscle; the order must surprise him, so **never show Martin
@@ -25,7 +28,10 @@ figure for every exercise), a calf raise every day, loads as the kg to log, offi
 - **Schema 3 and Q-8:** data saved by 0.8.1 or older migrates on first open, and under Q-8 that migration is
   blocked until backups are set up. Nothing was ever on the phone, so there the Gym starts fresh at version 3.
 - **Notion (Martin asked, 2026-11-14):** TheHub does not use Notion. Its only link is the one-time ISTQB progress
-  import (Part 6); gainz-tracker's Notion backups end when it retires.
+  import (Part 6); gainz-tracker's Notion backups end when it retires. **Done on Claude's side, 2026-11-14:** Notion
+  was checked (read-only): nothing newer than the October import; `private/istqb-progress.json` was rebuilt with today's
+  code (old copy: `private/istqb-progress.2026-10-17.json`) and passes the app's import check (summary in `private/istqb-notes.md`). What is left is Martin's: Settings → Import ISTQB progress on the phone,
+  after Part 1; then Notion is no longer needed.
 - **Ideas, not planned:** change the usual office days in the app (now: per week only, default Tue/Thu); a
   plates picker instead of kg.
 
