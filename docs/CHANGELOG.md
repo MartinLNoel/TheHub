@@ -2,6 +2,26 @@
 
 Dated entries, newest first.
 
+## 2026-11-14 — Gym: the home plan's additions (version 0.8.3)
+
+From Martin's review of the home plan. Branch `gym/home-plan-additions`, one commit per feature.
+
+- **Calf raise every day**: single-leg calf raise on the yoga block, by a wall, 3×15–20 per leg, in each day's
+  main block (now 7). Martin's goal now includes legs in proportion and a tight stomach; a test checks that every
+  day trains two leg moves, calves, core and lower abs.
+- **Loads as the kg to log** (Q-24 answered): Martin logs the plates on one dumbbell and ignores the handle. Each
+  load reads e.g. "5 kg · both DBs, 2.5 each side"; the day card says kg = plates on one dumbbell, bodyweight = 0,
+  holds = seconds in "reps".
+- **Office days** (Gym schema 3, migration 2 → 3): `officeDays` (usual, default Tuesday and Thursday) and
+  `officeWeeks` (a week's own list). A "This week" card on the Workout screen: a button per day to mark or unmark
+  an office day for this week, sessions and free days left, and a warning when the free days left are no more than
+  the sessions left. The Today card adds an office-day line and that warning. Nothing is blocked: any day can be
+  trained, weekends included (Martin's choice, 3 days in a row included).
+- **Ladder steps**: push-ups, pike push-ups
+  and chair dips record their step (`exercises[].step`, optional, validated); − and + on the Workout screen; a
+  nudge to move up after a session at the top of the range on every set; personal bests per step.
+- Tests: `gym-office-days.test.js`, `gym-ladders.test.js`, plus updates; 526 unit and 53 e2e tests pass locally.
+
 ## 2026-11-01 — Gym: the home plan with moving demonstrations (version 0.8.2)
 
 Martin trains at home now; with Claude he worked out a home plan (bodyweight plus his dumbbells, no
