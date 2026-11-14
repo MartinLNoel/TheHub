@@ -14,7 +14,7 @@ figure for every exercise), a calf raise every day, loads as the kg to log, offi
 - **Built 2026-11-14 (0.9.0): the Fighter as a story**, Season 1, 20 stages, real weather, plus a quote of the day.
   `src/modules/gym/story/season1.js` and `docs/fighter/` are SPOILERS: never show Martin a locked stage. Martin's
   first-run steps: Settings → Fighter weather → his town (he named it on 2026-11-14; not written here, the repo is
-  public), and Gym → Protein → his weight (no default since 0.9.1). Later seasons are new adventures (Martin: "seasons", "arcs"). The brief, kept for Season 2: detailed pixel art; a fantasy world of frog
+  public), and Gym → Protein → his weight (no default since 0.9.1). **All done 2026-11-15** (checked in the backup). Later seasons are new adventures (Martin: "seasons", "arcs"). The brief, kept for Season 2: detailed pixel art; a fantasy world of frog
   bounty hunters, where bounty hunting is the main income and hunters belong to classes with their own gear and
   abilities; the hero is a beginner who has chosen a class. Stage 1 introduces him, stage 2 shows his quest, the
   rest is the adventure; upgrades are gear as well as muscle; the order must surprise him, so **never show Martin
@@ -44,12 +44,17 @@ item unblocks most of the rest.
    (public) and `MartinLNoel/thehub-backup` (private) exist; the first CI run failed on a flaky test (fixed, see
    CHANGELOG), the second passed and deployed 0.9.1 to https://martinlnoel.github.io/TheHub/. Next: install it on
    the phone (first-run steps in the 2026-11-14 section above), then item 2.
-2. **Backups for real** (Part 3): the fine-grained token, the first backup, the restore drill; then decide Q-8
-   (block migrations without backups?) and Q-9. Do this before relying on TheHub for real data.
+2. ~~**Backups for real** (Part 3): the fine-grained token, the first backup, the restore drill~~ **Done
+   2026-11-15:** token set on the phone, manual backup, restore drill, safety backups before restore and import; the
+   latest backup was checked by Claude (cloned into the git-ignored `private/thehub-backup/`): it passes the app's
+   verification and holds no token. Still open: Q-8 and Q-9.
 3. **Gym move** (Part 4), **shortened 2026-11-14 (fresh start)**: gainz-tracker's `export-button` branch and one
    export, kept as an archive in `private/` and not imported; then Q-11 and gainz-tracker's retirement. Q-2, Q-10
    and Q-12 are moot unless Martin changes his mind.
-4. **ISTQB** (Part 6): import `private/istqb-progress.json` on the phone, answer Q-1, Q-15, Q-16, study in TheHub.
+4. **ISTQB** (Part 6): ~~import `private/istqb-progress.json` on the phone~~ **imported 2026-11-15** (the backup
+   after it matches the file exactly: sessions, answers, mastery, review queue, next lesson; Notion is no longer
+   needed). Still open: Q-1, Q-15, Q-16, and studying in TheHub. The uploaded copy of the file is still in
+   `thehub-backup` (Martin will delete it).
 5. **Ask Claude on the phone** (Q-13: which delivery works) and the study defaults (Q-14).
 6. **Fridge on the phone** (Part 8): the Diagnostics line and five real scans (Q-19, Q-20), then Q-21.
 7. **Bulgarian** (Part 7): the Diagnostics voice line and a 🔊 try (Q-22), the trainer defaults (Q-23), then the
