@@ -2,6 +2,17 @@
 
 Dated entries, newest first.
 
+## 2026-11-14 — The first push to GitHub; a flaky test fixed (no app change)
+
+- **First CI run on GitHub: the browser test "Settings → Ask Claude: choose the delivery" failed** (twice, with the
+  retry), while it passes on Martin's PC. Cause, in the test: it chose "Link" and reloaded at once; the app saves
+  first and only then marks the button, so on GitHub's slower runner the reload came before the save. Reproduced on
+  the PC by slowing the storage write (an init script that runs 400 reads before the write): the old test fails
+  with GitHub's exact error, the fixed one passes three times out of three. Fix: wait for the button to show the
+  choice before reloading. The other tests that reload already wait for a sign of the save.
+- CI now also reports failed browser tests as annotations on the run (`playwright.config.js`, "github" reporter):
+  the job logs need a login, the annotations do not.
+
 ## 2026-11-14 — No default body weight; personal details out of the public repo (version 0.9.1)
 
 - **No default body weight** (Gym schema 5, migration 4 → 5 keeps a stored weight): Martin's weight changes, so a

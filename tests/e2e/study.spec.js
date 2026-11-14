@@ -201,6 +201,9 @@ test('Settings → Ask Claude: choose the delivery and test each one', async ({ 
   await card.getByTestId('ask-test-link').click();
   expect((await page.evaluate(() => window.__opened))[0]).toMatch(/^https:\/\/claude\.ai\/new\?q=I'm%20studying/);
   await card.locator('[data-delivery-choice="link"]').click();
+  // The button shows the choice only once it is saved: wait for that before reloading, or a slow runner reloads
+  // first and the choice is lost (the first GitHub run failed this way, 2026-11-14).
+  await expect(card.locator('[data-delivery-choice="link"]')).toHaveAttribute('aria-pressed', 'true');
   await page.reload();
   await expect(page.locator('html[data-ready="true"]')).toBeAttached();
   await expect(page.getByTestId('ask-claude-settings').locator('[data-delivery-choice="link"]')).toHaveAttribute('aria-pressed', 'true');
