@@ -45,6 +45,9 @@ export function checkModule(mod) {
   if (mod.accept !== undefined && typeof mod.accept !== 'function') {
     problems.push('accept must be a function (or left out)');
   }
+  if (mod.settingsCard !== undefined && typeof mod.settingsCard !== 'function') {
+    problems.push('settingsCard must be a function (or left out)');
+  }
   if (mod.importers !== undefined) {
     if (!Array.isArray(mod.importers)) problems.push('importers must be a list (or left out)');
     else {
