@@ -111,12 +111,11 @@ const main = (name, reps, muscle, demo, load) => ({ name, sets: 3, reps, muscle,
 const addOn = (name, reps, muscle, demo, load) => ({ name, sets: 3, reps, muscle, demo, load, part: "add" });
 
 // The ladders: one movement from easier to harder versions. Each session uses one step for all its sets;
-// when every set reaches the top of the rep range, move up a step. `start` is the first session's step.
+// when every set reaches the top of the rep range, move up a step. Every ladder starts at its bottom step;
+// the regular push-up is the bottom of the push-up ladder (Martin's choice, 2026-11-14).
 export const LADDERS = {
   push: {
-    start: 3,
     steps: [
-      "Incline push-up (hands on a table)",
       "Push-up",
       "Deficit push-up (hands on the dumbbells)",
       "Feet-raised push-up (feet on a chair)",
@@ -125,7 +124,6 @@ export const LADDERS = {
     ]
   },
   pike: {
-    start: 1,
     steps: [
       "Pike push-up",
       "Feet-raised pike push-up (feet on a chair)",
@@ -135,7 +133,6 @@ export const LADDERS = {
     ]
   },
   dip: {
-    start: 2,
     steps: [
       "Chair dip, knees bent",
       "Chair dip, legs straight",

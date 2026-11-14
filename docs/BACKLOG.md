@@ -17,10 +17,15 @@ figure for every exercise), a calf raise every day, loads as the kg to log, offi
   rest is the adventure; upgrades are gear as well as muscle; the order must surprise him, so **never show Martin
   the stages ahead of time**. More than 10 stages (gainz's 10 ran to 120 sessions). Stage 1 sample (hero Tad, a Bogbrawler who
   fights with his fists, in the marsh town of Lilyhollow): https://claude.ai/artifact/QEUbKDm5f5WRKpYbiG1eBc, source
-  `docs/fighter/stage-1-sample.html` (canvas pixel art, 160 × 120). Waiting on Martin's verdict on the style. Replacing the 10 STAGES breaks
+  `docs/fighter/stage-1-sample.html` (canvas pixel art, 160 × 120). **Martin, 2026-11-14: "Art is perfect"; 20 stages make
+  Season 1, and later seasons are new adventures (arcs).** Two open choices before the build: real-life weather in
+  the scenes (proposal: Open-Meteo, free and keyless, with a town Martin sets, not GPS; cached for offline) and a
+  small motivational quote (Martin is to pick the kind of quotes he likes from examples). Replacing the 10 STAGES breaks
   the "identical to gainz-tracker" Fighter test on purpose; with the fresh start no stored stage needs mapping.
 - **Schema 3 and Q-8:** data saved by 0.8.1 or older migrates on first open, and under Q-8 that migration is
   blocked until backups are set up. Nothing was ever on the phone, so there the Gym starts fresh at version 3.
+- **Notion (Martin asked, 2026-11-14):** TheHub does not use Notion. Its only link is the one-time ISTQB progress
+  import (Part 6); gainz-tracker's Notion backups end when it retires.
 - **Ideas, not planned:** change the usual office days in the app (now: per week only, default Tue/Thu); a
   plates picker instead of kg.
 

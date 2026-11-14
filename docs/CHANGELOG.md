@@ -2,6 +2,16 @@
 
 Dated entries, newest first.
 
+## 2026-11-14 — Gym: Martin's review of the additions (version 0.8.4)
+
+Branch `gym/feedback-2026-11-14`.
+
+- **Office days no longer say "rest"** (Today card and the week card): Martin trains on an office day when the week
+  needs it. They still count as busy days for the "free days left" warning.
+- **Every ladder starts at its bottom step.** Correction: Martin did not say push-ups were too easy; the regular
+  push-up is where he wants to start. The incline push-up is gone (the push-up ladder has 5 steps), and the pike and
+  dip ladders start at step 1 too.
+
 ## 2026-11-14 — Gym: the home plan's additions (version 0.8.3)
 
 From Martin's review of the home plan. Branch `gym/home-plan-additions`, one commit per feature.
