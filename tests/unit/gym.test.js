@@ -191,7 +191,9 @@ describe('protein, foods and check-ins', () => {
 describe('Today card', () => {
   it('fresh: Upper A, 0/3, all protein left, no streak, one tap to log', () => {
     const card = todayCard(defaultData(), WED);
-    expect(card.lines).toEqual(['Today: Upper A — Push + Pull', 'This week: 0/3 sessions', 'Protein: 135g left today', 'Streak: 0 weeks']);
+    expect(card.lines.slice(0, 4)).toEqual(['Today: Upper A — Push + Pull', 'This week: 0/3 sessions', 'Protein: 135g left today', 'Streak: 0 weeks']);
+    expect(card.lines[4]).toMatch(/^💬 “/); // the quote of the day
+    expect(card.lines).toHaveLength(5);
     expect(card.action).toEqual({ label: 'Log workout', route: 'gym/log' });
   });
 

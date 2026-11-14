@@ -50,6 +50,7 @@ const PRECACHE = [
   'src/modules/gym/index.js',
   'src/modules/gym/logic.js',
   'src/modules/gym/program.js',
+  'src/modules/gym/quotes.js',
   'src/modules/gym/screens.js',
   'src/modules/istqb/import.js',
   'src/modules/istqb/index.js',

@@ -96,13 +96,13 @@ describe('the Today card', () => {
   it('an office day does not tell you to rest: any day can be trained', () => {
     const card = todayCard(home(), TUE);
     expect(card.lines[0]).toBe('Today: Day A — Push emphasis');
-    expect(card.lines.join(' ')).not.toMatch(/office|rest/i);
-    expect(card.lines).toHaveLength(4);
+    expect(card.lines.slice(0, 4).join(' ')).not.toMatch(/office|rest/i);
+    expect(card.lines).toHaveLength(5); // the four lines and the quote
   });
 
   it('adds the warning when the week is tight, and nothing extra on a normal day', () => {
     expect(todayCard(home(), SAT).lines.at(-1)).toBe('⚠ 3 sessions left, 2 free days: an office day will have to count.');
-    expect(todayCard(home(), WED).lines).toHaveLength(4);
+    expect(todayCard(home(), WED).lines).toHaveLength(5); // the four lines and the quote
   });
 });
 
