@@ -34,6 +34,7 @@ describe('the Workout screen on the home plan', () => {
     expect([...root.querySelectorAll('.gym-part')].map((p) => p.textContent)).toEqual(['Main block', 'Arm + shoulder add-on']);
     expect(root.querySelector('.gym-ex__load').textContent).toMatch(/^Start: /);
     expect(root.textContent).toContain('HOME PLAN · DAY 1 OF 3');
+    expect(root.querySelector('[data-testid="gym-kg-note"]').textContent).toMatch(/^kg = the plates on one dumbbell, not the handle/);
   });
 
   it('has no GYM/HOME version toggle and no Phase 2 prompt', () => {
@@ -46,6 +47,7 @@ describe('the Workout screen on the home plan', () => {
     const { root } = mountWorkout(defaultData());
     expect(root.querySelector('[data-testid="gym-day"]').textContent).toBe('Upper A');
     expect(root.querySelector('svg.gym-demo')).toBeNull();
+    expect(root.querySelector('[data-testid="gym-kg-note"]')).toBeNull();
     expect(root.querySelector('[data-testid="mode-home"]')).not.toBeNull();
   });
 

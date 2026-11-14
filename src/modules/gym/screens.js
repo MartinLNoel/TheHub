@@ -336,6 +336,9 @@ function renderWorkout(c) {
       h('div', { class: 'gym-day-badge', 'data-testid': 'gym-day' }, dayName),
       h('div', { class: 'gym-day-name' }, workout.focus),
       h('div', { class: 'gym-day-sub' }, dayOfPlan),
+      home
+        ? h('p', { class: 'muted gym-small', 'data-testid': 'gym-kg-note' }, 'kg = the plates on one dumbbell, not the handle · bodyweight = 0 · holds: seconds in "reps"')
+        : null,
       exercises,
     ),
     h(

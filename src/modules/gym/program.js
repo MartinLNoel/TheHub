@@ -97,7 +97,8 @@ export const HOME_WORKOUTS = {
 // The home plan (2026-11-01, Martin has no gym now): full body 3×/week, bodyweight and dumbbells only,
 // no jumping (quiet, for the neighbours). Agreed with Martin in a coaching session; the plan page is
 // https://claude.ai/artifact/BLU6hUP38wvW7JVsByjYY3. `demo` names the figure in demos.js; `load` is
-// the starting dumbbell load as plates per side (2 handles, 4 × 1.25 kg and 4 × 2.5 kg plates);
+// the starting load: the kg to log (the plates on one dumbbell; Martin does not count the handle) and the plates
+// per side (2 handles, 4 × 1.25 kg and 4 × 2.5 kg plates);
 // `part` splits the main block from the arm + shoulder add-on. 2026-11-14: a calf raise every day, so the
 // legs stay in proportion (Martin's goal: big arms, round shoulders, wide back, proportionate legs, tight stomach).
 export const HOME_PROGRAM = {
@@ -114,45 +115,45 @@ export const HOME_PLAN = {
     focus: "Push emphasis",
     exercises: [
       main("Push-up ladder", "5–8", "Chest", "pushup"),
-      main("Bent-over dumbbell row", "10–15", "Back", "bentrow", "Both DBs · 2.5 each side"),
+      main("Bent-over dumbbell row", "10–15", "Back", "bentrow", "5 kg · both DBs, 2.5 each side"),
       main("Split squat", "8/leg", "Legs", "splitsquat"),
       main("Glute bridge", "10", "Glutes", "bridge"),
       main("Single-leg calf raise", "15–20/leg", "Calves", "calf"),
       main("Plank", "30–60s", "Core", "plank"),
       main("Reverse crunch", "10–15", "Lower abs", "revcrunch"),
-      addOn("Dumbbell curl", "8–12", "Biceps", "curl", "Both DBs · 2.5 each side"),
-      addOn("Overhead triceps extension", "10–15", "Triceps", "ohtri", "One DB · 2.5 + 1.25 each side"),
-      addOn("Lateral raise", "12–20", "Shoulders", "lateral", "Both DBs · 1.25 each side")
+      addOn("Dumbbell curl", "8–12", "Biceps", "curl", "5 kg · both DBs, 2.5 each side"),
+      addOn("Overhead triceps extension", "10–15", "Triceps", "ohtri", "7.5 kg · one DB, 2.5 + 1.25 each side"),
+      addOn("Lateral raise", "12–20", "Shoulders", "lateral", "2.5 kg · both DBs, 1.25 each side")
     ]
   },
   "Day B": {
     focus: "Shoulders + width",
     exercises: [
       main("Pike push-up ladder", "5–8", "Shoulders", "pike"),
-      main("Floor pullover", "10–15", "Lats", "pullover", "One DB · 2.5 + 1.25 each side"),
+      main("Floor pullover", "10–15", "Lats", "pullover", "7.5 kg · one DB, 2.5 + 1.25 each side"),
       main("Bulgarian split squat", "8/leg", "Legs", "bulgarian"),
-      main("Single-leg Romanian deadlift", "10/leg", "Hamstrings", "slrdl", "Bodyweight first, then one DB · 2.5 + 1.25 each side"),
+      main("Single-leg Romanian deadlift", "10/leg", "Hamstrings", "slrdl", "0 kg at first, then 7.5 kg · one DB, 2.5 + 1.25 each side"),
       main("Single-leg calf raise", "15–20/leg", "Calves", "calf"),
       main("Side plank", "30–45s/side", "Core", "sideplank"),
       main("Lying leg raise", "8–12", "Lower abs", "legraise"),
-      addOn("Hammer curl", "8–12", "Biceps", "hammer", "Both DBs · 2.5 each side"),
-      addOn("Triceps kickback", "12–15", "Triceps", "kickback", "Both DBs · 1.25 each side"),
-      addOn("Rear delt fly", "15–20", "Rear delts", "reardelt", "Both DBs · 1.25 each side")
+      addOn("Hammer curl", "8–12", "Biceps", "hammer", "5 kg · both DBs, 2.5 each side"),
+      addOn("Triceps kickback", "12–15", "Triceps", "kickback", "2.5 kg · both DBs, 1.25 each side"),
+      addOn("Rear delt fly", "15–20", "Rear delts", "reardelt", "2.5 kg · both DBs, 1.25 each side")
     ]
   },
   "Day C": {
     focus: "Dips + back",
     exercises: [
       main("Chair dip ladder", "8–12", "Triceps", "dip"),
-      main("One-arm dumbbell row", "8–12/side", "Back", "dbrow", "One DB · 2.5 + 2.5 each side"),
+      main("One-arm dumbbell row", "8–12/side", "Back", "dbrow", "10 kg · one DB, 2.5 + 2.5 each side"),
       main("Slow squat", "12", "Legs", "squat"),
       main("Single-leg glute bridge", "10/leg", "Glutes", "slbridge"),
       main("Single-leg calf raise", "15–20/leg", "Calves", "calf"),
       main("Hollow hold", "20–30s", "Core", "hollow"),
       main("Dead bug", "8/side", "Lower abs", "deadbug"),
-      addOn("Concentration curl", "8–12/arm", "Biceps", "conc", "One DB · 2.5 each side"),
-      addOn("Floor skull crusher", "10–15", "Triceps", "skull", "Both DBs · 1.25 each side"),
-      addOn("Lateral raise", "12–20", "Shoulders", "lateral", "Both DBs · 1.25 each side")
+      addOn("Concentration curl", "8–12/arm", "Biceps", "conc", "5 kg · one DB, 2.5 each side"),
+      addOn("Floor skull crusher", "10–15", "Triceps", "skull", "2.5 kg · both DBs, 1.25 each side"),
+      addOn("Lateral raise", "12–20", "Shoulders", "lateral", "2.5 kg · both DBs, 1.25 each side")
     ]
   }
 };

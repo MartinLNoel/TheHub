@@ -38,12 +38,18 @@ describe('the plan data', () => {
     expect(JSON.stringify(HOME_PLAN)).not.toMatch(/band|towel|jump/i);
   });
 
-  it('starting loads are only settings the plates allow (2 × 1.25 and 2 × 2.5 per side at most)', () => {
-    const allowed = /^(Both DBs|One DB) · (1\.25|2\.5|2\.5 \+ 1\.25|2\.5 \+ 2\.5) each side$/i;
-    for (const ex of all.filter((e) => e.load)) {
-      const load = ex.load.replace(/^Bodyweight first, then /, '');
-      expect(load, ex.name).toMatch(allowed);
-      if (load.startsWith('Both DBs')) expect(load, `${ex.name}: a pair cannot both have two 2.5s per side`).not.toContain('2.5 + 2.5');
+  it('starting loads are settings the plates allow, and the kg to log is the plates on one dumbbell', () => {
+    const shape = /^(\d+(?:\.\d+)?) kg · (both DBs|one DB), (1\.25|2\.5|2\.5 \+ 1\.25|2\.5 \+ 2\.5) each side$/;
+    const loads = all.filter((e) => e.load);
+    expect(loads).toHaveLength(13);
+    for (const ex of loads) {
+      const load = ex.load.replace(/^0 kg at first, then /, '');
+      const m = load.match(shape);
+      expect(m, `${ex.name}: ${ex.load}`).not.toBeNull();
+      const perSide = m[3].split(' + ').reduce((sum, p) => sum + Number(p), 0);
+      expect(Number(m[1]), `${ex.name}: kg is both sides' plates`).toBe(perSide * 2);
+      // 2 × 2.5 kg per side uses all four 2.5 kg plates: only one dumbbell can have that
+      if (m[2] === 'both DBs') expect(m[3], ex.name).not.toBe('2.5 + 2.5');
     }
   });
 });
