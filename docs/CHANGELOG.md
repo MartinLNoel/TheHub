@@ -2,6 +2,17 @@
 
 Dated entries, newest first.
 
+## 2026-11-14 — No default body weight; personal details out of the public repo (version 0.9.1)
+
+- **No default body weight** (Gym schema 5, migration 4 → 5 keeps a stored weight): Martin's weight changes, so a
+  fresh Gym has none. Until he enters it (Protein tab, now at the top while it is missing, or a weekly check-in), the
+  app asks for it instead of showing a protein target; an empty or nonsense entry keeps the weight there was.
+- **Before the first push, the whole history was cleaned** (all branches, files and commit messages, with
+  `git filter-branch`): personal details earlier sessions had written into docs and comments were removed or made
+  neutral (study results, routine and life details, Notion links, a wrong claim about push-ups). The details that matter for the study system moved to the git-ignored
+  `private/istqb-notes.md`; a backup of the history before the cleanup is in `private/` (git-ignored). Rule kept in
+  `CLAUDE.md`: never commit personal data; the repo is public.
+
 ## 2026-11-14 — The story Fighter, real weather, a quote of the day (version 0.9.0)
 
 Branch `gym/story-fighter`. No plot here on purpose: Martin wants the story to surprise him.
