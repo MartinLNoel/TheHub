@@ -40,8 +40,10 @@ figure for every exercise), a calf raise every day, loads as the kg to log, offi
 Part 7's book-free half was the last part that could be built without you. Everything below needs you; the first
 item unblocks most of the rest.
 
-1. **Part 1: create the two GitHub repos and push `main`** (Q-3). Nothing is online, CI has never run, and every
-   phone check below waits for it.
+1. ~~**Part 1: create the two GitHub repos and push `main`** (Q-3).~~ **Done 2026-11-14:** `MartinLNoel/TheHub`
+   (public) and `MartinLNoel/thehub-backup` (private) exist; the first CI run failed on a flaky test (fixed, see
+   CHANGELOG), the second passed and deployed 0.9.1 to https://martinlnoel.github.io/TheHub/. Next: install it on
+   the phone (first-run steps in the 2026-11-14 section above), then item 2.
 2. **Backups for real** (Part 3): the fine-grained token, the first backup, the restore drill; then decide Q-8
    (block migrations without backups?) and Q-9. Do this before relying on TheHub for real data.
 3. **Gym move** (Part 4), **shortened 2026-11-14 (fresh start)**: gainz-tracker's `export-button` branch and one
