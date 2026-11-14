@@ -1,6 +1,8 @@
 // The Gym program data, copied unchanged from gainz-tracker (app.js, "DATA" and "FIGHTER").
 // Keep it identical to gainz-tracker: these are Martin's program rules (see the coaching guide in Notion).
 // HOME_PROGRAM and HOME_PLAN, below, are TheHub's own: the home plan, chosen with the program switch.
+// STAGES (the Fighter) is TheHub's own too, since 2026-11-14.
+import { SEASON_1 } from './story/season1.js';
 
 export const PROGRAM = {
   phase1: {
@@ -202,18 +204,9 @@ export const QUICK_FOODS = [
   { name: "Milk 250ml", protein: 8 }
 ];
 
-export const STAGES = [
-  { id: 0, sessions: 0,  name: "THE BEGINNER",    icon: "🧍", title: "Day One",        desc: "Every legend starts here." },
-  { id: 1, sessions: 5,  name: "THE RECRUIT",     icon: "💪", title: "5 Sessions",     desc: "You showed up. Keep going." },
-  { id: 2, sessions: 10, name: "THE GRINDER",     icon: "🔩", title: "10 Sessions",    desc: "Discipline over motivation." },
-  { id: 3, sessions: 18, name: "THE CONTENDER",   icon: "🥊", title: "18 Sessions",    desc: "Phase 1 complete. You earned this." },
-  { id: 4, sessions: 25, name: "THE IRON",        icon: "⚙️", title: "25 Sessions",    desc: "The bar knows your name now." },
-  { id: 5, sessions: 35, name: "THE MACHINE",     icon: "🤖", title: "35 Sessions",    desc: "Routine is your superpower." },
-  { id: 6, sessions: 50, name: "THE VETERAN",     icon: "🏆", title: "50 Sessions",    desc: "Half a century. Respect." },
-  { id: 7, sessions: 70, name: "THE WARRIOR",     icon: "⚔️", title: "70 Sessions",    desc: "Built in the dark, seen in the light." },
-  { id: 8, sessions: 90, name: "THE TITAN",       icon: "🌋", title: "90 Sessions",    desc: "Three months of relentless work." },
-  { id: 9, sessions: 120,"name": "THE LEGEND",    icon: "👑", title: "120 Sessions",   desc: "You are the person you set out to become." },
-];
+// The Fighter's stages: Season 1 of the story (story/season1.js, spoilers). They replaced gainz-tracker's
+// 10 stages on 2026-11-14, when Martin started fresh; stages are still earned by total sessions, never lost.
+export const STAGES = SEASON_1.map((st, id) => ({ id, sessions: st.sessions, name: st.name, icon: st.icon, title: st.title, desc: st.desc }));
 
 // gainz-tracker's default "My Foods" for a fresh start (app.js, STATE).
 export const DEFAULT_MY_FOODS = [

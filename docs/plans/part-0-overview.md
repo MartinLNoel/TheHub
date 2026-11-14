@@ -126,6 +126,7 @@ export default {
                                 // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
   todayCard: (data) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
   accept: (item, data) => newData | null, // optional (Part 8): take an item another module offers (below)
+  settingsCard: ({ data, readOnly, save }) => Node | null, // optional (2026-11-14): a card in Settings; save(next) validates and saves
   importers: [                  // optional (Part 4): bring data in from another app, shown in Settings
     { id, title, description, prepare: (text, currentData) => ({ ok, problems, summary, data, nothingNew }),
       findLocal: () => text | null, localLabel }   // findLocal/localLabel optional

@@ -51,12 +51,12 @@ describe('screens render', () => {
     expect(root.textContent).toContain('<img src=x onerror=alert(1)>');
   });
 
-  it('the Fighter shows the 10 stages and the current one', () => {
+  it('the Fighter shows the 20 stages of Season 1 and the current one, as a story scene', () => {
     const imported = gym.importers[0].prepare(FIXTURE, defaultData()).data; // 5 workouts: stage 2
     const { root } = mountRoute('fighter', imported);
-    expect(root.querySelectorAll('.gym-stage')).toHaveLength(10);
-    expect(root.querySelector('[data-testid="gym-stage-name"]').textContent).toBe('THE RECRUIT');
-    expect(root.querySelector('[data-testid="gym-fighter-char"] svg')).not.toBeNull();
+    expect(root.querySelectorAll('.gym-stage')).toHaveLength(20);
+    expect(root.querySelector('[data-testid="gym-stage-label"]').textContent).toBe('SEASON 1 · STAGE 2 OF 20');
+    expect(root.querySelector('[data-testid="gym-fighter-char"] canvas.gym-story').dataset.stage).toBe('2');
   });
 });
 

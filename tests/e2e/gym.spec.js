@@ -49,7 +49,7 @@ test('log a workout: it shows on Today and in History, and survives a reload', a
 
   // The next Upper A pre-fills from this one; the Today tab of the module is one tap away.
   await page.goto('./#/gym/fighter');
-  await expect(page.getByTestId('gym-stage-name')).toHaveText('THE BEGINNER');
+  await expect(page.getByTestId('gym-stage-label')).toHaveText('SEASON 1 · STAGE 1 OF 20');
 });
 
 test('an empty workout is not saved', async ({ page }) => {
@@ -113,7 +113,7 @@ test('import from gainz-tracker: preview, import, and importing again adds nothi
   await page.getByTestId('import-gym-gainz-tracker').setInputFiles({ name: 'gainz-backup.json', mimeType: 'application/json', buffer: Buffer.from(FIXTURE) });
 
   const summary = page.getByTestId('module-import-summary');
-  await expect(summary).toContainText('In the file: 5 workouts, 2 protein days, 2 check-ins, fighter stage 2 of 10 (THE RECRUIT).');
+  await expect(summary).toContainText('In the file: 5 workouts, 2 protein days, 2 check-ins, fighter stage 2 of 20.');
   await expect(page.getByTestId('module-import-confirm')).toContainText('Backups are not set up');
   await page.getByTestId('module-import-apply').click();
   await expect(page.getByTestId('module-import-done')).toBeVisible();
@@ -121,7 +121,7 @@ test('import from gainz-tracker: preview, import, and importing again adds nothi
   await page.goto('./#/gym/history');
   await expect(page.getByTestId('gym-log-entry')).toHaveCount(5);
   await page.goto('./#/gym/fighter');
-  await expect(page.getByTestId('gym-stage-name')).toHaveText('THE RECRUIT');
+  await expect(page.getByTestId('gym-stage-label')).toHaveText('SEASON 1 · STAGE 2 OF 20');
   await page.goto('./#/gym/checkin');
   await expect(page.getByTestId('gym-checkin-entry')).toHaveCount(2);
 
@@ -201,6 +201,61 @@ test('home plan: fits the phone width and its links and buttons are 48 px', asyn
     expect(box.height, await targets.nth(i).textContent()).toBeGreaterThanOrEqual(48);
   }
   await page.screenshot({ path: 'test-results/home-plan.png', fullPage: true });
+});
+
+// A fake Open-Meteo: the tests never reach the real weather service. "Testville" is made up.
+async function fakeWeather(page, code) {
+  await page.route('https://geocoding-api.open-meteo.com/**', (route) =>
+    route.fulfill({ json: { results: [{ name: 'Testville', admin1: 'North', country: 'Nowhere', latitude: 10.5, longitude: 20.25 }] } }),
+  );
+  await page.route('https://api.open-meteo.com/**', (route) => route.fulfill({ json: { current: { weather_code: code, is_day: 1, temperature_2m: -1 } } }));
+}
+
+test('the Fighter draws the story scene, with its chapter, and moves', async ({ page }) => {
+  await open(page, '#/gym/fighter');
+  const scene = page.locator('canvas.gym-story');
+  await expect(scene).toHaveAttribute('data-stage', '1');
+  await expect(page.getByTestId('gym-chapter')).toContainText('Chapter 1');
+  const drawn = () => scene.evaluate((cv) => {
+    const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data;
+    let filled = 0;
+    let sum = 0;
+    for (let i = 3; i < d.length; i += 4) if (d[i] > 0) filled++;
+    for (let i = 0; i < d.length; i += 97) sum += d[i];
+    return { filled, sum };
+  });
+  const first = await drawn();
+  expect(first.filled).toBe(160 * 120); // every pixel painted
+  await expect.poll(async () => (await drawn()).sum, { timeout: 3000 }).not.toBe(first.sum); // rain falls
+  // the next stage is locked: no scene, no story
+  await page.getByRole('button', { name: 'Next stage' }).click();
+  await expect(page.getByTestId('gym-story-locked')).toContainText('Unlocks at 3 sessions');
+  await expect(page.locator('canvas.gym-story')).toHaveCount(0);
+});
+
+test('Settings → Fighter weather: find a town, and the story shows its weather', async ({ page }) => {
+  await fakeWeather(page, 73); // snow
+  await open(page, '#/settings');
+  const card = page.getByTestId('weather-card');
+  await expect(card).toContainText('No town set');
+  await page.getByTestId('weather-town-input').fill('Testville');
+  await page.getByTestId('weather-search').click();
+  await card.getByRole('button', { name: 'Testville, North, Nowhere' }).click();
+  await expect(page.getByTestId('weather-status')).toHaveText('Saved. The story now follows the weather in Testville.');
+
+  await page.goto('./#/gym/fighter');
+  await expect(page.getByTestId('gym-weather')).toHaveText('🌦 Weather from Testville: snow, -1°C');
+  await expect(page.locator('canvas.gym-story')).toHaveAttribute('data-weather', /overcast snow/);
+
+  await page.reload();
+  await expect(page.locator('html[data-ready="true"]')).toBeAttached();
+  await page.goto('./#/settings');
+  await expect(page.getByTestId('weather-town')).toHaveText('Town: Testville, North, Nowhere');
+});
+
+test('the Today card has a quote of the day', async ({ page }) => {
+  await open(page);
+  await expect(gymCard(page)).toContainText('💬 \u201c');
 });
 
 test('every Gym screen fits the phone width and has 48 px touch targets', async ({ page }) => {

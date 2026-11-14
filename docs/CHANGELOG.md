@@ -2,6 +2,29 @@
 
 Dated entries, newest first.
 
+## 2026-11-14 — The story Fighter, real weather, a quote of the day (version 0.9.0)
+
+Branch `gym/story-fighter`. No plot here on purpose: Martin wants the story to surprise him.
+
+- **core: `settingsCard`** (module contract): a module may add a card to Settings; `save(next)` runs the module's
+  `validate`, saves and updates the app's copy, refuses read-only data; a card that throws shows as a warning.
+- **Quote of the day** on the Gym's Today card (`quotes.js`): 23 quotes in the five kinds Martin picked (calm
+  discipline, fighters, sayings from the story's world, dry humour, small steps), the same all day.
+- **The Fighter is Season 1 of a story** (`src/modules/gym/story/`, SPOILERS): 20 stages from 0 to 140 sessions
+  replace gainz-tracker's 10. Each stage is a 160 × 120 pixel-art scene drawn in code (pixel engine, characters,
+  places, `season1.js` with the chapters, a renderer with animated weather), shown with its chapter only once
+  unlocked; locked stages show neither picture nor name. The hero's gear and muscle grow with the story. The old SVG
+  fighter (`fighter.js`) is gone; the gainz parity tests no longer cover stages, and the gainz import preview no
+  longer names a stage.
+- **Real weather** (`story/weather.js`, `weather-settings.js`): Settings → Fighter weather finds a town by name
+  (Open-Meteo, free, no key); outdoor scenes then show its rain, drizzle, snow, fog, thunder and day, dusk or night
+  (indoor scenes through the window). Only the town's position (rounded to about 1 km) is sent; the last reading is
+  cached on the phone for 30 minutes and used offline. **Gym schema 4**: `weatherTown` (migration 3 → 4: none).
+- Tests: `module-settings`, `gym-quotes`, `gym-fighter` (every stage drawn in four weathers, no gaps), e2e for the
+  scene (every pixel painted, the rain moves, locked stages hidden), the town search (fake Open-Meteo) and the quote.
+  570 unit and 56 e2e tests pass locally. Every commit on the branch passes the unit tests on its own.
+- The ISTQB Notion transfer file was rebuilt (`private/istqb-progress.json`, git-ignored): Notion has nothing newer (checked 2026-11-14, read-only), and the file passes the app's import check.
+
 ## 2026-11-14 — Gym: Martin's review of the additions (version 0.8.4)
 
 Branch `gym/feedback-2026-11-14`.

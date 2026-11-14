@@ -5,11 +5,14 @@ import { findGainzOnThisPhone, prepareGainzImport } from './import.js';
 import {
   currentDayName, getStreak, isHomePlan, proteinTarget, sessionsThisWeek, targetSessions, todayProtein, weekStatus, workoutFor,
 } from './logic.js';
+import { quoteFor, quoteLine } from './quotes.js';
 import { routes } from './screens.js';
+import { weatherSettingsCard } from './weather-settings.js';
 
 /**
  * Today's card: the planned workout (or a rest day once the week's target is met), the week, protein,
- * streak; then a warning when the week has no room left. Office days only count as busy days: any day can be trained.
+ * streak, a quote for the day; then a warning when the week has no room left. Office days only count as busy
+ * days: any day can be trained.
  */
 export function todayCard(data, now = new Date()) {
   if (!data) return null;
@@ -34,6 +37,7 @@ export function todayCard(data, now = new Date()) {
       `This week: ${done}/${target} sessions`,
       left > 0 ? `Protein: ${left}g left today` : 'Protein: target hit today ✅',
       `Streak: ${streak} week${streak === 1 ? '' : 's'}${streak > 0 ? ' 🔥' : ''}`,
+      quoteLine(quoteFor(now.toISOString().split('T')[0])),
       week.warning,
     ].filter(Boolean),
     action: { label: 'Log workout', route: 'gym/log' },
@@ -50,6 +54,7 @@ export default {
   validate,
   routes,
   todayCard: (data) => todayCard(data),
+  settingsCard: (api) => weatherSettingsCard(api),
   importers: [
     {
       id: 'gainz-tracker',

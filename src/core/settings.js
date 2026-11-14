@@ -1,4 +1,4 @@
-// Settings screen (#/settings): theme, backup, export and import, module importers and diagnostics.
+// Settings screen (#/settings): theme, backup, export and import, module settings and importers, diagnostics.
 import { h, mount } from './dom.js';
 import { applyImport, countItems, downloadJSON, exportAll, readImport } from './transfer.js';
 import { assertNoSecret } from './backup.js';
@@ -22,6 +22,37 @@ export async function loadSettings(storage) {
 
 export async function saveSettings(storage, settings) {
   await storage.setCore('settings', settings);
+}
+
+/**
+ * The Settings cards modules add with `settingsCard({ data, readOnly, save })`. save(next) checks the
+ * module's validate, saves and updates the app's copy; it throws (with the reason) when it cannot.
+ */
+export function moduleSettingsCards(ctx) {
+  const cards = [];
+  for (const mod of ctx.registry.list()) {
+    if (typeof mod.settingsCard !== 'function') continue;
+    const entry = ctx.state[mod.id];
+    if (!entry || entry.data === null || entry.data === undefined) continue;
+    const api = {
+      data: structuredClone(entry.data),
+      readOnly: Boolean(entry.readOnly),
+      save: async (next) => {
+        if (entry.readOnly) throw new Error(`${mod.name} cannot be changed until the app updates.`);
+        const problems = mod.validate(next) || [];
+        if (problems.length) throw new Error(problems.join('; '));
+        await ctx.storage.save(mod, next);
+        entry.data = next;
+      },
+    };
+    try {
+      const card = mod.settingsCard(api);
+      if (card) cards.push(card);
+    } catch (err) {
+      cards.push(h('section', { class: 'card card--warn' }, h('h2', {}, `${mod.icon} ${mod.name}`), h('p', {}, `This card could not be shown: ${err.message}`)));
+    }
+  }
+  return cards;
 }
 
 function formatCounts(counts) {
@@ -121,6 +152,7 @@ export async function renderSettings(root, ctx) {
         fileInput,
         status,
       ),
+      moduleSettingsCards(ctx),
       importerCards(root, ctx, () => renderSettings(root, ctx)),
       diagnosticsCard(),
       h('p', { class: 'muted' }, `TheHub version ${ctx.appVersion}`),

@@ -74,7 +74,7 @@ describe('import into a fresh Gym', () => {
     const prepared = prepareGainzImport(FIXTURE, defaultData());
     expect(prepared.ok).toBe(true);
     expect(prepared.nothingNew).toBe(false);
-    expect(prepared.summary[0]).toBe('In the file: 5 workouts, 2 protein days, 2 check-ins, fighter stage 2 of 10 (THE RECRUIT).');
+    expect(prepared.summary[0]).toBe('In the file: 5 workouts, 2 protein days, 2 check-ins, fighter stage 2 of 20.');
     expect(prepared.summary[1]).toBe('New for TheHub: 5 workouts, 2 protein days (4 items), 2 check-ins, 1 saved food.');
     expect(prepared.data.workoutLogs.map((l) => l.id)).toEqual(raw().workoutLogs.map((l) => l.id)); // newest first, same order
     expect(prepared.data.myFoods).toEqual(raw().myFoods);

@@ -20,7 +20,7 @@ const flush = () => new Promise((r) => setTimeout(r, 0));
 
 describe('schema 3', () => {
   it('a fresh store has Tuesday and Thursday as office days, and is valid', () => {
-    expect(SCHEMA_VERSION).toBe(3);
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(3);
     expect(DEFAULT_OFFICE_DAYS).toEqual([2, 4]);
     expect(defaultData()).toMatchObject({ officeDays: [2, 4], officeWeeks: {} });
     expect(validate(defaultData())).toEqual([]);
@@ -96,13 +96,13 @@ describe('the Today card', () => {
   it('an office day does not tell you to rest: any day can be trained', () => {
     const card = todayCard(home(), TUE);
     expect(card.lines[0]).toBe('Today: Day A — Push emphasis');
-    expect(card.lines.join(' ')).not.toMatch(/office|rest/i);
-    expect(card.lines).toHaveLength(4);
+    expect(card.lines.slice(0, 4).join(' ')).not.toMatch(/office|rest/i);
+    expect(card.lines).toHaveLength(5); // the four lines and the quote
   });
 
   it('adds the warning when the week is tight, and nothing extra on a normal day', () => {
     expect(todayCard(home(), SAT).lines.at(-1)).toBe('⚠ 3 sessions left, 2 free days: an office day will have to count.');
-    expect(todayCard(home(), WED).lines).toHaveLength(4);
+    expect(todayCard(home(), WED).lines).toHaveLength(5); // the four lines and the quote
   });
 });
 
