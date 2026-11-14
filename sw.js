@@ -44,6 +44,7 @@ const PRECACHE = [
   'src/core/study/screens.js',
   'src/core/study/session.js',
   'src/modules/gym/data.js',
+  'src/modules/gym/demos.js',
   'src/modules/gym/fighter.js',
   'src/modules/gym/import.js',
   'src/modules/gym/index.js',
