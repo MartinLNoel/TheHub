@@ -20,9 +20,18 @@ describe('the plan data', () => {
     expect(HOME_PROGRAM.days).toEqual(Object.keys(HOME_PLAN));
     for (const day of HOME_PROGRAM.days) {
       const parts = HOME_PLAN[day].exercises.map((ex) => ex.part);
-      expect(parts).toEqual([...Array(6).fill('main'), ...Array(3).fill('add')]);
+      expect(parts).toEqual([...Array(7).fill('main'), ...Array(3).fill('add')]);
     }
     expect(all.every((ex) => ex.sets === 3 && ex.name && ex.reps && ex.muscle && ex.demo)).toBe(true);
+  });
+
+  it('every day is full body: legs (two moves and a calf raise), core and lower abs, not only the upper body', () => {
+    for (const day of HOME_PROGRAM.days) {
+      const muscles = HOME_PLAN[day].exercises.map((ex) => ex.muscle);
+      const legMoves = muscles.filter((m) => ['Legs', 'Glutes', 'Hamstrings'].includes(m));
+      expect(legMoves, day).toHaveLength(2);
+      expect(muscles, day).toEqual(expect.arrayContaining(['Calves', 'Core', 'Lower abs']));
+    }
   });
 
   it('no band or towel is needed, and no exercise jumps', () => {

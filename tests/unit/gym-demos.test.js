@@ -44,6 +44,14 @@ describe('demonstrations', () => {
     expect(demoFigure('nope')).toBeNull();
   });
 
+  it('the calf raise stands on the yoga block, by a wall, and its toe stays on the block', () => {
+    const fig = demoFigure('calf');
+    expect(fig.querySelector('.gym-demo__block')).not.toBeNull();
+    expect(fig.querySelector('.gym-demo__wall')).not.toBeNull();
+    expect(DEMOS.calf.A.t).toEqual(DEMOS.calf.B.t);
+    expect(DEMOS.calf.B.f[1]).toBeLessThan(DEMOS.calf.A.f[1]); // the heel rises
+  });
+
   it('a chair is drawn where the exercise uses one', () => {
     expect(demoFigure('dip').querySelector('.gym-demo__seat')).not.toBeNull();
     expect(demoFigure('pushup').querySelector('.gym-demo__seat')).toBeNull();

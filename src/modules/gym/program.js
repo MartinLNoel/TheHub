@@ -98,7 +98,8 @@ export const HOME_WORKOUTS = {
 // no jumping (quiet, for the neighbours). Agreed with Martin in a coaching session; the plan page is
 // https://claude.ai/artifact/BLU6hUP38wvW7JVsByjYY3. `demo` names the figure in demos.js; `load` is
 // the starting dumbbell load as plates per side (2 handles, 4 × 1.25 kg and 4 × 2.5 kg plates);
-// `part` splits the main block from the arm + shoulder add-on.
+// `part` splits the main block from the arm + shoulder add-on. 2026-11-14: a calf raise every day, so the
+// legs stay in proportion (Martin's goal: big arms, round shoulders, wide back, proportionate legs, tight stomach).
 export const HOME_PROGRAM = {
   label: "Home plan — 3×/week",
   weeks: "Bodyweight + dumbbells",
@@ -116,6 +117,7 @@ export const HOME_PLAN = {
       main("Bent-over dumbbell row", "10–15", "Back", "bentrow", "Both DBs · 2.5 each side"),
       main("Split squat", "8/leg", "Legs", "splitsquat"),
       main("Glute bridge", "10", "Glutes", "bridge"),
+      main("Single-leg calf raise", "15–20/leg", "Calves", "calf"),
       main("Plank", "30–60s", "Core", "plank"),
       main("Reverse crunch", "10–15", "Lower abs", "revcrunch"),
       addOn("Dumbbell curl", "8–12", "Biceps", "curl", "Both DBs · 2.5 each side"),
@@ -130,6 +132,7 @@ export const HOME_PLAN = {
       main("Floor pullover", "10–15", "Lats", "pullover", "One DB · 2.5 + 1.25 each side"),
       main("Bulgarian split squat", "8/leg", "Legs", "bulgarian"),
       main("Single-leg Romanian deadlift", "10/leg", "Hamstrings", "slrdl", "Bodyweight first, then one DB · 2.5 + 1.25 each side"),
+      main("Single-leg calf raise", "15–20/leg", "Calves", "calf"),
       main("Side plank", "30–45s/side", "Core", "sideplank"),
       main("Lying leg raise", "8–12", "Lower abs", "legraise"),
       addOn("Hammer curl", "8–12", "Biceps", "hammer", "Both DBs · 2.5 each side"),
@@ -144,6 +147,7 @@ export const HOME_PLAN = {
       main("One-arm dumbbell row", "8–12/side", "Back", "dbrow", "One DB · 2.5 + 2.5 each side"),
       main("Slow squat", "12", "Legs", "squat"),
       main("Single-leg glute bridge", "10/leg", "Glutes", "slbridge"),
+      main("Single-leg calf raise", "15–20/leg", "Calves", "calf"),
       main("Hollow hold", "20–30s", "Core", "hollow"),
       main("Dead bug", "8/side", "Lower abs", "deadbug"),
       addOn("Concentration curl", "8–12/arm", "Biceps", "conc", "One DB · 2.5 each side"),

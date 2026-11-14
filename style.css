@@ -279,6 +279,8 @@ summary { min-height: var(--tap); display: flex; align-items: center; cursor: po
 .gym-demo__floor { stroke: var(--border); stroke-width: 3; }
 .gym-demo__prop { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
 .gym-demo__seat { stroke: var(--muted); stroke-width: 5; stroke-linecap: round; }
+.gym-demo__wall { stroke: var(--border); stroke-width: 6; }
+.gym-demo__block { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
 .gym-demo__ghost line { stroke: var(--muted); stroke-width: 4; stroke-linecap: round; }
 .gym-demo__ghost { opacity: 0.25; }
 .gym-demo__ghost circle { fill: var(--muted); }

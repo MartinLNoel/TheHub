@@ -3,7 +3,7 @@
 // one pose and a HOLD label. Ported from the plan page Martin liked (its link is in program.js).
 //
 // Poses are points in a 200 × 142 box (viewBox "0 -12 200 142", the floor at y 125):
-//   h head · n neck/shoulder · hp hip · e/w elbow/wrist · k/f knee/foot · e2 w2 k2 f2 the other limb
+//   h head · n neck/shoulder · hp hip · e/w elbow/wrist · k/f knee/foot (ankle) · t toe · e2 w2 k2 f2 the other limb
 //   front views: sl sr shoulders · el wl er wr arms · hl hr hips · kl fl kr fr legs
 // Colours come from the theme through CSS classes (style.css, "gym-demo").
 
@@ -14,7 +14,7 @@ const PERIOD_MS = 3200;
 /** The bones drawn between pose points, when both points exist. */
 export const PAIRS = [
   ['n', 'hp'], ['n', 'e'], ['e', 'w'], ['n', 'e2'], ['e2', 'w2'],
-  ['hp', 'k'], ['k', 'f'], ['hp', 'k2'], ['k2', 'f2'],
+  ['hp', 'k'], ['k', 'f'], ['f', 't'], ['hp', 'k2'], ['k2', 'f2'],
   ['n', 'sl'], ['n', 'sr'], ['sl', 'el'], ['el', 'wl'], ['sr', 'er'], ['er', 'wr'],
   ['hp', 'hl'], ['hp', 'hr'], ['hl', 'kl'], ['kl', 'fl'], ['hr', 'kr'], ['kr', 'fr'],
 ];
@@ -33,7 +33,8 @@ const CURL_B = M(STAND, { e: [100, 60], w: [114, 46] });
 
 /**
  * Every demo: cue (how to do it), query (a YouTube search for real form videos), A and optional B
- * poses, db (pose points holding a dumbbell), chair ([x1, x2, seat y, backrest side]).
+ * poses, db (pose points holding a dumbbell), chair ([x1, x2, seat y, backrest side]), block (the yoga
+ * block: [x, y, width, height]), wall (a wall's x, to hold for balance).
  */
 export const DEMOS = {
   pushup: {
@@ -198,6 +199,14 @@ export const DEMOS = {
     A: { f: [122, 123], k: [118, 94], hp: [90, 92], n: [104, 56], h: [110, 46], e: [112, 88], w: [113, 108] },
     B: { f: [122, 123], k: [118, 94], hp: [90, 92], n: [104, 56], h: [110, 46], e: [112, 88], w: [106, 69] },
   },
+  calf: {
+    cue: 'Stand on one foot on the yoga block, heel hanging off the edge, one hand on a wall. Lower the heel all the way, rise as high as you can, pause 1 second at the top.',
+    query: 'single leg calf raise on step form',
+    block: [96, 113, 38, 12],
+    wall: 152,
+    A: { t: [112, 113], f: [100, 117], k: [100, 96], hp: [100, 74], n: [99, 34], h: [99, 23], e: [114, 50], w: [150, 54], k2: [96, 96], f2: [86, 104] },
+    B: { t: [112, 113], f: [106, 104], k: [102, 83], hp: [101, 61], n: [100, 21], h: [100, 10], e: [115, 37], w: [150, 41], k2: [97, 83], f2: [87, 91] },
+  },
   skull: {
     cue: 'Lie on the floor, upper arms straight up and still. Lower the dumbbells to beside your head, then press up.',
     query: 'floor skull crusher dumbbell',
@@ -311,6 +320,11 @@ export function demoFigure(key, label = key) {
   const root = el('svg', { viewBox: '0 -12 200 142', class: 'gym-demo', role: 'img', 'aria-label': `${label}: how to do it`, 'data-demo': key });
   root.append(el('line', { x1: 10, y1: GROUND + 1.5, x2: 190, y2: GROUND + 1.5, class: 'gym-demo__floor' }));
   if (demo.chair) root.append(...chairShapes(demo.chair));
+  if (demo.wall) root.append(el('line', { x1: demo.wall, y1: -12, x2: demo.wall, y2: GROUND, class: 'gym-demo__wall' }));
+  if (demo.block) {
+    const [x, y, width, height] = demo.block;
+    root.append(el('rect', { x, y, width, height, rx: 1.5, class: 'gym-demo__block' }));
+  }
   if (demo.B) root.append(skeleton(demo.B, 'gym-demo__ghost').group);
 
   const body = skeleton(demo.A, 'gym-demo__body');
