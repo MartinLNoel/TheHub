@@ -1,19 +1,28 @@
-// The Gym store's data (schema version 1): the same fields gainz-tracker keeps in its `state`,
-// minus `_mondayFixed` (gainz's one-time date fix, not needed here). No Notion token, ever.
+// The Gym store's data (schema version 2): the same fields gainz-tracker keeps in its `state`,
+// minus `_mondayFixed` (gainz's one-time date fix, not needed here), plus `program`. No Notion token, ever.
 //
-//   workoutLogs   [{ id, date: "YYYY-MM-DD", day: "Upper A", mode: "gym"|"home",
+//   workoutLogs   [{ id, date: "YYYY-MM-DD", day: "Upper A" | "Day A"…, mode: "gym"|"home",
 //                    exercises: [{ name, sets: [{ weight, reps }] }] }]   newest first
 //   proteinLogs   { "YYYY-MM-DD": [{ name, grams }] }
 //   checkIns      [{ date, weight, cals (number|null), notes }]           oldest first
 //   myFoods       [{ name, protein }]
 //   personalBests { [exerciseName]: { weight, reps } }
 //   bodyweight    kg (protein target = bodyweight × 1.8)
-//   phase         "phase1" | "phase2"
+//   program       "gym" (gainz-tracker's program, by phase) | "home" (the home plan, Day A/B/C)   v2
+//   phase         "phase1" | "phase2" (the gym program's phase, kept while on the home plan)
 //   dayIndex      sessions logged since the phase started (gainz shows "DAY n OF m" from it)
 //   lastSeenStage the highest fighter stage already shown (for the unlock animation)
 import { DEFAULT_MY_FOODS, PROGRAM, STAGES } from './program.js';
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
+
+export const PROGRAMS = ['gym', 'home'];
+
+/** migrations[n] turns version n-1 into version n (src/core/db.js runs them, backing up first). */
+export const migrations = {
+  // v2: the program switch. Everything stored before it was the gym program.
+  2: (data) => ({ ...data, program: 'gym' }),
+};
 
 /**
  * A fresh start. gainz-tracker pre-loaded Martin's first 7 sessions here; TheHub does not (see
@@ -28,6 +37,7 @@ export function defaultData() {
     myFoods: structuredClone(DEFAULT_MY_FOODS),
     personalBests: {},
     bodyweight: 75,
+    program: 'gym',
     phase: 'phase1',
     dayIndex: 0,
     lastSeenStage: 0,
@@ -97,6 +107,7 @@ export function validate(data) {
   }
 
   if (!nonNegative(data.bodyweight) || data.bodyweight === 0) problems.push('bodyweight must be a positive number');
+  if (!PROGRAMS.includes(data.program)) problems.push(`unknown program "${data.program}"`);
   if (!PROGRAM[data.phase]) problems.push(`unknown phase "${data.phase}"`);
   if (!Number.isInteger(data.dayIndex) || data.dayIndex < 0) problems.push('dayIndex must be a whole number of 0 or more');
   if (!Number.isInteger(data.lastSeenStage) || data.lastSeenStage < 0 || data.lastSeenStage >= STAGES.length) {

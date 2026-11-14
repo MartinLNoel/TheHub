@@ -267,6 +267,25 @@ summary { min-height: var(--tap); display: flex; align-items: center; cursor: po
 .gym-note { text-align: center; font-size: 0.8125rem; color: var(--muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; }
 .gym-note--go { width: 100%; color: var(--accent); border-color: var(--accent); margin: 0; }
 .gym-modes .seg { font-weight: 700; }
+/* Home plan: block labels and each exercise's moving demonstration (src/modules/gym/demos.js) */
+.gym-part { margin-top: 1rem; }
+.gym-ex__demo { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.625rem; }
+.gym-ex__how { flex: 1 1 9rem; min-width: 0; display: flex; flex-direction: column; gap: 0.375rem; font-size: 0.8125rem; }
+.gym-ex__how p { margin: 0; }
+.gym-ex__load { background: var(--surface-2); border: 1px solid var(--border); border-radius: 0.375rem; padding: 0.25rem 0.5rem; }
+.gym-ex__cue { color: var(--muted); }
+.gym-ex__video { color: var(--accent); font-weight: 600; text-decoration: none; min-height: var(--tap); display: inline-flex; align-items: center; align-self: flex-start; }
+.gym-demo { flex: 0 0 9.5rem; width: 9.5rem; max-width: 100%; height: auto; aspect-ratio: 200 / 142; background: var(--surface-2); border-radius: 0.5rem; }
+.gym-demo__floor { stroke: var(--border); stroke-width: 3; }
+.gym-demo__prop { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.gym-demo__seat { stroke: var(--muted); stroke-width: 5; stroke-linecap: round; }
+.gym-demo__ghost line { stroke: var(--muted); stroke-width: 4; stroke-linecap: round; }
+.gym-demo__ghost { opacity: 0.25; }
+.gym-demo__ghost circle { fill: var(--muted); }
+.gym-demo__body line { stroke: var(--text); stroke-width: 4.5; stroke-linecap: round; }
+.gym-demo__body circle { fill: var(--text); }
+.gym-demo__db { fill: var(--accent); }
+.gym-demo__hold { fill: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; }
 .gym-progress { background: var(--surface-2); border-radius: 0.25rem; height: 0.4rem; overflow: hidden; margin-top: 0.4rem; }
 .gym-progress__fill { height: 100%; background: var(--accent); border-radius: 0.25rem; transition: width 0.5s ease; }
 .gym-between { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }

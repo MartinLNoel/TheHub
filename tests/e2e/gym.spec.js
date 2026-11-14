@@ -162,6 +162,47 @@ test('gainz-tracker data at the same address is offered without a file', async (
   expect(exported).not.toContain('secret_e2e_never_read');
 });
 
+test('home plan: switch to it, the figures move, log Day A, and the choice survives a reload', async ({ page }) => {
+  await open(page, '#/gym/log');
+  await page.getByTestId('program-home').click();
+  await expect(page.locator('#gym-toast')).toHaveText('HOME PLAN ON 🏠');
+  await expect(page.getByTestId('gym-day')).toHaveText('Day A');
+  await expect(page.locator('.gym-ex svg.gym-demo')).toHaveCount(9);
+  await expect(page.getByTestId('mode-home')).toHaveCount(0);
+
+  // The curl's forearm moves: its wrist is somewhere else a moment later.
+  const wrist = () => page.locator('svg[data-demo="curl"] .gym-demo__body line').nth(2).getAttribute('x2');
+  const first = await wrist();
+  await expect.poll(wrist, { timeout: 3000 }).not.toBe(first);
+
+  await page.getByTestId('set-0-0-reps').fill('8');
+  await page.getByTestId('gym-log-workout').click();
+  await expect(page.locator('#gym-toast')).toHaveText('WORKOUT SAVED 💪');
+  await expect(page.getByTestId('gym-day')).toHaveText('Day B');
+
+  await page.reload();
+  await expect(page.locator('html[data-ready="true"]')).toBeAttached();
+  await expect(page.getByTestId('program-home')).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('#nav [data-section="today"]').click();
+  await expect(gymCard(page)).toContainText('Done today. Next: Day B — Shoulders + width.');
+});
+
+test('home plan: fits the phone width and its links and buttons are 48 px', async ({ page }) => {
+  await open(page, '#/gym/log');
+  await page.getByTestId('program-home').click();
+  await expect(page.getByTestId('gym-day')).toHaveText('Day A');
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(0);
+  const targets = page.locator('#screen .btn, #screen .seg, #screen .gym-ex__video');
+  const count = await targets.count();
+  expect(count).toBeGreaterThan(9);
+  for (let i = 0; i < count; i++) {
+    const box = await targets.nth(i).boundingBox();
+    expect(box.height, await targets.nth(i).textContent()).toBeGreaterThanOrEqual(48);
+  }
+  await page.screenshot({ path: 'test-results/home-plan.png', fullPage: true });
+});
+
 test('every Gym screen fits the phone width and has 48 px touch targets', async ({ page }) => {
   for (const hash of ['#/gym', '#/gym/history', '#/gym/fighter', '#/gym/protein', '#/gym/checkin']) {
     await open(page, hash);

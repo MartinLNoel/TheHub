@@ -2,6 +2,20 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
+## 2026-11-01: the Gym's home plan (version 0.8.2, branch `gym/home-plan`)
+
+Martin trains at home now; the Gym now has a **home plan** (Day A/B/C, bodyweight and dumbbells) with
+a moving figure for every exercise, chosen with a program switch on the Workout screen (CHANGELOG, 2026-11-01).
+All tests pass locally. The work is on branch `gym/home-plan`, **not yet committed** (Martin to say), not merged
+into `main` and not pushed.
+
+- **Schema 2 and Q-8:** the Gym's data is now version 2. Data saved by 0.8.1 or older migrates on first open, and
+  under Q-8 that migration is **blocked until backups are set up**. Nothing has been pushed, so on the phone the Gym
+  starts fresh at version 2 and nothing is blocked; this only matters for a browser that already ran 0.8.1.
+- **Martin's part:** Q-24 (what to type in the kg boxes, the handle's weight, untracked ladder steps). It changes
+  nothing in the order of "Waiting on Martin" below: the home plan is used through the Gym, so it waits on Part 1.
+- **Ideas, not planned:** record the ladder step with each session; a "plates" picker instead of kg for dumbbells.
+
 ## Waiting on Martin, in priority order (2026-10-18, end of the autonomous build)
 
 Part 7's book-free half was the last part that could be built without you. Everything below needs you; the first

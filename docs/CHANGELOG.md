@@ -2,6 +2,27 @@
 
 Dated entries, newest first.
 
+## 2026-11-01 — Gym: the home plan with moving demonstrations (version 0.8.2)
+
+Martin trains at home now; with Claude he worked out a home plan (bodyweight plus his dumbbells, no
+jumping, no bands or towels) and asked for the plan page's moving figures in the app. Branch `gym/home-plan`.
+The plan page: https://claude.ai/artifact/BLU6hUP38wvW7JVsByjYY3.
+
+- **Program switch** on the Workout screen: 🏋️ GYM PROGRAM (gainz-tracker's, unchanged) or 🏠 HOME PLAN. Saved, so it
+  survives a reload; switching keeps the history, streak, Fighter stages and the gym phase.
+- **The home plan** (`HOME_PROGRAM`, `HOME_PLAN` in `program.js`): full body 3×/week, Day A (push emphasis), Day B
+  (shoulders + width), Day C (dips + back); each a main block of 6 and an arm + shoulder add-on of 3, with the
+  starting dumbbell load as plates per side. Same rules as the gym program: Monday restarts at Day A, 3 sessions
+  for the week and the streak, no Phase 2 prompt, no GYM/HOME version toggle; sessions are logged as `mode: 'home'`.
+- **Moving demonstrations** (`demos.js`): a stick figure per exercise moving between the start and end of the rep
+  over a faint outline of the end, dumbbells and chair drawn in, HOLD on holds; theme colours; one animation loop
+  for the figures on screen; still with reduced motion. Each comes with a form cue and a "Watch a demo ↗" YouTube
+  search link.
+- **Gym schema version 2**: adds `program` (`'gym' | 'home'`); migration 1 → 2 sets `'gym'`. The gainz import maps
+  to `'gym'` and a merge keeps the current choice. Defaults to confirm: Q-24.
+- Tests: `tests/unit/gym-home-plan.test.js`, `gym-demos.test.js` and `gym-home-plan-screens.test.js` (50), and two e2e tests (switch, figures move, log Day A, reload; phone
+  width and 48 px targets). 501 unit and 53 e2e tests pass locally.
+
 ## 2026-10-18 — Part 7 before the book: the Bulgarian module (version 0.8.1)
 
 Built autonomously while Martin was away, on branch `part-7/bulgarian-prebook`, merged into local `main` (not

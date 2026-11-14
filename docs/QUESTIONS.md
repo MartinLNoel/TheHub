@@ -158,6 +158,13 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   it has no Cyrillic letter or is already a card. OK? · How fast the alphabet counts as learned, and what you can
   review before the book arrives. · `src/modules/bulgarian/data.js` (`LEARNED_STREAK`, `ROUND_SIZE`,
   `acceptOffer`), `src/modules/bulgarian/screens.js` (`CARDS`), `content/bulgarian/alphabet.json` (`latin`) · open
+- **Q-24** · Gym home plan defaults (2026-11-01): a fresh Gym starts on the **gym program**; tap **🏠 HOME PLAN**
+  once and it stays. In the kg boxes, type **one dumbbell's total weight, handle included** (the handle's weight is
+  unknown: weigh an empty one on a kitchen scale once); bodyweight moves are logged as **0 kg** × reps, holds as
+  **seconds** in the reps box (as the plank always was). The ladders' steps are **not tracked**: "Push-up ladder"
+  stays one exercise, so its personal best mixes steps (say if you want the step recorded). OK? · What the history
+  and personal bests mean on the home plan. · `src/modules/gym/program.js` (`HOME_PLAN`), `src/modules/gym/data.js`
+  (`defaultData`) · open
 - **Q-18** · **Bug found (not fixed: the Ch4 content run may only edit content, tests and docs).** A study session
   is saved with its **UTC** date (`finishSession`: `new Date(now).toISOString().slice(0, 10)`), but the ISTQB home
   compares it with the **local** date (`daysSinceLastSession` uses `localISO`). Between midnight and 01:00 (02:00
