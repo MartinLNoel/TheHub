@@ -4,7 +4,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { gainzOriginal } from '../fixtures/gainz-original.js';
 import {
-  currentDayName, currentStage, getStreak, getWeekKey, initExInputs, nextStage, sessionsThisWeek, targetSessions, todayISO, todayProtein,
+  currentDayName, getStreak, getWeekKey, initExInputs, sessionsThisWeek, targetSessions, todayISO, todayProtein,
 } from '../../src/modules/gym/logic.js';
 import { WORKOUTS } from '../../src/modules/gym/program.js';
 
@@ -66,7 +66,7 @@ describe('parity with gainz-tracker', () => {
   const dayNames = new Set();
   for (const [i, nowText] of NOWS.entries()) {
     for (const phase of ['phase1', 'phase2']) {
-      it(`streak, day, sessions this week and stage match at ${nowText} (${phase})`, () => {
+      it(`streak, day and sessions this week match at ${nowText} (${phase})`, () => {
         vi.useFakeTimers({ toFake: ['Date'] });
         const now = new Date(nowText);
         vi.setSystemTime(now);
@@ -81,7 +81,6 @@ describe('parity with gainz-tracker', () => {
           expect(currentDayName(state, new Date()), `seed ${seed}`).toBe(original.getCurrentDayName());
           expect(sessionsThisWeek(state, new Date()), `seed ${seed}`).toBe(original.getSessionsThisWeek());
           expect(targetSessions(state)).toBe(original.getTargetSessions());
-          expect(currentStage(logs.length)).toEqual(original.getCurrentStage(logs.length));
           expect(todayISO(new Date())).toBe(original.today());
           streaks.add(original.getStreak());
           dayNames.add(original.getCurrentDayName());
@@ -111,13 +110,7 @@ describe('parity with gainz-tracker', () => {
     expect(getStreak(state, new Date())).toBe(52);
   });
 
-  it('stage and next stage match for every total from 0 to 130', () => {
-    const original = gainzOriginal(stateFor([]));
-    for (let total = 0; total <= 130; total++) {
-      expect(currentStage(total)).toEqual(original.getCurrentStage(total));
-      expect(nextStage(total)).toEqual(original.getNextStage(total));
-    }
-  });
+  // The Fighter's stages are TheHub's own since 2026-11-14 (Season 1 of the story): see gym-fighter.test.js.
 
   it('week keys match', () => {
     const original = gainzOriginal(stateFor([]));

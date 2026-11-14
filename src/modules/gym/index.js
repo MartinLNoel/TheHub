@@ -7,6 +7,7 @@ import {
 } from './logic.js';
 import { quoteFor, quoteLine } from './quotes.js';
 import { routes } from './screens.js';
+import { weatherSettingsCard } from './weather-settings.js';
 
 /**
  * Today's card: the planned workout (or a rest day once the week's target is met), the week, protein,
@@ -53,6 +54,7 @@ export default {
   validate,
   routes,
   todayCard: (data) => todayCard(data),
+  settingsCard: (api) => weatherSettingsCard(api),
   importers: [
     {
       id: 'gainz-tracker',

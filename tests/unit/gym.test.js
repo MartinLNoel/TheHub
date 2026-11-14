@@ -6,8 +6,7 @@ import {
   addCheckIn, addMyFood, addProtein, checkinThisWeek, deleteMyFood, logWorkout, removeProtein, sessionsUntilPhase2, setBodyweight, upgradePhase,
 } from '../../src/modules/gym/logic.js';
 import { checkModule } from '../../src/core/registry.js';
-import { HOME_WORKOUTS, PROGRAM, QUICK_FOODS, STAGES, WORKOUTS } from '../../src/modules/gym/program.js';
-import { getCharacterSVG } from '../../src/modules/gym/fighter.js';
+import { HOME_WORKOUTS, PROGRAM, QUICK_FOODS, WORKOUTS } from '../../src/modules/gym/program.js';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -52,24 +51,15 @@ describe('program data is identical to gainz-tracker', () => {
     // eslint-disable-next-line no-new-func
     return new Function(`return ${src.slice(i + `const ${name} = `.length, j + 2)}`)();
   };
-  it.skipIf(!src)('PROGRAM, WORKOUTS, HOME_WORKOUTS, QUICK_FOODS, STAGES', () => {
+  it.skipIf(!src)('PROGRAM, WORKOUTS, HOME_WORKOUTS, QUICK_FOODS (the Fighter is TheHub\'s own since 2026-11-14)', () => {
     const s = src.replace(/\r\n/g, '\n');
     src = s;
     expect(PROGRAM).toEqual(grab('PROGRAM', '{', '}'));
     expect(WORKOUTS).toEqual(grab('WORKOUTS', '{', '}'));
     expect(HOME_WORKOUTS).toEqual(grab('HOME_WORKOUTS', '{', '}'));
     expect(QUICK_FOODS).toEqual(grab('QUICK_FOODS', '[', ']'));
-    expect(STAGES).toEqual(grab('STAGES', '[', ']'));
   });
 
-  it('has 10 stages and an SVG character for each', () => {
-    expect(STAGES).toHaveLength(10);
-    for (const st of STAGES) {
-      const svg = getCharacterSVG(st.id, st.id % 2 === 0);
-      expect(svg.startsWith('<svg')).toBe(true);
-      expect(svg).toContain('viewBox="0 0 200 260"');
-    }
-  });
 });
 
 describe('validate', () => {
@@ -143,9 +133,9 @@ describe('logging a workout (gainz saveWorkout)', () => {
     expect(r.data.workoutLogs[0]).toMatchObject({ mode: 'home', day: 'Lower A', exercises: [{ name: 'Plank', sets: [{ weight: 0, reps: 60 }] }] });
   });
 
-  it('reports a stage unlock at 5 sessions', () => {
-    const four = withLogs(...['2026-01-01', '2026-01-02', '2026-01-03', '2026-01-04'].map((d) => log(d)));
-    const r = logWorkout(four, { dayName: 'Upper A', mode: 'gym', inputs: { 'Lat Pulldown': [{ weight: 1, reps: 1 }] }, now: WED });
+  it('reports a stage unlock at 3 sessions (Season 1, stage 2)', () => {
+    const two = withLogs(...['2026-01-01', '2026-01-02'].map((d) => log(d)));
+    const r = logWorkout(two, { dayName: 'Upper A', mode: 'gym', inputs: { 'Lat Pulldown': [{ weight: 1, reps: 1 }] }, now: WED });
     expect([r.oldStage.id, r.newStage.id]).toEqual([0, 1]);
   });
 

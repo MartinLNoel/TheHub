@@ -20,7 +20,7 @@ const flush = () => new Promise((r) => setTimeout(r, 0));
 
 describe('schema 3', () => {
   it('a fresh store has Tuesday and Thursday as office days, and is valid', () => {
-    expect(SCHEMA_VERSION).toBe(3);
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(3);
     expect(DEFAULT_OFFICE_DAYS).toEqual([2, 4]);
     expect(defaultData()).toMatchObject({ officeDays: [2, 4], officeWeeks: {} });
     expect(validate(defaultData())).toEqual([]);

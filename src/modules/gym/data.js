@@ -1,5 +1,6 @@
-// The Gym store's data (schema version 3): the same fields gainz-tracker keeps in its `state`,
-// minus `_mondayFixed` (gainz's one-time date fix, not needed here), plus `program` and the office days.
+// The Gym store's data (schema version 4): the same fields gainz-tracker keeps in its `state`,
+// minus `_mondayFixed` (gainz's one-time date fix, not needed here), plus `program`, the office days and
+// the town whose weather the Fighter's story shows.
 // No Notion token, ever.
 //
 //   workoutLogs   [{ id, date: "YYYY-MM-DD", day: "Upper A" | "Day A"…, mode: "gym"|"home",
@@ -16,9 +17,11 @@
 //   lastSeenStage the highest fighter stage already shown (for the unlock animation)
 //   officeDays    the usual office days, weekday numbers 1 (Monday) to 7 (Sunday): rest days       v3
 //   officeWeeks   { "YYYY-Www": [weekdays] } a week whose office days differ from the usual        v3
+//   weatherTown   { name, country, lat, lon } | null: the story's weather comes from here         v4
+//                 (rounded to 0.01°; personal, so it lives on the phone and in the private backup only)
 import { DEFAULT_MY_FOODS, PROGRAM, STAGES } from './program.js';
 
-export const SCHEMA_VERSION = 3;
+export const SCHEMA_VERSION = 4;
 
 export const PROGRAMS = ['gym', 'home'];
 
@@ -31,6 +34,8 @@ export const migrations = {
   2: (data) => ({ ...data, program: 'gym' }),
   // v3: office days, busy days the week plan works around (2026-11-14).
   3: (data) => ({ ...data, officeDays: [...DEFAULT_OFFICE_DAYS], officeWeeks: {} }),
+  // v4: the Fighter's real-life weather (2026-11-14). No town until Martin sets one in Settings.
+  4: (data) => ({ ...data, weatherTown: null }),
 };
 
 /**
@@ -52,6 +57,7 @@ export function defaultData() {
     lastSeenStage: 0,
     officeDays: [...DEFAULT_OFFICE_DAYS],
     officeWeeks: {},
+    weatherTown: null,
   };
 }
 
@@ -130,6 +136,13 @@ export function validate(data) {
     problems.push('lastSeenStage must be a stage number');
   }
   if (!isWeekdayList(data.officeDays)) problems.push('officeDays must be a list of weekdays 1 to 7');
+  if (data.weatherTown !== null) {
+    const t = data.weatherTown;
+    const inRange = (v, max) => typeof v === 'number' && Number.isFinite(v) && Math.abs(v) <= max;
+    if (!isObject(t) || typeof t.name !== 'string' || !t.name || !inRange(t.lat, 90) || !inRange(t.lon, 180)) {
+      problems.push('weatherTown must be null or a town with a name, lat and lon');
+    }
+  }
   if (!isObject(data.officeWeeks)) problems.push('officeWeeks must be an object of weeks');
   else {
     for (const [week, days] of Object.entries(data.officeWeeks)) {

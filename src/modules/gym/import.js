@@ -89,6 +89,7 @@ export function mapGainzState(raw) {
     lastSeenStage: stage,
     officeDays: base.officeDays, // gainz-tracker has no office days; a merge keeps the current ones
     officeWeeks: {},
+    weatherTown: null, // nor a town; a merge keeps the current one
   };
 }
 
@@ -195,7 +196,7 @@ function describe(data) {
     plural(data.workoutLogs.length, 'workout'),
     plural(Object.keys(data.proteinLogs).length, 'protein day'),
     plural(data.checkIns.length, 'check-in'),
-    `fighter stage ${stage.id + 1} of ${STAGES.length} (${stage.name})`,
+    `fighter stage ${stage.id + 1} of ${STAGES.length}`, // no stage name: the story is a surprise
   ].join(', ');
 }
 

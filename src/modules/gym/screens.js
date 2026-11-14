@@ -3,7 +3,9 @@
 // rules; built with h() instead of HTML strings, so stored text is always shown as text.
 import { h, mount } from '../../core/dom.js';
 import { DEMOS, demoFigure, demoVideoUrl } from './demos.js';
-import { characterElement } from './fighter.js';
+import { SEASON_1 } from './story/season1.js';
+import { stageCanvas } from './story/render.js';
+import { cachedReading, currentReading, describe, sceneEnv } from './story/weather.js';
 import { QUICK_FOODS, STAGES } from './program.js';
 import {
   activeProgram, addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
@@ -499,8 +501,31 @@ function renderHistory(c) {
 }
 
 // ============================================================
-// FIGHTER
+// FIGHTER: Season 1 of Tad's story (story/season1.js), a pixel-art scene per stage, in real weather
 // ============================================================
+let weatherCheck = null; // the town whose weather is being fetched, so a re-render does not fetch twice
+
+function weatherLine(c, town, reading) {
+  if (!town) {
+    return h('p', { class: 'muted gym-small gym-weather', 'data-testid': 'gym-weather' }, '🌦 The story uses its own weather. ', h('a', { href: '#/settings' }, 'Set your town in Settings'), ' to bring yours in.');
+  }
+  const text = reading
+    ? `🌦 Weather from ${town.name}: ${describe(reading.code)}${typeof reading.temp === 'number' ? `, ${Math.round(reading.temp)}°C` : ''}`
+    : `🌦 Weather from ${town.name}: not loaded yet`;
+  return h('p', { class: 'muted gym-small gym-weather', 'data-testid': 'gym-weather' }, text);
+}
+
+/** After drawing with the cached weather, fetch fresh weather once and redraw if it changed. */
+function refreshWeather(c, town, reading) {
+  if (!town || weatherCheck === `${town.lat},${town.lon}`) return;
+  weatherCheck = `${town.lat},${town.lon}`;
+  currentReading(town).then((fresh) => {
+    weatherCheck = null;
+    if (!fresh || (reading && fresh.code === reading.code && fresh.isDay === reading.isDay)) return;
+    if (location.hash.startsWith('#/gym/fighter') && c.root.isConnected) c.rerender();
+  });
+}
+
 function renderFighter(c) {
   const data = c.data;
   const total = data.workoutLogs.length;
@@ -518,6 +543,7 @@ function renderFighter(c) {
 
   if (previewStageId === null || previewStageId < 0 || previewStageId >= STAGES.length) previewStageId = stage.id;
   const view = STAGES[previewStageId];
+  const chapter = SEASON_1[previewStageId];
   const isCurrent = view.id === stage.id;
   const isUnlocked = total >= view.sessions;
   const canLeft = previewStageId > 0;
@@ -527,16 +553,16 @@ function renderFighter(c) {
     c.rerender();
   };
 
-  const charWrap = h(
-    'div',
-    { class: `gym-fighter__char${newUnlock && isCurrent ? ' unlock-flash' : ''}${powered && isCurrent ? ' powered' : ''}`, 'data-testid': 'gym-fighter-char' },
-    isUnlocked ? characterElement(view.id, powered && isCurrent) : h('div', { class: 'gym-fighter__locked' }, '🔒'),
-  );
+  const town = data.weatherTown || null;
+  const reading = town ? cachedReading(town) : null;
+  const env = sceneEnv(chapter.env, reading, new Date());
+
   let startX = 0;
-  const stageRow = h(
+  const picture = h(
     'div',
     {
-      class: 'gym-fighter__row',
+      class: `gym-story-frame${newUnlock && isCurrent ? ' unlock-flash' : ''}${powered && isCurrent ? ' powered' : ''}`,
+      'data-testid': 'gym-fighter-char',
       ontouchstart: (e) => {
         startX = e.touches[0].clientX;
       },
@@ -548,9 +574,9 @@ function renderFighter(c) {
         }
       },
     },
-    h('button', { type: 'button', class: 'gym-arrow', 'aria-label': 'Previous stage', disabled: !canLeft, onclick: () => go(previewStageId - 1) }, '‹'),
-    charWrap,
-    h('button', { type: 'button', class: 'gym-arrow', 'aria-label': 'Next stage', disabled: !canRight, onclick: () => go(previewStageId + 1) }, '›'),
+    isUnlocked
+      ? stageCanvas(view.id, env, { label: `${chapter.title}: a pixel-art scene from Tad's story` })
+      : h('div', { class: 'gym-story-locked', 'data-testid': 'gym-story-locked' }, h('span', { class: 'gym-story-locked__icon' }, '🔒'), `Unlocks at ${view.sessions} sessions`),
   );
 
   const subtitle =
@@ -565,9 +591,9 @@ function renderFighter(c) {
         'p',
         { class: `gym-power ${powered ? 'on' : 'off'}` },
         powered
-          ? `⚡ POWER STATE ACTIVE — ${streak} week streak — your fighter is charged`
+          ? `⚡ POWER STATE ACTIVE — ${streak} week streak — Tad is charged`
           : streak > 0
-            ? `🔥 ${streak} week streak — hit 3 weeks in a row to power up your fighter`
+            ? `🔥 ${streak} week streak — hit 3 weeks in a row to power Tad up`
             : '💤 No streak yet — complete 3 sessions this week to start',
       )
     : null;
@@ -575,11 +601,11 @@ function renderFighter(c) {
   const nextInfo =
     isCurrent && next
       ? [
-          h('div', { class: 'gym-between' }, h('span', { class: 'muted' }, 'Next: ', h('strong', {}, next.name)), h('strong', { class: 'gym-hl' }, `${toNext} session${toNext === 1 ? '' : 's'} away`)),
+          h('div', { class: 'gym-between' }, h('span', { class: 'muted' }, 'Next: ', h('strong', {}, `Stage ${next.id + 1}`)), h('strong', { class: 'gym-hl' }, `${toNext} session${toNext === 1 ? '' : 's'} away`)),
           progressBar(Math.round(((total - stage.sessions) / (next.sessions - stage.sessions)) * 100)),
         ]
       : isCurrent
-        ? h('p', { class: 'gym-hl' }, '🏆 MAXIMUM LEVEL REACHED')
+        ? h('p', { class: 'gym-hl' }, '🏆 SEASON 1 COMPLETE')
         : null;
 
   const track = STAGES.map((st) => {
@@ -598,20 +624,33 @@ function renderFighter(c) {
     );
   });
 
+  refreshWeather(c, town, reading);
+
   return [
-    h('p', { class: 'gym-center gym-kicker', 'data-testid': 'gym-stage-label' }, `STAGE ${view.id + 1} OF ${STAGES.length}`),
+    h('p', { class: 'gym-center gym-kicker', 'data-testid': 'gym-stage-label' }, `SEASON 1 · STAGE ${view.id + 1} OF ${STAGES.length}`),
     !isCurrent ? h('p', { class: 'gym-center' }, h('span', { class: 'gym-preview' }, isUnlocked ? 'PREVIEWING PAST STAGE' : '🔒 LOCKED')) : null,
     h(
       'section',
       { class: 'gym-fighter' },
-      stageRow,
-      h('div', { class: 'gym-fighter__title', 'data-testid': 'gym-stage-name' }, isUnlocked ? view.name : '???'),
-      h('div', { class: 'gym-fighter__sub' }, subtitle),
+      picture,
+      h(
+        'div',
+        { class: 'gym-fighter__row' },
+        h('button', { type: 'button', class: 'gym-arrow', 'aria-label': 'Previous stage', disabled: !canLeft, onclick: () => go(previewStageId - 1) }, '‹'),
+        h('div', { class: 'gym-fighter__names' }, h('div', { class: 'gym-fighter__title', 'data-testid': 'gym-stage-name' }, isUnlocked ? view.name : '???'), h('div', { class: 'gym-fighter__sub' }, subtitle)),
+        h('button', { type: 'button', class: 'gym-arrow', 'aria-label': 'Next stage', disabled: !canRight, onclick: () => go(previewStageId + 1) }, '›'),
+      ),
       !isCurrent ? h('button', { type: 'button', class: 'btn', onclick: () => go(stage.id) }, '↩ BACK TO CURRENT') : null,
     ),
+    isUnlocked ? weatherLine(c, town, reading) : null,
+    h(
+      'section',
+      { class: 'card gym-chapter', 'data-testid': 'gym-chapter' },
+      isUnlocked ? [h('h2', {}, chapter.title), h('p', {}, chapter.story)] : [h('h2', {}, `Stage ${view.id + 1}`), h('p', { class: 'muted' }, 'Keep training to find out what happens next.')],
+    ),
     power,
-    h('section', { class: 'card' }, h('p', { class: 'muted gym-quote' }, isUnlocked ? `"${view.desc}"` : '???'), nextInfo),
-    sectionHeader('All stages'),
+    nextInfo ? h('section', { class: 'card' }, nextInfo) : null,
+    sectionHeader('Season 1'),
     h('div', { class: 'gym-stages' }, track),
     h('p', { class: 'muted gym-center gym-small' }, `TOTAL SESSIONS: ${total}  ·  STREAK: ${streak} WEEKS`),
   ];
