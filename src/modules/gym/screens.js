@@ -309,7 +309,7 @@ function renderWorkout(c) {
     ];
   });
 
-  const pct = Math.min(100, Math.round((protein / target) * 100));
+  const pct = target ? Math.min(100, Math.round((protein / target) * 100)) : 0;
   const restChips = [60, 70, 80, 90].map((s) =>
     h(
       'button',
@@ -422,9 +422,13 @@ function renderWorkout(c) {
       'section',
       { class: 'card' },
       h('h2', {}, "Today's protein"),
-      h('p', {}, h('strong', { class: 'gym-big' }, `${protein}g`), h('span', { class: 'muted' }, ` / ${target}g`), h('span', { class: pct >= 100 ? 'gym-good' : 'muted' }, `  ${pct}%`)),
-      progressBar(pct),
-      h('p', { class: 'muted gym-small' }, pct >= 100 ? '✅ Target hit! Keep it up.' : '⚡ Go log your protein — muscles need it.'),
+      target === null
+        ? [h('p', {}, h('strong', { class: 'gym-big' }, `${protein}g`)), h('p', { class: 'muted gym-small' }, 'Enter your weight on the ', h('a', { href: '#/gym/protein' }, 'Protein tab'), ' to get your daily target.')]
+        : [
+            h('p', {}, h('strong', { class: 'gym-big' }, `${protein}g`), h('span', { class: 'muted' }, ` / ${target}g`), h('span', { class: pct >= 100 ? 'gym-good' : 'muted' }, `  ${pct}%`)),
+            progressBar(pct),
+            h('p', { class: 'muted gym-small' }, pct >= 100 ? '✅ Target hit! Keep it up.' : '⚡ Go log your protein — muscles need it.'),
+          ],
     ),
     h(
       'section',
@@ -665,7 +669,7 @@ function renderProtein(c) {
   const target = proteinTarget(data);
   const log = todayProteinLog(data, now);
   const total = log.reduce((sum, i) => sum + i.grams, 0);
-  const pct = Math.min(100, Math.round((total / target) * 100));
+  const pct = target ? Math.min(100, Math.round((total / target) * 100)) : 0;
   const r = 56;
   const circ = 2 * Math.PI * r;
   const dash = circ * (pct / 100);
@@ -724,7 +728,9 @@ function renderProtein(c) {
   const bw = h('input', {
     type: 'number',
     inputmode: 'decimal',
-    value: data.bodyweight,
+    value: data.bodyweight ?? '',
+    placeholder: 'kg',
+    'data-testid': 'gym-bodyweight',
     min: '40',
     max: '200',
     step: '0.5',
@@ -740,12 +746,17 @@ function renderProtein(c) {
       'section',
       { class: 'card' },
       h('h2', {}, 'Protein target'),
+      target === null ? h('label', { class: 'gym-inline gym-weight-first' }, h('span', {}, 'Your weight (kg) — enter it to get your target'), bw) : null,
       h(
         'div',
         { class: 'gym-ring-wrap' },
         ring,
-        h('p', { class: 'muted gym-small' }, 'Target: ', h('strong', {}, `${target}g`), ` (bodyweight ${data.bodyweight}kg × 1.8)`),
-        h('p', { class: total >= target ? 'gym-good gym-small' : 'muted gym-small', 'data-testid': 'gym-protein-left' }, total >= target ? '✅ TARGET HIT' : `⚡ ${Math.max(0, target - total)}g remaining`),
+        target === null
+          ? h('p', { class: 'muted gym-small', 'data-testid': 'gym-protein-left' }, 'No target yet: enter your weight above.')
+          : [
+              h('p', { class: 'muted gym-small' }, 'Target: ', h('strong', {}, `${target}g`), ` (bodyweight ${data.bodyweight}kg × 1.8)`),
+              h('p', { class: total >= target ? 'gym-good gym-small' : 'muted gym-small', 'data-testid': 'gym-protein-left' }, total >= target ? '✅ TARGET HIT' : `⚡ ${Math.max(0, target - total)}g remaining`),
+            ],
       ),
       sectionHeader('Quick add — default'),
       h('div', { class: 'gym-chips' }, QUICK_FOODS.map((f) => h('button', { type: 'button', class: 'gym-chip', onclick: () => add(f.name, f.protein) }, `${f.name} `, h('strong', {}, `+${f.protein}g`)))),
@@ -803,11 +814,10 @@ function renderProtein(c) {
       'section',
       { class: 'card muted gym-small' },
       h('p', {}, "💪 Muscle is built from protein. Without enough, your workouts don't produce results — your body can't repair and grow the muscle fibers you're breaking down."),
-      h('p', {}, '🎯 ', h('strong', {}, `Your target: ${target}g/day`), ' — based on 1.8g per kg of bodyweight. This is the sweet spot for muscle gain.'),
+      h('p', {}, '🎯 ', h('strong', {}, target === null ? 'Your target: 1.8g per kg of bodyweight' : `Your target: ${target}g/day`), target === null ? ' — enter your weight to see it in grams.' : ' — based on 1.8g per kg of bodyweight. This is the sweet spot for muscle gain.'),
       h('p', {}, '⏰ Try to spread it across 3–4 meals rather than one big dose. Your body can only use ~40g efficiently at once.'),
     ),
-    sectionHeader('Settings'),
-    h('section', { class: 'card' }, h('label', { class: 'gym-inline' }, h('span', {}, 'Your weight (kg)'), bw)),
+    target === null ? null : [sectionHeader('Settings'), h('section', { class: 'card' }, h('label', { class: 'gym-inline' }, h('span', {}, 'Your weight (kg)'), bw))],
   ];
 }
 

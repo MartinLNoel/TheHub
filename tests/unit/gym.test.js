@@ -156,13 +156,16 @@ describe('protein, foods and check-ins', () => {
     expect(d.proteinLogs['2026-01-07']).toEqual([{ name: 'Tuna can', grams: 30 }]);
   });
 
-  it('saves and deletes my foods; bodyweight falls back to 75', () => {
+  it('saves and deletes my foods; an empty or nonsense weight keeps the one there was', () => {
     let d = addMyFood(defaultData(), 'Bar', 19);
     expect(d.myFoods.at(-1)).toEqual({ name: 'Bar', protein: 19 });
     d = deleteMyFood(d, d.myFoods.length - 1);
     expect(d.myFoods).toEqual(defaultData().myFoods);
-    expect(setBodyweight(d, '80.5').bodyweight).toBe(80.5);
-    expect(setBodyweight(d, '').bodyweight).toBe(75);
+    expect(setBodyweight(d, '').bodyweight).toBeNull(); // none yet, and none invented
+    d = setBodyweight(d, '80.5');
+    expect(d.bodyweight).toBe(80.5);
+    expect(setBodyweight(d, '').bodyweight).toBe(80.5);
+    expect(setBodyweight(d, '-3').bodyweight).toBe(80.5);
   });
 
   it('a check-in also sets the bodyweight', () => {
@@ -179,16 +182,16 @@ describe('protein, foods and check-ins', () => {
 });
 
 describe('Today card', () => {
-  it('fresh: Upper A, 0/3, all protein left, no streak, one tap to log', () => {
+  it('fresh: Upper A, 0/3, a weight to enter, no streak, one tap to log', () => {
     const card = todayCard(defaultData(), WED);
-    expect(card.lines.slice(0, 4)).toEqual(['Today: Upper A — Push + Pull', 'This week: 0/3 sessions', 'Protein: 135g left today', 'Streak: 0 weeks']);
+    expect(card.lines.slice(0, 4)).toEqual(['Today: Upper A — Push + Pull', 'This week: 0/3 sessions', 'Protein: enter your weight (Gym → Protein) for a daily target', 'Streak: 0 weeks']);
     expect(card.lines[4]).toMatch(/^💬 “/); // the quote of the day
     expect(card.lines).toHaveLength(5);
     expect(card.action).toEqual({ label: 'Log workout', route: 'gym/log' });
   });
 
   it('after a session today: done, next day, protein left', () => {
-    const d = addProtein(withLogs(log('2026-01-07')), 'Whey shake', 25, WED);
+    const d = addProtein({ ...withLogs(log('2026-01-07')), bodyweight: 75 }, 'Whey shake', 25, WED);
     const card = todayCard(d, WED);
     expect(card.lines[0]).toBe('Done today. Next: Lower A — Quad + Hamstring.');
     expect(card.lines[1]).toBe('This week: 1/3 sessions');
