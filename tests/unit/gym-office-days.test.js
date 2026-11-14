@@ -93,10 +93,11 @@ describe('the rules', () => {
 });
 
 describe('the Today card', () => {
-  it('on an office day: rest, and an extra session still counts', () => {
+  it('an office day does not tell you to rest: any day can be trained', () => {
     const card = todayCard(home(), TUE);
-    expect(card.lines[0]).toBe('Today: Day A — Push emphasis'); // the plan stays first, on any day
-    expect(card.lines).toContain('🏢 Office day: rest. An extra session still counts.');
+    expect(card.lines[0]).toBe('Today: Day A — Push emphasis');
+    expect(card.lines.join(' ')).not.toMatch(/office|rest/i);
+    expect(card.lines).toHaveLength(4);
   });
 
   it('adds the warning when the week is tight, and nothing extra on a normal day', () => {

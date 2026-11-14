@@ -205,7 +205,6 @@ function stepPicker(c, ex, step, saved) {
 /** This week: a button per day (tap to mark or unmark an office day, this week only), sessions and free days left. */
 function weekCard(c, now) {
   const week = weekStatus(c.data, now);
-  const officeRest = week.officeToday && week.left > 0 && !week.trainedToday;
   return h(
     'section',
     { class: 'card gym-weekcard', 'data-testid': 'gym-weekcard' },
@@ -238,7 +237,6 @@ function weekCard(c, now) {
       ),
     ),
     week.warning ? h('p', { class: 'gym-week-warn', 'data-testid': 'gym-week-warning' }, week.warning) : null,
-    officeRest ? h('p', { class: 'muted gym-small' }, '🏢 Office day: rest. An extra session still counts.') : null,
     h('p', { class: 'muted gym-small' }, 'Tap a day to mark it as an office day for this week. You can train on any day.'),
   );
 }
