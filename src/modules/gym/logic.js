@@ -116,8 +116,9 @@ export function nextStage(totalSessions) {
   return STAGES.find((st) => st.sessions > totalSessions) || null;
 }
 
+/** Grams of protein a day (bodyweight × 1.8), or null while no weight is entered. */
 export function proteinTarget(data) {
-  return Math.round(data.bodyweight * 1.8);
+  return data.bodyweight > 0 ? Math.round(data.bodyweight * 1.8) : null;
 }
 
 export function todayProteinLog(data, now = new Date()) {
@@ -289,7 +290,8 @@ export function deleteMyFood(data, index) {
 }
 
 export function setBodyweight(data, value) {
-  return { ...structuredClone(data), bodyweight: parseFloat(value) || 75 };
+  const kg = parseFloat(value);
+  return kg > 0 ? { ...structuredClone(data), bodyweight: kg } : structuredClone(data); // empty or nonsense: keep it
 }
 
 /** gainz saveCheckin(): the check-in's weight also becomes the bodyweight (protein target). */

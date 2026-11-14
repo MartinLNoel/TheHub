@@ -331,6 +331,7 @@ summary { min-height: var(--tap); display: flex; align-items: center; cursor: po
 .gym-story-locked__icon { font-size: 3rem; opacity: 0.5; }
 .gym-fighter__names { flex: 1; min-width: 0; }
 .gym-weather { text-align: center; margin: 0; }
+.gym-weight-first { margin-bottom: 0.75rem; }
 .gym-chapter p { line-height: 1.55; }
 .gym-arrow { min-width: var(--tap); min-height: var(--tap); background: none; border: 0; color: var(--text); font-size: 2rem; cursor: pointer; }
 .gym-arrow:disabled { color: var(--border); cursor: default; }

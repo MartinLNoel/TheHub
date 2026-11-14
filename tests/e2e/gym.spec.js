@@ -16,7 +16,7 @@ test('Today shows the Gym card with one tap to log', async ({ page }) => {
   await open(page);
   await expect(gymCard(page)).toContainText('Today: Upper A — Push + Pull');
   await expect(gymCard(page)).toContainText('This week: 0/3 sessions');
-  await expect(gymCard(page)).toContainText('Protein: 135g left today');
+  await expect(gymCard(page)).toContainText('Protein: enter your weight (Gym → Protein) for a daily target');
   await gymCard(page).getByRole('link', { name: 'Log workout' }).click();
   await expect(page).toHaveURL(/#\/gym\/log$/);
   await expect(page.getByTestId('gym-day')).toHaveText('Upper A');
@@ -60,8 +60,12 @@ test('an empty workout is not saved', async ({ page }) => {
   await expect(page.getByTestId('gym-history-empty')).toBeVisible();
 });
 
-test('add protein: quick add and a one-off, then remove one; Today shows what is left', async ({ page }) => {
+test('add protein: enter a weight, quick add and a one-off, then remove one; Today shows what is left', async ({ page }) => {
   await open(page, '#/gym/protein');
+  await expect(page.getByTestId('gym-protein-left')).toHaveText('No target yet: enter your weight above.');
+  await page.getByTestId('gym-bodyweight').fill('75');
+  await page.getByTestId('gym-bodyweight').blur();
+  await expect(page.getByTestId('gym-protein-left')).toHaveText('⚡ 135g remaining');
   await expect(page.getByTestId('gym-protein-total')).toHaveText('0');
   await page.getByRole('button', { name: /Whey shake \+25g/ }).click();
   await expect(page.getByTestId('gym-protein-total')).toHaveText('25');

@@ -13,8 +13,8 @@ figure for every exercise), a calf raise every day, loads as the kg to log, offi
   shrinks to "export gainz-tracker's data once, as an archive in `private/` (never imported), then retire it".
 - **Built 2026-11-14 (0.9.0): the Fighter as a story**, Season 1, 20 stages, real weather, plus a quote of the day.
   `src/modules/gym/story/season1.js` and `docs/fighter/` are SPOILERS: never show Martin a locked stage. Martin's
-  first-run step: Settings → Fighter weather → his town (he named it on 2026-11-14; not written here, the repo is
-  public). Later seasons are new adventures (Martin: "seasons", "arcs"). The brief, kept for Season 2: detailed pixel art; a fantasy world of frog
+  first-run steps: Settings → Fighter weather → his town (he named it on 2026-11-14; not written here, the repo is
+  public), and Gym → Protein → his weight (no default since 0.9.1). Later seasons are new adventures (Martin: "seasons", "arcs"). The brief, kept for Season 2: detailed pixel art; a fantasy world of frog
   bounty hunters, where bounty hunting is the main income and hunters belong to classes with their own gear and
   abilities; the hero is a beginner who has chosen a class. Stage 1 introduces him, stage 2 shows his quest, the
   rest is the adventure; upgrades are gear as well as muscle; the order must surprise him, so **never show Martin

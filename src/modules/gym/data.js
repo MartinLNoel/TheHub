@@ -1,4 +1,4 @@
-// The Gym store's data (schema version 4): the same fields gainz-tracker keeps in its `state`,
+// The Gym store's data (schema version 5): the same fields gainz-tracker keeps in its `state`,
 // minus `_mondayFixed` (gainz's one-time date fix, not needed here), plus `program`, the office days and
 // the town whose weather the Fighter's story shows.
 // No Notion token, ever.
@@ -10,7 +10,7 @@
 //   checkIns      [{ date, weight, cals (number|null), notes }]           oldest first
 //   myFoods       [{ name, protein }]
 //   personalBests { [exerciseName]: { weight, reps } }
-//   bodyweight    kg (protein target = bodyweight × 1.8)
+//   bodyweight    kg, or null until Martin enters it (protein target = bodyweight × 1.8)            v5: null
 //   program       "gym" (gainz-tracker's program, by phase) | "home" (the home plan, Day A/B/C)   v2
 //   phase         "phase1" | "phase2" (the gym program's phase, kept while on the home plan)
 //   dayIndex      sessions logged since the phase started (gainz shows "DAY n OF m" from it)
@@ -21,7 +21,7 @@
 //                 (rounded to 0.01°; personal, so it lives on the phone and in the private backup only)
 import { DEFAULT_MY_FOODS, PROGRAM, STAGES } from './program.js';
 
-export const SCHEMA_VERSION = 4;
+export const SCHEMA_VERSION = 5;
 
 export const PROGRAMS = ['gym', 'home'];
 
@@ -36,6 +36,9 @@ export const migrations = {
   3: (data) => ({ ...data, officeDays: [...DEFAULT_OFFICE_DAYS], officeWeeks: {} }),
   // v4: the Fighter's real-life weather (2026-11-14). No town until Martin sets one in Settings.
   4: (data) => ({ ...data, weatherTown: null }),
+  // v5: no default body weight (Martin, 2026-11-14: "My body weight changes so there is no need for a
+  // default"). A stored weight is kept as it is; fresh data starts with none until he enters it.
+  5: (data) => ({ ...data }),
 };
 
 /**
@@ -50,7 +53,7 @@ export function defaultData() {
     checkIns: [],
     myFoods: structuredClone(DEFAULT_MY_FOODS),
     personalBests: {},
-    bodyweight: 75,
+    bodyweight: null,
     program: 'gym',
     phase: 'phase1',
     dayIndex: 0,
@@ -128,7 +131,9 @@ export function validate(data) {
     problems.push('personal bests must have weights and reps of 0 or more');
   }
 
-  if (!nonNegative(data.bodyweight) || data.bodyweight === 0) problems.push('bodyweight must be a positive number');
+  if (data.bodyweight !== null && (!nonNegative(data.bodyweight) || data.bodyweight === 0)) {
+    problems.push('bodyweight must be null or a positive number');
+  }
   if (!PROGRAMS.includes(data.program)) problems.push(`unknown program "${data.program}"`);
   if (!PROGRAM[data.phase]) problems.push(`unknown phase "${data.phase}"`);
   if (!Number.isInteger(data.dayIndex) || data.dayIndex < 0) problems.push('dayIndex must be a whole number of 0 or more');

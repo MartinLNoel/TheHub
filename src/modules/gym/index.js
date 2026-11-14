@@ -27,7 +27,8 @@ export function todayCard(data, now = new Date()) {
       : loggedToday
         ? `Done today. Next: ${day} — ${focus}.`
         : `Today: ${day} — ${focus}`;
-  const left = Math.max(0, proteinTarget(data) - todayProtein(data, now));
+  const goal = proteinTarget(data);
+  const left = goal === null ? null : Math.max(0, goal - todayProtein(data, now));
   const streak = getStreak(data, now);
   const week = weekStatus(data, now);
   return {
@@ -35,7 +36,7 @@ export function todayCard(data, now = new Date()) {
     lines: [
       plan,
       `This week: ${done}/${target} sessions`,
-      left > 0 ? `Protein: ${left}g left today` : 'Protein: target hit today ✅',
+      left === null ? 'Protein: enter your weight (Gym → Protein) for a daily target' : left > 0 ? `Protein: ${left}g left today` : 'Protein: target hit today ✅',
       `Streak: ${streak} week${streak === 1 ? '' : 's'}${streak > 0 ? ' 🔥' : ''}`,
       quoteLine(quoteFor(now.toISOString().split('T')[0])),
       week.warning,

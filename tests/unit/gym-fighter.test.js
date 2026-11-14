@@ -134,7 +134,7 @@ describe('real weather', () => {
 
 describe('schema 4: the weather town', () => {
   it('a fresh store has no town; version 3 data migrates to none', () => {
-    expect(SCHEMA_VERSION).toBe(4);
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(4);
     expect(defaultData().weatherTown).toBeNull();
     const v3 = { ...defaultData() };
     delete v3.weatherTown;
