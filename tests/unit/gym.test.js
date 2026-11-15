@@ -175,9 +175,13 @@ describe('protein, foods and check-ins', () => {
     expect(validate(d)).toEqual([]);
   });
 
-  it('Check-in "This Week" counts from Sunday, as in gainz', () => {
+  it('Check-in "This week" counts Monday to Sunday, the same as the header (bug: it said 0 for a session today)', () => {
+    // A session logged on Sunday 11 January, seen that Sunday morning: the header counts it, so must the tile.
+    const sunday = withLogs(log('2026-01-11'));
+    expect(checkinThisWeek(sunday, new Date('2026-01-11T10:00:00'))).toBe(1);
+    // Sunday 4 January belongs to the week before Monday 5 January.
     const d = withLogs(log('2026-01-04'), log('2026-01-05'), log('2026-01-03'));
-    expect(checkinThisWeek(d, new Date('2026-01-07T12:00:00'))).toBeGreaterThanOrEqual(1);
+    expect(checkinThisWeek(d, new Date('2026-01-07T12:00:00'))).toBe(1);
   });
 });
 

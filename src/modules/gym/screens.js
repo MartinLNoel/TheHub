@@ -493,6 +493,12 @@ function renderWorkout(c) {
   ];
 }
 
+/** "8, 7 reps" for bodyweight sets; "5kg × 10, 5kg × 9" when there is weight. */
+export function setsText(sets) {
+  if (sets.every((s) => !s.weight)) return `${sets.map((s) => s.reps).join(', ')} reps`;
+  return sets.map((s) => `${s.weight}kg × ${s.reps}`).join(', ');
+}
+
 // ============================================================
 // HISTORY (gainz "Log")
 // ============================================================
@@ -510,7 +516,7 @@ function renderHistory(c) {
       h(
         'div',
         { class: 'gym-log__exercises' },
-        log.exercises.map((ex) => h('div', {}, h('strong', {}, ex.name), ex.step ? ` (step ${ex.step})` : '', ': ', ex.sets.map((s) => `${s.weight}kg×${s.reps}`).join(', '))),
+        log.exercises.map((ex) => h('div', { class: 'gym-log__ex' }, h('strong', {}, ex.name), ex.step ? ` (step ${ex.step})` : '', ': ', setsText(ex.sets))),
       ),
     ),
   );
@@ -832,10 +838,10 @@ function renderProtein(c) {
             ),
           ),
     ),
-    sectionHeader('Why protein matters'),
     h(
-      'section',
-      { class: 'card muted gym-small' },
+      'details',
+      { class: 'card muted gym-small gym-why' },
+      h('summary', {}, 'Why protein matters'),
       h('p', {}, "💪 Muscle is built from protein. Without enough, your workouts don't produce results — your body can't repair and grow the muscle fibers you're breaking down."),
       h('p', {}, '🎯 ', h('strong', {}, target === null ? 'Your target: 1.8g per kg of bodyweight' : `Your target: ${target}g/day`), target === null ? ' — enter your weight to see it in grams.' : ' — based on 1.8g per kg of bodyweight. This is the sweet spot for muscle gain.'),
       h('p', {}, '⏰ Try to spread it across 3–4 meals rather than one big dose. Your body can only use ~40g efficiently at once.'),
@@ -910,7 +916,7 @@ function renderCheckin(c) {
     h(
       'section',
       { class: 'card muted gym-small' },
-      h('p', {}, 'Everything here is in TheHub’s verified backups (Settings → Backup), with the rest of the app. To bring your history over from gainz-tracker: Settings → Import from gainz-tracker.'),
+      h('p', {}, 'Everything here is in TheHub’s verified backups (Settings → Backup), with the rest of the app.'),
       h('a', { class: 'btn', href: '#/settings' }, 'Open Settings'),
     ),
     sectionHeader('Coach notes'),

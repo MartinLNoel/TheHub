@@ -158,6 +158,10 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   it has no Cyrillic letter or is already a card. OK? · How fast the alphabet counts as learned, and what you can
   review before the book arrives. · `src/modules/bulgarian/data.js` (`LEARNED_STREAK`, `ROUND_SIZE`,
   `acceptOffer`), `src/modules/bulgarian/screens.js` (`CARDS`), `content/bulgarian/alphabet.json` (`latin`) · open
+- **Q-25** · Gym → Check-in → **Coach notes** still carry gainz-tracker's targets: "Weight gain target — aim for
+  0.25–0.5kg/week" and "Calorie target — aim for 2900–3100 kcal/day". Your coaching rules say no calorie counting
+  for now, and your goals now include a tight stomach. Keep them, change the numbers, or remove those two notes? ·
+  What the Check-in screen tells you. · `src/modules/gym/screens.js` (renderCheckin, "Coach notes") · open
 - **Q-24** · Gym home plan: what goes in the kg boxes. **Answered 2026-11-14:** the plates on one dumbbell, the
   handle not counted (Martin's way; one set of dumbbells, so the numbers only need to agree with themselves);
   bodyweight moves 0 kg; holds in seconds in "reps"; the ladders now record their step (Martin: "that rule is

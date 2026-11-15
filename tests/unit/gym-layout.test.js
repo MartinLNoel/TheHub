@@ -49,3 +49,11 @@ describe('the Workout screen layout', () => {
     expect(tabs.every((t) => t.querySelector('.gym-tab__icon').textContent.length > 0)).toBe(true);
   });
 });
+
+describe('History wording', () => {
+  it('bodyweight sets read as reps; sets with weight keep the kg', async () => {
+    const { setsText } = await import('../../src/modules/gym/screens.js');
+    expect(setsText([{ weight: 0, reps: 8 }, { weight: 0, reps: 7 }])).toBe('8, 7 reps');
+    expect(setsText([{ weight: 5, reps: 10 }, { weight: 5, reps: 9 }])).toBe('5kg × 10, 5kg × 9');
+  });
+});

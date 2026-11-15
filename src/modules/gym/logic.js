@@ -302,14 +302,13 @@ export function addCheckIn(data, { weight, cals, notes }, now = new Date()) {
   return next;
 }
 
-/** gainz Check-in "This Week": logs dated on or after this week's Sunday (its own rule, kept). */
+/**
+ * Check-in "This week": the sessions of this Monday-to-Sunday week, like the header. (gainz-tracker counted from
+ * Sunday and compared a UTC date with the local time, so a session logged on a Sunday showed as 0; that rule was
+ * kept for the side-by-side week with gainz-tracker, which Martin's fresh start made moot. Fixed 2026-11-15.)
+ */
 export function checkinThisWeek(data, now = new Date()) {
-  return data.workoutLogs.filter((l) => {
-    const ld = new Date(l.date);
-    const start = new Date(now.getTime());
-    start.setDate(now.getDate() - now.getDay());
-    return ld >= start;
-  }).length;
+  return sessionsThisWeek(data, now);
 }
 
 /** gainz formatDate(): "Mon 4 May". */
