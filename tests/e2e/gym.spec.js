@@ -43,8 +43,8 @@ test('log a workout: it shows on Today and in History, and survives a reload', a
   const entries = page.getByTestId('gym-log-entry');
   await expect(entries).toHaveCount(1);
   await expect(entries.first()).toContainText('Upper A');
-  await expect(entries.first()).toContainText('Incline Chest Press: 40kg×10');
-  await expect(entries.first()).toContainText('Lat Pulldown: 35kg×12');
+  await expect(entries.first()).toContainText('Incline Chest Press: 40kg × 10');
+  await expect(entries.first()).toContainText('Lat Pulldown: 35kg × 12');
   await expect(page.locator('.gym-pb')).toHaveCount(2);
 
   // The next Upper A pre-fills from this one; the Today tab of the module is one tap away.

@@ -2,6 +2,18 @@
 
 Dated entries, newest first.
 
+## 2026-11-15 — The Gym's other tabs; a Check-in bug fixed (version 0.9.5)
+
+Overnight run, branch `ui/gym-tabs`.
+
+- **Bug fixed: Check-in's "This week" said 0** while the header said 1/3: it used gainz-tracker's own rule (from
+  Sunday, comparing a UTC date with the local time), kept only for the side-by-side week that the fresh start made
+  moot. It now counts Monday to Sunday like the rest of the app. A unit test reproduces the bug (a session on a
+  Sunday) and failed on the old code.
+- **History** reads bodyweight sets as "8, 7 reps" (and "5kg × 10" with weight); **Protein's** "Why protein matters"
+  folds away; **Check-in** no longer explains the gainz-tracker import (fresh start).
+- Open for Martin: Q-25 (the coach notes' calorie and weight-gain targets).
+
 ## 2026-11-15 — Clearer study apps (version 0.9.4)
 
 Overnight run (Martin asleep, asked for as much progress as possible without his input; commits, no push). Branch
