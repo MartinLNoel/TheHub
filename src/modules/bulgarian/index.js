@@ -8,6 +8,7 @@ import { dueSides, localDate } from '../../core/study/scheduler.js';
 import { speakButton } from '../../core/speech.js';
 import { SCHEMA_VERSION, acceptOffer, extendDefault, lettersLearned, markActivity, streak, validateExtra } from './data.js';
 import { BASE, MANIFEST, getTrainer, trainer } from './content.js';
+import { withLessonsTab } from './screens.js';
 import { CARDS, ID, NAME, TABS, VOICE, feedbackTitle, renderAlphabet, renderHome, renderPractice } from './screens.js';
 
 /** Today's card: cards due (course and home deck), alphabet progress and the streak. */
@@ -31,7 +32,12 @@ export function todayCard(data, course, letters = trainer().alphabet.letters, no
 let loadedCards = [];
 let warming = null;
 function warm() {
-  if (!warming) warming = study.getCourse().then(({ course }) => (loadedCards = course.cards));
+  if (!warming) {
+    warming = study.getCourse().then(({ course }) => {
+      loadedCards = course.cards;
+      withLessonsTab(course); // the Lessons tab appears once the book's first chapter is written
+    });
+  }
   getTrainer();
 }
 

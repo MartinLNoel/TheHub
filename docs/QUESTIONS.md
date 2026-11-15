@@ -33,7 +33,12 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
 - **Q-3** · Create the two GitHub repos (Part 1: public `TheHub`, private `thehub-backup` with a README) and set
   Pages to "GitHub Actions"; then push. Nothing has been pushed anywhere. · Nothing is online until this is done. ·
   Part 1 · open (action, not a question)
-- **Q-4** · Bulgarian course book: still to find. · Part 7's lessons follow it. · Part 7 · open
+- **Q-4** · Bulgarian course book: **named 2026-11-15:** "Learn Bulgarian the Easy Way" (Doncheva, Zagorchev,
+  Georgiev; ISBN 978-954-9351-87-3). Do you have a copy (paper or PDF), and with the CDs? The first step is the course
+  map, from the book's table of contents: photos of the contents pages are enough to start. Keep the book and any
+  scans in `C:\Users\marti\Documents\Education\Bulgarian\`, never in TheHub (public repo); lessons are written in
+  our own words. The app side is ready (0.9.6): lessons appear as soon as chapter 1 is written. · Part 7's lessons
+  follow it. · Part 7 · open
   - *2026-10-18:* everything that does not need the book is built (version 0.8.1): the module, the alphabet
     trainer, reading practice, the "From my home" deck and the 🔊 button. The home says "Lessons start when your
     course book is added". When you have it, put it in `C:\Users\marti\Documents\Education\Bulgarian\` (not
@@ -158,6 +163,10 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   it has no Cyrillic letter or is already a card. OK? · How fast the alphabet counts as learned, and what you can
   review before the book arrives. · `src/modules/bulgarian/data.js` (`LEARNED_STREAK`, `ROUND_SIZE`,
   `acceptOffer`), `src/modules/bulgarian/screens.js` (`CARDS`), `content/bulgarian/alphabet.json` (`latin`) · open
+- **Q-26** · The Fridge does what its spec asked (scan, expiry, "expiring soon", Bulgarian names) and reads
+  cleanly; nothing in it was changed overnight. Should it grow? Ideas: a shopping list (items you used up or threw
+  away go on it), or "what can I cook" from what is in the fridge. Or leave it as it is until you have used it. ·
+  What the Fridge is for. · `src/modules/fridge/` · open
 - **Q-25** · Gym → Check-in → **Coach notes** still carry gainz-tracker's targets: "Weight gain target — aim for
   0.25–0.5kg/week" and "Calorie target — aim for 2900–3100 kcal/day". Your coaching rules say no calorie counting
   for now, and your goals now include a tight stomach. Keep them, change the numbers, or remove those two notes? ·
