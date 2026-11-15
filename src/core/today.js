@@ -1,4 +1,6 @@
-// Today screen: one card per registered module (from its todayCard), plus the backup status.
+// Today screen, laid out like a phone's home screen (2026-11-15, Martin: "a background with app icons on it like a
+// phone home page"): the time and date, a grid of app icons (every module, then Settings), then each module's
+// Today card and the backup status as widgets.
 import { h, mount } from './dom.js';
 import { relativeTime } from './backup.js';
 
@@ -99,17 +101,65 @@ export function backupCard(health, { onBackupNow, now = Date.now() } = {}) {
   );
 }
 
+/** The colour of each app's icon (a module without one gets the default). */
+export const APP_COLORS = {
+  gym: '#f06a3a',
+  istqb: '#3c7fd6',
+  bulgarian: '#2f9e5a',
+  fridge: '#22a6c4',
+  settings: '#6b7280',
+  demo: '#8a5cf6',
+};
+const DEFAULT_COLOR = '#5b6270';
+
+function appIcon({ id, name, icon, href }) {
+  const color = APP_COLORS[id] || DEFAULT_COLOR;
+  return h(
+    'a',
+    { class: 'app-icon', href, 'data-app': id, style: `--app:${color}` },
+    h('span', { class: 'app-icon__tile', 'aria-hidden': 'true' }, icon),
+    h('span', { class: 'app-icon__label' }, name),
+  );
+}
+
+const two = (n) => String(n).padStart(2, '0');
+
+/** The big clock at the top; it updates itself while it is on screen. */
+function clock(now = () => new Date()) {
+  const time = h('div', { class: 'home__time' });
+  const date = h('div', { class: 'home__date' });
+  const tick = () => {
+    const d = now();
+    time.textContent = `${two(d.getHours())}:${two(d.getMinutes())}`;
+    date.textContent = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+  };
+  tick();
+  const timer = setInterval(() => {
+    if (!time.isConnected) clearInterval(timer);
+    else tick();
+  }, 15000);
+  return h('div', { class: 'home__clock', 'aria-hidden': 'true' }, time, date);
+}
+
 /**
  * state: { [moduleId]: { data, readOnly, error } }
  * backup (optional): { health, onBackupNow } for the Backups card.
  */
 export function renderToday(root, { registry, state, backup = {} }) {
-  const cards = registry.list().map((mod) => moduleCard(mod, state[mod.id])).filter(Boolean);
+  const mods = registry.list();
+  const cards = mods.map((mod) => moduleCard(mod, state[mod.id])).filter(Boolean);
+  const apps = [
+    ...mods.map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),
+    { id: 'settings', name: 'Settings', icon: '⚙️', href: '#/settings' },
+  ];
   mount(
     root,
     h(
       'div',
-      { class: 'stack', 'data-testid': 'today' },
+      { class: 'home stack', 'data-testid': 'today' },
+      clock(),
+      h('nav', { class: 'home__apps', 'aria-label': 'Apps', 'data-testid': 'home-apps' }, apps.map(appIcon)),
+      h('h2', { class: 'home__heading' }, 'Today'),
       cards.length ? cards : h('section', { class: 'card' }, h('h2', {}, 'Welcome'), h('p', {}, 'No modules yet. They arrive with the next updates.')),
       backupCard(backup.health, { onBackupNow: backup.onBackupNow }),
     ),

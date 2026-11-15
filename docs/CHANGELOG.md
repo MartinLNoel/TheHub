@@ -2,6 +2,19 @@
 
 Dated entries, newest first.
 
+## 2026-11-15 — A phone-style home screen (version 0.9.2)
+
+Martin found the app hard to read and asked for "a background with app icons on it like a phone home page", without
+a deep redesign. Branch `ui/phone-home`.
+
+- **Home (Today) is a phone home screen:** a wallpaper (light and dark), the time and date, a grid of app icons
+  (every module, then Settings; colours in `APP_COLORS`, `src/core/today.js`), then the Today cards as see-through
+  widgets. The top-bar title stays for screen readers but is hidden on the home screen.
+- **A "‹ Home" button** in the top bar on every other screen; the bottom bar became a floating dock; cards are
+  rounder with a soft shadow. No module screen changed.
+- Tests: `tests/unit/home.test.js`, `tests/e2e/home.spec.js` (open an app from its icon, back with "‹ Home", icons
+  48 px or more). 578 unit and 58 e2e tests pass locally.
+
 ## 2026-11-14 — The first push to GitHub; a flaky test fixed (no app change)
 
 - **First CI run on GitHub: the browser test "Settings → Ask Claude: choose the delivery" failed** (twice, with the
