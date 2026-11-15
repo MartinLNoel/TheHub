@@ -139,7 +139,8 @@ describe('course hooks on the engine screens (Part 7)', () => {
   it('config.tabs replaces the sub-tabs; the default stays the five engine tabs', async () => {
     const plain = mountModule(createStudyModule({ id: 'sample', name: 'Sample', icon: '📚', content }), 'cards', defaultProgress());
     await plain.done;
-    expect([...plain.root.querySelectorAll('.subtab')].map((a) => a.textContent)).toEqual(['Home', 'Lessons', 'Cards', 'Mocks', 'Feedback']);
+    expect([...plain.root.querySelectorAll('.subtab__label')].map((a) => a.textContent)).toEqual(['Home', 'Lessons', 'Cards', 'Mocks', 'Feedback']);
+    expect([...plain.root.querySelectorAll('.subtab__icon')]).toHaveLength(5); // an icon over each name (0.9.4)
     const own = mountModule(createStudyModule({ id: 'sample', name: 'Sample', icon: '📚', content, tabs: [['', 'Home'], ['cards', 'Cards']] }), 'cards', defaultProgress());
     await own.done;
     expect([...own.root.querySelectorAll('.subtab')].map((a) => a.getAttribute('href'))).toEqual(['#/sample', '#/sample/cards']);

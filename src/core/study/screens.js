@@ -56,13 +56,21 @@ export const DEFAULT_TABS = [
 ];
 
 /** The course's sub-tab bar (exported for module screens; env needs id, name and config). */
+/** An icon over each sub-tab's name (2026-11-15, the same look as the Gym's tabs). */
+const TAB_ICONS = { '': '🏠', lessons: '📖', cards: '🃏', mock: '📝', feedback: '💬', alphabet: '🔤', review: '🔁' };
+
 export function tabs(env, current) {
   const items = env.config?.tabs || DEFAULT_TABS;
   return h(
     'nav',
-    { class: 'subtabs', 'aria-label': `${env.name} screens` },
+    { class: 'subtabs', 'aria-label': `${env.name} screens`, style: `--tabs:${items.length}` },
     items.map(([route, label]) =>
-      h('a', { class: 'subtab', href: route ? `#/${env.id}/${route}` : `#/${env.id}`, 'aria-current': route === current ? 'page' : null }, label),
+      h(
+        'a',
+        { class: 'subtab', href: route ? `#/${env.id}/${route}` : `#/${env.id}`, 'aria-current': route === current ? 'page' : null },
+        TAB_ICONS[route] ? h('span', { class: 'subtab__icon', 'aria-hidden': 'true' }, TAB_ICONS[route]) : null,
+        h('span', { class: 'subtab__label' }, label),
+      ),
     ),
   );
 }
@@ -260,7 +268,7 @@ export async function renderHome(ctx, env) {
   const s = p.activeSession;
   const sessionCard = h(
     'section',
-    { class: 'card', 'data-testid': 'study-session-card' },
+    { class: 'card study-hero', 'data-testid': 'study-session-card' },
     h('h2', {}, s ? `Session ${s.no} in progress` : `Session ${no}`),
     s
       ? h('p', {}, `Step ${Math.min(s.index + 1, s.steps.length)} of ${s.steps.length}. Your answers so far are saved.`)
@@ -295,8 +303,8 @@ export async function renderHome(ctx, env) {
       { class: 'stack study', 'data-testid': 'study-home', 'data-module': env.id },
       tabs(env, ''),
       problemsNote(problems),
-      extraCards,
       sessionCard,
+      extraCards,
       m
         ? h(
             'section',

@@ -681,3 +681,41 @@ body[data-section="gym"] { --accent: #c2481a; --accent-text: #ffffff; }
 /* pop-ups sit above the dock and the sticky log button */
 .gym-toast { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 6.25rem); }
 .gym-rest-timer { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 6.25rem); }
+
+/* ===== Study apps (ISTQB, Bulgarian), made easier to read (2026-11-15): icon tabs, the session first, mastery bars,
+   each app in its home-screen colour. ===== */
+body[data-section="istqb"] { --accent: #2f6fde; --accent-text: #ffffff; }
+body[data-section="bulgarian"] { --accent: #23824a; --accent-text: #ffffff; }
+body[data-section="fridge"] { --accent: #13809a; --accent-text: #ffffff; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body[data-section="istqb"] { --accent: #6d9cf5; --accent-text: #0e1220; }
+  :root:not([data-theme="light"]) body[data-section="bulgarian"] { --accent: #5cc983; --accent-text: #08180e; }
+  :root:not([data-theme="light"]) body[data-section="fridge"] { --accent: #4cc6e0; --accent-text: #061a20; }
+}
+:root[data-theme="dark"] body[data-section="istqb"] { --accent: #6d9cf5; --accent-text: #0e1220; }
+:root[data-theme="dark"] body[data-section="bulgarian"] { --accent: #5cc983; --accent-text: #08180e; }
+:root[data-theme="dark"] body[data-section="fridge"] { --accent: #4cc6e0; --accent-text: #061a20; }
+
+.subtabs { display: grid; grid-template-columns: repeat(var(--tabs, 5), minmax(0, 1fr)); gap: 0.375rem; overflow: visible; }
+.subtab { flex-direction: column; gap: 0.125rem; padding: 0.375rem 0.125rem; font-size: 0.6875rem; border-radius: 0.875rem; min-width: 0; }
+.subtab__icon { font-size: 1.25rem; line-height: 1.1; }
+.subtab__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.study-hero { background: linear-gradient(150deg, color-mix(in srgb, var(--accent) 18%, var(--surface)) 0%, var(--surface) 70%); }
+.study-hero h2 { font-size: 1.625rem; }
+.study-hero .btn--primary { width: 100%; min-height: 3.5rem; font-size: 1.0625rem; margin-right: 0; }
+
+.istqb-mastery { margin: 0.75rem 0; }
+.istqb-mastery__title { font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
+.mbar { display: grid; grid-template-columns: 2.5rem 1fr; gap: 0.125rem 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+.mbar__ch { font-weight: 700; font-size: 0.875rem; }
+.mbar__bar { display: flex; height: 0.75rem; border-radius: 999px; overflow: hidden; background: var(--surface-2); }
+.mbar__seg { min-width: 3px; }
+.mbar__seg--exam-ready { background: var(--good); }
+.mbar__seg--solid { background: #4f86e8; }
+.mbar__seg--shaky { background: var(--warn-border); }
+.mbar__seg--untested { background: var(--border); }
+.mbar__words { grid-column: 2; font-size: 0.75rem; color: var(--muted); }
+.mbar__legend { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; font-size: 0.75rem; margin: 0.25rem 0 0; }
+.mbar__key { display: inline-flex; align-items: center; gap: 0.3rem; }
+.mbar__dot { width: 0.625rem; height: 0.625rem; border-radius: 0.2rem; display: inline-block; }

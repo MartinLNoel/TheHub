@@ -107,14 +107,27 @@ export async function homeCards(ctx, course, data) {
       : null,
     objectives.length
       ? h(
-          'details',
-          { class: 'istqb-mastery' },
-          h('summary', {}, 'Mastery by chapter'),
-          h(
-            'table',
-            { class: 'table', 'data-testid': 'istqb-mastery' },
-            h('tbody', {}, CHAPTERS.map((c) => h('tr', {}, h('td', {}, `Ch${c}`), h('td', {}, MASTERY.filter((m) => byCh[c][m]).map((m) => `${MASTERY_ICON[m]} ${byCh[c][m]} ${m}`).join(' · '))))),
-          ),
+          'div',
+          { class: 'istqb-mastery', 'data-testid': 'istqb-mastery' },
+          h('h3', { class: 'istqb-mastery__title' }, 'Mastery by chapter'),
+          // A bar per chapter: exam-ready, solid, shaky, untested, in proportion; the counts in words for screen readers.
+          CHAPTERS.map((c) => {
+            const counts = byCh[c];
+            const total = MASTERY.reduce((n, m) => n + (counts[m] || 0), 0) || 1;
+            const words = [...MASTERY].reverse().filter((m) => counts[m]).map((m) => `${MASTERY_ICON[m]} ${counts[m]} ${m}`).join(' · ');
+            return h(
+              'div',
+              { class: 'mbar' },
+              h('span', { class: 'mbar__ch' }, `Ch${c}`),
+              h(
+                'span',
+                { class: 'mbar__bar', role: 'img', 'aria-label': `Chapter ${c}: ${words}` },
+                [...MASTERY].reverse().filter((m) => counts[m]).map((m) => h('span', { class: `mbar__seg mbar__seg--${m}`, style: `flex:${counts[m] / total}` })),
+              ),
+              h('span', { class: 'mbar__words' }, words),
+            );
+          }),
+          h('p', { class: 'muted mbar__legend' }, [...MASTERY].reverse().map((m) => h('span', { class: 'mbar__key' }, h('span', { class: `mbar__dot mbar__seg--${m}` }), m))),
         )
       : null,
     h('a', { class: 'btn', href: '#/istqb/review', 'data-testid': 'istqb-review-link' }, `Wrong answers (${wrong})`),
