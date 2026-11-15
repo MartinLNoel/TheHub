@@ -620,3 +620,64 @@ body.is-home .card p { font-size: 0.9375rem; }
 body.is-home .card.card--warn { background: color-mix(in srgb, var(--warn-bg) 80%, transparent); }
 
 @media (prefers-reduced-motion: reduce) { .app-icon__tile { transition: none; } }
+
+/* ===== The Gym, made easier to read (2026-11-15): its own orange, today's card first, icon tabs, a card per exercise,
+   the log button always in reach, the once-only program settings last. ===== */
+body[data-section="gym"] { --accent: #c2481a; --accent-text: #ffffff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body[data-section="gym"] { --accent: #ff8a5c; --accent-text: #1c0d06; } }
+:root[data-theme="dark"] body[data-section="gym"] { --accent: #ff8a5c; --accent-text: #1c0d06; }
+
+.gym { gap: 1rem; }
+.gym-head__week strong { font-size: 1.25rem; }
+
+/* sub-tabs: icon over label, five across */
+.gym-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.375rem; overflow: visible; }
+.gym-tab { flex-direction: column; gap: 0.125rem; padding: 0.375rem 0.125rem; font-size: 0.6875rem; border-radius: 0.875rem; min-width: 0; }
+.gym-tab__icon { font-size: 1.25rem; line-height: 1.1; }
+.gym-tab__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* today's workout at a glance */
+.gym-hero { background: linear-gradient(150deg, color-mix(in srgb, var(--accent) 18%, var(--surface)) 0%, var(--surface) 70%); }
+.gym-hero__top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.gym-hero .gym-day-name { font-size: 2rem; margin: 0.375rem 0 0.125rem; }
+.gym-day-badge { border-radius: 999px; padding: 0.25rem 0.75rem; }
+.gym-dots { display: inline-flex; gap: 0.375rem; }
+.gym-dot { width: 0.875rem; height: 0.875rem; border-radius: 50%; border: 2px solid var(--accent); }
+.gym-dot.done { background: var(--accent); }
+
+/* a card per exercise */
+.gym-ex { padding: 1rem; border-bottom: 1px solid var(--border); }
+.gym-ex:last-child { border-bottom: 1px solid var(--border); }
+.gym-ex__head { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; }
+.gym-ex__num {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--accent); color: var(--accent-text); font-weight: 800; font-size: 0.9375rem;
+}
+.gym-ex__title { min-width: 0; }
+.gym-ex__name { font-size: 1.0625rem; font-weight: 700; line-height: 1.25; }
+.gym-ex__meta { margin: 0.125rem 0 0; }
+.gym-part { margin: 0.5rem 0.25rem -0.25rem; }
+
+/* sets as tidy rows */
+.gym-sets { display: flex; flex-direction: column; gap: 0.5rem; }
+.gym-set { gap: 0.5rem; }
+.gym-set__label { min-width: 3rem; font-size: 0.8125rem; font-weight: 600; }
+.gym-num { width: 5.5rem; }
+
+/* the log button stays in reach above the dock while scrolling */
+.gym-log-btn {
+  position: sticky;
+  bottom: calc(var(--nav-h) + 1.5rem + env(safe-area-inset-bottom));
+  z-index: 1;
+  min-height: 3.5rem;
+  font-size: 1.0625rem;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* once-only settings, quiet at the end */
+.gym-settings { background: var(--surface-2); box-shadow: none; }
+.gym-settings h2 { font-size: 0.875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+/* pop-ups sit above the dock and the sticky log button */
+.gym-toast { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 6.25rem); }
+.gym-rest-timer { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 6.25rem); }

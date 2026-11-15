@@ -36,11 +36,11 @@ export function resetScreenState() {
 }
 
 const SUBNAV = [
-  { route: '', href: '#/gym', label: 'Workout' },
-  { route: 'history', href: '#/gym/history', label: 'History' },
-  { route: 'fighter', href: '#/gym/fighter', label: 'Fighter' },
-  { route: 'protein', href: '#/gym/protein', label: 'Protein' },
-  { route: 'checkin', href: '#/gym/checkin', label: 'Check-in' },
+  { route: '', href: '#/gym', label: 'Workout', icon: '💪' },
+  { route: 'history', href: '#/gym/history', label: 'History', icon: '📜' },
+  { route: 'fighter', href: '#/gym/fighter', label: 'Fighter', icon: '🐸' },
+  { route: 'protein', href: '#/gym/protein', label: 'Protein', icon: '🍗' },
+  { route: 'checkin', href: '#/gym/checkin', label: 'Check-in', icon: '⚖️' },
 ];
 
 // --- small shared pieces ---
@@ -120,7 +120,7 @@ function frame(ctx, active, ...content) {
       'nav',
       { class: 'gym-tabs', 'aria-label': 'Gym' },
       SUBNAV.map((t) =>
-        h('a', { href: t.href, class: 'gym-tab', 'aria-current': t.route === active ? 'page' : null }, t.label),
+        h('a', { href: t.href, class: 'gym-tab', 'aria-current': t.route === active ? 'page' : null }, h('span', { class: 'gym-tab__icon', 'aria-hidden': 'true' }, t.icon), h('span', { class: 'gym-tab__label' }, t.label)),
       ),
     ),
     ctx.readOnly ? h('p', { class: 'card card--warn' }, 'Read-only until the app updates: nothing can be saved.') : null,
@@ -287,20 +287,29 @@ function renderWorkout(c) {
             sessionInputs[ex.name][s][field] = e.target.value;
           },
         });
-      sets.push(h('div', { class: 'gym-set' }, h('span', { class: 'gym-set__label' }, `S${s + 1}`), set('weight'), h('span', { class: 'muted' }, '×'), set('reps')));
+      sets.push(h('div', { class: 'gym-set' }, h('span', { class: 'gym-set__label' }, `Set ${s + 1}`), set('weight'), h('span', { class: 'muted' }, '×'), set('reps')));
     }
     return [
       partLabel,
       h(
-        'div',
-        { class: 'gym-ex', 'data-testid': `gym-ex-${exIdx}` },
-        h('div', { class: 'gym-ex__name' }, ex.name),
+        'section',
+        { class: 'card gym-ex', 'data-testid': `gym-ex-${exIdx}` },
         h(
           'div',
-          { class: 'gym-ex__meta' },
-          `${ex.sets} sets · ${ex.reps} reps · `,
-          h('span', { class: 'gym-hl' }, ex.muscle),
-          pb ? [' · PB: ', h('span', { class: 'gym-hl' }, `${pb.weight}kg × ${pb.reps}`)] : null,
+          { class: 'gym-ex__head' },
+          h('span', { class: 'gym-ex__num', 'aria-hidden': 'true' }, String(exIdx + 1)),
+          h(
+            'div',
+            { class: 'gym-ex__title' },
+            h('div', { class: 'gym-ex__name' }, ex.name),
+            h(
+              'div',
+              { class: 'gym-ex__meta' },
+              `${ex.sets} sets · ${ex.reps} reps · `,
+              h('span', { class: 'gym-hl' }, ex.muscle),
+              pb ? [' · PB: ', h('span', { class: 'gym-hl' }, `${pb.weight}kg × ${pb.reps}`)] : null,
+            ),
+          ),
         ),
         ex.demo ? demoBlock(ex) : null,
         ladder ? stepPicker(c, ex, step, saved) : null,
@@ -379,9 +388,25 @@ function renderWorkout(c) {
     ? `HOME PLAN · DAY ${phase.days.indexOf(dayName) + 1} OF ${phase.days.length} · FULL BODY`
     : `${phase.days.length}-DAY SPLIT · DAY ${(data.dayIndex % phase.days.length) + 1} OF ${phase.days.length}`;
 
+  const done = sessionsThisWeek(data, now);
+  const goal = targetSessions(data);
   return [
-    h('div', { class: 'gym-badge' }, h('strong', {}, phase.label), `  ·  ${phase.weeks}`),
-    programSwitch,
+    // Today's workout at a glance
+    h(
+      'section',
+      { class: 'card gym-hero' },
+      h(
+        'div',
+        { class: 'gym-hero__top' },
+        h('span', { class: 'gym-day-badge', 'data-testid': 'gym-day' }, dayName),
+        h('span', { class: 'gym-dots', 'aria-label': `${done} of ${goal} sessions this week` }, Array.from({ length: goal }, (_, i) => h('span', { class: `gym-dot${i < done ? ' done' : ''}` }))),
+      ),
+      h('div', { class: 'gym-day-name' }, workout.focus),
+      h('div', { class: 'gym-day-sub' }, dayOfPlan),
+      home
+        ? h('p', { class: 'muted gym-small', 'data-testid': 'gym-kg-note' }, 'kg = the plates on one dumbbell, not the handle · bodyweight = 0 · holds: seconds in "reps"')
+        : null,
+    ),
     weekCard(c, now),
     // The gym program's GYM/HOME versions of each day; the home plan has only one.
     home
@@ -407,16 +432,13 @@ function renderWorkout(c) {
             ),
           ),
         ),
+    exercises,
     h(
       'section',
       { class: 'card' },
-      h('div', { class: 'gym-day-badge', 'data-testid': 'gym-day' }, dayName),
-      h('div', { class: 'gym-day-name' }, workout.focus),
-      h('div', { class: 'gym-day-sub' }, dayOfPlan),
-      home
-        ? h('p', { class: 'muted gym-small', 'data-testid': 'gym-kg-note' }, 'kg = the plates on one dumbbell, not the handle · bodyweight = 0 · holds: seconds in "reps"')
-        : null,
-      exercises,
+      h('h2', {}, 'Rest timer', h('span', { class: 'muted gym-small' }, `  ${selectedRestTime}s selected`)),
+      h('div', { class: 'segmented', role: 'group', 'aria-label': 'Rest time' }, restChips),
+      h('button', { type: 'button', class: 'btn gym-wide', onclick: () => startRestTimer(selectedRestTime) }, '⏱ START REST'),
     ),
     h(
       'section',
@@ -431,17 +453,10 @@ function renderWorkout(c) {
           ],
     ),
     h(
-      'section',
-      { class: 'card' },
-      h('h2', {}, 'Rest timer', h('span', { class: 'muted gym-small' }, `  ${selectedRestTime}s selected`)),
-      h('div', { class: 'segmented', role: 'group', 'aria-label': 'Rest time' }, restChips),
-      h('button', { type: 'button', class: 'btn gym-wide', onclick: () => startRestTimer(selectedRestTime) }, '⏱ START REST'),
-    ),
-    h(
       'button',
       {
         type: 'button',
-        class: 'btn btn--primary gym-wide',
+        class: 'btn btn--primary gym-wide gym-log-btn',
         'data-testid': 'gym-log-workout',
         disabled: c.readOnly,
         onclick: async () => {
@@ -466,7 +481,15 @@ function renderWorkout(c) {
       },
       '✔ LOG THIS WORKOUT',
     ),
-    phasePrompt,
+    // Set once: which program, and the gym program's phase
+    h(
+      'section',
+      { class: 'card gym-settings' },
+      h('h2', {}, 'Program'),
+      h('div', { class: 'gym-badge' }, h('strong', {}, phase.label), `  ·  ${phase.weeks}`),
+      programSwitch,
+      phasePrompt,
+    ),
   ];
 }
 

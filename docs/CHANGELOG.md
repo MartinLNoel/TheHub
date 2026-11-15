@@ -2,6 +2,19 @@
 
 Dated entries, newest first.
 
+## 2026-11-15 — A clearer Gym (version 0.9.3)
+
+Martin, after the new home screen: "You only changed the home screen? Do the gainz functionality too." Branch
+`ui/gym`. Same features, easier to read:
+
+- The Gym has its own orange (its home-screen icon's colour); the sub-tabs show an icon over the name.
+- The Workout screen opens with **today's card** (the day, its focus, the day of the plan, a dot per session this
+  week), then the week card, then **a numbered card per exercise** with its sets as rows ("Set 1"…), the rest timer,
+  protein, and a **"Log this workout" button that stays in reach** above the dock while scrolling. The program
+  settings (Gym program / Home plan, the phase and the Phase 2 prompt) moved to a quiet card at the end.
+- Toasts and the rest timer sit above the sticky button. Tests: `tests/unit/gym-layout.test.js`; 582 unit and
+  58 e2e tests pass locally.
+
 ## 2026-11-15 — A phone-style home screen (version 0.9.2)
 
 Martin found the app hard to read and asked for "a background with app icons on it like a phone home page", without
