@@ -2,6 +2,18 @@
 
 Dated entries, newest first.
 
+## 2026-11-15 — Clearer study apps (version 0.9.4)
+
+Overnight run (Martin asleep, asked for as much progress as possible without his input; commits, no push). Branch
+`ui/study`. The study engine is shared, so ISTQB and Bulgarian both get it:
+
+- **The session first:** the course home opens with "Session N · next lesson · Start session" (a big button), then the
+  course's own summary.
+- **Icon sub-tabs** (🏠 📖 🃏 📝 💬, 🔤 for the alphabet), like the Gym's; every app in its home-screen colour
+  (ISTQB blue, Bulgarian green, Fridge teal).
+- **ISTQB mastery as a bar per chapter** (exam-ready, solid, shaky, untested in proportion, with the counts in
+  words), visible instead of folded away. Tests: `tests/unit/study-layout.test.js`; 583 unit and 58 e2e tests pass.
+
 ## 2026-11-15 — A clearer Gym (version 0.9.3)
 
 Martin, after the new home screen: "You only changed the home screen? Do the gainz functionality too." Branch
