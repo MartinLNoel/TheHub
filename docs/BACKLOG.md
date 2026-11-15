@@ -2,6 +2,15 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
+## 2026-11-15 overnight: committed on local `main`, NOT pushed (Martin reviews first)
+
+Martin asked for as much progress as possible while he slept, questions collected for the morning, commits but no
+push. Done (CHANGELOG 0.9.4–0.9.6): clearer study apps (ISTQB and Bulgarian: session first, icon tabs, mastery
+bars), the Gym's other tabs and a Check-in bug fix, Bulgarian ready for the book (Lessons tab and session card
+appear with the first chapter). The Fridge needed no change. **Next: Martin reviews, then push.** His open
+questions from tonight: Q-4 (the book: does he have it, with CDs?), Q-25 (coach notes' calorie target), Q-26 (should
+the Fridge grow?). Screenshot helpers for these passes are in the git-ignored `private/tools/`.
+
 ## 2026-11-14: the Gym's home plan and its additions (versions 0.8.2 and 0.8.3)
 
 Martin trains at home now. The Gym has a **home plan** (Day A/B/C, bodyweight and dumbbells, a moving
