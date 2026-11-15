@@ -253,18 +253,15 @@ export function lessonView(ctx, env, st, course, lesson, extra = null) {
 
 // ---------- home ----------
 
-export async function renderHome(ctx, env) {
-  const { course, problems } = await env.getCourse();
-  const st = store(ctx);
+/**
+ * The "Session N · next lesson · Start session" card that opens a course home (ISTQB; Bulgarian once its book's
+ * lessons exist). Starts a new session, or resumes the one in progress.
+ */
+export function sessionCardView(ctx, env, course, st) {
   const p = st.data;
   const no = nextSessionNo(p);
   const lesson = nextLesson(course, p);
   const reviewDue = dueReviews(p, p.activeSession?.no ?? no).length;
-  const cardsDue = dueSides(env.allCards(course, p), p.cardState, localDate(), env.config.cards).length;
-  const objectives = [...new Set([...course.lessons.flatMap((l) => l.objectives), ...course.questions.map((q) => q.objective)])];
-  const summary = masterySummary(p, objectives);
-  const openFeedback = p.feedback.filter((f) => !isResolved(f, env.handled())).length;
-
   const s = p.activeSession;
   const sessionCard = h(
     'section',
@@ -293,6 +290,23 @@ export async function renderHome(ctx, env) {
       s ? 'Resume session' : 'Start session',
     ),
   );
+
+  return sessionCard;
+}
+
+export async function renderHome(ctx, env) {
+  const { course, problems } = await env.getCourse();
+  const st = store(ctx);
+  const p = st.data;
+  const no = nextSessionNo(p);
+  const lesson = nextLesson(course, p);
+  const reviewDue = dueReviews(p, p.activeSession?.no ?? no).length;
+  const cardsDue = dueSides(env.allCards(course, p), p.cardState, localDate(), env.config.cards).length;
+  const objectives = [...new Set([...course.lessons.flatMap((l) => l.objectives), ...course.questions.map((q) => q.objective)])];
+  const summary = masterySummary(p, objectives);
+  const openFeedback = p.feedback.filter((f) => !isResolved(f, env.handled())).length;
+
+  const sessionCard = sessionCardView(ctx, env, course, st);
 
   const m = p.activeMock;
   const extraCards = env.config.homeCards ? await env.config.homeCards(ctx, course, p) : null;

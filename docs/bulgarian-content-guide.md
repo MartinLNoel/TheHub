@@ -49,7 +49,9 @@ spec wants vocabulary from the book (Q-23 asks Martin whether he wants them as c
      topic: "ch<N> <topic>", twoWay: true, lang: { front: "bg", back: "en" } }`. Ids must not contain `~`.
    - `questions-ch<N>.json`: the chapter quiz, engine questions (4 options, `why`, a note per wrong option,
      `source: "generated"`), written by us, never the book's exercises.
-3. **The module UI for lessons**: the Bulgarian home now shows a "Lessons start when your course book is added"
+3. **The module UI for lessons** (*done 2026-11-15, version 0.9.6:* the Lessons tab and the session card appear
+   by themselves once `index.json` lists lessons; still to do with the content: chapter progress, "next lesson" on
+   the Today card, chapter quizzes): the Bulgarian home now shows a "Lessons start when your course book is added"
    panel instead of lessons (it disappears once lessons exist). Add the session card and chapter progress (the
    engine's session, or a Bulgarian variant), the Lessons tab, and "next lesson" on the Today card
    (`src/modules/bulgarian/index.js`, `screens.js`). Add chapter quizzes as engine `mocks` (one per chapter) if

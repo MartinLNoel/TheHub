@@ -2,6 +2,18 @@
 
 Dated entries, newest first.
 
+## 2026-11-15 — Bulgarian, ready for the book (version 0.9.6)
+
+Overnight run, branch `bulgarian/lessons-ready`. Martin named his course book: "Learn Bulgarian the Easy Way" by
+Lilia Doncheva, Marin Zagorchev and Dimitar Georgiev (ISBN 978-954-9351-87-3; Skyprint, 2007; also sold with four
+CDs as 978-954-9351-89-7). No table of contents is public, so the lessons still wait for the book (Q-4).
+
+- **The book run's app part is done** (`docs/bulgarian-content-guide.md`, step 3): once `content/bulgarian/index.json`
+  lists lessons, the Bulgarian home shows a **Lessons tab** and the **session card** ("Session 1 · next lesson ·
+  Start session", the engine's, now shared as `sessionCardView`); until then the waiting panel names the book.
+- Tests: `tests/unit/bulgarian-lessons.test.js` feeds the module a practice lesson (made up for the test, not the
+  book's) through a stubbed fetch: the tab, the card and starting a session. 587 unit and 58 e2e tests pass.
+
 ## 2026-11-15 — The Gym's other tabs; a Check-in bug fixed (version 0.9.5)
 
 Overnight run, branch `ui/gym-tabs`.

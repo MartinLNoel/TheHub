@@ -3,7 +3,7 @@
 // (#/bulgarian/practice/<to-sound | to-letter | reading>). Lessons wait for the course book (Q-4).
 import { h, mount } from '../../core/dom.js';
 import { speakButton } from '../../core/speech.js';
-import { askButtons, feedbackBox, store, tabs, toast } from '../../core/study/screens.js';
+import { askButtons, feedbackBox, sessionCardView, store, tabs, toast } from '../../core/study/screens.js';
 import { buildAskMessage } from '../../core/study/ask-claude.js';
 import { isResolved } from '../../core/study/progress.js';
 import { dueSides, localDate } from '../../core/study/scheduler.js';
@@ -18,6 +18,15 @@ export const TABS = [
   ['cards', 'Cards'],
   ['feedback', 'Feedback'],
 ];
+/** Adds the Lessons tab (after Home) once the course has lessons; until the book run, there are none. */
+export function withLessonsTab(course) {
+  if (course.lessons.length && !TABS.some(([route]) => route === 'lessons')) TABS.splice(1, 0, ['lessons', 'Lessons']);
+  return TABS;
+}
+
+/** Martin's course book (2026-11-15). The lessons follow it in our own words; it never goes into this repo. */
+export const BOOK = { title: 'Learn Bulgarian the Easy Way', authors: 'Lilia Doncheva, Marin Zagorchev, Dimitar Georgiev' };
+
 export const CARDS = { newPerDay: 10 };
 /** The voice the 🔊 buttons ask for. */
 export const VOICE = 'bg-BG';
@@ -94,7 +103,7 @@ export async function renderHome(ctx, study) {
         tabs(ENV, ''),
         problemsNote([...problems, ...tr.problems]),
         course.lessons.length
-          ? null
+          ? sessionCardView(ctx, { id: ID, name: NAME, config: {} }, course, st)
           : h(
               'section',
               { class: 'card card--warn', 'data-testid': 'bg-book-panel' },
@@ -102,7 +111,7 @@ export async function renderHome(ctx, study) {
               h(
                 'p',
                 {},
-                'The lessons, their vocabulary and the chapter quizzes will follow your course book, chapter by chapter. Until the book is here: learn the 30 letters, practise reading, and review the words from your home.',
+                `The lessons, their vocabulary and the chapter quizzes will follow your course book, “${BOOK.title}” (${BOOK.authors}), chapter by chapter. Until then: learn the 30 letters, practise reading, and review the words from your home.`,
               ),
             ),
         h(
