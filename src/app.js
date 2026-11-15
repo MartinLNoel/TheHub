@@ -89,6 +89,9 @@ async function autoBackup() {
 async function route({ section, screen: sub }) {
   current = { section, screen: sub };
   markActive(section);
+  // The home screen looks like a phone's (wallpaper, app icons); every other screen has a "‹ Home" button.
+  document.body.classList.toggle('is-home', section === 'today');
+  document.body.dataset.section = section;
   window.scrollTo(0, 0);
   if (section === 'today') {
     title.textContent = 'Today';
