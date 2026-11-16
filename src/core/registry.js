@@ -45,6 +45,13 @@ export function checkModule(mod) {
   if (mod.homeStatus !== undefined && typeof mod.homeStatus !== 'function') {
     problems.push('homeStatus must be a function (or left out)');
   }
+  if (mod.answers !== undefined) {
+    if (!mod.answers || typeof mod.answers !== 'object' || Array.isArray(mod.answers)) problems.push('answers must be an object of functions (or left out)');
+    else for (const [key, fn] of Object.entries(mod.answers)) if (typeof fn !== 'function') problems.push(`answers.${key} must be a function`);
+  }
+  if (mod.onStart !== undefined && typeof mod.onStart !== 'function') {
+    problems.push('onStart must be a function (or left out)');
+  }
   if (mod.accept !== undefined && typeof mod.accept !== 'function') {
     problems.push('accept must be a function (or left out)');
   }

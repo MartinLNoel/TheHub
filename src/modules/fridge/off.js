@@ -11,7 +11,7 @@
 //   { status: 'error', message }        (offline, timeout, rate limit, server trouble: try again later)
 
 export const OFF_PRODUCT_URL = 'https://world.openfoodfacts.org/api/v2/product/';
-export const OFF_FIELDS = ['code', 'product_name', 'product_name_en', 'product_name_nl', 'product_name_bg', 'generic_name', 'brands'];
+export const OFF_FIELDS = ['code', 'product_name', 'product_name_en', 'product_name_nl', 'product_name_bg', 'generic_name', 'brands', 'nutriments'];
 export const APP_NAME = 'TheHub';
 export const LOOKUP_TIMEOUT_MS = 8000;
 
@@ -23,12 +23,30 @@ export function productUrl(code, appVersion = '0') {
 
 const text = (v) => (typeof v === 'string' ? v.trim() : '');
 
-/** Maps an OFF product object to the Fridge's product (text only; no images, no nutrition). */
+const per100g = (v) => {
+  const n = typeof v === 'string' ? parseFloat(v) : v;
+  return typeof n === 'number' && Number.isFinite(n) && n >= 0 ? Math.round(n * 10) / 10 : null;
+};
+
+/**
+ * Nutrition per 100 g from OFF's `nutriments` (0.9.8, for the food log), or null when it has neither kcal nor
+ * protein. kcal falls back to kJ / 4.184.
+ */
+export function mapNutrition(nutriments) {
+  const n = nutriments && typeof nutriments === 'object' ? nutriments : {};
+  let kcal = per100g(n['energy-kcal_100g']);
+  if (kcal === null && per100g(n.energy_100g) !== null && (n.energy_unit === undefined || n.energy_unit === 'kJ')) kcal = Math.round(per100g(n.energy_100g) / 4.184);
+  const out = { protein: per100g(n.proteins_100g), kcal, carbs: per100g(n.carbohydrates_100g), fat: per100g(n.fat_100g) };
+  return out.kcal === null && out.protein === null ? null : out;
+}
+
+/** Maps an OFF product object to the Fridge's product (text, and nutrition per 100 g when known; no images). */
 export function mapProduct(product) {
   const p = product && typeof product === 'object' ? product : {};
   const name = text(p.product_name) || text(p.product_name_en) || text(p.product_name_nl) || text(p.generic_name);
   const brand = text(p.brands).split(',')[0].trim();
-  return { name, brand, nameEn: text(p.product_name_en), nameBg: text(p.product_name_bg) };
+  const per100 = mapNutrition(p.nutriments);
+  return { name, brand, nameEn: text(p.product_name_en), nameBg: text(p.product_name_bg), ...(per100 ? { per100 } : {}) };
 }
 
 /** Maps an HTTP status and parsed JSON body to a lookup result (exported for tests). */

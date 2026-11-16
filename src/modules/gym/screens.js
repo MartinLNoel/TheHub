@@ -6,11 +6,11 @@ import { DEMOS, demoFigure, demoVideoUrl } from './demos.js';
 import { SEASON_1 } from './story/season1.js';
 import { stageCanvas } from './story/render.js';
 import { cachedReading, currentReading, sceneEnv } from './story/weather.js';
-import { QUICK_FOODS, STAGES } from './program.js';
+import { STAGES } from './program.js';
 import {
-  activeProgram, addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
-  formatDate, getStreak, initExInputs, isHomePlan, logWorkout, nextStage, proteinTarget, removeProtein, sessionsThisWeek,
-  sessionsUntilPhase2, setBodyweight, setProgram, targetSessions, todayProtein, todayProteinLog, toggleOfficeDay, upgradePhase,
+  activeProgram, addCheckIn, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
+  formatDate, getStreak, initExInputs, isHomePlan, logWorkout, nextStage, proteinTarget, sessionsThisWeek,
+  sessionsUntilPhase2, setBodyweight, setProgram, targetSessions, toggleOfficeDay, upgradePhase,
   weekStatus, workoutFor, currentStep, ladderOf, pbKey, readyToMoveUp, stepName,
 } from './logic.js';
 
@@ -258,7 +258,7 @@ function renderWorkout(c) {
     sessionKey = key;
   }
   const target = proteinTarget(data);
-  const protein = todayProtein(data, now);
+  const protein = fridgeDay(c.hub).totals.protein;
 
   const exercises = workout.exercises.map((ex, exIdx) => {
     const prevPart = workout.exercises[exIdx - 1]?.part;
@@ -680,25 +680,23 @@ function renderFighter(c) {
 }
 
 // ============================================================
-// PROTEIN (gainz "Nutrition")
+// PROTEIN: read-only since 0.9.8 (Martin, 2026-11-16: food is logged in the Fridge; this tab shows it)
 // ============================================================
+/** Today's food from the Fridge (hub.ask), or an empty day when the Fridge is not there. */
+export function fridgeDay(hub) {
+  return hub?.ask?.('fridge', 'foodDay') || { entries: [], totals: { protein: 0, kcal: 0, carbs: 0, fat: 0 } };
+}
+
 function renderProtein(c) {
-  const now = new Date();
   const data = c.data;
   const target = proteinTarget(data);
-  const log = todayProteinLog(data, now);
-  const total = log.reduce((sum, i) => sum + i.grams, 0);
+  const day = fridgeDay(c.hub);
+  const total = day.totals.protein;
+  const kcalTarget = c.hub?.ask?.('fridge', 'kcalTarget') ?? null;
   const pct = target ? Math.min(100, Math.round((total / target) * 100)) : 0;
   const r = 56;
   const circ = 2 * Math.PI * r;
   const dash = circ * (pct / 100);
-
-  const add = async (name, grams) => {
-    if (await c.commit(addProtein(c.data, name, grams, new Date()))) {
-      showToast(`+${grams}g PROTEIN ADDED`);
-      c.rerender();
-    }
-  };
 
   const ring = h(
     'div',
@@ -708,42 +706,6 @@ function renderProtein(c) {
       svg('circle', { cx: 70, cy: 70, r, class: 'gym-ring__fill', 'stroke-width': 10, fill: 'none', 'stroke-dasharray': `${dash} ${circ}`, 'stroke-linecap': 'round' })),
     h('div', { class: 'gym-ring__center' }, h('div', { class: 'gym-ring__num', 'data-testid': 'gym-protein-total' }, String(total)), h('div', { class: 'muted gym-small' }, 'grams')),
   );
-
-  const nameIn = h('input', { type: 'text', placeholder: 'e.g. Protein bar, Steak 200g...', 'aria-label': 'Food name', 'data-testid': 'myfood-name' });
-  const gramsIn = h('input', { type: 'number', inputmode: 'numeric', min: '0', placeholder: 'e.g. 20', 'aria-label': 'Protein grams', 'data-testid': 'myfood-g' });
-  const addFoodForm = h(
-    'div',
-    { class: 'gym-form', hidden: true },
-    h('label', { class: 'field' }, 'Food name', nameIn),
-    h('label', { class: 'field' }, 'Protein (grams)', gramsIn),
-    h(
-      'div',
-      { class: 'row' },
-      h('button', { type: 'button', class: 'btn', onclick: () => (addFoodForm.hidden = true) }, 'Cancel'),
-      h(
-        'button',
-        {
-          type: 'button',
-          class: 'btn btn--primary',
-          'data-testid': 'myfood-save',
-          onclick: async () => {
-            const name = nameIn.value.trim();
-            const protein = parseInt(gramsIn.value) || 0;
-            if (!name) return showToast('ENTER A FOOD NAME');
-            if (protein <= 0) return showToast('ENTER PROTEIN GRAMS');
-            if (await c.commit(addMyFood(c.data, name, protein))) {
-              showToast(`${name} SAVED ✓`);
-              c.rerender();
-            }
-          },
-        },
-        'Save food',
-      ),
-    ),
-  );
-
-  const oneName = h('input', { type: 'text', placeholder: 'Food name...', 'aria-label': 'One-off food name', 'data-testid': 'custom-food-name' });
-  const oneGrams = h('input', { type: 'number', inputmode: 'numeric', min: '0', placeholder: 'g', 'aria-label': 'One-off protein grams', 'data-testid': 'custom-food-g' });
   const bw = h('input', {
     type: 'number',
     inputmode: 'decimal',
@@ -759,7 +721,6 @@ function renderProtein(c) {
     },
   });
 
-  const foods = data.myFoods || [];
   return [
     h(
       'section',
@@ -777,55 +738,18 @@ function renderProtein(c) {
               h('p', { class: total >= target ? 'gym-good gym-small' : 'muted gym-small', 'data-testid': 'gym-protein-left' }, total >= target ? '✅ TARGET HIT' : `⚡ ${Math.max(0, target - total)}g remaining`),
             ],
       ),
-      sectionHeader('Quick add — default'),
-      h('div', { class: 'gym-chips' }, QUICK_FOODS.map((f) => h('button', { type: 'button', class: 'gym-chip', onclick: () => add(f.name, f.protein) }, `${f.name} `, h('strong', {}, `+${f.protein}g`)))),
-      h('div', { class: 'gym-between' }, sectionHeader('My foods'), h('button', { type: 'button', class: 'btn', onclick: () => { addFoodForm.hidden = false; nameIn.focus(); } }, '+ Add food')),
-      addFoodForm,
-      h(
-        'div',
-        { class: 'gym-chips' },
-        foods.length === 0
-          ? h('p', { class: 'muted gym-small' }, 'No saved foods yet. Add your own!')
-          : foods.map((f, i) =>
-              h(
-                'span',
-                { class: 'gym-chip-pair' },
-                h('button', { type: 'button', class: 'gym-chip', onclick: () => add(f.name, f.protein) }, `${f.name} `, h('strong', {}, `+${f.protein}g`)),
-                h('button', { type: 'button', class: 'gym-chip gym-chip--x', 'aria-label': `Delete saved food ${f.name}`, onclick: async () => { if (await c.commit(deleteMyFood(c.data, i))) c.rerender(); } }, '×'),
-              ),
-            ),
-      ),
-      sectionHeader('Log one-off'),
-      h('div', { class: 'gym-oneoff' }, oneName, oneGrams),
-      h(
-        'button',
-        {
-          type: 'button',
-          class: 'btn btn--primary gym-wide',
-          'data-testid': 'custom-food-add',
-          onclick: () => {
-            const name = oneName.value.trim() || 'Custom food';
-            const g = parseInt(oneGrams.value) || 0;
-            if (g <= 0) return showToast('ENTER PROTEIN GRAMS');
-            add(name, g);
-          },
-        },
-        '+ LOG IT',
-      ),
+      h('p', { class: 'gym-center', 'data-testid': 'gym-kcal-today' }, h('strong', {}, `${day.totals.kcal}`), kcalTarget ? ` / ${kcalTarget} kcal today` : ' kcal today'),
+      h('a', { class: 'btn btn--primary gym-wide', href: '#/fridge/food', 'data-testid': 'gym-to-fridge' }, '🍽 Log food in the Fridge'),
+      h('p', { class: 'muted gym-small gym-center' }, 'Food is logged in the Fridge now: protein, calories and recipes in one place.'),
     ),
     sectionHeader("Today's log"),
     h(
       'div',
       { class: 'gym-plist', 'data-testid': 'gym-protein-log' },
-      log.length === 0
+      day.entries.length === 0
         ? h('p', { class: 'muted gym-center' }, 'Nothing logged yet today.')
-        : log.map((item, i) =>
-            h(
-              'div',
-              { class: 'gym-pitem' },
-              h('span', {}, item.name),
-              h('span', { class: 'gym-pitem__right' }, h('strong', { class: 'gym-hl' }, `${item.grams}g`), h('button', { type: 'button', class: 'gym-x', 'aria-label': `Remove ${item.name}`, onclick: async () => { if (await c.commit(removeProtein(c.data, i, new Date()))) c.rerender(); } }, '×')),
-            ),
+        : day.entries.map((item) =>
+            h('div', { class: 'gym-pitem' }, h('span', {}, item.name), h('span', { class: 'gym-pitem__right' }, h('strong', { class: 'gym-hl' }, `${Math.round(item.protein || 0)}g`))),
           ),
     ),
     h(
@@ -917,7 +841,7 @@ function renderCheckin(c) {
       h('p', {}, '😴 ', h('strong', {}, 'Sleep'), ' — 7–9 hours. Most muscle growth happens during sleep, not in the gym.'),
       h('p', {}, '📈 ', h('strong', {}, 'Weight gain target'), ' — aim for 0.25–0.5kg/week on the scale. More than that = too much fat.'),
       h('p', {}, '💧 ', h('strong', {}, 'Hydration'), ' — 2.5–3L of water daily. Dehydration tanks performance more than you think.'),
-      h('p', {}, '🍽️ ', h('strong', {}, 'Calorie target'), ' — aim for 2900–3100 kcal/day. Protein hits matter most.'),
+      h('p', {}, '🍽️ ', h('strong', {}, 'Calories'), ' — your daily target and what you ate are in ', h('a', { href: '#/fridge/food' }, 'Fridge → Food'), '. Protein hits matter most.'),
     ),
   ];
 }

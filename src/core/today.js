@@ -3,6 +3,7 @@
 // Today card and the backup status as widgets.
 import { h, mount } from './dom.js';
 import { relativeTime } from './backup.js';
+import { NO_HUB } from './hub.js';
 
 function toHref(route) {
   if (!route) return '#/today';
@@ -10,7 +11,7 @@ function toHref(route) {
   return `#/${route.replace(/^\/+/, '')}`;
 }
 
-function moduleCard(mod, entry) {
+function moduleCard(mod, entry, hub = NO_HUB) {
   if (entry?.error) {
     return h(
       'section',
@@ -22,7 +23,7 @@ function moduleCard(mod, entry) {
   if (typeof mod.todayCard !== 'function') return null;
   let card;
   try {
-    card = mod.todayCard(entry?.data);
+    card = mod.todayCard(entry?.data, { hub });
   } catch (err) {
     return h(
       'section',
@@ -171,9 +172,9 @@ function statusLine(mod, entry) {
  * state: { [moduleId]: { data, readOnly, error } }
  * backup (optional): { health, onBackupNow } for the Backups card.
  */
-export function renderToday(root, { registry, state, backup = {} }) {
+export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB }) {
   const mods = registry.list();
-  const cards = mods.map((mod) => moduleCard(mod, state[mod.id])).filter(Boolean);
+  const cards = mods.map((mod) => moduleCard(mod, state[mod.id], hub)).filter(Boolean);
   const statuses = mods.map((mod) => statusLine(mod, state[mod.id])).filter(Boolean);
   const apps = [
     ...mods.map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),

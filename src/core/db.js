@@ -27,6 +27,26 @@ export class NewerDataError extends Error {
   }
 }
 
+/**
+ * The save(newData) every module screen gets. The live state (entry.data) takes the new data at once, before
+ * the write finishes, so a screen opened during the write starts from it; a failed write puts the old data
+ * back (unless a later change came meanwhile). Bug found 2026-11-16: taking it only after the write let a
+ * recipe saved right after logging food wipe that food.
+ */
+export function moduleSave({ storage, mod, entry }) {
+  return async (data) => {
+    const prev = entry.data;
+    entry.data = data;
+    try {
+      await storage.save(mod, data);
+    } catch (err) {
+      if (entry.data === data) entry.data = prev;
+      if (err instanceof NewerDataError) entry.readOnly = true;
+      throw err;
+    }
+  };
+}
+
 export class MigrationError extends Error {
   constructor(message) {
     super(message);

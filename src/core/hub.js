@@ -6,6 +6,11 @@
 // The core checks the result with the target's validate() and saves it. When no module with that id is
 // installed, or it does not accept offers, or its data is read-only, the offer is simply ignored.
 // offer() never throws: it resolves to { accepted: true } or { accepted: false, reason }.
+//
+// ask(target, question, ...args) is the read-only side (0.9.8): a module may list pure functions in `answers`,
+//   answers: { [question]: (data, ...args) => value }
+// and others ask them, e.g. the Gym asks the Fridge for a day's food. ask() gets a copy of the data, never
+// throws and returns null when the module, its data or the answer is missing.
 
 /**
  * registry: the module registry; state: { [moduleId]: { data, readOnly, error } } (the app's live state,
@@ -41,8 +46,21 @@ export function createHub({ registry, state, save }) {
     return { accepted: true };
   }
 
-  return { accepts, offer };
+  function ask(target, question, ...args) {
+    const mod = registry.get(target);
+    const entry = state[target];
+    const fn = mod?.answers?.[question];
+    if (typeof fn !== 'function' || !entry || entry.data == null) return null;
+    try {
+      const value = fn(structuredClone(entry.data), ...args);
+      return value === undefined ? null : value;
+    } catch {
+      return null;
+    }
+  }
+
+  return { accepts, offer, ask };
 }
 
 /** A hub that accepts nothing (for screens rendered without the app, e.g. in tests). */
-export const NO_HUB = Object.freeze({ accepts: () => false, offer: async () => ({ accepted: false, reason: 'no-module' }) });
+export const NO_HUB = Object.freeze({ accepts: () => false, offer: async () => ({ accepted: false, reason: 'no-module' }), ask: () => null });
