@@ -2,7 +2,7 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
-## 2026-11-16: next features, decided with Martin (not started; build after he reviews 0.9.4–0.9.6)
+## 2026-11-16: next features, decided with Martin (not started; 0.9.4–0.9.6 approved and pushed the same day)
 
 Martin's answers, in a discussion session (started in gainz-tracker's folder). Build in this order:
 
@@ -35,7 +35,7 @@ Martin's answers, in a discussion session (started in gainz-tracker's folder). B
    in Settings (Q-29). A separate repo, so it never pushes TheHub's `main`. Check
    the feed's terms before relying on it.
 
-## 2026-11-15 overnight: committed on local `main`, NOT pushed (Martin reviews first)
+## 2026-11-15 overnight (0.9.4–0.9.6; approved and pushed 2026-11-16, live)
 
 Martin asked for as much progress as possible while he slept, questions collected for the morning, commits but no
 push. Done (CHANGELOG 0.9.4–0.9.6): clearer study apps (ISTQB and Bulgarian: session first, icon tabs, mastery

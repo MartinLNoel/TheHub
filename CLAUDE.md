@@ -40,13 +40,13 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | The Fighter's story, pixel art and real weather (SPOILERS) | `src/modules/gym/story/` (start with `season1.js`), CHANGELOG 0.9.0 |
 | What is in `private/` (git-ignored): ISTQB notes and transfer files, a clone of the backup repo, screenshot tools | `docs/BACKLOG.md` (2026-11-14/15 sections) |
 
-## Plan status (2026-11-16)
+## Plan status (2026-11-16, evening)
 All plan parts are built except Part 7's book run. **TheHub is live** (https://martinlnoel.github.io/TheHub/, first
 push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verified backups to the private
 `thehub-backup` repo (token set, restore drill done), his ISTQB progress imported (Notion no longer needed), the
 Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
-**Live: 0.9.3. Committed on local `main` but NOT pushed: 0.9.4–0.9.6** (study apps, the Gym's other tabs and a
-Check-in fix, Bulgarian ready for its book), waiting for Martin's review. Open with Martin: Q-4 (the Bulgarian book,
+**Live: 0.9.6** (pushed 2026-11-16 with Martin's approval, CI green). **Next: the features decided 2026-11-16**
+(top section of `docs/BACKLOG.md`), starting with the weather status on the home screen. Open with Martin: Q-4 (the Bulgarian book,
 now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.
 Where things stand and what is next: the top sections of `docs/BACKLOG.md`.
 
