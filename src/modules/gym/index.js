@@ -7,6 +7,7 @@ import {
 } from './logic.js';
 import { quoteFor, quoteLine } from './quotes.js';
 import { routes } from './screens.js';
+import { cachedReading, currentReading, weatherText } from './story/weather.js';
 import { weatherSettingsCard } from './weather-settings.js';
 
 /**
@@ -45,6 +46,23 @@ export function todayCard(data, now = new Date()) {
   };
 }
 
+/**
+ * The home screen's weather line (Martin, 2026-11-16: the weather status shows on the home page; the Fighter's
+ * scenes still use the weather). Drawn from the cached reading, then refreshed in the background.
+ */
+export function homeStatus(data, { fetchFn } = {}) {
+  if (!data) return null;
+  const town = data.weatherTown;
+  if (!town) return { text: '🌤️ Weather: set your town in Settings', href: '#/settings' };
+  return {
+    text: weatherText(town, cachedReading(town)),
+    refresh: async () => {
+      const fresh = await currentReading(town, fetchFn ? { fetchFn } : undefined);
+      return fresh ? { text: weatherText(town, fresh) } : null;
+    },
+  };
+}
+
 export default {
   id: 'gym',
   name: 'Gym',
@@ -55,6 +73,7 @@ export default {
   validate,
   routes,
   todayCard: (data) => todayCard(data),
+  homeStatus: (data) => homeStatus(data),
   settingsCard: (api) => weatherSettingsCard(api),
   importers: [
     {

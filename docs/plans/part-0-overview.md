@@ -125,6 +125,8 @@ export default {
   routes: { '': renderHome, 'log': renderLog, 'lesson/*': renderLesson },
                                 // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
   todayCard: (data) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
+  homeStatus: (data) => ({ text, href?, refresh? }) | null, // optional (0.9.7): a short line under the home clock;
+                                // refresh() resolves to a newer { text } (the Gym's weather)
   accept: (item, data) => newData | null, // optional (Part 8): take an item another module offers (below)
   settingsCard: ({ data, readOnly, save }) => Node | null, // optional (2026-11-14): a card in Settings; save(next) validates and saves
   importers: [                  // optional (Part 4): bring data in from another app, shown in Settings

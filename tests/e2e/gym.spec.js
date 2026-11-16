@@ -237,7 +237,7 @@ test('the Fighter draws the story scene, with its chapter, and moves', async ({ 
   await expect(page.locator('canvas.gym-story')).toHaveCount(0);
 });
 
-test('Settings → Fighter weather: find a town, and the story shows its weather', async ({ page }) => {
+test('Settings → Weather: find a town; the home screen shows its weather and the story uses it', async ({ page }) => {
   await fakeWeather(page, 73); // snow
   await open(page, '#/settings');
   const card = page.getByTestId('weather-card');
@@ -245,10 +245,12 @@ test('Settings → Fighter weather: find a town, and the story shows its weather
   await page.getByTestId('weather-town-input').fill('Testville');
   await page.getByTestId('weather-search').click();
   await card.getByRole('button', { name: 'Testville, North, Nowhere' }).click();
-  await expect(page.getByTestId('weather-status')).toHaveText('Saved. The story now follows the weather in Testville.');
+  await expect(page.getByTestId('weather-status')).toHaveText('Saved. The home screen and the story now follow the weather in Testville.');
 
+  await page.goto('./#/');
+  await expect(page.getByTestId('home-status-gym')).toHaveText('🌨️ Snow, -1°C · Testville');
   await page.goto('./#/gym/fighter');
-  await expect(page.getByTestId('gym-weather')).toHaveText('🌦 Weather from Testville: snow, -1°C');
+  await expect(page.getByTestId('gym-weather')).toHaveCount(0);
   await expect(page.locator('canvas.gym-story')).toHaveAttribute('data-weather', /overcast snow/);
 
   await page.reload();

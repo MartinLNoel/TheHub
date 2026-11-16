@@ -6,7 +6,7 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 
 Martin's answers, in a discussion session (started in gainz-tracker's folder). Build in this order:
 
-1. **Weather moves to the home screen.** A small line by the clock (icon, temperature, a word), from the same cached
+1. **Done 2026-11-16 (0.9.7, not pushed yet).** **Weather moves to the home screen.** A small line by the clock (icon, temperature, a word), from the same cached
    Open-Meteo reading. **The Fighter's scenes keep using the real weather as now; only the weather status text
    leaves the Fighter page** (Martin corrected this, 2026-11-16). Settings → "Fighter weather" becomes "Weather".
 2. **Food tracking moves to the Fridge, and grows.** Track **calories now**, plus what the data allows (proposal:

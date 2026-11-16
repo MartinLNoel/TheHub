@@ -1,5 +1,5 @@
 // The story Fighter (0.9.0): Season 1, the pixel scenes, real weather, schema 4,
-// the "Fighter weather" Settings card. Tests use a made-up town: Martin's own is personal data.
+// the "Weather" Settings card ("Fighter weather" until 0.9.7). Tests use a made-up town: Martin's own is personal data.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import gym from '../../src/modules/gym/index.js';
 import { SCHEMA_VERSION, defaultData, validate } from '../../src/modules/gym/data.js';
@@ -149,7 +149,7 @@ describe('schema 4: the weather town', () => {
   });
 });
 
-describe('Settings → Fighter weather', () => {
+describe('Settings → Weather', () => {
   beforeEach(() => document.body.replaceChildren());
 
   function settingsWith(data, { readOnly = false } = {}) {
@@ -176,7 +176,7 @@ describe('Settings → Fighter weather', () => {
     globalThis.fetch = vi.fn(okJson({ results: [{ name: 'Testville', admin1: 'North', country: 'Nowhere', latitude: 10.5, longitude: 20.25 }] }));
     try {
       const { root, saved, entry } = settingsWith(defaultData());
-      expect(root.querySelector('[data-testid="weather-town"]').textContent).toBe('No town set: the story uses its own weather.');
+      expect(root.querySelector('[data-testid="weather-town"]').textContent).toBe('No town set: no weather on the home screen, and the story uses its own.');
       root.querySelector('[data-testid="weather-town-input"]').value = 'Testville';
       root.querySelector('form').dispatchEvent(new Event('submit', { cancelable: true }));
       await flush();
@@ -221,7 +221,7 @@ describe('the Fighter screen', () => {
     expect(root.querySelector('canvas.gym-story').dataset.stage).toBe('2');
     expect(root.querySelector('[data-testid="gym-chapter"] h2').textContent).toBe(SEASON_1[1].title);
     expect(root.querySelector('[data-testid="gym-chapter"] p').textContent).toBe(SEASON_1[1].story);
-    expect(root.querySelector('[data-testid="gym-weather"] a').getAttribute('href')).toBe('#/settings');
+    expect(root.querySelector('[data-testid="gym-weather"]')).toBeNull(); // the weather's text is on the home screen (0.9.7)
   });
 
   it('a locked stage shows no scene and no story', () => {
@@ -243,7 +243,7 @@ describe('the Fighter screen', () => {
     try {
       const root = mountFighter({ ...defaultData(), weatherTown: TOWN });
       expect(root.querySelector('canvas.gym-story').dataset.weather).toMatch(/overcast snow/);
-      expect(root.querySelector('[data-testid="gym-weather"]').textContent).toBe('🌦 Weather from Testville: snow, -2°C');
+      expect(root.querySelector('[data-testid="gym-weather"]')).toBeNull(); // the scene keeps the weather; its text moved home
       expect(globalThis.fetch).not.toHaveBeenCalled(); // the cache is fresh
     } finally {
       globalThis.fetch = realFetch;

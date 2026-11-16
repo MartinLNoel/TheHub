@@ -26,7 +26,7 @@ export function conditionsFor(code) {
   return { ...base, sky: 'cloudy' };
 }
 
-/** A short description for the Fighter screen, e.g. "light rain". */
+/** A short description, e.g. "rain" (the home screen's weather line). */
 export function describe(code) {
   const c = Number(code);
   if (c === 0) return 'clear sky';
@@ -38,6 +38,28 @@ export function describe(code) {
   if ((c >= 71 && c <= 77) || c === 85 || c === 86) return 'snow';
   if (c >= 95 && c <= 99) return 'thunderstorm';
   return 'mixed weather';
+}
+
+/** An emoji for a WMO weather code, for the home screen (night: a moon instead of the sun). */
+export function iconFor(code, isDay = 1) {
+  const c = Number(code);
+  if (c === 0) return isDay ? '☀️' : '🌙';
+  if (c === 1 || c === 2) return isDay ? '⛅' : '☁️';
+  if (c === 3) return '☁️';
+  if (c === 45 || c === 48) return '🌫️';
+  if (c >= 51 && c <= 67) return '🌧️';
+  if (c >= 80 && c <= 82) return '🌦️';
+  if ((c >= 71 && c <= 77) || c === 85 || c === 86) return '🌨️';
+  if (c >= 95 && c <= 99) return '⛈️';
+  return '🌤️';
+}
+
+/** The home screen's weather line, e.g. "🌨️ Snow, -2°C · Testville". */
+export function weatherText(town, reading) {
+  if (!reading) return `🌤️ ${town.name}: weather not loaded yet`;
+  const words = describe(reading.code);
+  const temp = typeof reading.temp === 'number' ? `, ${Math.round(reading.temp)}°C` : '';
+  return `${iconFor(reading.code, reading.isDay)} ${words[0].toUpperCase()}${words.slice(1)}${temp} · ${town.name}`;
 }
 
 /** Day, dusk or night from the local hour (dusk: 6–7 h and 17–20 h). */
