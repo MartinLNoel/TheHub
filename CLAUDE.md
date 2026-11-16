@@ -36,6 +36,7 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | Writing Bulgarian content (alphabet, reading words, the book run, copyright) | `docs/bulgarian-content-guide.md` |
 | Improving content from Martin's feedback and wrong answers; the Part 6 and Bulgarian content runs | `docs/content-loop.md` |
 | Longer-term ideas | `docs/ROADMAP.md` |
+| Recipes added by a Claude instance (the link format) | `docs/recipe-links.md` |
 | The Gym's home plan (why it is what it is, loads, ladders, office days) | `src/modules/gym/program.js` (comments), CHANGELOG 0.8.2–0.9.1 |
 | The Fighter's story, pixel art and real weather (SPOILERS) | `src/modules/gym/story/` (start with `season1.js`), CHANGELOG 0.9.0 |
 | What is in `private/` (git-ignored): ISTQB notes and transfer files, a clone of the backup repo, screenshot tools | `docs/BACKLOG.md` (2026-11-14/15 sections) |
@@ -45,9 +46,10 @@ All plan parts are built except Part 7's book run. **TheHub is live** (https://m
 push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verified backups to the private
 `thehub-backup` repo (token set, restore drill done), his ISTQB progress imported (Notion no longer needed), the
 Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
-**Live: 0.9.6** (pushed 2026-11-16 with Martin's approval, CI green). **Committed on local `main`, NOT pushed:
-0.9.7** (the weather status on the home screen). **Next: the rest of the features decided 2026-11-16** (top
-section of `docs/BACKLOG.md`): food and calorie tracking in the Fridge, with recipes by import link. Open with Martin: Q-4 (the Bulgarian book,
+**Live: 0.9.7** (the weather on the home screen; pushed 2026-11-16, CI green). **Committed on local `main`, NOT
+pushed: 0.9.8** (food and calories in the Fridge, recipes by link, the Gym's Protein tab read-only). **Next: the rest
+of the features decided 2026-11-16** (top section of `docs/BACKLOG.md`): the "today" strip and market session clock,
+then the companion pet, then the economic calendar. Open with Martin: Q-4 (the Bulgarian book,
 now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.
 Where things stand and what is next: the top sections of `docs/BACKLOG.md`.
 
