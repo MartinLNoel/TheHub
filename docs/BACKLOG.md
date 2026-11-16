@@ -7,14 +7,14 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 Martin's answers, in a discussion session (started in gainz-tracker's folder). Build in this order:
 
 1. **Weather moves to the home screen.** A small line by the clock (icon, temperature, a word), from the same cached
-   Open-Meteo reading. **The Fighter stops using weather** (Martin: the scene "doesn't keep the weather status").
-   Settings → "Fighter weather" becomes "Weather". Proposal to confirm: scenes then always use their own default sky.
+   Open-Meteo reading. **The Fighter's scenes keep using the real weather as now; only the weather status text
+   leaves the Fighter page** (Martin corrected this, 2026-11-16). Settings → "Fighter weather" becomes "Weather".
 2. **Food tracking moves to the Fridge, and grows.** Track **calories now**, plus what the data allows (proposal:
    protein, kcal, carbs, fat; targets only for protein and kcal). Log from a Fridge item or a scanned product (Open
    Food Facts gives per-100 g values) or from a recipe serving. The Gym's Protein tab becomes **read-only** (today's
    totals and target) with a button to the Fridge. Moving the log out of the Gym store needs a schema bump, a
-   migration and a test. Q-25 (the Coach notes' old kcal target) is decided by this: a kcal target is wanted; its
-   number is still open (Q-27).
+   migration and a test. Q-25 (the Coach notes' old kcal target) is decided by this: a kcal target is wanted; Martin
+   does not know the number, so the app suggests one (Q-27).
 3. **Recipes in the Fridge, added by Claude, never typed.** Martin will always ask a Claude instance to add them;
    his limit is "as simple as copy and paste a link, or nothing". Proposal: an **import link**
    (`…/TheHub/#/fridge/recipe?r=<encoded recipe>`): Claude makes the link, Martin taps it, the app shows a preview,
@@ -25,12 +25,14 @@ Martin's answers, in a discussion session (started in gainz-tracker's folder). B
    soon, one Bulgarian word. The clock: which of Tokyo, London and New York is open, and the time to the next open.
 5. **A companion pet (mascot) on the home screen.** For the whole Hub, distinct from the Fighter. Fed by things
    already done (a workout, a study session, food logged, a Fridge item used); tap to interact; never dies or
-   sickens, at worst sleepy or bored. Pixel art like the Fighter. Its look is open (Q-28).
+   sickens, at worst sleepy or bored. Pixel art like the Fighter. Martin: "Surprise me" (Q-28):
+   Claude designs it and Martin first sees it in the app.
 6. **Economic calendar** (scheduled market-moving events, by impact and currency, with countdowns). Not live news
    and no alerts. Source found: a free, keyless weekly JSON feed (`nfs.faireconomy.media/ff_calendar_thisweek.json`,
    checked 2026-11-16) that sends **no CORS header**, so the app cannot fetch it. Proposal: a scheduled GitHub Action
    in a separate small public repo copies it to that repo's GitHub Pages (which allows cross-origin reads) a few
-   times a day; the app reads that copy and caches it. A separate repo, so it never pushes TheHub's `main`. Check
+   times a day; the app reads that copy and caches it. Shows high-impact USD, EUR, GBP and JPY events, changeable
+   in Settings (Q-29). A separate repo, so it never pushes TheHub's `main`. Check
    the feed's terms before relying on it.
 
 ## 2026-11-15 overnight: committed on local `main`, NOT pushed (Martin reviews first)

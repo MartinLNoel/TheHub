@@ -163,14 +163,14 @@ Format: **Q-n** · the question · why it matters · where the placeholder is ·
   it has no Cyrillic letter or is already a card. OK? · How fast the alphabet counts as learned, and what you can
   review before the book arrives. · `src/modules/bulgarian/data.js` (`LEARNED_STREAK`, `ROUND_SIZE`,
   `acceptOffer`), `src/modules/bulgarian/screens.js` (`CARDS`), `content/bulgarian/alphabet.json` (`latin`) · open
-- **Q-27** · **Your daily calorie target.** Calories are tracked from now on (decided 2026-11-16). Give a number,
-  or let the app suggest one from your weight and goal (say which goal: gain, keep, or lose a little). · The kcal
-  ring and the Coach notes (replaces Q-25's old 2900–3100). · Fridge food log (to build) · open
-- **Q-28** · **What should the companion pet look like?** An animal, a creature, a small robot, something tied to
-  the Fighter's frog world? A name? Claude can sketch three options as a page first. · The home screen's mascot. ·
-  to build · open
-- **Q-29** · **Which currencies in the economic calendar?** Proposal: high-impact events only, for USD, EUR, GBP and
-  JPY, changeable in Settings. · What the calendar shows. · to build · open
+- **Q-29** · Which currencies in the economic calendar? **Answered 2026-11-16:** yes to the proposal, high-impact
+  events only for USD, EUR, GBP and JPY, changeable in Settings. · to build · answered
+- **Q-28** · What should the companion pet look like? **Answered 2026-11-16: "Surprise me."** Claude designs it;
+  do not show Martin sketches first. · to build · answered
+- **Q-27** · Your daily calorie target. **Answered 2026-11-16: Martin does not know.** Proposal for the build: the
+  app suggests a starting number from his weight (a maintenance estimate, shown as such) and lets him change it; for
+  the first two weeks the kcal ring shows the day's total against it without "target missed" messages, so the
+  number can be adjusted to what he really eats. Revisit with him after two weeks. · to build · answered
 - **Q-26** · The Fridge does what its spec asked (scan, expiry, "expiring soon", Bulgarian names) and reads
   cleanly; nothing in it was changed overnight. Should it grow? Ideas: a shopping list (items you used up or threw
   away go on it), or "what can I cook" from what is in the fridge. Or leave it as it is until you have used it. ·
