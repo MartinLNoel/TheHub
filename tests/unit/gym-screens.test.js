@@ -13,7 +13,7 @@ import { GAINZ_STATE_KEY } from '../../src/modules/gym/import.js';
 const FIXTURE = readFileSync(join(import.meta.dirname, '..', 'fixtures', 'gainz-export.synthetic.json'), 'utf8');
 const flush = () => new Promise((r) => setTimeout(r, 0));
 
-function mountRoute(route, data, { readOnly = false } = {}) {
+function mountRoute(route, data, { readOnly = false, hub } = {}) {
   const root = document.createElement('main');
   document.body.append(root);
   const saved = [];
@@ -21,6 +21,7 @@ function mountRoute(route, data, { readOnly = false } = {}) {
     root,
     data,
     readOnly,
+    hub,
     save: vi.fn(async (d) => saved.push(d)),
     navigate: vi.fn(),
   };
@@ -44,9 +45,10 @@ describe('screens render', () => {
     }
   });
 
-  it('stored text is shown as text, never as markup', () => {
-    const data = { ...defaultData(), myFoods: [{ name: '<img src=x onerror=alert(1)>', protein: 5 }] };
-    const { root } = mountRoute('protein', data);
+  it('stored text is shown as text, never as markup (the food names come from the Fridge since 0.9.8)', () => {
+    const entries = [{ id: 'e1', name: '<img src=x onerror=alert(1)>', protein: 5, kcal: 50, carbs: null, fat: null, from: 'manual' }];
+    const hub = { ask: (id, q) => (id === 'fridge' && q === 'foodDay' ? { entries, totals: { protein: 5, kcal: 50, carbs: 0, fat: 0 } } : null) };
+    const { root } = mountRoute('protein', defaultData(), { hub });
     expect(root.querySelector('img')).toBeNull();
     expect(root.textContent).toContain('<img src=x onerror=alert(1)>');
   });

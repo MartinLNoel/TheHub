@@ -1,4 +1,4 @@
-// E2E tests for the Gym module at a phone viewport: log a workout, protein, check-in, and the
+// E2E tests for the Gym module at a phone viewport: log a workout, protein (read from the Fridge), check-in, and the
 // import from gainz-tracker (with a SYNTHETIC export, never Martin's real file).
 import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
@@ -60,37 +60,22 @@ test('an empty workout is not saved', async ({ page }) => {
   await expect(page.getByTestId('gym-history-empty')).toBeVisible();
 });
 
-test('add protein: enter a weight, quick add and a one-off, then remove one; Today shows what is left', async ({ page }) => {
+test('Protein is read-only since 0.9.8: enter a weight for the target, food is logged in the Fridge', async ({ page }) => {
   await open(page, '#/gym/protein');
   await expect(page.getByTestId('gym-protein-left')).toHaveText('No target yet: enter your weight above.');
   await page.getByTestId('gym-bodyweight').fill('75');
   await page.getByTestId('gym-bodyweight').blur();
   await expect(page.getByTestId('gym-protein-left')).toHaveText('⚡ 135g remaining');
   await expect(page.getByTestId('gym-protein-total')).toHaveText('0');
-  await page.getByRole('button', { name: /Whey shake \+25g/ }).click();
+  await expect(page.getByTestId('custom-food-add')).toHaveCount(0);
+  await page.getByTestId('gym-to-fridge').click();
+  await page.getByRole('button', { name: /Whey shake 120 kcal/ }).click();
+  await expect(page.getByTestId('food-protein')).toHaveText('25g');
+  await page.goto('./#/gym/protein');
   await expect(page.getByTestId('gym-protein-total')).toHaveText('25');
-  await page.getByTestId('custom-food-name').fill('Kippenbouten');
-  await page.getByTestId('custom-food-g').fill('30');
-  await page.getByTestId('custom-food-add').click();
-  await expect(page.getByTestId('gym-protein-total')).toHaveText('55');
-  await expect(page.getByTestId('gym-protein-left')).toHaveText('⚡ 80g remaining');
-  await expect(page.getByTestId('gym-protein-log')).toContainText('Kippenbouten');
-
-  await page.getByRole('button', { name: 'Remove Whey shake' }).click();
-  await expect(page.getByTestId('gym-protein-total')).toHaveText('30');
-
+  await expect(page.getByTestId('gym-protein-left')).toHaveText('⚡ 110g remaining');
   await page.locator('#nav [data-section="today"]').click();
-  await expect(gymCard(page)).toContainText('Protein: 105g left today');
-});
-
-test('save a food to My Foods and log it', async ({ page }) => {
-  await open(page, '#/gym/protein');
-  await page.getByRole('button', { name: '+ Add food' }).click();
-  await page.getByTestId('myfood-name').fill('Pork jerky');
-  await page.getByTestId('myfood-g').fill('18');
-  await page.getByTestId('myfood-save').click();
-  await page.getByRole('button', { name: /Pork jerky \+18g/ }).click();
-  await expect(page.getByTestId('gym-protein-total')).toHaveText('18');
+  await expect(gymCard(page)).toContainText('Protein: 110g left today');
 });
 
 test('complete a check-in: it shows in History and sets the protein target', async ({ page }) => {

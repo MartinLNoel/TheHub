@@ -1,4 +1,4 @@
-// The Fridge store's data (schema version 1). Text only: no photos are stored.
+// The Fridge store's data (schema version 2; 2 added `food`, 0.9.8). Text only: no photos are stored.
 //
 //   items     [{ id, name, brand, location: "fridge"|"freezer"|"pantry", quantity (text, e.g. "500 g"),
 //                expiry: "YYYY-MM-DD" | null (a LOCAL calendar date, src/core/dates.js), added: "YYYY-MM-DD",
@@ -6,11 +6,19 @@
 //              lookup "pending" = scanned while offline: the barcode is looked up on Open Food Facts later.
 //              nameAuto = the name is a stand-in ("Barcode 5449…") that a later lookup may replace.
 //   waste     { used, thrown }   how many items were used up and how many were thrown away
-//   products  { [barcode]: { name, brand, nameEn, nameBg, fetchedAt } }   Open Food Facts answers already
-//              fetched, so scanning the same product again works offline
+//   products  { [barcode]: { name, brand, nameEn, nameBg, fetchedAt, per100? } }   Open Food Facts answers already
+//              fetched, so scanning the same product again works offline. per100 (0.9.8, optional):
+//              { protein, kcal, carbs, fat } per 100 g, numbers or null
+//   food      the food log, quick foods, recipes and calorie target: see food.js
 import { addDays, daysBetween, isCalendarDate, localDate } from '../../core/dates.js';
+import { NUTRIENTS, defaultFood, validateFood } from './food.js';
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
+
+/** migrations[n] turns version n-1 into version n (src/core/db.js runs them, backing up first). */
+export const migrations = {
+  2: (data) => ({ ...data, food: defaultFood() }),
+};
 
 // PLACEHOLDER(Q-21): the three places from the plan; MiniFridge also had shelves and a counter.
 export const LOCATIONS = [
@@ -24,7 +32,7 @@ const LOCATION_IDS = new Set(LOCATIONS.map((l) => l.id));
 export const SOON_DAYS = 2;
 
 export function defaultData() {
-  return { items: [], waste: { used: 0, thrown: 0 }, products: {} };
+  return { items: [], waste: { used: 0, thrown: 0 }, products: {}, food: defaultFood() };
 }
 
 const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -69,8 +77,12 @@ export function validate(data) {
       if (!isObject(p) || !isText(p.name) || !isText(p.brand) || !isText(p.nameEn) || !isText(p.nameBg) || !isText(p.fetchedAt)) {
         problems.push(`product ${code} is incomplete`);
       }
+      if (isObject(p) && p.per100 !== undefined && (!isObject(p.per100) || NUTRIENTS.some((k) => !(p.per100[k] === null || (typeof p.per100[k] === 'number' && p.per100[k] >= 0))))) {
+        problems.push(`product ${code} has unreadable nutrition`);
+      }
     }
   }
+  problems.push(...validateFood(data.food));
   return problems;
 }
 
@@ -203,6 +215,7 @@ export function cacheProduct(data, barcode, product, now = new Date()) {
     nameEn: product.nameEn || '',
     nameBg: product.nameBg || '',
     fetchedAt: new Date(now).toISOString(),
+    ...(product.per100 ? { per100: { ...product.per100 } } : {}),
   };
   return { ...data, products: { ...data.products, [barcode]: entry } };
 }

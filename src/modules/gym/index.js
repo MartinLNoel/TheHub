@@ -3,19 +3,19 @@
 import { SCHEMA_VERSION, defaultData, migrations, validate } from './data.js';
 import { findGainzOnThisPhone, prepareGainzImport } from './import.js';
 import {
-  currentDayName, getStreak, isHomePlan, proteinTarget, sessionsThisWeek, targetSessions, todayProtein, weekStatus, workoutFor,
+  currentDayName, getStreak, isHomePlan, proteinTarget, sessionsThisWeek, targetSessions, weekStatus, workoutFor,
 } from './logic.js';
 import { quoteFor, quoteLine } from './quotes.js';
-import { routes } from './screens.js';
+import { fridgeDay, routes } from './screens.js';
 import { cachedReading, currentReading, weatherText } from './story/weather.js';
 import { weatherSettingsCard } from './weather-settings.js';
 
 /**
  * Today's card: the planned workout (or a rest day once the week's target is met), the week, protein,
  * streak, a quote for the day; then a warning when the week has no room left. Office days only count as busy
- * days: any day can be trained.
+ * days: any day can be trained. Protein eaten comes from the Fridge's food log (hub.ask, 0.9.8).
  */
-export function todayCard(data, now = new Date()) {
+export function todayCard(data, now = new Date(), hub = null) {
   if (!data) return null;
   const done = sessionsThisWeek(data, now);
   const target = targetSessions(data);
@@ -29,7 +29,7 @@ export function todayCard(data, now = new Date()) {
         ? `Done today. Next: ${day} — ${focus}.`
         : `Today: ${day} — ${focus}`;
   const goal = proteinTarget(data);
-  const left = goal === null ? null : Math.max(0, goal - todayProtein(data, now));
+  const left = goal === null ? null : Math.max(0, goal - fridgeDay(hub).totals.protein);
   const streak = getStreak(data, now);
   const week = weekStatus(data, now);
   return {
@@ -72,7 +72,13 @@ export default {
   defaultData,
   validate,
   routes,
-  todayCard: (data) => todayCard(data),
+  todayCard: (data, ctx) => todayCard(data, new Date(), ctx?.hub),
+  answers: {
+    bodyweight: (data) => data.bodyweight,
+    proteinTarget: (data) => proteinTarget(data),
+    /** The protein log and saved foods from before 0.9.8, for the Fridge to take over (kept here as an archive). */
+    foodArchive: (data) => ({ proteinLogs: data.proteinLogs, myFoods: data.myFoods }),
+  },
   homeStatus: (data) => homeStatus(data),
   settingsCard: (api) => weatherSettingsCard(api),
   importers: [

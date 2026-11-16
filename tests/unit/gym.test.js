@@ -194,9 +194,10 @@ describe('Today card', () => {
     expect(card.action).toEqual({ label: 'Log workout', route: 'gym/log' });
   });
 
-  it('after a session today: done, next day, protein left', () => {
-    const d = addProtein({ ...withLogs(log('2026-01-07')), bodyweight: 75 }, 'Whey shake', 25, WED);
-    const card = todayCard(d, WED);
+  it('after a session today: done, next day, protein left (eaten protein comes from the Fridge, 0.9.8)', () => {
+    const d = { ...withLogs(log('2026-01-07')), bodyweight: 75 };
+    const hub = { ask: (id, q) => (id === 'fridge' && q === 'foodDay' ? { entries: [], totals: { protein: 25, kcal: 120, carbs: 0, fat: 0 } } : null) };
+    const card = todayCard(d, WED, hub);
     expect(card.lines[0]).toBe('Done today. Next: Lower A — Quad + Hamstring.');
     expect(card.lines[1]).toBe('This week: 1/3 sessions');
     expect(card.lines[2]).toBe('Protein: 110g left today');

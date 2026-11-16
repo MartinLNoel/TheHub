@@ -1,12 +1,23 @@
 // The Fridge module (docs/plans/part-8-fridge.md): fridge, freezer and pantry items with expiry dates,
-// barcode scanning with Open Food Facts lookups, and "expiring soon" on Today. Module contract:
-// docs/plans/part-0-overview.md. Text only: no photos are stored.
-import { SCHEMA_VERSION, SOON_DAYS, defaultData, expiringSoon, expiryLabel, pendingItems, validate } from './data.js';
+// barcode scanning with Open Food Facts lookups, and "expiring soon" on Today. Since 0.9.8 it also keeps the
+// food log (protein and calories, moved from the Gym), quick foods and recipes (food.js, recipes.js). Module
+// contract: docs/plans/part-0-overview.md. Text only: no photos are stored.
+import { localDate } from '../../core/dates.js';
+import { SCHEMA_VERSION, SOON_DAYS, defaultData, expiringSoon, expiryLabel, migrations, pendingItems, validate } from './data.js';
+import { foodDay, learningDay, mergeGymArchive } from './food.js';
 import { routes } from './screens.js';
 
 const MAX_LINES = 4;
 
-/** Today's card: what expires today or in the next 2 days (and what already expired). */
+/** The food line for Today: "🍽 Food today: 1450 / 2550 kcal · 85g protein". */
+export function foodLine(data, now = new Date()) {
+  const t = foodDay(data, localDate(now)).totals;
+  const target = data.food.kcalTarget;
+  const kcal = target ? `${t.kcal} / ${target} kcal` : `${t.kcal} kcal`;
+  return `🍽 Food today: ${kcal} · ${t.protein}g protein${learningDay(data, now) ? ' (learning your days)' : ''}`;
+}
+
+/** Today's card: what expires today or in the next 2 days (and what already expired), and today's food. */
 export function todayCard(data, now = new Date()) {
   if (!data) return null;
   const soon = expiringSoon(data.items, now);
@@ -21,11 +32,19 @@ export function todayCard(data, now = new Date()) {
   }
   const pending = pendingItems(data).length;
   if (pending) lines.push(`${pending} scanned item${pending === 1 ? '' : 's'} still to look up.`);
+  lines.push(foodLine(data, now));
   return {
     title: soon.length ? `Fridge: ${soon.length} expiring soon` : 'Fridge',
     lines,
-    action: soon.length ? { label: 'Open Fridge', route: 'fridge' } : { label: 'Scan item', route: 'fridge/scan' },
+    action: soon.length ? { label: 'Open Fridge', route: 'fridge' } : { label: 'Log food', route: 'fridge/food' },
   };
+}
+
+/** Takes over the Gym's old protein log (once; later only what is new), through the hub. */
+export async function onStart({ hub }) {
+  const archive = hub.ask('gym', 'foodArchive');
+  if (!archive) return { accepted: false, reason: 'nothing' };
+  return hub.offer('fridge', { kind: 'gym-food', archive });
 }
 
 export default {
@@ -33,9 +52,15 @@ export default {
   name: 'Fridge',
   icon: '🧊',
   schemaVersion: SCHEMA_VERSION,
-  migrations: {},
+  migrations,
   defaultData,
   validate,
   routes,
   todayCard: (data) => todayCard(data),
+  answers: {
+    foodDay: (data, date) => foodDay(data, date || localDate()),
+    kcalTarget: (data) => data.food.kcalTarget,
+  },
+  accept: (item, data) => (item?.kind === 'gym-food' ? mergeGymArchive(data, item.archive) : null),
+  onStart,
 };

@@ -124,10 +124,12 @@ export default {
   validate: (data) => [],       // returns a list of problems; [] means complete (used by backup verify)
   routes: { '': renderHome, 'log': renderLog, 'lesson/*': renderLesson },
                                 // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
-  todayCard: (data) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
+  todayCard: (data, { hub }) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
   homeStatus: (data) => ({ text, href?, refresh? }) | null, // optional (0.9.7): a short line under the home clock;
                                 // refresh() resolves to a newer { text } (the Gym's weather)
   accept: (item, data) => newData | null, // optional (Part 8): take an item another module offers (below)
+  answers: { question: (data, ...args) => value }, // optional (0.9.8): read-only answers for hub.ask (below)
+  onStart: async ({ hub }) => {},  // optional (0.9.8): once after the data is loaded (and after a restore)
   settingsCard: ({ data, readOnly, save }) => Node | null, // optional (2026-11-14): a card in Settings; save(next) validates and saves
   importers: [                  // optional (Part 4): bring data in from another app, shown in Settings
     { id, title, description, prepare: (text, currentData) => ({ ok, problems, summary, data, nothingNew }),
@@ -159,6 +161,10 @@ or ignores:
   e.g. a duplicate), `invalid` (the result failed the target's `validate`) or `error`.
 - The target's `accept(item, data)` is pure: it gets copies and returns its new data (or `null`); the core checks it
   with `validate`, saves it and updates the live state.
+- `hub.ask(id, question, ...args)` (0.9.8) is the read-only side: it calls the target's `answers[question]` with a
+  copy of its data and returns the value, or `null` when anything is missing; it never throws. Questions so far: the
+  Fridge answers `foodDay(date)` (the day's food log and totals) and `kcalTarget()`; the Gym answers `bodyweight()`,
+  `proteinTarget()` and `foodArchive()` (its protein log from before 0.9.8).
 - Items offered so far: the Fridge offers `{ bg, en, topic: 'food' }` to `bulgarian` (`bg` typed or confirmed by
   Martin, prefilled from Open Food Facts' Bulgarian name when there is one; `en` = the English product name or the
   item's name). Part 7's `accept` (built 2026-10-18) adds it to the "From my home" deck and returns `null` for a word already there.

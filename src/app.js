@@ -3,7 +3,7 @@ import { VERSION } from './version.js';
 import modules from './modules.js';
 import { createRegistry } from './core/registry.js';
 import { createHub } from './core/hub.js';
-import { NewerDataError, hooks, openStorage, requestPersistence } from './core/db.js';
+import { hooks, moduleSave, openStorage, requestPersistence } from './core/db.js';
 import { createBackupService } from './core/backup.js';
 import { renderRestore } from './core/backup-screens.js';
 import { resolveRoute, startRouter } from './core/router.js';
@@ -39,6 +39,18 @@ async function loadAll() {
   }
 }
 
+/** Each module's onStart({ hub }) after the data is loaded (e.g. the Fridge takes over the Gym's old food log). */
+async function startModules() {
+  for (const mod of registry.list()) {
+    if (typeof mod.onStart !== 'function' || !state[mod.id] || state[mod.id].data == null) continue;
+    try {
+      await mod.onStart({ hub });
+    } catch (err) {
+      console.warn(`${mod.name}: start-up step failed:`, err.message);
+    }
+  }
+}
+
 function buildNav() {
   const tabs = [
     { section: 'today', icon: '🏠', name: 'Today' },
@@ -70,6 +82,7 @@ async function showToday() {
   renderToday(screen, {
     registry,
     state,
+    hub,
     backup: {
       health,
       onBackupNow: async () => {
@@ -105,7 +118,10 @@ async function route({ section, screen: sub }) {
       state,
       backup,
       appVersion: VERSION,
-      reloadData: loadAll,
+      reloadData: async () => {
+        await loadAll();
+        await startModules();
+      },
       navigate: (hash) => router.navigate(hash),
     };
     if (sub === 'restore') return renderRestore(screen, ctx);
@@ -129,15 +145,7 @@ async function route({ section, screen: sub }) {
     hub,
     data: entry.data,
     readOnly: entry.readOnly,
-    save: async (data) => {
-      try {
-        await storage.save(mod, data);
-        entry.data = data;
-      } catch (err) {
-        if (err instanceof NewerDataError) entry.readOnly = true;
-        throw err;
-      }
-    },
+    save: moduleSave({ storage, mod, entry }),
     navigate: (hash) => router.navigate(hash),
   });
 }
@@ -157,6 +165,7 @@ async function boot() {
   applyTheme(settings.theme);
   requestPersistence(storage).catch(() => {});
   await loadAll();
+  await startModules();
   buildNav();
   router = startRouter((r) => {
     Promise.resolve(route(r)).catch((err) => renderProblem(screen, 'Something went wrong', err.message));

@@ -167,22 +167,22 @@ describe('Today card', () => {
     ]);
     const card = todayCard(data, NOW);
     expect(card.title).toBe('Fridge: 2 expiring soon');
-    expect(card.lines).toEqual(['Milk: expires today', 'Cheese: expires in 2 days']);
+    expect(card.lines).toEqual(['Milk: expires today', 'Cheese: expires in 2 days', '🍽 Food today: 0 kcal · 0g protein']);
     expect(card.action).toEqual({ label: 'Open Fridge', route: 'fridge' });
   });
 
-  it('says when nothing is due, offers Scan item, and mentions the offline queue', () => {
+  it('says when nothing is due, offers Log food (0.9.8), and mentions the offline queue', () => {
     const data = addItem(withItems([{ name: 'Rice', expiry: addDays(TODAY, 90) }]), { barcode: '5449000000996', lookup: 'pending' }, NOW).data;
     const card = todayCard(data, NOW);
     expect(card.title).toBe('Fridge');
-    expect(card.lines).toEqual(['Nothing expires in the next 2 days (2 items stored).', '1 scanned item still to look up.']);
-    expect(card.action).toEqual({ label: 'Scan item', route: 'fridge/scan' });
-    expect(todayCard(defaultData(), NOW).lines).toEqual(['Nothing stored yet.']);
+    expect(card.lines).toEqual(['Nothing expires in the next 2 days (2 items stored).', '1 scanned item still to look up.', '🍽 Food today: 0 kcal · 0g protein']);
+    expect(card.action).toEqual({ label: 'Log food', route: 'fridge/food' });
+    expect(todayCard(defaultData(), NOW).lines).toEqual(['Nothing stored yet.', '🍽 Food today: 0 kcal · 0g protein']);
   });
 
   it('caps the list at 4 lines plus a count', () => {
     const data = withItems(['A', 'B', 'C', 'D', 'E', 'F'].map((name) => ({ name, expiry: TODAY })));
-    expect(todayCard(data, NOW).lines).toEqual(['A: expires today', 'B: expires today', 'C: expires today', 'D: expires today', '… and 2 more']);
+    expect(todayCard(data, NOW).lines).toEqual(['A: expires today', 'B: expires today', 'C: expires today', 'D: expires today', '… and 2 more', '🍽 Food today: 0 kcal · 0g protein']);
   });
 });
 

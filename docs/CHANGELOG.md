@@ -2,6 +2,39 @@
 
 Dated entries, newest first.
 
+## 2026-11-16 — Food and recipes in the Fridge (version 0.9.8)
+
+Branch `fridge/food-log`, the second of the features decided with Martin on 2026-11-16 (`docs/BACKLOG.md`).
+
+- **Food is logged in the Fridge now** (new tabs: Items · Food · Recipes): calories, protein, carbs and fat per
+  day; one-tap quick foods (the Gym's eight, now with calorie estimates, plus his own); a recipe serving; a one-off;
+  and **"Ate some"** on an item: grams of a scanned product, using the nutrition per 100 g that Open Food Facts now
+  sends (`off.js` asks for `nutriments`; items scanned before 0.9.8 have a "Look up nutrition" button).
+- **Calorie target (Q-27):** the Food tab suggests one from the Gym's body weight (about 33 kcal per kg, rounded to
+  50, shown as an estimate); for its first 14 days the screen shows no verdicts ("Learning your days").
+- **Recipes come in by link** (Martin: "as simple as copy and paste a link, or nothing"): a Claude instance follows
+  `docs/recipe-links.md` and gives a link; tapping it shows a preview, one tap saves. The Recipes tab also takes a
+  pasted link and shows the request to give Claude. A recipe logs any number of servings, copies its own link, and
+  is replaced when a link with the same name comes in.
+- **The Gym's Protein tab is read-only:** its ring, today's log and kcal come from the Fridge, with a button to
+  Fridge → Food. The Gym's home card and Today line read protein from the Fridge too. Check-in's coach note on
+  calories points to the Fridge (the old 2900–3100 kcal note is gone; Q-25's weight-gain note stays open).
+- **Data:** Fridge schema 2 adds `food` (migration with a test; the app backs up first, as for every migration).
+  On start the Fridge takes over the Gym's old protein log and saved foods once, through the hub; the Gym keeps
+  its copy untouched as an archive, so nothing can be lost.
+- **Core:** `hub.ask(module, question)` (read-only answers between modules) and an optional `onStart` in the
+  module contract; Today cards get `{ hub }`.
+- **Bugs found in the screenshots before release, fixed with tests:** (1) a save finishing after leaving the Food
+  screen drew Food over the new screen; (2) two quick taps on the Food screen could lose the first one (each change
+  now builds on the latest data); (3) in the core, the live state took new data only after the write finished, so
+  a screen opened during a write (a recipe link tapped right after logging food) started from old data and its
+  save wiped the food. `moduleSave` (`src/core/db.js`, `tests/unit/module-save.test.js`) now updates the state at
+  once and puts it back if the write fails. Repeating the screenshot steps lost the food in 1 of 3 runs before
+  the fix and in 0 of 3 after (a small sample); an e2e test could not reproduce the timing, so none was kept.
+- Tests: `tests/unit/fridge-food.test.js` (logic, migration, recipe links, the take-over, hub.ask, screens) and
+  `tests/e2e/fridge-food.spec.js` (logging, the read-only Gym tab, a recipe link, and the upgrade from a Fridge before
+  0.9.8 with backups set up: backed up, converted, Gym log taken over).
+
 ## 2026-11-16 — The weather on the home screen (version 0.9.7)
 
 Branch `ui/home-weather`, the first of the features decided with Martin on 2026-11-16 (`docs/BACKLOG.md`).

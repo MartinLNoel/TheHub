@@ -1,5 +1,6 @@
 // Fridge screens: home (#/fridge), scan (#/fridge/scan, the "Scan item" shortcut), add by hand
-// (#/fridge/add), add a scanned code (#/fridge/add/<barcode>) and one item (#/fridge/item/<id>).
+// (#/fridge/add), add a scanned code (#/fridge/add/<barcode>) and one item (#/fridge/item/<id>). The food
+// screens (Food, Recipes, a recipe, a recipe link) are in food-screens.js (0.9.8).
 import { h, mount } from '../../core/dom.js';
 import { addDays, localDate } from '../../core/dates.js';
 import { NO_HUB } from '../../core/hub.js';
@@ -21,6 +22,7 @@ import {
 } from './data.js';
 import { lookupProduct } from './off.js';
 import { startScanner } from './scanner.js';
+import { eatCard, fridgeTabs, renderFood, renderImport, renderRecipe, renderRecipes, resetFoodScreenState, setFoodFlash } from './food-screens.js';
 
 export const BULGARIAN = 'bulgarian';
 const ATTRIBUTION = 'Product names from Open Food Facts (openfoodfacts.org), under the Open Database License.';
@@ -37,6 +39,7 @@ export function resetScreenState() {
   resolving = false;
   stopScanner?.();
   stopScanner = null;
+  resetFoodScreenState();
 }
 
 const placeName = (id) => LOCATIONS.find((l) => l.id === id)?.name || id;
@@ -126,6 +129,7 @@ export function renderHome(ctx) {
   const page = h(
     'div',
     { class: 'stack fridge', 'data-testid': 'fridge-home' },
+    fridgeTabs('items'),
     takeFlash(),
     readOnlyNote(readOnly),
     h(
@@ -517,6 +521,14 @@ export function renderItem(ctx) {
         item.lookup === 'pending' ? h('p', { class: 'muted' }, 'Scanned while offline: its name is looked up when you are online.') : null,
         h('div', { class: 'row' }, take('used', '✓ Used it'), take('thrown', '🗑 Thrown away')),
       ),
+      eatCard(ctx, item, {
+        onLogged: (next, entry) => {
+          if (entry) {
+            setFoodFlash(`+ ${entry.name}`);
+            ctx.navigate('#/fridge/food');
+          } else renderItem({ ...ctx, data: next });
+        },
+      }),
       h(
         'section',
         { class: 'card' },
@@ -579,4 +591,8 @@ export const routes = {
   add: renderAdd,
   'add/*': renderAdd,
   'item/*': renderItem,
+  food: renderFood,
+  recipes: renderRecipes,
+  'recipe/*': renderRecipe,
+  'recipe-import/*': renderImport,
 };
