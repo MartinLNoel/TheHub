@@ -330,7 +330,6 @@ summary { min-height: var(--tap); display: flex; align-items: center; cursor: po
 .gym-story-locked { aspect-ratio: 4 / 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: #a3aab8; font-size: 0.875rem; }
 .gym-story-locked__icon { font-size: 3rem; opacity: 0.5; }
 .gym-fighter__names { flex: 1; min-width: 0; }
-.gym-weather { text-align: center; margin: 0; }
 .gym-weight-first { margin-bottom: 0.75rem; }
 .gym-chapter p { line-height: 1.55; }
 .gym-arrow { min-width: var(--tap); min-height: var(--tap); background: none; border: 0; color: var(--text); font-size: 2rem; cursor: pointer; }
@@ -587,6 +586,9 @@ body.is-home .topbar { justify-content: flex-end; }
 
 .home__clock { text-align: center; padding: 0.5rem 0 0.25rem; color: var(--on-wall); }
 .home__time { font-size: 4rem; font-weight: 200; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.home__statuses { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; margin-top: -0.25rem; }
+.home__status { margin: 0; font-size: 1.05rem; color: var(--on-wall); text-decoration: none; text-align: center; min-height: 48px; display: flex; align-items: center; justify-content: center; }
+a.home__status { text-decoration: underline; text-underline-offset: 3px; }
 .home__date { font-size: 1rem; color: var(--on-wall-muted); margin-top: 0.375rem; }
 
 .home__apps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.125rem 0.5rem; padding: 0.75rem 0.25rem 0.5rem; }

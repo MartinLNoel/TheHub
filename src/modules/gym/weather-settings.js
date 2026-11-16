@@ -1,4 +1,4 @@
-// Settings → "Fighter weather": the town whose real weather the Fighter's story shows (Gym schema 4,
+// Settings → "Weather": the town whose real weather shows on the home screen and in the Fighter's story (Gym schema 4,
 // weatherTown). Found by name with Open-Meteo's free town search; only the chosen town is stored.
 import { h, mount } from '../../core/dom.js';
 import { findTowns } from './story/weather.js';
@@ -14,7 +14,7 @@ export function weatherSettingsCard(api, { fetchFn } = {}) {
   const input = h('input', { type: 'text', id: 'weather-town-input', placeholder: 'Town name', autocomplete: 'off', 'aria-label': 'Town', 'data-testid': 'weather-town-input' });
 
   const showCurrent = () => {
-    mount(current, data.weatherTown ? ['Town: ', h('strong', {}, label(data.weatherTown))] : 'No town set: the story uses its own weather.');
+    mount(current, data.weatherTown ? ['Town: ', h('strong', {}, label(data.weatherTown))] : 'No town set: no weather on the home screen, and the story uses its own.');
     removeBtn.hidden = !data.weatherTown;
   };
 
@@ -31,7 +31,7 @@ export function weatherSettingsCard(api, { fetchFn } = {}) {
     mount(results);
     input.value = '';
     status.className = 'status status--good';
-    status.textContent = `Saved. The story now follows the weather in ${town.name}.`;
+    status.textContent = `Saved. The home screen and the story now follow the weather in ${town.name}.`;
     showCurrent();
   };
 
@@ -84,8 +84,8 @@ export function weatherSettingsCard(api, { fetchFn } = {}) {
   return h(
     'section',
     { class: 'card', 'data-testid': 'weather-card' },
-    h('h2', {}, '🏋️ Fighter weather'),
-    h('p', { class: 'muted' }, 'The outdoor scenes of the Fighter’s story follow the real weather in your town. Only the town’s position is sent to Open-Meteo, a free weather service, never your GPS.'),
+    h('h2', {}, '🌤️ Weather'),
+    h('p', { class: 'muted' }, 'Your town’s weather shows on the home screen, and the outdoor scenes of the Fighter’s story follow it. Only the town’s position is sent to Open-Meteo, a free weather service, never your GPS.'),
     current,
     h(
       'form',

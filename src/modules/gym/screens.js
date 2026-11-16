@@ -5,7 +5,7 @@ import { h, mount } from '../../core/dom.js';
 import { DEMOS, demoFigure, demoVideoUrl } from './demos.js';
 import { SEASON_1 } from './story/season1.js';
 import { stageCanvas } from './story/render.js';
-import { cachedReading, currentReading, describe, sceneEnv } from './story/weather.js';
+import { cachedReading, currentReading, sceneEnv } from './story/weather.js';
 import { QUICK_FOODS, STAGES } from './program.js';
 import {
   activeProgram, addCheckIn, addMyFood, addProtein, checkinThisWeek, currentDayName, currentStage, deleteMyFood, fmtTime,
@@ -534,19 +534,10 @@ function renderHistory(c) {
 }
 
 // ============================================================
-// FIGHTER: Season 1 of Tad's story (story/season1.js), a pixel-art scene per stage, in real weather
+// FIGHTER: Season 1 of Tad's story (story/season1.js), a pixel-art scene per stage, in real weather (the
+// weather's text is on the home screen since 0.9.7: index.js homeStatus)
 // ============================================================
 let weatherCheck = null; // the town whose weather is being fetched, so a re-render does not fetch twice
-
-function weatherLine(c, town, reading) {
-  if (!town) {
-    return h('p', { class: 'muted gym-small gym-weather', 'data-testid': 'gym-weather' }, '🌦 The story uses its own weather. ', h('a', { href: '#/settings' }, 'Set your town in Settings'), ' to bring yours in.');
-  }
-  const text = reading
-    ? `🌦 Weather from ${town.name}: ${describe(reading.code)}${typeof reading.temp === 'number' ? `, ${Math.round(reading.temp)}°C` : ''}`
-    : `🌦 Weather from ${town.name}: not loaded yet`;
-  return h('p', { class: 'muted gym-small gym-weather', 'data-testid': 'gym-weather' }, text);
-}
 
 /** After drawing with the cached weather, fetch fresh weather once and redraw if it changed. */
 function refreshWeather(c, town, reading) {
@@ -675,7 +666,6 @@ function renderFighter(c) {
       ),
       !isCurrent ? h('button', { type: 'button', class: 'btn', onclick: () => go(stage.id) }, '↩ BACK TO CURRENT') : null,
     ),
-    isUnlocked ? weatherLine(c, town, reading) : null,
     h(
       'section',
       { class: 'card gym-chapter', 'data-testid': 'gym-chapter' },

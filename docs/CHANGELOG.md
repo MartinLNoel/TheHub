@@ -2,6 +2,20 @@
 
 Dated entries, newest first.
 
+## 2026-11-16 — The weather on the home screen (version 0.9.7)
+
+Branch `ui/home-weather`, the first of the features decided with Martin on 2026-11-16 (`docs/BACKLOG.md`).
+
+- **The weather status moved from the Fighter page to the home screen,** under the clock: "🌨️ Snow, -2°C · town",
+  drawn from the cached reading at once and refreshed in the background (Open-Meteo, at most every 30 minutes as
+  before). With no town set it is a link to Settings. **The Fighter's scenes still use the real weather;** only the
+  text line left the Fighter page.
+- The module contract has an optional **`homeStatus`** (`docs/plans/part-0-overview.md`); a module whose status fails
+  shows nothing rather than breaking the home screen.
+- Settings → "Fighter weather" is now **"Weather"**, with wording that names the home screen.
+- Tests: `tests/unit/home-weather.test.js` (the line, the Gym's status, the home screen's order, refresh and
+  failures); the Fighter and Settings tests and the e2e weather test follow the move.
+
 ## 2026-11-15 — Bulgarian, ready for the book (version 0.9.6)
 
 Overnight run, branch `bulgarian/lessons-ready`. Martin named his course book: "Learn Bulgarian the Easy Way" by

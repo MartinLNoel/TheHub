@@ -142,12 +142,39 @@ function clock(now = () => new Date()) {
 }
 
 /**
+ * A module's short line under the clock (homeStatus, e.g. the Gym's weather): drawn at once, then updated if its
+ * refresh brings something newer. A module whose homeStatus fails shows nothing rather than breaking the home.
+ */
+function statusLine(mod, entry) {
+  if (typeof mod.homeStatus !== 'function') return null;
+  let status;
+  try {
+    status = mod.homeStatus(entry?.data);
+  } catch {
+    return null;
+  }
+  if (!status || !status.text) return null;
+  const attrs = { class: 'home__status', 'data-testid': `home-status-${mod.id}` };
+  const node = status.href ? h('a', { ...attrs, href: status.href }, status.text) : h('p', attrs, status.text);
+  if (typeof status.refresh === 'function') {
+    Promise.resolve()
+      .then(() => status.refresh())
+      .then((next) => {
+        if (next?.text && node.isConnected) node.textContent = next.text;
+      })
+      .catch(() => {});
+  }
+  return node;
+}
+
+/**
  * state: { [moduleId]: { data, readOnly, error } }
  * backup (optional): { health, onBackupNow } for the Backups card.
  */
 export function renderToday(root, { registry, state, backup = {} }) {
   const mods = registry.list();
   const cards = mods.map((mod) => moduleCard(mod, state[mod.id])).filter(Boolean);
+  const statuses = mods.map((mod) => statusLine(mod, state[mod.id])).filter(Boolean);
   const apps = [
     ...mods.map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),
     { id: 'settings', name: 'Settings', icon: '⚙️', href: '#/settings' },
@@ -158,6 +185,7 @@ export function renderToday(root, { registry, state, backup = {} }) {
       'div',
       { class: 'home stack', 'data-testid': 'today' },
       clock(),
+      statuses.length ? h('div', { class: 'home__statuses' }, statuses) : null,
       h('nav', { class: 'home__apps', 'aria-label': 'Apps', 'data-testid': 'home-apps' }, apps.map(appIcon)),
       h('h2', { class: 'home__heading' }, 'Today'),
       cards.length ? cards : h('section', { class: 'card' }, h('h2', {}, 'Welcome'), h('p', {}, 'No modules yet. They arrive with the next updates.')),
