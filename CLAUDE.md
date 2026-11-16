@@ -45,8 +45,9 @@ All plan parts are built except Part 7's book run. **TheHub is live** (https://m
 push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verified backups to the private
 `thehub-backup` repo (token set, restore drill done), his ISTQB progress imported (Notion no longer needed), the
 Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
-**Live: 0.9.6** (pushed 2026-11-16 with Martin's approval, CI green). **Next: the features decided 2026-11-16**
-(top section of `docs/BACKLOG.md`), starting with the weather status on the home screen. Open with Martin: Q-4 (the Bulgarian book,
+**Live: 0.9.6** (pushed 2026-11-16 with Martin's approval, CI green). **Committed on local `main`, NOT pushed:
+0.9.7** (the weather status on the home screen). **Next: the rest of the features decided 2026-11-16** (top
+section of `docs/BACKLOG.md`): food and calorie tracking in the Fridge, with recipes by import link. Open with Martin: Q-4 (the Bulgarian book,
 now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.
 Where things stand and what is next: the top sections of `docs/BACKLOG.md`.
 
