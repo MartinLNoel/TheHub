@@ -17,6 +17,11 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
   only when CI passes.
 - **Work on the branch the plan part names**, and update the logs below before a session ends.
 - Mobile first: design for a Samsung phone in portrait, touch targets at least 48 px, dark mode.
+- **Pushing `main` deploys to Martin's phone** (CI, then GitHub Pages): push only when Martin says so; commit freely.
+- **No personal details in docs, comments or commit messages either** (his plans, results, routine, town): they go
+  in `private/` (git-ignored) with a pointer. The history was cleaned once before the first push (2026-11-14).
+- **The Fighter is a story Martin must not see ahead:** never show or quote a stage he has not unlocked
+  (`src/modules/gym/story/season1.js` and `docs/fighter/` are spoilers).
 
 ## Map: read this when the session is about...
 | Topic | Read |
@@ -31,20 +36,19 @@ finishes here (a plan part, a module going live), update TheHub's entry there** 
 | Writing Bulgarian content (alphabet, reading words, the book run, copyright) | `docs/bulgarian-content-guide.md` |
 | Improving content from Martin's feedback and wrong answers; the Part 6 and Bulgarian content runs | `docs/content-loop.md` |
 | Longer-term ideas | `docs/ROADMAP.md` |
+| The Gym's home plan (why it is what it is, loads, ladders, office days) | `src/modules/gym/program.js` (comments), CHANGELOG 0.8.2–0.9.1 |
+| The Fighter's story, pixel art and real weather (SPOILERS) | `src/modules/gym/story/` (start with `season1.js`), CHANGELOG 0.9.0 |
+| What is in `private/` (git-ignored): ISTQB notes and transfer files, a clone of the backup repo, screenshot tools | `docs/BACKLOG.md` (2026-11-14/15 sections) |
 
-## Plan status
-Parts 0–8 written 2026-10-17. Parts 2 (core shell), 3 (verified backup and restore), 4 (Gym, from gainz-tracker)
-and 5 (shared study engine, `src/core/study/README.md`) built 2026-10-17 and merged into local `main`; nothing
-pushed yet (Part 1's repos, Part 3's token, Part 4's export, import and side-by-side week, and Part 5's Ask Claude
-phone test are Martin's). Part 6a (ISTQB module, Notion progress import, content scaffolding with §3.1, the
-content loop) built and merged 2026-10-17; Ch3 and Ch6 content written 2026-10-17, Ch4 2026-10-18 (version 0.6.2); the Q-18 local-date fix 2026-10-18 (0.6.3); Ch5 2026-10-18 (0.6.4); the Ch1–2 questions 2026-10-18 (0.6.5): **Part 6 content
-complete** (Part 6's phone import and Q-1, Q-15, Q-16 are Martin's). Part 8 (Fridge, with the core's `hub.offer`
-and a vendored fallback barcode scanner) built and merged 2026-10-18 (0.8.0); scanning on the phone and Q-19 to
-Q-21 are Martin's. Part 7's book-free half (Bulgarian module: alphabet trainer, reading practice, "From my
-home" deck from the Fridge, 🔊 with a bg-BG voice only) built and merged 2026-10-18 (0.8.1); Q-22, Q-23 are
-Martin's. **That was the last part buildable without Martin**: what waits on him, in priority order, is at the top of
-`docs/BACKLOG.md`. Next: Part 7's book run, gated on the course book (Q-4).
-Details: `docs/BACKLOG.md`.
+## Plan status (2026-11-16)
+All plan parts are built except Part 7's book run. **TheHub is live** (https://martinlnoel.github.io/TheHub/, first
+push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verified backups to the private
+`thehub-backup` repo (token set, restore drill done), his ISTQB progress imported (Notion no longer needed), the
+Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
+**Live: 0.9.3. Committed on local `main` but NOT pushed: 0.9.4–0.9.6** (study apps, the Gym's other tabs and a
+Check-in fix, Bulgarian ready for its book), waiting for Martin's review. Open with Martin: Q-4 (the Bulgarian book,
+now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.
+Where things stand and what is next: the top sections of `docs/BACKLOG.md`.
 
 ## Commands
 `npm test` (unit, Vitest) · `npm run e2e` (Playwright, phone viewport; first run `npx playwright install chromium`)
