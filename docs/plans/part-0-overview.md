@@ -125,6 +125,8 @@ export default {
   routes: { '': renderHome, 'log': renderLog, 'lesson/*': renderLesson },
                                 // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
   todayCard: (data, { hub }) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
+  homeTile: (data, { hub }) => ({ title, text, sub, href, refresh? }) | null, // optional (0.9.11): a tile in the home
+                                // screen's "today" strip, in the module's colour
   homeStatus: (data) => ({ text, href?, refresh? }) | null, // optional (0.9.7): a short line under the home clock;
                                 // refresh() resolves to a newer { text } (the Gym's weather)
   accept: (item, data) => newData | null, // optional (Part 8): take an item another module offers (below)

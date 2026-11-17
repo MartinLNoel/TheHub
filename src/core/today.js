@@ -4,6 +4,7 @@
 import { h, mount } from './dom.js';
 import { relativeTime } from './backup.js';
 import { NO_HUB } from './hub.js';
+import { marketStatus } from './markets.js';
 
 function toHref(route) {
   if (!route) return '#/today';
@@ -169,6 +170,77 @@ function statusLine(mod, entry) {
 }
 
 /**
+ * A module's tile in the "today" strip (homeTile: { title, text, sub, href, refresh? }), in the module's colour.
+ * Like the status lines, a failing tile is left out and a refresh fills it in later (the Bulgarian word).
+ */
+function tile(mod, entry, hub) {
+  if (typeof mod.homeTile !== 'function') return null;
+  let t;
+  try {
+    t = mod.homeTile(entry?.data, { hub });
+  } catch {
+    return null;
+  }
+  if (!t || !t.text) return null;
+  const text = h('span', { class: 'home-tile__text' }, t.text);
+  const sub = h('span', { class: 'home-tile__sub' }, t.sub || '');
+  const node = h(
+    'a',
+    { class: 'home-tile', href: t.href || `#/${mod.id}`, style: `--app:${APP_COLORS[mod.id] || DEFAULT_COLOR}`, 'data-testid': `home-tile-${mod.id}` },
+    h('span', { class: 'home-tile__title' }, h('span', { 'aria-hidden': 'true' }, mod.icon), ` ${t.title || mod.name}`),
+    text,
+    sub,
+  );
+  if (typeof t.refresh === 'function') {
+    Promise.resolve()
+      .then(() => t.refresh())
+      .then((next) => {
+        if (!next?.text || !node.isConnected) return;
+        text.textContent = next.text;
+        sub.textContent = next.sub || '';
+      })
+      .catch(() => {});
+  }
+  return node;
+}
+
+/** The market session clock (src/core/markets.js); it updates itself while it is on screen. */
+export function marketCard(now = () => new Date()) {
+  const rows = h('ul', { class: 'markets__rows' });
+  const overlap = h('p', { class: 'markets__overlap', 'data-testid': 'markets-overlap' });
+  const draw = () => {
+    const m = marketStatus(now());
+    mount(
+      rows,
+      m.sessions.map((s) =>
+        h(
+          'li',
+          { class: `markets__row${s.isOpen ? ' markets__row--open' : ''}`, 'data-testid': `market-${s.id}` },
+          h('span', { class: 'markets__name' }, h('span', { 'aria-hidden': 'true' }, s.flag), ` ${s.name}`),
+          h('span', { class: 'markets__state' }, s.text),
+        ),
+      ),
+    );
+    overlap.textContent = m.overlap ? '🔥 London and New York overlap: the busiest hours.' : '';
+    overlap.hidden = !m.overlap;
+  };
+  draw();
+  const card = h(
+    'section',
+    { class: 'card markets', 'data-module': 'core-markets', 'data-testid': 'markets' },
+    h('h2', {}, '🕒 Market sessions'),
+    rows,
+    overlap,
+    h('p', { class: 'muted markets__note' }, 'Usual forex session hours, in each city\u2019s own time.'),
+  );
+  const timer = setInterval(() => {
+    if (!card.isConnected) clearInterval(timer);
+    else draw();
+  }, 30000);
+  return card;
+}
+
+/**
  * state: { [moduleId]: { data, readOnly, error } }
  * backup (optional): { health, onBackupNow } for the Backups card.
  */
@@ -176,6 +248,7 @@ export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB }
   const mods = registry.list();
   const cards = mods.map((mod) => moduleCard(mod, state[mod.id], hub)).filter(Boolean);
   const statuses = mods.map((mod) => statusLine(mod, state[mod.id])).filter(Boolean);
+  const tiles = mods.map((mod) => tile(mod, state[mod.id], hub)).filter(Boolean);
   const apps = [
     ...mods.map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),
     { id: 'settings', name: 'Settings', icon: '⚙️', href: '#/settings' },
@@ -189,6 +262,8 @@ export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB }
       statuses.length ? h('div', { class: 'home__statuses' }, statuses) : null,
       h('nav', { class: 'home__apps', 'aria-label': 'Apps', 'data-testid': 'home-apps' }, apps.map(appIcon)),
       h('h2', { class: 'home__heading' }, 'Today'),
+      tiles.length ? h('nav', { class: 'home-strip', 'aria-label': 'Today at a glance', 'data-testid': 'home-strip' }, tiles) : null,
+      marketCard(),
       cards.length ? cards : h('section', { class: 'card' }, h('h2', {}, 'Welcome'), h('p', {}, 'No modules yet. They arrive with the next updates.')),
       backupCard(backup.health, { onBackupNow: backup.onBackupNow }),
     ),

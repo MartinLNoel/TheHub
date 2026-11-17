@@ -40,6 +40,14 @@ export function todayCard(data, now = new Date()) {
   };
 }
 
+/** The home screen's "today" tile: what expires soon, and today's calories. */
+export function homeTile(data, now = new Date()) {
+  if (!data) return null;
+  const soon = expiringSoon(data.items, now).length;
+  const kcal = foodDay(data, localDate(now)).totals.kcal;
+  return { title: 'Fridge', text: soon ? `${soon} expiring soon` : 'Nothing expiring', sub: `${kcal} kcal today`, href: soon ? '#/fridge' : '#/fridge/food' };
+}
+
 /** Takes over the Gym's old protein log (once; later only what is new), through the hub. */
 export async function onStart({ hub }) {
   const archive = hub.ask('gym', 'foodArchive');
@@ -57,6 +65,7 @@ export default {
   validate,
   routes,
   todayCard: (data) => todayCard(data),
+  homeTile: (data) => homeTile(data),
   answers: {
     foodDay: (data, date) => foodDay(data, date || localDate()),
     kcalTarget: (data) => data.food.kcalTarget,
