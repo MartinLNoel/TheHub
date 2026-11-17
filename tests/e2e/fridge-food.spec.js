@@ -72,6 +72,7 @@ test('log food in the Fridge; the Gym Protein tab and Today read it', async ({ p
   await open(page, '#/gym/checkin');
   await page.getByTestId('ci-weight').fill('77');
   await page.getByTestId('ci-save').click();
+  await expect(page.locator('#gym-toast')).toHaveText('CHECK-IN SAVED ✓');
 
   await page.goto('./#/fridge/food');
   await expect(page.getByTestId('food-target')).toContainText('Suggested: 2550 kcal a day');

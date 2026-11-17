@@ -2,6 +2,15 @@
 
 Dated entries, newest first.
 
+## 2026-11-17 — 0.9.8 again, with a Gym fix (version 0.9.9)
+
+0.9.8's push failed CI (never deployed): on GitHub's slower runner, the e2e test that saves a check-in and then opens
+Fridge → Food saw no Food screen. Cause, an old Gym bug: after a save, the Gym redrew itself into the screen area
+even when Martin had already moved on, drawing the Gym over the new screen. The Gym now redraws only while its own
+screen is showing (`src/modules/gym/screens.js` `screen()`), with a unit test that failed on the old code
+(`tests/unit/gym-screens.test.js`); the e2e test now waits for "Check-in saved" before moving on. Everything in 0.9.8
+below arrives with 0.9.9.
+
 ## 2026-11-16 — Food and recipes in the Fridge (version 0.9.8)
 
 Branch `fridge/food-log`, the second of the features decided with Martin on 2026-11-16 (`docs/BACKLOG.md`).

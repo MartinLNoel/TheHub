@@ -149,7 +149,14 @@ function screen(renderFn, active) {
       c.data = next;
       return true;
     };
-    c.rerender = () => mount(c.root, frame(c, active, renderFn(c)));
+    // Redraw only while this screen is still showing: a save that finishes after Martin left (opened Fridge →
+    // Food right after saving a check-in) must not draw the Gym over the new screen (bug found by CI, 2026-11-17).
+    let shown = null;
+    c.rerender = () => {
+      if (shown && !shown.isConnected) return;
+      shown = frame(c, active, renderFn(c));
+      mount(c.root, shown);
+    };
     c.rerender();
   };
 }
