@@ -42,6 +42,10 @@ export function checkModule(mod) {
   if (mod.todayCard !== undefined && mod.todayCard !== null && typeof mod.todayCard !== 'function') {
     problems.push('todayCard must be a function (or left out)');
   }
+  if (mod.hidden !== undefined && typeof mod.hidden !== 'boolean') problems.push('hidden must be true or false (or left out)');
+  if (mod.homeWidget !== undefined && typeof mod.homeWidget !== 'function') {
+    problems.push('homeWidget must be a function (or left out)');
+  }
   if (mod.homeTile !== undefined && typeof mod.homeTile !== 'function') {
     problems.push('homeTile must be a function (or left out)');
   }

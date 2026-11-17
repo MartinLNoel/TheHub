@@ -2,6 +2,23 @@
 
 Dated entries, newest first.
 
+## 2026-11-17 — The companion pet (version 0.9.12)
+
+Branch `home/pet`, item 5 of the features decided with Martin on 2026-11-16. Martin asked for a simple tamagotchi
+on the home screen, tapped to interact and fed "without it feeling like a chore"; its look: "Surprise me" (so it
+was not shown to him before this version; the art is in `src/modules/pet/art.js`).
+
+- **A pet on the home screen**, after the app icons; tap it to make it react; tap its name for its page (meals,
+  stages, how it eats, rename). It starts as an egg.
+- **Fed by what Martin already does:** each workout, study session or mock, day of Bulgarian practice and day of
+  logged food is one meal, eaten when the home screen opens (only activities from the day the pet arrived, at most
+  30 days back, none twice). It grows with its meals (5 stages). It never gets sick, sad or dies: at night it
+  sleeps, after a few quiet days it is a bit bored, and the next meal makes it happy again.
+- **A hidden module** (`src/modules/pet/`): no app icon or nav tab, but its data is backed up like every module's.
+  New in the contract: `hidden`, `homeWidget`, and the modules' `activities()` answer.
+- Tests: `tests/unit/pet.test.js` (meals, growth, mood, the widget, the drawing staying on its grid) and
+  `tests/e2e/pet.spec.js` (an egg, a workout hatches it, a tap, its page and a rename).
+
 ## 2026-11-17 — The "today" strip and the market session clock (version 0.9.11)
 
 Branch `home/today-strip`, item 4 of the features decided with Martin on 2026-11-16 (`docs/BACKLOG.md`).

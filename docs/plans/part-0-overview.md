@@ -125,6 +125,9 @@ export default {
   routes: { '': renderHome, 'log': renderLog, 'lesson/*': renderLesson },
                                 // #/gym, #/gym/log; '' is required; 'x/*' matches #/<id>/x/<anything> (Part 5)
   todayCard: (data, { hub }) => ({ title, lines: [], action: { label, route } }), // or null; may be left out
+  hidden: true,                  // optional (0.9.12): no app icon and no nav tab (the pet lives on the home screen)
+  homeWidget: ({ data, readOnly, hub, save }) => Node | null, // optional (0.9.12): its own widget on the home screen,
+                                // after the app icons, with a save for its data
   homeTile: (data, { hub }) => ({ title, text, sub, href, refresh? }) | null, // optional (0.9.11): a tile in the home
                                 // screen's "today" strip, in the module's colour
   homeStatus: (data) => ({ text, href?, refresh? }) | null, // optional (0.9.7): a short line under the home clock;
@@ -166,7 +169,9 @@ or ignores:
 - `hub.ask(id, question, ...args)` (0.9.8) is the read-only side: it calls the target's `answers[question]` with a
   copy of its data and returns the value, or `null` when anything is missing; it never throws. Questions so far: the
   Fridge answers `foodDay(date)` (the day's food log and totals) and `kcalTarget()`; the Gym answers `bodyweight()`,
-  `proteinTarget()` and `foodArchive()` (its protein log from before 0.9.8).
+  `proteinTarget()` and `foodArchive()` (its protein log from before 0.9.8). Since 0.9.12 the Gym, ISTQB, Bulgarian and
+  Fridge also answer `activities()` (`[{ id, kind, date }]`: workouts, study sessions, practice days, food days), the
+  pet's meals.
 - Items offered so far: the Fridge offers `{ bg, en, topic: 'food' }` to `bulgarian` (`bg` typed or confirmed by
   Martin, prefilled from Open Food Facts' Bulgarian name when there is one; `en` = the English product name or the
   item's name). Part 7's `accept` (built 2026-10-18) adds it to the "From my home" deck and returns `null` for a word already there.

@@ -90,6 +90,8 @@ const study = createStudyModule({
 export default {
   ...study,
   homeTile: (data) => homeTile(data),
+  /** For the pet (0.9.12): each day of practice is a meal. */
+  answers: { activities: (data) => (data.activity || []).map((date) => ({ id: `bg-${date}`, kind: 'bulgarian', date })) },
   // hub.offer('bulgarian', { bg, en, topic }): a word from another module (the Fridge) becomes a two-way
   // card in the "From my home" deck; null (declined) when it is already a card.
   accept: (item, data) => acceptOffer(item, data, { contentCards: loadedCards }),

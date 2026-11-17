@@ -67,6 +67,8 @@ export default {
   todayCard: (data) => todayCard(data),
   homeTile: (data) => homeTile(data),
   answers: {
+    /** For the pet (0.9.12): each day with food logged is a meal. */
+    activities: (data) => Object.entries(data.food.log).filter(([, e]) => e.length).map(([date]) => ({ id: `food-${date}`, kind: 'food', date })),
     foodDay: (data, date) => foodDay(data, date || localDate()),
     kcalTarget: (data) => data.food.kcalTarget,
   },

@@ -4,7 +4,8 @@ import gym from './modules/gym/index.js';
 import istqb from './modules/istqb/index.js';
 import bulgarian from './modules/bulgarian/index.js';
 import fridge from './modules/fridge/index.js';
+import pet from './modules/pet/index.js';
 import demo from '../tests/fixtures/demo-module.js';
 import sample from '../tests/fixtures/sample-study-module.js';
 
-export default [gym, istqb, bulgarian, fridge, demo, sample];
+export default [gym, istqb, bulgarian, fridge, pet, demo, sample];
