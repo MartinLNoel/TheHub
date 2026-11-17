@@ -74,6 +74,8 @@ const study = createStudyModule({
 export default {
   ...study,
   homeTile: (data) => homeTile(data),
+  /** For the pet (0.9.12): each finished session or mock is a meal. */
+  answers: { activities: (data) => (data.sessions || []).map((s) => ({ id: `istqb-${s.no}-${s.kind}-${s.date}`, kind: 'study', date: s.date })) },
   importers: [
     {
       id: 'notion-progress',

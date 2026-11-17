@@ -54,7 +54,7 @@ async function startModules() {
 function buildNav() {
   const tabs = [
     { section: 'today', icon: '🏠', name: 'Today' },
-    ...registry.list().map((m) => ({ section: m.id, icon: m.icon, name: m.name })),
+    ...registry.list().filter((m) => !m.hidden).map((m) => ({ section: m.id, icon: m.icon, name: m.name })),
   ];
   mount(
     nav,
@@ -83,6 +83,7 @@ async function showToday() {
     registry,
     state,
     hub,
+    saveFor: (mod) => moduleSave({ storage, mod, entry: state[mod.id] }),
     backup: {
       health,
       onBackupNow: async () => {

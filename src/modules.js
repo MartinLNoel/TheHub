@@ -5,5 +5,6 @@ import gym from './modules/gym/index.js';
 import istqb from './modules/istqb/index.js';
 import bulgarian from './modules/bulgarian/index.js';
 import fridge from './modules/fridge/index.js';
+import pet from './modules/pet/index.js';
 
-export default [gym, istqb, bulgarian, fridge];
+export default [gym, istqb, bulgarian, fridge, pet];

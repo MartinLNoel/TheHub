@@ -204,6 +204,16 @@ function tile(mod, entry, hub) {
   return node;
 }
 
+/** A module's own widget on the home screen (homeWidget, e.g. the pet), with a save for its data. */
+function widget(mod, entry, hub, saveFor) {
+  if (typeof mod.homeWidget !== 'function' || !entry || entry.data == null) return null;
+  try {
+    return mod.homeWidget({ data: entry.data, readOnly: Boolean(entry.readOnly), hub, save: saveFor(mod) }) || null;
+  } catch {
+    return null;
+  }
+}
+
 /** The market session clock (src/core/markets.js); it updates itself while it is on screen. */
 export function marketCard(now = () => new Date()) {
   const rows = h('ul', { class: 'markets__rows' });
@@ -244,13 +254,14 @@ export function marketCard(now = () => new Date()) {
  * state: { [moduleId]: { data, readOnly, error } }
  * backup (optional): { health, onBackupNow } for the Backups card.
  */
-export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB }) {
+export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB, saveFor = () => async () => {} }) {
   const mods = registry.list();
   const cards = mods.map((mod) => moduleCard(mod, state[mod.id], hub)).filter(Boolean);
   const statuses = mods.map((mod) => statusLine(mod, state[mod.id])).filter(Boolean);
   const tiles = mods.map((mod) => tile(mod, state[mod.id], hub)).filter(Boolean);
+  const widgets = mods.map((mod) => widget(mod, state[mod.id], hub, saveFor)).filter(Boolean);
   const apps = [
-    ...mods.map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),
+    ...mods.filter((m) => !m.hidden).map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),
     { id: 'settings', name: 'Settings', icon: '⚙️', href: '#/settings' },
   ];
   mount(
@@ -261,6 +272,7 @@ export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB }
       clock(),
       statuses.length ? h('div', { class: 'home__statuses' }, statuses) : null,
       h('nav', { class: 'home__apps', 'aria-label': 'Apps', 'data-testid': 'home-apps' }, apps.map(appIcon)),
+      widgets,
       h('h2', { class: 'home__heading' }, 'Today'),
       tiles.length ? h('nav', { class: 'home-strip', 'aria-label': 'Today at a glance', 'data-testid': 'home-strip' }, tiles) : null,
       marketCard(),

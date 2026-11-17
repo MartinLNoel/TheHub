@@ -84,6 +84,8 @@ export default {
   routes,
   todayCard: (data, ctx) => todayCard(data, new Date(), ctx?.hub),
   answers: {
+    /** For the pet (0.9.12): each workout is a meal. */
+    activities: (data) => data.workoutLogs.map((l) => ({ id: `gym-${l.id ?? l.date}`, kind: 'workout', date: l.date })),
     bodyweight: (data) => data.bodyweight,
     proteinTarget: (data) => proteinTarget(data),
     /** The protein log and saved foods from before 0.9.8, for the Fridge to take over (kept here as an archive). */

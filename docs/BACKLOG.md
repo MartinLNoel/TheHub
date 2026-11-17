@@ -23,7 +23,7 @@ Martin's answers, in a discussion session (started in gainz-tracker's folder). B
    phone reaches the installed app's storage (same origin, so it should).
 4. **Done 2026-11-17 (0.9.11).** **Home screen: a "today" strip and a market session clock.** The strip: the Gym day, ISTQB cards due, food expiring
    soon, one Bulgarian word. The clock: which of Tokyo, London and New York is open, and the time to the next open.
-5. **A companion pet (mascot) on the home screen.** For the whole Hub, distinct from the Fighter. Fed by things
+5. **Done 2026-11-17 (0.9.12).** **A companion pet (mascot) on the home screen.** For the whole Hub, distinct from the Fighter. Fed by things
    already done (a workout, a study session, food logged, a Fridge item used); tap to interact; never dies or
    sickens, at worst sleepy or bored. Pixel art like the Fighter. Martin: "Surprise me" (Q-28):
    Claude designs it and Martin first sees it in the app.
