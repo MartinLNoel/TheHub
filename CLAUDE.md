@@ -46,10 +46,10 @@ All plan parts are built except Part 7's book run. **TheHub is live** (https://m
 push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verified backups to the private
 `thehub-backup` repo (token set, restore drill done), his ISTQB progress imported (Notion no longer needed), the
 Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
-**Live: 0.9.10** (2026-11-17, CI green): the weather on the home screen, food and calories in the Fridge with recipes
+**Live: 0.9.11** (2026-11-17, CI green): the "today" strip and market session clock, and before it the weather on the home screen, food and calories in the Fridge with recipes
 by link (Martin's two Sunday-prep recipes were given to him as links, copies in `private/recipes/`), Food and Recipes in
-the Fridge's own look. **Committed on local `main`, NOT pushed: 0.9.11** (the "today" strip and market session clock). **Next: the rest
-of the features decided 2026-11-16** (top section of `docs/BACKLOG.md`): the companion pet (Martin: "Surprise me": never show it to him before it is in the app), then the economic calendar. Open with Martin: Q-4 (the Bulgarian book,
+the Fridge's own look. **Committed on local `main`, NOT pushed: 0.9.12** (the companion pet). **Next: the rest
+of the features decided 2026-11-16** (top section of `docs/BACKLOG.md`): the economic calendar (needs a separate small public repo with a scheduled GitHub Action: ask Martin to create it, or for permission to). Open with Martin: Q-4 (the Bulgarian book,
 now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.
 Where things stand and what is next: the top sections of `docs/BACKLOG.md`.
 
