@@ -9,7 +9,7 @@ Martin's answers, in a discussion session (started in gainz-tracker's folder). B
 1. **Done 2026-11-16 (0.9.7, live).** **Weather moves to the home screen.** A small line by the clock (icon, temperature, a word), from the same cached
    Open-Meteo reading. **The Fighter's scenes keep using the real weather as now; only the weather status text
    leaves the Fighter page** (Martin corrected this, 2026-11-16). Settings → "Fighter weather" becomes "Weather".
-2. **Done 2026-11-16 (0.9.8, not pushed yet), with item 3.** **Food tracking moves to the Fridge, and grows.** Track **calories now**, plus what the data allows (proposal:
+2. **Done (0.9.8, live as 0.9.9 on 2026-11-17), with item 3.** **Food tracking moves to the Fridge, and grows.** Track **calories now**, plus what the data allows (proposal:
    protein, kcal, carbs, fat; targets only for protein and kcal). Log from a Fridge item or a scanned product (Open
    Food Facts gives per-100 g values) or from a recipe serving. The Gym's Protein tab becomes **read-only** (today's
    totals and target) with a button to the Fridge. Moving the log out of the Gym store needs a schema bump, a
