@@ -48,7 +48,7 @@ push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verifi
 Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
 **Live: 0.9.9** (2026-11-17, CI green): the weather on the home screen (0.9.7), food and calories in the Fridge with
 recipes by link and the Gym's Protein tab read-only (0.9.8, whose own push failed CI; 0.9.9 adds the Gym redraw
-fix). Martin's two Sunday-prep recipes were given to him as links (copies in `private/recipes/`). **Next: the rest
+fix). Martin's two Sunday-prep recipes were given to him as links (copies in `private/recipes/`). **Committed on local `main`, NOT pushed: 0.9.10** (Food and Recipes restyled as the Fridge, no "Ate it" on a recipe; Martin's feedback 2026-11-17). **Next: the rest
 of the features decided 2026-11-16** (top section of `docs/BACKLOG.md`): the "today" strip and market session clock,
 then the companion pet, then the economic calendar. Open with Martin: Q-4 (the Bulgarian book,
 now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.
