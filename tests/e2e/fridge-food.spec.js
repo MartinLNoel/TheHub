@@ -110,8 +110,10 @@ test('a recipe link: tap it, save, and log a serving; it survives a reload', asy
   await expect(page.getByTestId('recipe-screen')).toContainText('Leave in the fridge overnight.');
   await page.reload();
   await expect(page.locator('html[data-ready="true"]')).toBeAttached();
-  await page.getByTestId('recipe-ate').click();
-  await expect(page).toHaveURL(/#\/fridge\/food$/);
+  await expect(page.getByTestId('recipe-ate')).toHaveCount(0);
+  await page.goto('./#/fridge/food');
+  await page.getByTestId('food-filter-recipes').click();
+  await page.getByRole('button', { name: /^Overnight oats, 1 serving/ }).click();
   await expect(page.getByTestId('food-kcal')).toHaveText('560');
   await page.goto('./#/fridge/recipes');
   await expect(page.getByTestId('recipe-row')).toHaveCount(1);

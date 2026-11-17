@@ -2,6 +2,17 @@
 
 Dated entries, newest first.
 
+## 2026-11-17 — Food and Recipes in the Fridge's own look (version 0.9.10)
+
+Branch `fridge/food-look`. Martin's feedback on 0.9.9: the food screens should look like the Fridge, not the Gym,
+"using existing application's UI that are related to the Fridge functionality", and the recipe's "Ate it" section can go.
+
+- Food and Recipes use the app's shared sub-tabs (as the study apps), today's totals in a hero card in the Fridge's
+  colour, and the Items tab's row cards: each quick food or recipe is a row with a ＋ to log it, and **Quick foods /
+  Recipes** switch like the Items tab's places. Today's log is rows too. Adding or deleting quick foods moved into a
+  folded "Manage quick foods". No Gym classes are left on these screens (a unit test checks).
+- The recipe page has no "Ate it" section: a serving is logged from Food → Recipes.
+
 ## 2026-11-17 — 0.9.8 again, with a Gym fix (version 0.9.9)
 
 0.9.8's push failed CI (never deployed): on GitHub's slower runner, the e2e test that saves a check-in and then opens
