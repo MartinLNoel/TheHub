@@ -41,6 +41,13 @@ export function todayCard(data, course, objectives = extras().objectives, now = 
   };
 }
 
+/** The home screen's "today" tile: the next session and the review items due. */
+export function homeTile(data) {
+  if (!data) return null;
+  const no = data.activeSession?.no ?? nextSessionNo(data);
+  return { title: 'ISTQB', text: data.activeSession ? `Session ${no} in progress` : `Session ${no} next`, sub: `${dueReviews(data, no).length} to review`, href: data.activeSession ? '#/istqb/session' : '#/istqb' };
+}
+
 const study = createStudyModule({
   id: 'istqb',
   name: 'ISTQB',
@@ -66,6 +73,7 @@ const study = createStudyModule({
 
 export default {
   ...study,
+  homeTile: (data) => homeTile(data),
   importers: [
     {
       id: 'notion-progress',

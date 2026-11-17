@@ -63,6 +63,16 @@ export function homeStatus(data, { fetchFn } = {}) {
   };
 }
 
+/** The home screen's "today" tile: today's day, or rest / done, and the week. */
+export function homeTile(data, now = new Date()) {
+  if (!data) return null;
+  const done = sessionsThisWeek(data, now);
+  const target = targetSessions(data);
+  const loggedToday = data.workoutLogs.some((l) => l.date === now.toISOString().split('T')[0]);
+  const text = loggedToday ? 'Done today ✓' : done >= target ? 'Rest day' : currentDayName(data, now);
+  return { title: 'Gym', text, sub: `${done}/${target} this week`, href: loggedToday || done >= target ? '#/gym' : '#/gym/log' };
+}
+
 export default {
   id: 'gym',
   name: 'Gym',
@@ -80,6 +90,7 @@ export default {
     foodArchive: (data) => ({ proteinLogs: data.proteinLogs, myFoods: data.myFoods }),
   },
   homeStatus: (data) => homeStatus(data),
+  homeTile: (data) => homeTile(data),
   settingsCard: (api) => weatherSettingsCard(api),
   importers: [
     {

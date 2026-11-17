@@ -28,6 +28,24 @@ export function todayCard(data, course, letters = trainer().alphabet.letters, no
   return { title: NAME, lines, action };
 }
 
+/** The word of the day from the reading words: the same word all day, the next one tomorrow. */
+export function wordOfTheDay(words, now = new Date()) {
+  if (!words.length) return null;
+  const [y, m, d] = localDate(now).split('-').map(Number);
+  const day = Math.round(Date.UTC(y, m - 1, d) / 86_400_000);
+  return words[day % words.length];
+}
+
+const wordTile = (word) => (word ? { title: 'Bulgarian', text: word.bg, sub: word.en, href: `#/${ID}` } : null);
+
+/** The home screen's "today" tile: a word of the day (the reading words load in the background the first time). */
+export function homeTile(data, now = new Date()) {
+  if (!data) return null;
+  const word = wordOfTheDay(trainer().reading, now);
+  if (word) return wordTile(word);
+  return { title: 'Bulgarian', text: 'Word of the day', sub: 'loading…', href: `#/${ID}`, refresh: () => getTrainer().then((t) => wordTile(wordOfTheDay(t.reading, now))) };
+}
+
 // The course's own cards, once loaded, so accept() also declines a word the course already teaches.
 let loadedCards = [];
 let warming = null;
@@ -71,6 +89,7 @@ const study = createStudyModule({
 
 export default {
   ...study,
+  homeTile: (data) => homeTile(data),
   // hub.offer('bulgarian', { bg, en, topic }): a word from another module (the Fridge) becomes a two-way
   // card in the "From my home" deck; null (declined) when it is already a card.
   accept: (item, data) => acceptOffer(item, data, { contentCards: loadedCards }),

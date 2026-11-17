@@ -2,6 +2,21 @@
 
 Dated entries, newest first.
 
+## 2026-11-17 — The "today" strip and the market session clock (version 0.9.11)
+
+Branch `home/today-strip`, item 4 of the features decided with Martin on 2026-11-16 (`docs/BACKLOG.md`).
+
+- **A "today" strip** under the home screen's Today heading: a tile per app in its colour, two across. Gym: today's
+  day (or rest, or done) and the week; ISTQB: the next session and the reviews due; Bulgarian: a word of the day
+  from the reading words (the same word all day; it loads in the background the first time); Fridge: what expires
+  soon and today's calories. Each tile opens its app. New optional `homeTile` in the module contract.
+- **A market session clock** below it (`src/core/markets.js`): Tokyo 09–18, London 08–17, New York 08–17 on
+  weekdays, in each city's own time zone (so summer time is right), each open or closed with the time until it
+  opens or closes, and a line when London and New York overlap. These are the usual forex session hours, a
+  convention, not exchange opening hours (the card says so). Tested at fixed times, including the week the US is
+  on summer time and the UK is not.
+- Tests: `tests/unit/home-strip.test.js`, and an e2e test in `tests/e2e/home.spec.js`.
+
 ## 2026-11-17 — Food and Recipes in the Fridge's own look (version 0.9.10)
 
 Branch `fridge/food-look`. Martin's feedback on 0.9.9: the food screens should look like the Fridge, not the Gym,

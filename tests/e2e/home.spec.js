@@ -36,3 +36,16 @@ test('home: fits the phone width and every app icon is easy to tap', async ({ pa
     expect(box.height).toBeGreaterThanOrEqual(48);
   }
 });
+
+test('the "today" strip: a tile per app, a word of the day once loaded, and the market session clock', async ({ page }) => {
+  await open(page);
+  const strip = page.getByTestId('home-strip');
+  await expect(strip.locator('.home-tile')).toHaveCount(4);
+  await expect(page.getByTestId('home-tile-gym')).toContainText('0/3 this week');
+  await expect(page.getByTestId('home-tile-istqb')).toContainText('Session 1 next');
+  await expect(page.getByTestId('home-tile-fridge')).toContainText('kcal today');
+  await expect(page.getByTestId('home-tile-bulgarian').locator('.home-tile__sub')).not.toHaveText('loading…'); // the reading words load
+  await expect(page.getByTestId('markets').locator('.markets__row')).toHaveCount(3);
+  await page.getByTestId('home-tile-fridge').click();
+  await expect(page).toHaveURL(/#\/fridge(\/food)?$/);
+});
