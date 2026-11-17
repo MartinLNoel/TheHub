@@ -45,6 +45,24 @@ describe('screens render', () => {
     }
   });
 
+  it('bug (CI, 2026-11-17): a save that finishes after leaving the Gym does not draw the Gym over the new screen', async () => {
+    let finish;
+    const root = document.createElement('main');
+    document.body.append(root);
+    const ctx = { root, data: defaultData(), readOnly: false, save: () => new Promise((r) => (finish = r)), navigate: vi.fn() };
+    gym.routes.checkin(ctx);
+    root.querySelector('[data-testid="ci-weight"]').value = '77';
+    root.querySelector('[data-testid="ci-save"]').click();
+    const other = document.createElement('div');
+    other.dataset.testid = 'fridge-food';
+    root.replaceChildren(other); // Martin opens Fridge → Food before the save is done
+    finish();
+    await flush();
+    await flush();
+    expect(root.querySelector('[data-testid="fridge-food"]')).not.toBeNull();
+    expect(root.querySelector('.gym')).toBeNull();
+  });
+
   it('stored text is shown as text, never as markup (the food names come from the Fridge since 0.9.8)', () => {
     const entries = [{ id: 'e1', name: '<img src=x onerror=alert(1)>', protein: 5, kcal: 50, carbs: null, fat: null, from: 'manual' }];
     const hub = { ask: (id, q) => (id === 'fridge' && q === 'foodDay' ? { entries, totals: { protein: 5, kcal: 50, carbs: 0, fat: 0 } } : null) };
