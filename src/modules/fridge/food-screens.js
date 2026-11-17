@@ -1,4 +1,4 @@
-// The Fridge's food screens (0.9.8): Food (#/fridge/food: today's protein and calories, quick foods, recipes,
+// The Fridge's food screens (0.9.8; restyled as the Fridge in 0.9.10, Martin 2026-11-17): Food (#/fridge/food: today's protein and calories, quick foods, recipes,
 // a one-off), Recipes (#/fridge/recipes), one recipe (#/fridge/recipe/<id>), a recipe link
 // (#/fridge/recipe-import/<payload>), and the "Ate some" card on an item. Logic: food.js and recipes.js.
 import { h, mount } from '../../core/dom.js';
@@ -17,6 +17,7 @@ export const CLAUDE_ASK = `Turn this recipe into a TheHub recipe link, following
 
 let flash = '';
 let confirmDelete = null;
+let logFrom = 'quick'; // the Food tab's list: 'quick' foods or 'recipes'
 
 /** A message for the Food screen's next render (used by the item screen after "Ate some"). */
 export function setFoodFlash(text) {
@@ -26,6 +27,7 @@ export function setFoodFlash(text) {
 export function resetFoodScreenState() {
   flash = '';
   confirmDelete = null;
+  logFrom = 'quick';
 }
 
 function takeFlash() {
@@ -48,8 +50,8 @@ const TABS = [
 export function fridgeTabs(active) {
   return h(
     'nav',
-    { class: 'fridge-tabs', 'aria-label': 'Fridge', 'data-testid': 'fridge-tabs' },
-    TABS.map((t) => h('a', { href: t.href, class: 'gym-tab fridge-tab', 'aria-current': t.id === active ? 'page' : null }, h('span', { class: 'gym-tab__icon', 'aria-hidden': 'true' }, t.icon), h('span', { class: 'gym-tab__label' }, t.label))),
+    { class: 'subtabs', style: `--tabs:${TABS.length}`, 'aria-label': 'Fridge', 'data-testid': 'fridge-tabs' },
+    TABS.map((t) => h('a', { href: t.href, class: 'subtab', 'aria-current': t.id === active ? 'page' : null }, h('span', { class: 'subtab__icon', 'aria-hidden': 'true' }, t.icon), h('span', { class: 'subtab__label' }, t.label))),
   );
 }
 
@@ -140,7 +142,7 @@ export function renderFood(ctx) {
   else kcalNote = t.kcal <= kcalTarget ? `${kcalTarget - t.kcal} kcal left today` : `${t.kcal - kcalTarget} kcal over today`;
   const totalsCard = h(
     'section',
-    { class: 'card food-today', 'data-testid': 'food-today' },
+    { class: 'card study-hero food-hero', 'data-testid': 'food-today' },
     h('h2', {}, 'Today'),
     h('p', { class: 'food-big' }, h('strong', { 'data-testid': 'food-kcal' }, String(t.kcal)), h('span', { class: 'muted' }, kcalTarget ? ` / ${kcalTarget} kcal` : ' kcal')),
     kcalTarget ? bar(kcalPct) : null,
@@ -185,76 +187,102 @@ export function renderFood(ctx) {
       )
     : h('details', { class: 'card food-details', 'data-testid': 'food-target' }, h('summary', {}, `Calorie target: ${kcalTarget} kcal a day`), h('p', { class: 'muted fridge-small' }, 'Change it any time.'), targetForm);
 
-  // --- quick foods
+  // --- log food: Fridge rows (as the Items tab), quick foods or recipes, chosen like the Items tab's places
   const foods = data.food.myFoods;
-  const newFood = nutritionForm('myfood');
-  const newFoodBox = h(
-    'div',
-    { class: 'food-new', hidden: true },
-    newFood.el,
+  const recipes = data.food.recipes;
+  const from = recipes.length ? logFrom : 'quick';
+  const seg = (id, label) =>
     h(
-      'div',
-      { class: 'row' },
+      'button',
+      {
+        type: 'button',
+        class: 'seg',
+        'aria-pressed': String(from === id),
+        'data-testid': `food-filter-${id}`,
+        onclick: () => {
+          logFrom = id;
+          renderFood({ ...ctx, live, data: live.data });
+        },
+      },
+      label,
+    );
+  const addRow = ({ name, meta, label, testid, onclick }) =>
+    h(
+      'li',
+      {},
       h(
         'button',
-        {
-          type: 'button',
-          class: 'btn btn--primary',
-          disabled: readOnly,
-          'data-testid': 'myfood-save',
-          onclick: async () => {
-            const v = newFood.values();
-            if (!v.name) return (problem.textContent = 'Give the food a name.');
-            if (v.kcal === null && v.protein === null) return (problem.textContent = 'Enter at least kcal or protein.');
-            await commit((d) => addMyFood(d, v), `${v.name} saved as a quick food.`);
-          },
-        },
-        'Save food',
+        { type: 'button', class: 'fridge-item food-add', disabled: readOnly, 'aria-label': label, 'data-testid': testid, onclick },
+        h('span', { class: 'fridge-item__main' }, h('strong', { class: 'fridge-item__name' }, name), h('span', { class: 'fridge-item__meta' }, meta)),
+        h('span', { class: 'food-add__plus', 'aria-hidden': 'true' }, '＋'),
       ),
-      h('button', { type: 'button', class: 'btn', onclick: () => (newFoodBox.hidden = true) }, 'Cancel'),
-    ),
-  );
-  const quickCard = h(
+    );
+  const rows =
+    from === 'recipes'
+      ? recipes.map((r) =>
+          addRow({
+            name: r.name,
+            meta: `1 serving · ${nutritionText(r.perServing)}`,
+            label: `${r.name}, 1 serving: ${nutritionText(r.perServing)}`,
+            testid: 'food-recipe-chip',
+            onclick: () => log({ name: r.name, ...servingsOf(r, 1), from: 'recipe' }, `+ 1 serving of ${r.name}`),
+          }),
+        )
+      : foods.map((f) =>
+          addRow({
+            name: f.name,
+            meta: nutritionText(f),
+            label: `${f.name} ${nutritionText(f)}`,
+            testid: 'food-chip',
+            onclick: () => log({ ...f, from: 'quick' }, `+ ${f.name}`),
+          }),
+        );
+  const logCard = h(
     'section',
     { class: 'card', 'data-testid': 'food-quick' },
-    h('div', { class: 'food-head' }, h('h2', {}, 'Quick add'), h('button', { type: 'button', class: 'btn', disabled: readOnly, 'data-testid': 'myfood-new', onclick: () => (newFoodBox.hidden = false) }, '＋ Food')),
-    newFoodBox,
-    foods.length
-      ? h(
-          'div',
-          { class: 'gym-chips' },
-          foods.map((f) =>
-            h(
-              'span',
-              { class: 'gym-chip-pair' },
-              h('button', { type: 'button', class: 'gym-chip', disabled: readOnly, 'data-testid': 'food-chip', onclick: () => log({ ...f, from: 'quick' }, `+ ${f.name}`) }, `${f.name} `, h('strong', {}, f.kcal !== null ? `${Math.round(f.kcal)} kcal` : `${f.protein ?? 0}g`)),
-              h(
-                'button',
-                {
-                  type: 'button',
-                  class: 'gym-chip gym-chip--x',
-                  disabled: readOnly,
-                  'aria-label': `Delete quick food ${f.name}`,
-                  onclick: () => commit((d) => deleteMyFood(d, f.id), `${f.name} removed from quick add.`),
-                },
-                '×',
-              ),
-            ),
-          ),
-        )
-      : h('p', { class: 'muted fridge-small' }, 'No quick foods. Add your own with ＋ Food.'),
+    h('h2', {}, 'Log food'),
+    recipes.length ? h('div', { class: 'segmented food-filter', role: 'group', 'aria-label': 'Log from' }, seg('quick', `Quick foods (${foods.length})`), seg('recipes', `Recipes (${recipes.length})`)) : null,
+    rows.length ? h('ul', { class: 'fridge-list food-rows' }, rows) : h('p', { class: 'muted fridge-small' }, 'No quick foods. Add one under "Manage quick foods".'),
   );
 
-  // --- recipes
-  const recipes = data.food.recipes;
-  const recipeCard = recipes.length
-    ? h(
-        'section',
-        { class: 'card', 'data-testid': 'food-recipes' },
-        h('h2', {}, 'From a recipe (1 serving)'),
-        h('div', { class: 'gym-chips' }, recipes.map((r) => h('button', { type: 'button', class: 'gym-chip', disabled: readOnly, 'data-testid': 'food-recipe-chip', onclick: () => log({ name: r.name, ...servingsOf(r, 1), from: 'recipe' }, `+ 1 serving of ${r.name}`) }, `${r.name} `, h('strong', {}, `${Math.round(r.perServing.kcal)} kcal`)))),
-      )
-    : null;
+  // --- manage quick foods (add or delete), folded away
+  const newFood = nutritionForm('myfood');
+  const manageCard = h(
+    'details',
+    { class: 'card food-details', 'data-testid': 'food-manage' },
+    h('summary', {}, 'Manage quick foods'),
+    h('h3', {}, 'Add a quick food'),
+    newFood.el,
+    h(
+      'button',
+      {
+        type: 'button',
+        class: 'btn btn--primary',
+        disabled: readOnly,
+        'data-testid': 'myfood-save',
+        onclick: async () => {
+          const v = newFood.values();
+          if (!v.name) return (problem.textContent = 'Give the food a name.');
+          if (v.kcal === null && v.protein === null) return (problem.textContent = 'Enter at least kcal or protein.');
+          await commit((d) => addMyFood(d, v), `${v.name} saved as a quick food.`);
+        },
+      },
+      'Save food',
+    ),
+    foods.length ? h('h3', {}, 'Delete') : null,
+    h(
+      'ul',
+      { class: 'fridge-list' },
+      foods.map((f) =>
+        h(
+          'li',
+          { class: 'fridge-item food-line' },
+          h('span', { class: 'fridge-item__main' }, h('strong', { class: 'fridge-item__name' }, f.name)),
+          h('button', { type: 'button', class: 'btn btn--danger food-line__btn', disabled: readOnly, 'aria-label': `Delete quick food ${f.name}`, onclick: () => commit((d) => deleteMyFood(d, f.id), `${f.name} removed from quick foods.`) }, 'Delete'),
+        ),
+      ),
+    ),
+  );
 
   // --- one-off
   const once = nutritionForm('oneoff');
@@ -282,7 +310,7 @@ export function renderFood(ctx) {
     h('p', { class: 'muted fridge-small' }, 'Something in the fridge? Open it under Items and use "Ate some": scanned products know their nutrition.'),
   );
 
-  // --- today's list
+  // --- today's log: Fridge rows
   const listCard = h(
     'section',
     { class: 'card', 'data-testid': 'food-log' },
@@ -290,30 +318,20 @@ export function renderFood(ctx) {
     day.entries.length
       ? h(
           'ul',
-          { class: 'food-list' },
+          { class: 'fridge-list' },
           day.entries.map((e) =>
             h(
               'li',
-              { class: 'food-row', 'data-testid': 'food-entry' },
-              h('span', { class: 'food-row__main' }, h('strong', {}, e.name), h('span', { class: 'muted fridge-small' }, nutritionText(e))),
-              h(
-                'button',
-                {
-                  type: 'button',
-                  class: 'gym-chip gym-chip--x food-row__x',
-                  disabled: readOnly,
-                  'aria-label': `Remove ${e.name}`,
-                  onclick: () => commit((d) => removeFood(d, today, e.id), `${e.name} removed.`),
-                },
-                '×',
-              ),
+              { class: 'fridge-item food-line', 'data-testid': 'food-entry' },
+              h('span', { class: 'fridge-item__main' }, h('strong', { class: 'fridge-item__name' }, e.name), h('span', { class: 'fridge-item__meta' }, nutritionText(e))),
+              h('button', { type: 'button', class: 'btn food-line__btn', disabled: readOnly, 'aria-label': `Remove ${e.name}`, onclick: () => commit((d) => removeFood(d, today, e.id), `${e.name} removed.`) }, '×'),
             ),
           ),
         )
       : h('p', { class: 'muted fridge-small' }, 'Nothing logged yet today.'),
   );
 
-  page = h('div', { class: 'stack fridge food', 'data-testid': 'fridge-food' }, fridgeTabs('food'), takeFlash(), readOnlyNote(readOnly), totalsCard, problem, quickCard, recipeCard, onceCard, listCard, targetCard);
+  page = h('div', { class: 'stack fridge food', 'data-testid': 'fridge-food' }, fridgeTabs('food'), takeFlash(), readOnlyNote(readOnly), totalsCard, problem, logCard, onceCard, listCard, targetCard, manageCard);
   mount(root, page);
 }
 
@@ -403,7 +421,6 @@ export function renderRecipe(ctx) {
     return;
   }
   const problem = h('p', { class: 'status status--bad', role: 'alert' });
-  const count = h('input', { type: 'number', inputmode: 'decimal', min: '0.25', step: '0.25', value: '1', 'aria-label': 'Servings eaten', 'data-testid': 'recipe-servings' });
   const deleting = confirmDelete === r.id;
   mount(
     root,
@@ -413,33 +430,7 @@ export function renderRecipe(ctx) {
       fridgeTabs('recipes'),
       takeFlash(),
       readOnlyNote(readOnly),
-      h('section', { class: 'card' }, h('h2', {}, r.name), recipeBody(r)),
-      h(
-        'section',
-        { class: 'card' },
-        h('h2', {}, 'Ate it'),
-        h('label', { class: 'field food-num' }, 'Servings', count),
-        problem,
-        h(
-          'button',
-          {
-            type: 'button',
-            class: 'btn btn--primary',
-            disabled: readOnly,
-            'data-testid': 'recipe-ate',
-            onclick: async () => {
-              const n = amount(count.value);
-              if (!n) return (problem.textContent = 'How many servings?');
-              const next = logFood(data, { name: n === 1 ? r.name : `${r.name} × ${n}`, ...servingsOf(r, n), from: 'recipe' }, new Date());
-              if (await saveOr(ctx, next, problem)) {
-                flash = `+ ${n} serving${n === 1 ? '' : 's'} of ${r.name}`;
-                ctx.navigate('#/fridge/food');
-              }
-            },
-          },
-          '🍽 Log it',
-        ),
-      ),
+      h('section', { class: 'card' }, h('h2', {}, r.name), recipeBody(r), h('p', { class: 'muted fridge-small' }, 'To log a serving: Food → Recipes.')),
       h(
         'section',
         { class: 'card' },
@@ -499,7 +490,7 @@ export function renderImport(ctx) {
       { class: 'stack fridge food', 'data-testid': 'recipe-import' },
       fridgeTabs('recipes'),
       readOnlyNote(readOnly),
-      h('section', { class: 'card' }, h('p', { class: 'gym-kicker' }, 'NEW RECIPE'), h('h2', { 'data-testid': 'recipe-import-name' }, recipe.name), recipeBody(recipe)),
+      h('section', { class: 'card' }, h('p', { class: 'food-kicker' }, 'NEW RECIPE'), h('h2', { 'data-testid': 'recipe-import-name' }, recipe.name), recipeBody(recipe)),
       old ? h('p', { class: 'card card--warn', 'data-testid': 'recipe-import-replace' }, `You already have a recipe called "${old.name}". Saving replaces it.`) : null,
       problem,
       h(

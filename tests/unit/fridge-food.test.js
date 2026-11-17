@@ -295,6 +295,16 @@ describe('the Food screen', () => {
     resetScreenState();
   });
 
+  it('looks like the Fridge, not the Gym (Martin, 2026-11-17): shared tabs, a hero card, Fridge rows', () => {
+    const { root } = mountRoute('food', logFood(defaultData(), { name: 'Shake', protein: 25, kcal: 120, from: 'quick' }, new Date()));
+    expect(root.querySelector('[class*="gym-"]')).toBeNull();
+    expect($(root, 'fridge-tabs').classList.contains('subtabs')).toBe(true);
+    expect($(root, 'food-today').classList.contains('study-hero')).toBe(true);
+    expect($$(root, 'food-chip').every((b) => b.classList.contains('fridge-item'))).toBe(true);
+    expect($$(root, 'food-entry').every((li) => li.classList.contains('fridge-item'))).toBe(true);
+    expect($$(root, 'food-filter-quick')).toHaveLength(0); // no recipes yet: no filter
+  });
+
   it('has the Items, Food and Recipes tabs, today\'s totals and the protein target from the Gym', () => {
     const d = logFood(defaultData(), { name: 'Shake', protein: 25, kcal: 120, from: 'quick' }, new Date());
     const { root } = mountRoute('food', d, { hub: gymHub({ proteinTarget: 139, bodyweight: 77 }) });
@@ -424,14 +434,12 @@ describe('recipes on screen', () => {
     expect($(root, 'recipe-paste-problem').textContent).toContain('not a TheHub recipe link');
   });
 
-  it('a recipe: log 1.5 servings; delete takes two taps', async () => {
+  it('a recipe: no "Ate it" section (Martin, 2026-11-17); delete takes two taps', async () => {
     const d = saveRecipe(defaultData(), checkRecipe(RECIPE).recipe, NOW);
-    const { root, saved, ctx } = mountRoute('recipe/*', d.data, { params: d.recipe.id });
-    $(root, 'recipe-servings').value = '1.5';
-    $(root, 'recipe-ate').click();
-    await flush();
-    expect(foodDay(saved[0]).entries[0]).toMatchObject({ name: `${RECIPE.name} × 1.5`, kcal: 780, protein: 72, from: 'recipe' });
-    expect(ctx.navigate).toHaveBeenCalledWith('#/fridge/food');
+    const { root } = mountRoute('recipe/*', d.data, { params: d.recipe.id });
+    expect($(root, 'recipe-ate')).toBeNull();
+    expect(root.textContent).not.toContain('Ate it');
+    expect(root.textContent).toContain('To log a serving: Food → Recipes.');
 
     const again = mountRoute('recipe/*', d.data, { params: d.recipe.id });
     $(again.root, 'recipe-delete').click();
@@ -441,9 +449,12 @@ describe('recipes on screen', () => {
     expect(again.saved[0].food.recipes).toEqual([]);
   });
 
-  it('recipes show on the Food screen as one-serving chips', async () => {
+  it('recipes show on the Food screen under the Recipes filter, one serving a tap', async () => {
     const d = saveRecipe(defaultData(), checkRecipe(RECIPE).recipe, NOW).data;
     const { root, saved } = mountRoute('food', d);
+    expect($$(root, 'food-recipe-chip')).toHaveLength(0); // quick foods first
+    $(root, 'food-filter-recipes').click();
+    expect($(root, 'food-filter-recipes').getAttribute('aria-pressed')).toBe('true');
     $$(root, 'food-recipe-chip')[0].click();
     await flush();
     expect(foodDay(saved[0]).entries[0]).toMatchObject({ name: RECIPE.name, kcal: 520, from: 'recipe' });
