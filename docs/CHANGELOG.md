@@ -2,6 +2,23 @@
 
 Dated entries, newest first.
 
+## 2026-11-21 — The word of the day, to learn from (version 0.9.14)
+
+Branch `bulgarian/word-of-the-day`, item A1 of Martin's ideas of 2026-11-21 (`docs/BACKLOG.md`). Martin: the word
+in English and Bulgarian "is not helping me with learning"; he chose the Latin form, the pronunciation and a quiz.
+
+- **A card under "Today"** in place of the Bulgarian tile in the strip: the word in Cyrillic, its Latin form, how to
+  say it with the stressed syllable in capitals (MLYA-ko), the sound of any letter an English speaker would not
+  guess (ъ, ж, х, ц, щ, й, р, from the alphabet's notes), and 🔊 when the phone has a Bulgarian voice.
+- **The meaning only after a tap** ("What does it mean?"), then **"I knew it" / "Not yet"**. Both count as reading
+  practice and as a day of Bulgarian (the streak, the pet). "Not yet" adds the word as a two-way card, topic "word
+  of the day", so the review brings it back. The answer is kept for the day.
+- **Content:** every reading word has a `say` (syllables, stress in capitals); a test checks it spells the Latin form,
+  with one stress per word. Stress written from Claude's knowledge of standard Bulgarian: **unverified** by a speaker.
+- **Data:** Bulgarian schema 2 (`wordOfDay`), with a migration from 1 and its test. "From my home" on the Bulgarian
+  home is now "My words", since it holds the word-of-the-day cards too. The strip's odd last tile spans the row.
+- Tests: `tests/unit/bulgarian-word-of-day.test.js`, and the e2e in `tests/e2e/home.spec.js`.
+
 ## 2026-11-21 — Daily checks (version 0.9.13)
 
 Branch `home/daily-checks`. Martin asked for a check mark in the home screen's Today section for something he does

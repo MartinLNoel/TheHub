@@ -48,9 +48,9 @@ push 2026-11-14) and **in daily use on Martin's phone** since 2026-11-15: verifi
 Gym's home plan on, a fresh start (gainz-tracker history not imported; gainz-tracker is to be retired).
 **Pushed: 0.9.12** (the companion pet; found pushed on 2026-11-21), and before it the today strip and market clock,
 the weather on the home screen, food and calories in the Fridge with recipes by link (Martin's two Sunday-prep
-recipes were given to him as links, copies in `private/recipes/`). **Committed on local `main`, NOT pushed: 0.9.13**
-(daily checks: tick buttons under "Today"). **Next:** Martin's new ideas of 2026-11-21 (top of `docs/BACKLOG.md`:
-Bulgarian for a beginner without the book, the word of the day with pronunciation and a quiz, a daily mixed review,
+recipes were given to him as links, copies in `private/recipes/`). **Live: 0.9.13** (daily checks, 2026-11-21).
+**Committed on local `main`, NOT pushed: 0.9.14** (the word of the day with pronunciation and a quiz). **Next:**
+Martin's other new ideas of 2026-11-21 (top of `docs/BACKLOG.md`: Bulgarian for a beginner without the book, a daily mixed review,
 ISTQB readiness, more to do with the pet) and the economic calendar (needs a separate small public repo with a
 scheduled GitHub Action: ask Martin to create it, or for permission to). Order to agree with Martin. Open with Martin: Q-4 (the Bulgarian book,
 now named: "Learn Bulgarian the Easy Way", Doncheva, Zagorchev, Georgiev), Q-25, Q-26, and the older ones.

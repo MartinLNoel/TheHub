@@ -28,13 +28,32 @@ export function letterProblems(l) {
   return p;
 }
 
-/** word { id, bg, latin, en, topic, note? }; `letters` checks the spelling and the Latin form. */
+const isStressed = (syllable) => /[a-zа-яă]/i.test(syllable) && syllable === syllable.toUpperCase();
+
+/**
+ * A word's pronunciation (0.9.14): its Latin form in syllables split by "-", the stressed syllable in capitals,
+ * e.g. "zdra-VEY", "do-BRO U-tro"; a word may have no stress of its own ("KAK si"), but never two.
+ */
+export function sayProblems(say, latin) {
+  if (!text(say)) return ['say must be a text when given'];
+  const p = [];
+  if (text(latin) && say.replace(/-/g, '').toLowerCase() !== latin.toLowerCase()) p.push(`say "${say}" does not spell the Latin form "${latin}"`);
+  const words = say.split(' ').map((w) => w.split('-'));
+  if (words.some((sylls) => sylls.some((s) => !s))) p.push(`say "${say}" has an empty syllable`);
+  if (words.some((sylls) => sylls.filter(isStressed).length > 1)) p.push(`say "${say}" stresses two syllables in one word`);
+  if (!words.some((sylls) => sylls.some(isStressed))) p.push(`say "${say}" has no stressed syllable`);
+  if (words.flat().some((s) => !isStressed(s) && s !== s.toLowerCase())) p.push(`say "${say}" mixes capitals inside a syllable`);
+  return p;
+}
+
+/** word { id, bg, latin, say?, en, topic, note? }; `letters` checks the spelling and the Latin form. */
 export function wordProblems(w, letters = []) {
   if (!isObject(w)) return ['is not an object'];
   const p = [];
   if (!text(w.id)) p.push('id is required');
   for (const k of ['bg', 'latin', 'en', 'topic']) if (!text(w[k])) p.push(`${k} is required`);
   if (w.note !== undefined && !text(w.note)) p.push('note must be a text when given');
+  if (w.say !== undefined) p.push(...sayProblems(w.say, w.latin));
   if (text(w.bg) && letters.length) {
     const known = new Set(letters.flatMap((l) => [l.upper, l.lower]));
     const bad = [...w.bg].filter((ch) => !known.has(ch) && !WORD_EXTRAS.test(ch));

@@ -7,6 +7,8 @@
 //   homeDeck   [card]           the "From my home" deck: words other modules offered (the Fridge, through
 //                               hub.offer), each a two-way card { id: "home-<n>", front: bg, back: en, topic,
 //                               twoWay: true, lang: { front: "bg", back: "en" }, deck: "home", added }
+//   wordOfDay  null | { date: "YYYY-MM-DD", id, knew }   (schema 2, 0.9.14) today's answer to the home screen's
+//              word of the day: knew = "I knew it" (true) or "Not yet" (false, and the word became a card)
 //   Stat = { right, wrong, streak }   streak = right answers in a row
 //
 // Cards (from the book later, and the home deck now) are scheduled by the engine, each direction on its own
@@ -15,7 +17,10 @@ import { cardProblems } from '../../core/study/content.js';
 import { addDays, isCalendarDate, localDate } from '../../core/dates.js';
 import { cardSides } from '../../core/study/scheduler.js';
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
+
+/** Version 1 → 2 (0.9.14): no word of the day answered yet. */
+export const migrations = { 2: (d) => ({ ...d, wordOfDay: null }) };
 // PLACEHOLDER(Q-23): the trainer's defaults (learned = 2 right in a row both ways, 10 questions a round,
 // Ъ written "ă", no starter vocabulary deck before the book) were chosen while Martin was away.
 /** A letter counts as learned after this many right answers in a row in BOTH directions. */
@@ -39,7 +44,7 @@ const isCount = (v) => Number.isInteger(v) && v >= 0;
 const CYRILLIC = /[Ѐ-ӿ]/;
 
 export function extendDefault(d) {
-  return { ...d, alphabet: {}, reading: {}, activity: [], homeDeck: [] };
+  return { ...d, alphabet: {}, reading: {}, activity: [], homeDeck: [], wordOfDay: null };
 }
 
 function statProblems(s, where) {
@@ -60,6 +65,9 @@ export function validateExtra(d) {
   if (!isObject(d.reading)) p.push('reading must be an object');
   else for (const [id, s] of Object.entries(d.reading)) p.push(...statProblems(s, `reading.${id}`));
   if (!Array.isArray(d.activity) || !d.activity.every(isCalendarDate)) p.push('activity must be a list of dates (YYYY-MM-DD)');
+  if (d.wordOfDay !== null && (!isObject(d.wordOfDay) || !isCalendarDate(d.wordOfDay.date) || typeof d.wordOfDay.id !== 'string' || typeof d.wordOfDay.knew !== 'boolean')) {
+    p.push('wordOfDay must be empty or { date, id, knew }');
+  }
   if (!Array.isArray(d.homeDeck)) p.push('homeDeck must be a list');
   else {
     const seen = new Set();
@@ -212,4 +220,25 @@ export function removeHomeCard(data, id) {
   delete cardState[id];
   delete cardState[`${id}~rev`];
   return { ...data, homeDeck: data.homeDeck.filter((c) => c.id !== id), cardState };
+}
+
+// ---------- the word of the day (0.9.14) ----------
+
+export const WORD_OF_DAY_TOPIC = 'word of the day';
+
+/** Today's answer for `wordId`, or null when it has not been answered today. */
+export function wordOfDayAnswer(data, wordId, today = localDate()) {
+  const w = data?.wordOfDay;
+  return w && w.date === today && w.id === wordId ? w : null;
+}
+
+/**
+ * Answers the word of the day: counts it as reading practice and today's activity, and on "Not yet" adds it as a
+ * two-way card (unless it is already one) so the review brings it back.
+ */
+export function answerWordOfDay(data, word, knew, { contentCards = [], now = new Date() } = {}) {
+  const today = localDate(now);
+  let next = recordAnswer(data, 'reading', word.id, knew, today);
+  if (!knew) next = acceptOffer({ bg: word.bg, en: word.en, topic: WORD_OF_DAY_TOPIC }, next, { contentCards, now }) || next;
+  return { ...next, wordOfDay: { date: today, id: word.id, knew } };
 }

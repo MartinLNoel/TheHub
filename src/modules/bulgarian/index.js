@@ -6,9 +6,10 @@
 import { createStudyModule } from '../../core/study/index.js';
 import { dueSides, localDate } from '../../core/study/scheduler.js';
 import { speakButton } from '../../core/speech.js';
-import { SCHEMA_VERSION, acceptOffer, extendDefault, lettersLearned, markActivity, streak, validateExtra } from './data.js';
+import { SCHEMA_VERSION, acceptOffer, migrations, extendDefault, lettersLearned, markActivity, streak, validateExtra } from './data.js';
 import { BASE, MANIFEST, getTrainer, trainer } from './content.js';
 import { withLessonsTab } from './screens.js';
+import { wordOfDayWidget } from './word-of-day.js';
 import { CARDS, ID, NAME, TABS, VOICE, feedbackTitle, renderAlphabet, renderHome, renderPractice } from './screens.js';
 
 /** Today's card: cards due (course and home deck), alphabet progress and the streak. */
@@ -36,14 +37,23 @@ export function wordOfTheDay(words, now = new Date()) {
   return words[day % words.length];
 }
 
-const wordTile = (word) => (word ? { title: 'Bulgarian', text: word.bg, sub: word.en, href: `#/${ID}` } : null);
+const pickWord = (t, now) => {
+  const word = wordOfTheDay(t.reading, now);
+  return word ? { word, letters: t.alphabet.letters } : null;
+};
 
-/** The home screen's "today" tile: a word of the day (the reading words load in the background the first time). */
-export function homeTile(data, now = new Date()) {
-  if (!data) return null;
-  const word = wordOfTheDay(trainer().reading, now);
-  if (word) return wordTile(word);
-  return { title: 'Bulgarian', text: 'Word of the day', sub: 'loading…', href: `#/${ID}`, refresh: () => getTrainer().then((t) => wordTile(wordOfTheDay(t.reading, now))) };
+/**
+ * The home screen's word of the day under "Today" (0.9.14; it was a tile in the strip in 0.9.11): a quiz card
+ * (word-of-day.js). The reading words load in the background the first time.
+ */
+export function todayWidget(ctx, { now = () => new Date() } = {}) {
+  return wordOfDayWidget(ctx, {
+    getWord: () => pickWord(trainer(), now()),
+    load: () => getTrainer().then((t) => pickWord(t, now())),
+    contentCards: () => loadedCards,
+    voice: VOICE,
+    now,
+  });
 }
 
 // The course's own cards, once loaded, so accept() also declines a word the course already teaches.
@@ -64,6 +74,7 @@ const study = createStudyModule({
   name: NAME,
   icon: '🇧🇬',
   schemaVersion: SCHEMA_VERSION,
+  migrations,
   contentBase: BASE,
   contentManifest: MANIFEST,
   cards: CARDS,
@@ -89,7 +100,7 @@ const study = createStudyModule({
 
 export default {
   ...study,
-  homeTile: (data) => homeTile(data),
+  todayWidget: (ctx) => todayWidget(ctx),
   /** For the pet (0.9.12): each day of practice is a meal. */
   answers: { activities: (data) => (data.activity || []).map((date) => ({ id: `bg-${date}`, kind: 'bulgarian', date })) },
   // hub.offer('bulgarian', { bg, en, topic }): a word from another module (the Fridge) becomes a two-way

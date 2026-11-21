@@ -641,6 +641,7 @@ a.home__status { text-decoration: underline; text-underline-offset: 3px; }
   background: color-mix(in srgb, var(--app) 16%, var(--surface)); border: 1px solid color-mix(in srgb, var(--app) 45%, var(--border));
 }
 .home-tile:active { border-color: var(--app); }
+.home-tile:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 0; }
 .home-tile__title { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .home-tile__text { font-weight: 700; font-size: 1.0625rem; line-height: 1.25; overflow-wrap: anywhere; }
 .home-tile__sub { font-size: 0.8125rem; color: var(--muted); overflow-wrap: anywhere; }
@@ -670,6 +671,22 @@ a.home__status { text-decoration: underline; text-underline-offset: 3px; }
 .daily-edit { align-items: center; flex-wrap: wrap; }
 .daily-edit input { min-height: var(--tap); flex: 1 1 9rem; min-width: 0; }
 .daily-edit .daily-edit__icon { flex: 0 0 3.25rem; text-align: center; }
+
+/* the word of the day (0.9.14): Bulgarian first, the meaning after a tap */
+.wotd { display: flex; flex-direction: column; gap: 0.375rem; border-color: color-mix(in srgb, #2f9e5a 45%, var(--border)); }
+.wotd__title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.wotd__body { display: flex; flex-direction: column; gap: 0.375rem; }
+.wotd__body p { margin: 0; }
+.wotd__word { display: flex; align-items: center; gap: 0.75rem; }
+.wotd__bg { font-size: 2rem; font-weight: 800; line-height: 1.15; overflow-wrap: anywhere; }
+.wotd__latin { font-size: 1.125rem; }
+.wotd__say strong { letter-spacing: 0.04em; }
+.wotd__hints { margin: 0; padding-left: 1.1rem; font-size: 0.8125rem; }
+.wotd__en { font-size: 1.125rem; font-weight: 700; color: #2f9e5a; }
+.wotd__note { font-size: 0.8125rem; }
+.wotd__reveal, .wotd__answer .btn { min-height: var(--tap); }
+.wotd__answer .btn { flex: 1 1 0; }
+.wotd__done { font-weight: 600; }
 
 /* the pet (0.9.12) */
 .pet { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; }

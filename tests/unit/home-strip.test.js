@@ -7,8 +7,7 @@ import { checkModule, createRegistry } from '../../src/core/registry.js';
 import gym, { homeTile as gymTile } from '../../src/modules/gym/index.js';
 import fridge, { homeTile as fridgeTile } from '../../src/modules/fridge/index.js';
 import istqb, { homeTile as istqbTile } from '../../src/modules/istqb/index.js';
-import bulgarian, { homeTile as bgTile, wordOfTheDay } from '../../src/modules/bulgarian/index.js';
-import { setTrainer } from '../../src/modules/bulgarian/content.js';
+import bulgarian, { wordOfTheDay } from '../../src/modules/bulgarian/index.js';
 import { defaultData as gymDefault } from '../../src/modules/gym/data.js';
 import { addItem, defaultData as fridgeDefault } from '../../src/modules/fridge/data.js';
 import { logFood } from '../../src/modules/fridge/food.js';
@@ -85,15 +84,12 @@ describe('the modules\' "today" tiles', () => {
     expect(istqbTile(istqb.defaultData())).toEqual({ title: 'ISTQB', text: 'Session 1 next', sub: '0 to review', href: '#/istqb' });
   });
 
-  it('Bulgarian: the same word all day, the next one tomorrow; it loads in the background the first time', async () => {
+  it('Bulgarian: the same word all day, the next one tomorrow (shown under "Today" since 0.9.14, not as a tile)', () => {
     const words = [{ id: 'a', bg: 'здравей', en: 'hello' }, { id: 'b', bg: 'благодаря', en: 'thank you' }];
     expect(wordOfTheDay(words, new Date(2026, 10, 18, 7))).toBe(wordOfTheDay(words, new Date(2026, 10, 18, 23)));
     expect(wordOfTheDay(words, new Date(2026, 10, 18))).not.toBe(wordOfTheDay(words, new Date(2026, 10, 19)));
     expect(wordOfTheDay([], WED)).toBeNull();
-    setTrainer({ notes: [], letters: [] }, []);
-    const loading = bgTile(bulgarian.defaultData(), WED);
-    expect(loading).toMatchObject({ text: 'Word of the day', sub: 'loading…' });
-    setTrainer({ notes: [], letters: [{ id: 'l-z', upper: 'З', lower: 'з', latin: 'z' }] }, []);
+    expect(bulgarian.homeTile).toBeUndefined();
   });
 
   it('the contract checks homeTile', () => {

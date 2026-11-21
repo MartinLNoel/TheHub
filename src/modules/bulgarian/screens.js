@@ -124,7 +124,7 @@ export async function renderHome(ctx, study) {
           h('a', { class: 'btn btn--primary', href: `#/${ID}/cards`, 'data-testid': 'bg-cards-link' }, `Cards (${due} due)`),
           h('a', { class: 'btn', href: `#/${ID}/alphabet` }, 'Alphabet'),
         ),
-        h('section', { class: 'card' }, h('h2', {}, `🏠 From my home (${p.homeDeck.length})`), deckList),
+        h('section', { class: 'card' }, h('h2', {}, `🏠 My words (${p.homeDeck.length})`), deckList),
         h('a', { class: 'btn', href: `#/${ID}/feedback` }, `Feedback (${openFeedback} open)`),
       ),
     );
