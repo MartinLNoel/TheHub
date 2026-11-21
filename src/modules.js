@@ -6,5 +6,6 @@ import istqb from './modules/istqb/index.js';
 import bulgarian from './modules/bulgarian/index.js';
 import fridge from './modules/fridge/index.js';
 import pet from './modules/pet/index.js';
+import daily from './modules/daily/index.js';
 
-export default [gym, istqb, bulgarian, fridge, pet];
+export default [gym, istqb, bulgarian, fridge, pet, daily];

@@ -77,9 +77,9 @@ describe('index.html', () => {
 });
 
 describe('shipped modules', () => {
-  it('ships the Gym, ISTQB, Bulgarian and Fridge modules and the pet (hidden, 0.9.12), never the demo or sample module', () => {
-    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb', 'bulgarian', 'fridge', 'pet']);
-    expect(modules.filter((m) => m.hidden).map((m) => m.id)).toEqual(['pet']);
+  it('ships the Gym, ISTQB, Bulgarian and Fridge modules the pet (hidden, 0.9.12) and the daily checks (hidden, 0.9.13), never the demo or sample module', () => {
+    expect(modules.map((m) => m.id)).toEqual(['gym', 'istqb', 'bulgarian', 'fridge', 'pet', 'daily']);
+    expect(modules.filter((m) => m.hidden).map((m) => m.id)).toEqual(['pet', 'daily']);
     expect(modules.map((m) => m.id)).not.toContain('sample');
     expect(modules.map((m) => m.id)).not.toContain('demo');
   });
