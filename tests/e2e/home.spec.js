@@ -37,15 +37,30 @@ test('home: fits the phone width and every app icon is easy to tap', async ({ pa
   }
 });
 
-test('the "today" strip: a tile per app, a word of the day once loaded, and the market session clock', async ({ page }) => {
+test('the "today" strip: a tile per app (Bulgarian has its word of the day card instead), and the market session clock', async ({ page }) => {
   await open(page);
   const strip = page.getByTestId('home-strip');
-  await expect(strip.locator('.home-tile')).toHaveCount(4);
+  await expect(strip.locator('.home-tile')).toHaveCount(3);
   await expect(page.getByTestId('home-tile-gym')).toContainText('0/3 this week');
   await expect(page.getByTestId('home-tile-istqb')).toContainText('Session 1 next');
   await expect(page.getByTestId('home-tile-fridge')).toContainText('kcal today');
-  await expect(page.getByTestId('home-tile-bulgarian').locator('.home-tile__sub')).not.toHaveText('loading…'); // the reading words load
   await expect(page.getByTestId('markets').locator('.markets__row')).toHaveCount(3);
   await page.getByTestId('home-tile-fridge').click();
   await expect(page).toHaveURL(/#\/fridge(\/food)?$/);
+});
+
+test('the word of the day (0.9.14): Bulgarian, Latin and stress first, the meaning on a tap, "Not yet" makes a card', async ({ page }) => {
+  await open(page);
+  const card = page.getByTestId('wotd');
+  await expect(card.getByTestId('wotd-say')).toContainText('capitals = stress'); // the reading words load
+  await expect(card.getByTestId('wotd-en')).toHaveCount(0);
+  await card.getByTestId('wotd-reveal').click();
+  await expect(card.getByTestId('wotd-en')).toBeVisible();
+  await card.getByTestId('wotd-notyet').click();
+  await expect(card.getByTestId('wotd-done')).toContainText('Added to your Bulgarian cards');
+  await page.reload();
+  await expect(page.locator('html[data-ready="true"]')).toBeAttached();
+  await expect(page.getByTestId('wotd').getByTestId('wotd-done')).toBeVisible();
+  await page.goto('./#/bulgarian');
+  await expect(page.getByText('My words (1)')).toBeVisible();
 });

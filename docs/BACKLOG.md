@@ -5,15 +5,17 @@ Where things stand and what is next. Newest state at the top; history is in `CHA
 ## 2026-11-21: daily checks built; new ideas decided with Martin
 
 **Correction:** 0.9.12 (the pet) **was pushed** (GitHub's `main` was at `c7ca99b` on 2026-11-21), although the
-notes of 2026-11-17 said "not pushed". **Built 2026-11-21, on local `main`, not pushed: 0.9.13, daily checks**
-(CHANGELOG). Martin's first step after the push: open "History and edit ›" under the check and give it his name.
+notes of 2026-11-17 said "not pushed". **0.9.13, daily checks: pushed and live 2026-11-21** (CI green). Martin's
+first step: open "History and edit ›" under the check and give it his name. **0.9.14, the word of the day (A1):
+built 2026-11-21, on local `main`, not pushed.** If no 🔊 shows on his phone, it has no Bulgarian voice (Q-22;
+Settings → Diagnostics says): installing one in the phone's text-to-speech settings would add it.
 
 Martin's new ideas (2026-11-21), with his choices from the options Claude offered. Not started; the economic
 calendar (item 6 of 2026-11-16, below) is still open. Order to agree with Martin; a suggestion: A1, then B, then A2–A4.
 
 **A. Bulgarian, without the book for now** (Martin: he cannot get the book's content to Claude; build from other
 sources meanwhile). Martin: "I basically am a complete beginner", so **the alphabet comes first**.
-1. **Word of the day, made for learning** (the home tile): Cyrillic, the Latin spelling, a pronunciation with the
+1. **Done 2026-11-21 (0.9.14).** **Word of the day, made for learning** (the home tile): Cyrillic, the Latin spelling, a pronunciation with the
    stressed syllable marked (e.g. ZDRA-vey), a speak button (the phone's Bulgarian voice, `src/core/speech.js`),
    and **quiz before reveal**: the Bulgarian first, tap to see the meaning, "I knew it" / "Not yet" adds it to the
    review cards. Needs a stress field on the reading words (content schema) and a check that every word has one.
