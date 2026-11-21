@@ -2,6 +2,20 @@
 
 Dated entries, newest first.
 
+## 2026-11-21 — Daily checks (version 0.9.13)
+
+Branch `home/daily-checks`. Martin asked for a check mark in the home screen's Today section for something he does
+once a day: tick it when done, see whether it is done today, reset every day (what it is stays in his app, not here).
+
+- **A tick button under "Today"** on the home screen, one per check: tap when done (it turns green, "Done today",
+  and a streak from 2 days), tap again to undo a mis-tap. It resets at midnight, also when the app was left open.
+- **Its page** (`#/daily`, "History and edit ›" under the button): the last 14 days and the streak per check, and
+  renaming, adding (up to 6) and removing checks. It starts with one check called "Daily check"; Martin names it.
+- **A hidden module** (`src/modules/daily/`), backed up like every module's (schema 1; it keeps 60 days of ticks).
+  New in the contract: `todayWidget`, like `homeWidget` but drawn under the "Today" heading.
+- Tests: `tests/unit/daily.test.js` (the daily reset, undo, streak, history, editing, the midnight redraw, the
+  place under "Today") and `tests/e2e/daily.spec.js` (tick, reload, history, rename; 48 px tall).
+
 ## 2026-11-17 — The companion pet (version 0.9.12)
 
 Branch `home/pet`, item 5 of the features decided with Martin on 2026-11-16. Martin asked for a simple tamagotchi

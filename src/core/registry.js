@@ -46,6 +46,9 @@ export function checkModule(mod) {
   if (mod.homeWidget !== undefined && typeof mod.homeWidget !== 'function') {
     problems.push('homeWidget must be a function (or left out)');
   }
+  if (mod.todayWidget !== undefined && typeof mod.todayWidget !== 'function') {
+    problems.push('todayWidget must be a function (or left out)');
+  }
   if (mod.homeTile !== undefined && typeof mod.homeTile !== 'function') {
     problems.push('homeTile must be a function (or left out)');
   }

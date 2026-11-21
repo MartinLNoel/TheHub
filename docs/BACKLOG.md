@@ -2,6 +2,38 @@
 
 Where things stand and what is next. Newest state at the top; history is in `CHANGELOG.md`.
 
+## 2026-11-21: daily checks built; new ideas decided with Martin
+
+**Correction:** 0.9.12 (the pet) **was pushed** (GitHub's `main` was at `c7ca99b` on 2026-11-21), although the
+notes of 2026-11-17 said "not pushed". **Built 2026-11-21, on local `main`, not pushed: 0.9.13, daily checks**
+(CHANGELOG). Martin's first step after the push: open "History and edit ›" under the check and give it his name.
+
+Martin's new ideas (2026-11-21), with his choices from the options Claude offered. Not started; the economic
+calendar (item 6 of 2026-11-16, below) is still open. Order to agree with Martin; a suggestion: A1, then B, then A2–A4.
+
+**A. Bulgarian, without the book for now** (Martin: he cannot get the book's content to Claude; build from other
+sources meanwhile). Martin: "I basically am a complete beginner", so **the alphabet comes first**.
+1. **Word of the day, made for learning** (the home tile): Cyrillic, the Latin spelling, a pronunciation with the
+   stressed syllable marked (e.g. ZDRA-vey), a speak button (the phone's Bulgarian voice, `src/core/speech.js`),
+   and **quiz before reveal**: the Bulgarian first, tap to see the meaning, "I knew it" / "Not yet" adds it to the
+   review cards. Needs a stress field on the reading words (content schema) and a check that every word has one.
+2. **A beginner course from free, freely usable sources:** the alphabet trainer (exists) as step 1, then themed
+   units of the most common words (greetings, numbers, food, family, travel) and basic grammar (gender, plurals,
+   the definite article ending, present tense), all with Latin, stress and audio. Written in the house style
+   (`docs/bulgarian-content-guide.md`, no copied text); aligned with the book when it arrives (Q-4).
+3. **A smarter daily review** (both study apps): one short mixed session a day (5–10 minutes) of due cards from
+   ISTQB and Bulgarian, weakest topics first, with a daily goal and streak on the home screen.
+4. **ISTQB exam readiness:** a readiness score per chapter, wrong answers becoming review cards by themselves,
+   and the mocks weighted like the real exam (the full mock exists; check what it already does before building).
+
+**B. The pet, more to do with it** (Martin chose all four extras Claude offered):
+1. **Pet, feed, play** buttons: petting (hearts), feeding a treat (treats earned by real activity, so it stays tied
+   to his habits), playing (a short mini-game, e.g. catching falling berries).
+2. **Needs bars** (hunger, fun, affection) that slowly drop and refill; still never sick or dead.
+3. **Hats and items** unlocked by streaks and milestones (e.g. 7 days of a daily check, 10 workouts, 50 cards).
+4. **The pet speaks Bulgarian:** it greets him with the word of the day and asks its meaning; right answers are treats.
+   Needs the pet data schema bumped (2) with a migration and a test.
+
 ## 2026-11-16: next features, decided with Martin (not started; 0.9.4–0.9.6 approved and pushed the same day)
 
 Martin's answers, in a discussion session (started in gainz-tracker's folder). Build in this order:

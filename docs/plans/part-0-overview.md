@@ -128,6 +128,8 @@ export default {
   hidden: true,                  // optional (0.9.12): no app icon and no nav tab (the pet lives on the home screen)
   homeWidget: ({ data, readOnly, hub, save }) => Node | null, // optional (0.9.12): its own widget on the home screen,
                                 // after the app icons, with a save for its data
+  todayWidget: ({ data, readOnly, hub, save }) => Node | null, // optional (0.9.13): like homeWidget, but under the
+                                // "Today" heading (the daily checks)
   homeTile: (data, { hub }) => ({ title, text, sub, href, refresh? }) | null, // optional (0.9.11): a tile in the home
                                 // screen's "today" strip, in the module's colour
   homeStatus: (data) => ({ text, href?, refresh? }) | null, // optional (0.9.7): a short line under the home clock;

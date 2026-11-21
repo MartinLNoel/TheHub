@@ -645,6 +645,32 @@ a.home__status { text-decoration: underline; text-underline-offset: 3px; }
 .home-tile__text { font-weight: 700; font-size: 1.0625rem; line-height: 1.25; overflow-wrap: anywhere; }
 .home-tile__sub { font-size: 0.8125rem; color: var(--muted); overflow-wrap: anywhere; }
 
+/* daily checks (0.9.13): one big tick button per check under "Today" */
+.daily { display: flex; flex-direction: column; gap: 0.5rem; }
+.daily__list { display: flex; flex-direction: column; gap: 0.5rem; }
+.daily-check {
+  display: flex; align-items: center; gap: 0.75rem; width: 100%; min-height: 3.5rem; padding: 0.5rem 0.75rem;
+  border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font: inherit; text-align: left; cursor: pointer; touch-action: manipulation;
+}
+.daily-check__icon { font-size: 1.5rem; flex: none; }
+.daily-check__text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.daily-check__name { font-weight: 700; overflow-wrap: anywhere; }
+.daily-check__sub { font-size: 0.8125rem; color: var(--muted); }
+.daily-check__box {
+  flex: none; width: 2rem; height: 2rem; border-radius: 0.5rem; border: 2px solid var(--muted);
+  display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem;
+}
+.daily-check--done { border-color: #2f9e5a; background: color-mix(in srgb, #2f9e5a 16%, var(--surface)); }
+.daily-check--done .daily-check__box { background: #2f9e5a; border-color: #2f9e5a; color: #ffffff; }
+.daily__edit { align-self: flex-end; font-size: 0.8125rem; color: var(--on-wall-muted); min-height: var(--tap); display: flex; align-items: center; padding: 0 0.25rem; }
+.daily-days { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.375rem; }
+.daily-day { text-align: center; padding: 0.375rem 0; border-radius: 0.5rem; background: var(--surface-2); color: var(--muted); font-size: 0.8125rem; }
+.daily-day--done { background: #2f9e5a; color: #ffffff; font-weight: 700; }
+.daily-edit { align-items: center; flex-wrap: wrap; }
+.daily-edit input { min-height: var(--tap); flex: 1 1 9rem; min-width: 0; }
+.daily-edit .daily-edit__icon { flex: 0 0 3.25rem; text-align: center; }
+
 /* the pet (0.9.12) */
 .pet { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; }
 .pet-canvas { image-rendering: pixelated; flex: none; cursor: pointer; border-radius: 0.75rem; background: radial-gradient(circle at 50% 70%, color-mix(in srgb, #7fd6a4 18%, var(--surface-2)), var(--surface-2) 70%); touch-action: manipulation; }

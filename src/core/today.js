@@ -204,11 +204,14 @@ function tile(mod, entry, hub) {
   return node;
 }
 
-/** A module's own widget on the home screen (homeWidget, e.g. the pet), with a save for its data. */
-function widget(mod, entry, hub, saveFor) {
-  if (typeof mod.homeWidget !== 'function' || !entry || entry.data == null) return null;
+/**
+ * A module's own widget on the home screen, with a save for its data: homeWidget (e.g. the pet) after the app
+ * icons, todayWidget (the daily checks, 0.9.13) under the "Today" heading.
+ */
+function widget(mod, entry, hub, saveFor, hook = 'homeWidget') {
+  if (typeof mod[hook] !== 'function' || !entry || entry.data == null) return null;
   try {
-    return mod.homeWidget({ data: entry.data, readOnly: Boolean(entry.readOnly), hub, save: saveFor(mod) }) || null;
+    return mod[hook]({ data: entry.data, readOnly: Boolean(entry.readOnly), hub, save: saveFor(mod) }) || null;
   } catch {
     return null;
   }
@@ -260,6 +263,7 @@ export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB, 
   const statuses = mods.map((mod) => statusLine(mod, state[mod.id])).filter(Boolean);
   const tiles = mods.map((mod) => tile(mod, state[mod.id], hub)).filter(Boolean);
   const widgets = mods.map((mod) => widget(mod, state[mod.id], hub, saveFor)).filter(Boolean);
+  const todayWidgets = mods.map((mod) => widget(mod, state[mod.id], hub, saveFor, 'todayWidget')).filter(Boolean);
   const apps = [
     ...mods.filter((m) => !m.hidden).map((m) => ({ id: m.id, name: m.name, icon: m.icon, href: `#/${m.id}` })),
     { id: 'settings', name: 'Settings', icon: '⚙️', href: '#/settings' },
@@ -274,6 +278,7 @@ export function renderToday(root, { registry, state, backup = {}, hub = NO_HUB, 
       h('nav', { class: 'home__apps', 'aria-label': 'Apps', 'data-testid': 'home-apps' }, apps.map(appIcon)),
       widgets,
       h('h2', { class: 'home__heading' }, 'Today'),
+      todayWidgets,
       tiles.length ? h('nav', { class: 'home-strip', 'aria-label': 'Today at a glance', 'data-testid': 'home-strip' }, tiles) : null,
       marketCard(),
       cards.length ? cards : h('section', { class: 'card' }, h('h2', {}, 'Welcome'), h('p', {}, 'No modules yet. They arrive with the next updates.')),
